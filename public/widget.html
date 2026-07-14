@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Plan uw gratis adviesgesprek | SalderingsDienst</title>
+<meta name="robots" content="noindex">
+<link rel="icon" href="assets/crest.png">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=PT+Serif:wght@700&family=Source+Sans+3:wght@400;600&family=Cousine&display=swap" rel="stylesheet">
+
+<link rel="stylesheet" href="css/tokens.css">
+<link rel="stylesheet" href="css/main.css">
+<style>
+  /* Widget-context: geen paginachrome, strak op de kaart */
+  body { padding: 0; background: transparent; }
+  .widget-shell { max-width: 720px; margin: 0 auto; padding: 4px; }
+  .widget-brandline { display: flex; align-items: center; gap: 8px; margin: 10px 6px 0; font-size: 12.5px; color: var(--ink-500); }
+  .widget-brandline img { width: 16px; height: 17px; }
+  .widget-brandline a { color: var(--navy-400); font-weight: 600; }
+</style>
+
+<script>
+  window.dataLayer = window.dataLayer || [];
+  window.sdTrack = function (event, params) { try { window.dataLayer.push(Object.assign({ event: event }, params || {})); } catch (e) {} };
+  window.SD_CONFIG = {
+    phone: 'TE VERVANGEN',
+    email: 'TE VERVANGEN',
+    whatsapp: '31639369781',
+    kvk: 'TE VERVANGEN',
+    leadEndpoint: '',
+    bookingEndpoint: '/api/bookings',
+    chatEndpoint: ''
+  };
+</script>
+</head>
+<body>
+
+<div class="widget-shell">
+  <div class="card book-panel" data-booking data-source="widget">
+    <noscript><p style="padding:24px;">Het boekingsformulier heeft JavaScript nodig. Ga naar salderingsdienst.nl om een gesprek te plannen.</p></noscript>
+  </div>
+  <p class="widget-brandline">
+    <img src="assets/crest.png" alt="">
+    <span>Gratis adviesgesprek via <a href="https://www.salderingsdienst.nl" target="_blank" rel="noopener">SalderingsDienst</a> · kosteloos en vrijblijvend</span>
+  </p>
+</div>
+
+<script defer src="js/motion.js"></script>
+<script defer src="js/booking.js"></script>
+</body>
+</html>

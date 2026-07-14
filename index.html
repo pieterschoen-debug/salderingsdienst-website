@@ -1,0 +1,968 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script>document.documentElement.classList.add('js');/* fallback: zonder JS tonen de scrolly-stappen gestapeld */</script>
+<title>SalderingsDienst | Onafhankelijk advies over uw zonnepanelen na 2027</title>
+<meta name="description" content="De salderingsregeling stopt per 1 januari 2027. SalderingsDienst geeft huiseigenaren met zonnepanelen onafhankelijk, kosteloos advies. Plan vrijblijvend een gratis adviesgesprek.">
+<meta name="robots" content="index,follow">
+<link rel="canonical" href="https://www.salderingsdienst.nl/">
+<meta property="og:title" content="SalderingsDienst | Onafhankelijk advies over uw zonnepanelen na 2027">
+<meta property="og:description" content="De salderingsregeling stopt per 1 januari 2027. Plan een gratis, vrijblijvend adviesgesprek.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://www.salderingsdienst.nl/">
+<link rel="icon" href="assets/crest.png">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=PT+Serif:wght@700&family=Source+Sans+3:wght@400;600&family=Cousine&display=swap" rel="stylesheet">
+
+<link rel="stylesheet" href="css/tokens.css">
+<link rel="stylesheet" href="css/main.css">
+
+<script type="application/ld+json">
+{
+  "@context":"https://schema.org",
+  "@type":"Organization",
+  "name":"SalderingsDienst",
+  "url":"https://www.salderingsdienst.nl",
+  "description":"Onafhankelijk, commercieel adviesbureau voor huiseigenaren met zonnepanelen rond het einde van de salderingsregeling.",
+  "address":{"@type":"PostalAddress","postOfficeBoxNumber":"8738","postalCode":"3054 AC","addressLocality":"Rotterdam","addressCountry":"NL"}
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context":"https://schema.org",
+  "@type":"LocalBusiness",
+  "name":"SalderingsDienst",
+  "url":"https://www.salderingsdienst.nl",
+  "description":"Onafhankelijk energieadvies rond het einde van de salderingsregeling.",
+  "address":{"@type":"PostalAddress","postOfficeBoxNumber":"8738","postalCode":"3054 AC","addressLocality":"Rotterdam","addressCountry":"NL"},
+  "areaServed":"NL",
+  "priceRange":"Gratis adviesgesprek"
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context":"https://schema.org",
+  "@type":"Service",
+  "name":"Onafhankelijk adviesgesprek einde salderingsregeling",
+  "serviceType":"Energieadvies zonnepanelen",
+  "provider":{"@type":"Organization","name":"SalderingsDienst","url":"https://www.salderingsdienst.nl"},
+  "areaServed":{"@type":"Country","name":"Nederland"},
+  "description":"Kosteloos en vrijblijvend adviesgesprek voor huiseigenaren met zonnepanelen over wat het einde van de salderingsregeling per 1 januari 2027 voor hen betekent.",
+  "offers":{"@type":"Offer","price":"0","priceCurrency":"EUR"}
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context":"https://schema.org",
+  "@type":"FAQPage",
+  "mainEntity":[
+    {"@type":"Question","name":"Wat verandert er op 1 januari 2027?","acceptedAnswer":{"@type":"Answer","text":"De salderingsregeling stopt. U kunt teruggeleverde stroom dan niet meer onbeperkt wegstrepen tegen uw verbruik. Daardoor wordt het aantrekkelijker om uw zonnestroom direct zelf te gebruiken of op te slaan."}},
+    {"@type":"Question","name":"Loont een thuisbatterij nog?","acceptedAnswer":{"@type":"Answer","text":"Dat hangt af van uw verbruik, uw panelen en uw woning. Voor sommige huishoudens wel, voor andere niet. Wij rekenen het onafhankelijk voor u door, zonder iets te verkopen."}},
+    {"@type":"Question","name":"Wat kost een adviesgesprek?","acceptedAnswer":{"@type":"Answer","text":"Niets. Het gesprek is volledig kosteloos en vrijblijvend. U zit nergens aan vast."}},
+    {"@type":"Question","name":"Wat is de SalderingsDienst precies?","acceptedAnswer":{"@type":"Answer","text":"Wij zijn een onafhankelijk, commercieel adviesbureau. We helpen huiseigenaren begrijpen wat het einde van de salderingsregeling voor hun situatie betekent. We zijn niet verbonden aan een leverancier."}},
+    {"@type":"Question","name":"Moet ik al zonnepanelen hebben?","acceptedAnswer":{"@type":"Answer","text":"Ja. Ons advies richt zich op huiseigenaren die al zonnepanelen hebben en willen weten wat het einde van de salderingsregeling voor hen betekent."}},
+    {"@type":"Question","name":"Online of bij mij thuis?","acceptedAnswer":{"@type":"Answer","text":"Beide kan. Bij het plannen geeft u uw voorkeur aan. Een gesprek bij u thuis geeft ons het beste beeld van uw situatie."}}
+  ]
+}
+</script>
+
+<script>
+  /* Conversie-tracking laag (vul uw eigen GA4 / Meta Pixel ID in) */
+  window.dataLayer = window.dataLayer || [];
+  window.sdTrack = function (event, params) { try { window.dataLayer.push(Object.assign({ event: event }, params || {})); } catch (e) {} };
+  /* TODO (door u): plaats hier het GA4 gtag.js-snippet en/of Meta Pixel met uw eigen ID. */
+
+  /* Contactgegevens — eerlijke placeholders, duidelijk gemarkeerd. */
+  window.SD_CONFIG = {
+    /* Leeg = nog niet bekend; de site toont dan "Contactgegevens worden bijgewerkt." */
+    phone: '',
+    email: '',
+    whatsapp: '31639369781',
+    kvk: '',
+    /* Optioneel: URL van uw webhook/CRM. Elke bevestigde afspraak en
+       info-aanvraag wordt daar als JSON (schema sd.lead.v1) heen gePOST.
+       Leeg = alleen lokale wachtrij ('sd_lead_queue') + 'sd:lead'-event. */
+    leadEndpoint: '',
+    /* Serverless endpoints (Vercel functions in /api). Boekingen worden
+       hier met kwalificatie en status opgeslagen; de chat praat via
+       /api/chat met Kimi (Moonshot AI). Leegmaken = uitschakelen. */
+    bookingEndpoint: '/api/bookings',
+    chatEndpoint: '/api/chat'
+  };
+</script>
+</head>
+<body>
+
+<!-- ===== NAVIGATIE ===== -->
+<header class="site-header">
+  <div class="container">
+    <a class="brand" href="#top">
+      <img src="assets/crest.png" alt="" width="427" height="467">
+      <span class="brand-name">SalderingsDienst</span>
+    </a>
+    <nav class="nav-links" aria-label="Hoofdnavigatie">
+      <a href="#bereken">Bereken impact</a>
+      <a href="#verandert">Wat verandert er</a>
+      <a href="#werkwijze">Werkwijze</a>
+      <a href="#over-ons">Over ons</a>
+      <a href="kennisbank.html">Kennisbank</a>
+      <a href="#vragen">Vragen</a>
+    </nav>
+    <div class="nav-actions">
+      <a class="nav-cta btn btn-primary" href="#adviesgesprek" data-track="nav_cta_click">Plan gratis adviesgesprek</a>
+      <button class="nav-burger" data-nav-toggle aria-label="Menu" aria-expanded="false" aria-controls="nav-overlay">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </div>
+</header>
+
+<div class="nav-overlay" id="nav-overlay" aria-hidden="true">
+  <a href="#bereken" data-nav-close>Bereken impact</a>
+  <a href="#verandert" data-nav-close>Wat verandert er</a>
+  <a href="#werkwijze" data-nav-close>Werkwijze</a>
+  <a href="#over-ons" data-nav-close>Over ons</a>
+  <a href="kennisbank.html">Kennisbank</a>
+  <a href="#vragen" data-nav-close>Vragen</a>
+  <a href="#adviesgesprek" class="btn btn-primary nav-overlay-cta" data-nav-close>Plan gratis adviesgesprek</a>
+  <p class="nav-overlay-note">Kosteloos en vrijblijvend. U zit nergens aan vast.</p>
+</div>
+
+<main id="top">
+
+  <!-- ===== HERO ===== -->
+  <section class="hero">
+    <div class="container hero-inner">
+      <div class="hero-copy hero-enter">
+        <h1>De salderingsregeling stopt per 1&nbsp;januari&nbsp;2027.</h1>
+        <p class="lead">Wij rekenen voor úw woning uit wat dat betekent en welke opties er zijn.</p>
+        <div class="hero-ctas">
+          <a href="#adviesgesprek" class="btn btn-primary btn--lg" data-track="hero_cta_click">Plan gratis adviesgesprek</a>
+          <a href="#verandert" class="btn btn-ghost btn--lg">Hoe het werkt</a>
+        </div>
+        <p class="hero-trust">Onafhankelijk adviesbureau</p>
+      </div>
+
+      <div class="scene-wrap hero-photo-enter">
+        <figure class="scene-photo">
+          <div class="scene-photo-frame">
+            <img src="assets/hero-woning.jpg" alt="Koopwoning met zonnepanelen op het dak." width="960" height="1080" fetchpriority="high">
+          </div>
+          <figcaption>Een koopwoning met zonnepanelen: voor precies deze situatie rekenen wij door wat er na 1 januari 2027 verandert.</figcaption>
+        </figure>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ===== URGENTIEBALK ===== -->
+  <section class="urgency" aria-label="Aftellen tot het einde van de salderingsregeling">
+    <div class="container">
+      <div class="urgency-main">
+        <span class="urgency-days" data-count-days>…</span>
+        <span class="urgency-text">dagen tot 1 januari 2027. De salderingsregeling stopt per deze datum. Geen overgangsregeling.</span>
+      </div>
+      <div class="urgency-side">
+        <span class="urgency-clock" data-count-clock aria-hidden="true"></span>
+        <a href="#bereken">Bereken uw impact →</a>
+      </div>
+      <p class="urgency-law">Gebaseerd op de Wet beëindiging salderingsregeling (36.611), inwerkingtreding 1 januari 2027.</p>
+    </div>
+  </section>
+
+  <!-- ===== ADRES-CHECK + CALCULATOR ===== -->
+  <section id="bereken" style="background:#fff; border-bottom:1px solid var(--line);">
+    <div class="container section">
+      <div class="section-head section-head--center">
+        <h2 class="h2">Wat verandert er per 1 januari 2027?</h2>
+        <p class="lead">Een indicatie van het effect op uw situatie. Geen gegevens nodig.</p>
+      </div>
+
+      <div class="calc-grid">
+        <div class="card calc-card rv">
+          <label class="calc-label" for="calc-panels">Aantal zonnepanelen</label>
+          <div class="calc-panels-row">
+            <input type="range" class="range" id="calc-panels" min="4" max="30" step="1" value="10" aria-label="Aantal zonnepanelen">
+            <span class="calc-panels-num" data-calc-panels>10</span>
+          </div>
+          <div class="calc-kwh">≈ <span data-calc-count>10</span> panelen geselecteerd</div>
+
+          <div class="calc-label" id="calc-profiel-label">Dagverbruik</div>
+          <div class="calc-chips" data-calc-usage role="radiogroup" aria-labelledby="calc-profiel-label">
+            <button type="button" role="radio" data-usage="weinig" aria-checked="false" data-track="indicator-profiel-weinig">Weinig</button>
+            <button type="button" role="radio" data-usage="gemiddeld" aria-checked="true" data-track="indicator-profiel-gemiddeld">Gemiddeld</button>
+            <button type="button" role="radio" data-usage="veel" aria-checked="false" data-track="indicator-profiel-veel">Veel</button>
+          </div>
+          <p class="calc-chips-note">Dit helpt ons uw situatie te begrijpen.</p>
+        </div>
+
+        <div class="card calc-result rv" data-calc-result data-view="zonder">
+          <div class="calc-toggle" role="group" aria-label="Vergelijking: zonder actie of met batterij en EMS">
+            <button type="button" data-calc-view="zonder" aria-pressed="true" data-track="indicator-toggle-zonder">Zonder actie</button>
+            <button type="button" data-calc-view="met" aria-pressed="false" data-track="indicator-toggle-met">Met batterij + EMS</button>
+            <span class="calc-toggle-line" aria-hidden="true"></span>
+          </div>
+
+          <div class="impact" data-impact>
+            <div class="impact-arrows" aria-hidden="true">
+              <svg viewBox="0 0 24 24"><path d="M4 8l8 8 8-8" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              <svg viewBox="0 0 24 24"><path d="M4 8l8 8 8-8" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              <svg viewBox="0 0 24 24"><path d="M4 8l8 8 8-8" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </div>
+            <p class="impact-text" data-impact-text>Uw zonnestroom verliest aanzienlijk aan waarde</p>
+            <p class="impact-sub" data-impact-sub>Per 1 januari 2027 vervalt de salderingsregeling</p>
+          </div>
+
+          <p class="impact-note">Het exacte effect varieert sterk per situatie. Subsidies, woontype en contractkeuze spelen allemaal een rol.</p>
+
+          <ul class="calc-locked">
+            <li>
+              <span>Uw persoonlijke besparingspotentieel</span>
+              <span class="calc-locked-val" role="img" aria-label="Details beschikbaar na adviesgesprek">
+                <strong aria-hidden="true">wordt berekend</strong>
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+              </span>
+            </li>
+            <li>
+              <span>Extra inkomen via energiemanagement</span>
+              <span class="calc-locked-val" role="img" aria-label="Details beschikbaar na adviesgesprek">
+                <strong aria-hidden="true">wordt berekend</strong>
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+              </span>
+            </li>
+            <li>
+              <span>Optimale installatie voor uw woning</span>
+              <span class="calc-locked-val" role="img" aria-label="Details beschikbaar na adviesgesprek">
+                <strong aria-hidden="true">na het gesprek</strong>
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+              </span>
+            </li>
+          </ul>
+
+          <p class="calc-locked-note">De exacte berekening voor uw situatie bespreken wij in het adviesgesprek.</p>
+
+          <a href="#adviesgesprek" class="btn btn-primary" data-track="indicator-cta">Plan gratis adviesgesprek</a>
+          <div class="calc-disclaimer">Indicatief. Uw werkelijke situatie kan afwijken. Geen bindend financieel advies.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== SCROLLYTELLING: WAT VERANDERT ER (5 stappen) =====
+       Conceptueel verhaal ZONDER eurobedragen (Prompt A+): de
+       tellers zijn woorden ("Volle waarde", "Waarde verloren"),
+       de enige weg naar cijfers is het adviesgesprek. Desktop:
+       één sticky scene, met GSAP ScrollTrigger aan de scroll
+       gekoppeld (scrub 0.5, js/scrolly.js) — lagen kruisvervagen
+       en de viewBox zoomt per stap. Loop-beweging (bolletjes,
+       druppels, gloed, pulsen) is SMIL/CSS en leeft hier in de
+       markup. Mobiel: per stap een eigen illustratie. Zonder JS
+       (html zonder .js-klasse) tonen de vijf stappen gestapeld. -->
+  <section id="verandert" class="scrolly" data-scrolly role="region" aria-label="Uitleg salderingsregeling" tabindex="0">
+    <div class="container section">
+      <p class="law-note">Gebaseerd op de Wet beëindiging salderingsregeling (36.611), inwerkingtreding 1 januari 2027.</p>
+      <div class="section-head">
+        <h2 class="h2">Wat verandert er voor uw woning?</h2>
+        <p class="lead">De situatie in vijf stappen, van salderen nu tot slim beheer straks.</p>
+      </div>
+      <div class="scrolly-grid">
+        <div class="scrolly-scene" data-scrolly-scene>
+          <svg class="scene5" viewBox="0 0 720 400" xmlns="http://www.w3.org/2000/svg" role="img" data-step="1" aria-label="Stap 1: Saldering tot 31 december 2026. Teruggeleverde stroom wordt 1-op-1 weggestreept.">
+            <!-- Basis: zon + woning (stap 1 t/m 4) -->
+            <g class="sc-base" stroke="#1a4571" stroke-width="1" fill="none" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="112" cy="84" r="20"/>
+              <line x1="139" y1="84" x2="148" y2="84"/><line x1="85" y1="84" x2="76" y2="84"/>
+              <line x1="112" y1="57" x2="112" y2="48"/><line x1="112" y1="111" x2="112" y2="120"/>
+              <line x1="131" y1="65" x2="137" y2="59"/><line x1="93" y1="65" x2="87" y2="59"/>
+              <line x1="131" y1="103" x2="137" y2="109"/><line x1="93" y1="103" x2="87" y2="109"/>
+              <rect x="250" y="196" width="176" height="124"/>
+              <path d="M238 196 L338 118 L438 196"/>
+              <path d="M266 174 L312 138 L322 148 L276 184 Z"/>
+              <line x1="281" y1="162" x2="291" y2="172"/>
+              <line x1="297" y1="150" x2="307" y2="160"/>
+              <rect x="318" y="264" width="34" height="56"/>
+              <rect x="276" y="220" width="40" height="32"/>
+              <line x1="296" y1="220" x2="296" y2="252"/>
+              <line x1="276" y1="236" x2="316" y2="236"/>
+            </g>
+            <!-- Direct verbruik: zon -> huis (stap 1-2) -->
+            <g class="sc-green" stroke="#4a7c59" stroke-width="3" fill="none" stroke-linecap="round" stroke-linejoin="round">
+              <line x1="146" y1="110" x2="250" y2="162"/>
+              <path d="M242 153 L250 162 L238 161"/>
+              <circle class="sc-dot" r="2" fill="#4a7c59" stroke="none">
+                <animateMotion dur="2.4s" repeatCount="indefinite" path="M146 110 L250 162"/>
+              </circle>
+            </g>
+            <!-- Teruglevering: huis -> net (stap 1, gestippeld) -->
+            <g class="sc-blue" stroke="#1a4571" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round">
+              <line x1="440" y1="222" x2="630" y2="222" stroke-dasharray="7 7"/>
+              <path d="M622 214 L630 222 L622 230"/>
+            </g>
+            <!-- Saldering: net -> huis, het belangrijke element (stap 1) -->
+            <g class="sc-gold" stroke="#e7c98a" stroke-width="3" fill="none" stroke-linecap="round" stroke-linejoin="round">
+              <line x1="640" y1="250" x2="452" y2="250"/>
+              <path d="M464 242 L452 250 L464 258"/>
+              <circle class="sc-dot" r="2" fill="#b98a3e" stroke="none">
+                <animateMotion dur="3s" repeatCount="indefinite" path="M640 250 L452 250"/>
+              </circle>
+            </g>
+            <!-- Grondniveau (stap 2): de stroom is wég, niet ontvangen -->
+            <g class="sc-ground" opacity="0">
+              <line x1="88" y1="332" x2="648" y2="332" stroke="#ece7dc" stroke-width="1"/>
+            </g>
+            <!-- Lek: stroom valt uit het huis de grond in (stap 2) -->
+            <g class="sc-leak" opacity="0" stroke="#c0392b" fill="none" stroke-linecap="round">
+              <path d="M426 250 C452 250 462 262 465 282" stroke-width="2"/>
+              <circle class="sc-drop" cx="466" cy="296" r="3" stroke-width="1.5"/>
+              <circle class="sc-drop sc-drop--2" cx="468" cy="312" r="2.4" stroke-width="1.5"/>
+              <circle class="sc-drop sc-drop--3" cx="469" cy="326" r="1.8" stroke-width="1.5"/>
+            </g>
+            <!-- Thuisbatterij naast het huis (stap 3) -->
+            <g class="sc-batt" opacity="0" stroke="#1a4571" stroke-width="1" fill="none" stroke-linecap="round" stroke-linejoin="round">
+              <rect class="sc-glow" x="488" y="232" width="46" height="88" rx="7" fill="#e7c98a" fill-opacity="0"/>
+              <line x1="500" y1="226" x2="508" y2="226"/>
+              <line x1="514" y1="226" x2="522" y2="226"/>
+              <line x1="498" y1="280" x2="524" y2="280"/>
+              <line x1="498" y1="296" x2="524" y2="296"/>
+            </g>
+            <!-- Circuit: zon -> huis -> batterij en batterij -> huis (stap 3) -->
+            <g class="sc-circ" opacity="0" stroke="#e7c98a" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M146 110 C190 132 220 148 246 160"/>
+              <path d="M239 153 L246 160 L236 160"/>
+              <line x1="432" y1="252" x2="482" y2="252"/>
+              <path d="M474 244 L482 252 L474 260"/>
+              <line x1="482" y1="292" x2="432" y2="292"/>
+              <path d="M440 284 L432 292 L440 300"/>
+              <circle class="sc-dot" r="2" fill="#b98a3e" stroke="none">
+                <animateMotion dur="2.8s" repeatCount="indefinite" path="M146 110 C190 132 220 148 246 160"/>
+              </circle>
+              <circle class="sc-dot" r="2" fill="#b98a3e" stroke="none">
+                <animateMotion dur="2.5s" repeatCount="indefinite" path="M432 252 L482 252"/>
+              </circle>
+              <circle class="sc-dot" r="2" fill="#b98a3e" stroke="none">
+                <animateMotion dur="2.5s" repeatCount="indefinite" path="M482 292 L432 292"/>
+              </circle>
+            </g>
+            <!-- Energiemanagement: zoom op de batterij (stap 4) -->
+            <g class="sc-big" opacity="0">
+              <g class="sc-big-batt" stroke="#1a4571" stroke-width="1" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                <rect class="sc-glow" x="312" y="124" width="96" height="172" rx="10" fill="#e7c98a" fill-opacity="0"/>
+                <rect x="342" y="108" width="36" height="16" rx="3"/>
+                <line x1="332" y1="220" x2="388" y2="220"/>
+                <line x1="332" y1="244" x2="388" y2="244"/>
+                <line x1="332" y1="268" x2="388" y2="268"/>
+              </g>
+              <g class="sc-big-dal" opacity="0">
+                <text x="216" y="192" font-family="'Source Sans 3', sans-serif" font-size="11" fill="#4a7c59">Dal &#8595;</text>
+                <g stroke="#4a7c59" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                  <animate attributeName="opacity" values="0.6;1;0.6" dur="1.5s" repeatCount="indefinite"/>
+                  <line x1="216" y1="210" x2="296" y2="210"/>
+                  <path d="M288 202 L296 210 L288 218"/>
+                </g>
+                <circle class="sc-dot" r="2" fill="#4a7c59" stroke="none">
+                  <animateMotion dur="2s" repeatCount="indefinite" path="M216 210 L296 210"/>
+                </circle>
+              </g>
+              <g class="sc-big-piek" opacity="0">
+                <text x="504" y="192" text-anchor="end" font-family="'Source Sans 3', sans-serif" font-size="11" fill="#c0392b">Piek &#8593;</text>
+                <g stroke="#c0392b" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                  <animate attributeName="opacity" values="0.6;1;0.6" dur="1.5s" repeatCount="indefinite"/>
+                  <line x1="424" y1="210" x2="504" y2="210"/>
+                  <path d="M496 202 L504 210 L496 218"/>
+                </g>
+                <circle class="sc-dot" r="2" fill="#c0392b" stroke="none">
+                  <animateMotion dur="2s" repeatCount="indefinite" path="M424 210 L504 210"/>
+                </circle>
+              </g>
+              <g class="sc-big-marge" opacity="0">
+                <text x="360" y="66" text-anchor="middle" font-family="'Source Sans 3', sans-serif" font-size="11" fill="#b98a3e">Aanzienlijk verschil</text>
+                <g stroke="#e7c98a" stroke-width="2">
+                  <line x1="256" y1="76" x2="464" y2="76"/>
+                  <line x1="256" y1="70" x2="256" y2="82"/>
+                  <line x1="464" y1="70" x2="464" y2="82"/>
+                </g>
+                <rect x="268" y="86" width="184" height="20" fill="#faf8f4" stroke="#e7c98a" stroke-width="1"/>
+                <text x="360" y="100" text-anchor="middle" font-family="'Source Sans 3', sans-serif" font-size="10.5" fill="#1a4571">Extra inkomen via uw batterij</text>
+              </g>
+            </g>
+            <!-- Tijdlijn: vier iconen, stap 3 en 4 met gouden ring (stap 5) -->
+            <g class="sc-tl" opacity="0">
+              <line x1="168" y1="200" x2="552" y2="200" stroke="#ece7dc" stroke-width="2"/>
+              <g>
+                <circle cx="168" cy="200" r="20" fill="#faf8f4" stroke="#ece7dc" stroke-width="1"/>
+                <g stroke="#b98a3e" stroke-width="2" fill="none" stroke-linecap="round">
+                  <circle cx="168" cy="200" r="6"/>
+                  <line x1="168" y1="188" x2="168" y2="191"/><line x1="168" y1="209" x2="168" y2="212"/>
+                  <line x1="156" y1="200" x2="159" y2="200"/><line x1="177" y1="200" x2="180" y2="200"/>
+                  <line x1="159.5" y1="191.5" x2="161.6" y2="193.6"/><line x1="174.4" y1="206.4" x2="176.5" y2="208.5"/>
+                  <line x1="176.5" y1="191.5" x2="174.4" y2="193.6"/><line x1="161.6" y1="206.4" x2="159.5" y2="208.5"/>
+                </g>
+              </g>
+              <g>
+                <circle cx="296" cy="200" r="20" fill="#faf8f4" stroke="#ece7dc" stroke-width="1"/>
+                <path d="M296 190 C291 197 289 202 292 206 C294 208.5 298 208.5 300 206 C303 202 301 197 296 190 Z" fill="none" stroke="#c0392b" stroke-width="2" stroke-linejoin="round"/>
+              </g>
+              <g>
+                <circle cx="424" cy="200" r="24" fill="none" stroke="#e7c98a" stroke-width="4"/>
+                <circle cx="424" cy="200" r="20" fill="#faf8f4" stroke="#ece7dc" stroke-width="1"/>
+                <g stroke="#1a4571" stroke-width="2" fill="none" stroke-linecap="round">
+                  <rect x="416" y="193" width="16" height="16" rx="2"/>
+                  <line x1="421" y1="190" x2="427" y2="190"/>
+                </g>
+              </g>
+              <g>
+                <circle cx="552" cy="200" r="24" fill="none" stroke="#e7c98a" stroke-width="4"/>
+                <circle cx="552" cy="200" r="20" fill="#faf8f4" stroke="#ece7dc" stroke-width="1"/>
+                <g stroke="#b98a3e" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                  <line x1="544" y1="195" x2="560" y2="195"/><path d="M556 191 L560 195 L556 199"/>
+                  <line x1="560" y1="205" x2="544" y2="205"/><path d="M548 201 L544 205 L548 209"/>
+                </g>
+              </g>
+            </g>
+          </svg>
+        </div>
+
+        <div class="scrolly-steps" data-scrolly-steps>
+          <article class="scrolly-step rv" data-step="1" aria-labelledby="stap-1-kop">
+            <div class="scene-mini" aria-hidden="true">
+              <svg viewBox="0 0 720 400" xmlns="http://www.w3.org/2000/svg">
+                <g stroke="#1a4571" stroke-width="1" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                  <circle cx="112" cy="84" r="20"/>
+                  <line x1="139" y1="84" x2="148" y2="84"/><line x1="85" y1="84" x2="76" y2="84"/>
+                  <line x1="112" y1="57" x2="112" y2="48"/><line x1="112" y1="111" x2="112" y2="120"/>
+                  <line x1="131" y1="65" x2="137" y2="59"/><line x1="93" y1="65" x2="87" y2="59"/>
+                  <line x1="131" y1="103" x2="137" y2="109"/><line x1="93" y1="103" x2="87" y2="109"/>
+                  <rect x="250" y="196" width="176" height="124"/>
+                  <path d="M238 196 L338 118 L438 196"/>
+                  <path d="M266 174 L312 138 L322 148 L276 184 Z"/>
+                  <line x1="281" y1="162" x2="291" y2="172"/>
+                  <line x1="297" y1="150" x2="307" y2="160"/>
+                  <rect x="318" y="264" width="34" height="56"/>
+                  <rect x="276" y="220" width="40" height="32"/>
+                  <line x1="296" y1="220" x2="296" y2="252"/>
+                  <line x1="276" y1="236" x2="316" y2="236"/>
+                </g>
+                <g stroke="#4a7c59" stroke-width="3" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                  <line x1="146" y1="110" x2="250" y2="162"/>
+                  <path d="M242 153 L250 162 L238 161"/>
+                  <circle class="sc-dot" r="2" fill="#4a7c59" stroke="none">
+                    <animateMotion dur="2.4s" repeatCount="indefinite" path="M146 110 L250 162"/>
+                  </circle>
+                </g>
+                <g stroke="#1a4571" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                  <line x1="440" y1="222" x2="630" y2="222" stroke-dasharray="7 7"/>
+                  <path d="M622 214 L630 222 L622 230"/>
+                </g>
+                <g stroke="#e7c98a" stroke-width="3" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                  <line x1="640" y1="250" x2="452" y2="250"/>
+                  <path d="M464 242 L452 250 L464 258"/>
+                  <circle class="sc-dot" r="2" fill="#b98a3e" stroke="none">
+                    <animateMotion dur="3s" repeatCount="indefinite" path="M640 250 L452 250"/>
+                  </circle>
+                </g>
+              </svg>
+            </div>
+            <p class="scrolly-teller scrolly-teller--goud" aria-live="polite" aria-atomic="true">Volle waarde</p>
+            <h3 id="stap-1-kop">Tot 31 december 2026</h3>
+            <p>Uw overtollige stroom wordt weggestreept tegen uw verbruik. U betaalt alleen voor het verschil.</p>
+          </article>
+
+          <article class="scrolly-step rv" data-step="2" aria-labelledby="stap-2-kop">
+            <div class="scene-mini" aria-hidden="true">
+              <svg viewBox="0 0 720 400" xmlns="http://www.w3.org/2000/svg">
+                <g stroke="#1a4571" stroke-width="1" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                  <circle cx="112" cy="84" r="20"/>
+                  <line x1="139" y1="84" x2="148" y2="84"/><line x1="85" y1="84" x2="76" y2="84"/>
+                  <line x1="112" y1="57" x2="112" y2="48"/><line x1="112" y1="111" x2="112" y2="120"/>
+                  <line x1="131" y1="65" x2="137" y2="59"/><line x1="93" y1="65" x2="87" y2="59"/>
+                  <line x1="131" y1="103" x2="137" y2="109"/><line x1="93" y1="103" x2="87" y2="109"/>
+                  <rect x="250" y="196" width="176" height="124"/>
+                  <path d="M238 196 L338 118 L438 196"/>
+                  <path d="M266 174 L312 138 L322 148 L276 184 Z"/>
+                  <line x1="281" y1="162" x2="291" y2="172"/>
+                  <line x1="297" y1="150" x2="307" y2="160"/>
+                  <rect x="318" y="264" width="34" height="56"/>
+                  <rect x="276" y="220" width="40" height="32"/>
+                  <line x1="296" y1="220" x2="296" y2="252"/>
+                  <line x1="276" y1="236" x2="316" y2="236"/>
+                </g>
+                <g stroke="#4a7c59" stroke-width="3" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                  <line x1="146" y1="110" x2="250" y2="162"/>
+                  <path d="M242 153 L250 162 L238 161"/>
+                </g>
+                <line x1="88" y1="332" x2="648" y2="332" stroke="#ece7dc" stroke-width="1"/>
+                <g stroke="#c0392b" fill="none" stroke-linecap="round">
+                  <path d="M426 250 C452 250 462 262 465 282" stroke-width="2"/>
+                  <circle class="sc-drop" cx="466" cy="296" r="3" stroke-width="1.5"/>
+                  <circle class="sc-drop sc-drop--2" cx="468" cy="312" r="2.4" stroke-width="1.5"/>
+                  <circle class="sc-drop sc-drop--3" cx="469" cy="326" r="1.8" stroke-width="1.5"/>
+                </g>
+              </svg>
+            </div>
+            <p class="scrolly-teller scrolly-teller--rood" aria-live="polite" aria-atomic="true">Waarde verloren</p>
+            <h3 id="stap-2-kop" class="kop-rood">Vanaf 1 januari 2027</h3>
+            <p>Teruggeleverde stroom levert vrijwel niets meer op. De salderingsregeling is beëindigd.</p>
+            <p class="scrolly-note">Het exacte verschil voor uw situatie bespreken we in het adviesgesprek. Dit varieert sterk afhankelijk van uw woonsituatie, uw energiecontract en beschikbare subsidies.</p>
+          </article>
+
+          <article class="scrolly-step rv" data-step="3" aria-labelledby="stap-3-kop">
+            <div class="scene-mini" aria-hidden="true">
+              <svg viewBox="0 0 720 400" xmlns="http://www.w3.org/2000/svg">
+                <g stroke="#1a4571" stroke-width="1" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                  <circle cx="112" cy="84" r="20"/>
+                  <line x1="139" y1="84" x2="148" y2="84"/><line x1="85" y1="84" x2="76" y2="84"/>
+                  <line x1="112" y1="57" x2="112" y2="48"/><line x1="112" y1="111" x2="112" y2="120"/>
+                  <line x1="131" y1="65" x2="137" y2="59"/><line x1="93" y1="65" x2="87" y2="59"/>
+                  <line x1="131" y1="103" x2="137" y2="109"/><line x1="93" y1="103" x2="87" y2="109"/>
+                  <rect x="250" y="196" width="176" height="124"/>
+                  <path d="M238 196 L338 118 L438 196"/>
+                  <path d="M266 174 L312 138 L322 148 L276 184 Z"/>
+                  <line x1="281" y1="162" x2="291" y2="172"/>
+                  <line x1="297" y1="150" x2="307" y2="160"/>
+                  <rect x="318" y="264" width="34" height="56"/>
+                  <rect x="276" y="220" width="40" height="32"/>
+                  <line x1="296" y1="220" x2="296" y2="252"/>
+                  <line x1="276" y1="236" x2="316" y2="236"/>
+                  <rect class="sc-glow" x="488" y="232" width="46" height="88" rx="7" fill="#e7c98a" fill-opacity="0"/>
+                  <line x1="500" y1="226" x2="508" y2="226"/>
+                  <line x1="514" y1="226" x2="522" y2="226"/>
+                  <line x1="498" y1="280" x2="524" y2="280"/>
+                  <line x1="498" y1="296" x2="524" y2="296"/>
+                </g>
+                <g stroke="#e7c98a" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M146 110 C190 132 220 148 246 160"/>
+                  <path d="M239 153 L246 160 L236 160"/>
+                  <line x1="432" y1="252" x2="482" y2="252"/>
+                  <path d="M474 244 L482 252 L474 260"/>
+                  <line x1="482" y1="292" x2="432" y2="292"/>
+                  <path d="M440 284 L432 292 L440 300"/>
+                  <circle class="sc-dot" r="2" fill="#b98a3e" stroke="none">
+                    <animateMotion dur="2.8s" repeatCount="indefinite" path="M146 110 C190 132 220 148 246 160"/>
+                  </circle>
+                  <circle class="sc-dot" r="2" fill="#b98a3e" stroke="none">
+                    <animateMotion dur="2.5s" repeatCount="indefinite" path="M432 252 L482 252"/>
+                  </circle>
+                  <circle class="sc-dot" r="2" fill="#b98a3e" stroke="none">
+                    <animateMotion dur="2.5s" repeatCount="indefinite" path="M482 292 L432 292"/>
+                  </circle>
+                </g>
+              </svg>
+            </div>
+            <p class="scrolly-teller scrolly-teller--goud" aria-live="polite" aria-atomic="true">Waarde behouden</p>
+            <h3 id="stap-3-kop">Thuisbatterij: uw eigen stroom blijft van u</h3>
+            <p>Overtollige stroom wordt opgeslagen voor later gebruik. Ook wanneer de zon niet schijnt, gebruikt u uw eigen opgewekte energie.</p>
+            <p class="scrolly-note">De precieze besparing hangt af van uw verbruiksprofiel, installatie en beschikbare regelingen.</p>
+          </article>
+
+          <article class="scrolly-step rv" data-step="4" aria-labelledby="stap-4-kop">
+            <div class="scene-mini" aria-hidden="true">
+              <svg viewBox="200 50 320 300" xmlns="http://www.w3.org/2000/svg">
+                <g stroke="#1a4571" stroke-width="1" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                  <rect class="sc-glow" x="312" y="124" width="96" height="172" rx="10" fill="#e7c98a" fill-opacity="0"/>
+                  <rect x="342" y="108" width="36" height="16" rx="3"/>
+                  <line x1="332" y1="220" x2="388" y2="220"/>
+                  <line x1="332" y1="244" x2="388" y2="244"/>
+                  <line x1="332" y1="268" x2="388" y2="268"/>
+                </g>
+                <text x="216" y="192" font-family="'Source Sans 3', sans-serif" font-size="11" fill="#4a7c59">Dal &#8595;</text>
+                <g stroke="#4a7c59" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                  <animate attributeName="opacity" values="0.6;1;0.6" dur="1.5s" repeatCount="indefinite"/>
+                  <line x1="216" y1="210" x2="296" y2="210"/>
+                  <path d="M288 202 L296 210 L288 218"/>
+                </g>
+                <circle class="sc-dot" r="2" fill="#4a7c59" stroke="none">
+                  <animateMotion dur="2s" repeatCount="indefinite" path="M216 210 L296 210"/>
+                </circle>
+                <text x="504" y="192" text-anchor="end" font-family="'Source Sans 3', sans-serif" font-size="11" fill="#c0392b">Piek &#8593;</text>
+                <g stroke="#c0392b" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                  <animate attributeName="opacity" values="0.6;1;0.6" dur="1.5s" repeatCount="indefinite"/>
+                  <line x1="424" y1="210" x2="504" y2="210"/>
+                  <path d="M496 202 L504 210 L496 218"/>
+                </g>
+                <circle class="sc-dot" r="2" fill="#c0392b" stroke="none">
+                  <animateMotion dur="2s" repeatCount="indefinite" path="M424 210 L504 210"/>
+                </circle>
+                <text x="360" y="66" text-anchor="middle" font-family="'Source Sans 3', sans-serif" font-size="11" fill="#b98a3e">Aanzienlijk verschil</text>
+                <g stroke="#e7c98a" stroke-width="2">
+                  <line x1="256" y1="76" x2="464" y2="76"/>
+                  <line x1="256" y1="70" x2="256" y2="82"/>
+                  <line x1="464" y1="70" x2="464" y2="82"/>
+                </g>
+                <rect x="268" y="86" width="184" height="20" fill="#faf8f4" stroke="#e7c98a" stroke-width="1"/>
+                <text x="360" y="100" text-anchor="middle" font-family="'Source Sans 3', sans-serif" font-size="10.5" fill="#1a4571">Extra inkomen via uw batterij</text>
+              </svg>
+            </div>
+            <p class="scrolly-teller scrolly-teller--goud" aria-live="polite" aria-atomic="true">Extra voordeel</p>
+            <p class="scrolly-teller-sub">Via energiemanagement op uw batterij</p>
+            <h3 id="stap-4-kop">Energiemanagement (EMS)</h3>
+            <p>Uw energiemanagementsysteem koopt stroom bij een laag tarief en levert terug bij een hoog tarief. Dit gebeurt automatisch, zonder uw tussenkomst.</p>
+            <p class="scrolly-note">Het inkomen uit energiemanagement varieert per situatie. De exacte opbrengst is onderdeel van het adviesgesprek.</p>
+          </article>
+
+          <article class="scrolly-step rv" data-step="5" aria-labelledby="stap-5-kop">
+            <div class="scene-mini scene-mini--tl" aria-hidden="true">
+              <svg viewBox="0 0 140 420" xmlns="http://www.w3.org/2000/svg">
+                <line x1="70" y1="60" x2="70" y2="360" stroke="#ece7dc" stroke-width="2"/>
+                <circle cx="70" cy="60" r="20" fill="#faf8f4" stroke="#ece7dc" stroke-width="1"/>
+                <g stroke="#b98a3e" stroke-width="2" fill="none" stroke-linecap="round">
+                  <circle cx="70" cy="60" r="6"/>
+                  <line x1="70" y1="48" x2="70" y2="51"/><line x1="70" y1="69" x2="70" y2="72"/>
+                  <line x1="58" y1="60" x2="61" y2="60"/><line x1="79" y1="60" x2="82" y2="60"/>
+                  <line x1="61.5" y1="51.5" x2="63.6" y2="53.6"/><line x1="76.4" y1="66.4" x2="78.5" y2="68.5"/>
+                  <line x1="78.5" y1="51.5" x2="76.4" y2="53.6"/><line x1="63.6" y1="66.4" x2="61.5" y2="68.5"/>
+                </g>
+                <circle cx="70" cy="160" r="20" fill="#faf8f4" stroke="#ece7dc" stroke-width="1"/>
+                <path d="M70 150 C65 157 63 162 66 166 C68 168.5 72 168.5 74 166 C77 162 75 157 70 150 Z" fill="none" stroke="#c0392b" stroke-width="2" stroke-linejoin="round"/>
+                <circle cx="70" cy="260" r="24" fill="none" stroke="#e7c98a" stroke-width="4"/>
+                <circle cx="70" cy="260" r="20" fill="#faf8f4" stroke="#ece7dc" stroke-width="1"/>
+                <g stroke="#1a4571" stroke-width="2" fill="none" stroke-linecap="round">
+                  <rect x="62" y="253" width="16" height="16" rx="2"/>
+                  <line x1="67" y1="250" x2="73" y2="250"/>
+                </g>
+                <circle cx="70" cy="360" r="24" fill="none" stroke="#e7c98a" stroke-width="4"/>
+                <circle cx="70" cy="360" r="20" fill="#faf8f4" stroke="#ece7dc" stroke-width="1"/>
+                <g stroke="#b98a3e" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                  <line x1="62" y1="355" x2="78" y2="355"/><path d="M74 351 L78 355 L74 359"/>
+                  <line x1="78" y1="365" x2="62" y2="365"/><path d="M66 361 L62 365 L66 369"/>
+                </g>
+              </svg>
+            </div>
+            <h3 id="stap-5-kop">Wat betekent dit voor uw situatie?</h3>
+            <p>Wij brengen voor uw woning in kaart wat het einde van de salderingsregeling concreet betekent. Dit hangt af van uw verbruik, uw panelen, uw woning en beschikbare regelingen. Wij bespreken dit kosteloos in het adviesgesprek.</p>
+            <p class="scrolly-afsluiting">Wij rekenen uit wat dit voor uw situatie betekent.</p>
+            <div class="scrolly-cta">
+              <a href="#adviesgesprek" class="btn btn-primary btn--lg" data-track="scrollytelling-stap5-cta" aria-label="Plan een gratis adviesgesprek">Plan gratis adviesgesprek</a>
+            </div>
+          </article>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== WAT WIJ DOEN ===== -->
+  <section id="wat-wij-doen">
+    <div class="container section">
+      <div class="section-head">
+        <h2 class="h2">Tijdens uw adviesgesprek bekijken wij dit samen met u.</h2>
+        <p class="lead">Eén op één doorgenomen, op basis van uw eigen cijfers, niet op gemiddelden.</p>
+      </div>
+      <div class="faq svc-acc rv" data-faq>
+        <div class="faq-item open">
+          <h3 style="margin:0;"><button class="faq-q" aria-expanded="true"><span class="faq-idx" aria-hidden="true">1</span><span class="qt">De wetswijziging, vertaald</span><svg class="plus" viewBox="0 0 18 18" aria-hidden="true"><path d="M9 2v14M2 9h14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></button></h3>
+          <div class="faq-a"><div><p>Wat het einde van de salderingsregeling concreet betekent voor uw woning en uw energierekening.</p></div></div>
+        </div>
+        <div class="faq-item">
+          <h3 style="margin:0;"><button class="faq-q" aria-expanded="false"><span class="faq-idx" aria-hidden="true">2</span><span class="qt">Inzicht in uw eigen verbruik</span><svg class="plus" viewBox="0 0 18 18" aria-hidden="true"><path d="M9 2v14M2 9h14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></button></h3>
+          <div class="faq-a"><div><p>Hoeveel van uw opgewekte zonnestroom u nu al direct zelf gebruikt en wat dat straks waard is.</p></div></div>
+        </div>
+        <div class="faq-item">
+          <h3 style="margin:0;"><button class="faq-q" aria-expanded="false"><span class="faq-idx" aria-hidden="true">3</span><span class="qt">Meer zelf gebruiken</span><svg class="plus" viewBox="0 0 18 18" aria-hidden="true"><path d="M9 2v14M2 9h14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></button></h3>
+          <div class="faq-a"><div><p>Welke mogelijkheden er zijn om een groter deel van uw zonnestroom zelf te benutten.</p></div></div>
+        </div>
+        <div class="faq-item">
+          <h3 style="margin:0;"><button class="faq-q" aria-expanded="false"><span class="faq-idx" aria-hidden="true">4</span><span class="qt">Thuisbatterij &amp; slim beheer</span><svg class="plus" viewBox="0 0 18 18" aria-hidden="true"><path d="M9 2v14M2 9h14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></button></h3>
+          <div class="faq-a"><div><p>Of opslag of slimme sturing in úw situatie interessant is, eerlijk en zonder verkooppraatje.</p></div></div>
+        </div>
+        <div class="faq-item">
+          <h3 style="margin:0;"><button class="faq-q" aria-expanded="false"><span class="faq-idx" aria-hidden="true">5</span><span class="qt">Subsidies &amp; regelingen</span><svg class="plus" viewBox="0 0 18 18" aria-hidden="true"><path d="M9 2v14M2 9h14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></button></h3>
+          <div class="faq-a"><div><p>Welke financiële regelingen op dat moment voor u van toepassing kunnen zijn.</p></div></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== WERKWIJZE ===== -->
+  <section id="werkwijze" style="background:#fff; border-top:1px solid var(--line); border-bottom:1px solid var(--line);">
+    <div class="container section">
+      <div class="section-head">
+        <h2 class="h2">Zo werkt het, in drie stappen.</h2>
+      </div>
+      <div class="werkwijze-list">
+        <div class="werkwijze-rail" aria-hidden="true">
+          <svg preserveAspectRatio="none" viewBox="0 0 2 100"><line class="draw-line" x1="1" y1="0" x2="1" y2="100" pathLength="100"/><line class="rail-pulse" x1="1" y1="0" x2="1" y2="100" pathLength="100"/></svg>
+        </div>
+        <div class="werkwijze-step rv">
+          <div class="werkwijze-num">1</div>
+          <div><h3>Plan uw gesprek</h3><p>Kies online een moment dat u uitkomt. U ontvangt direct een bevestiging.</p></div>
+        </div>
+        <div class="werkwijze-step rv">
+          <div class="werkwijze-num">2</div>
+          <div><h3>Wij rekenen uw situatie door</h3><p>Op basis van uw panelen, uw verbruik en uw woning. Onafhankelijk, met de wetgeving als uitgangspunt.</p></div>
+        </div>
+        <div class="werkwijze-step rv">
+          <div class="werkwijze-num">3</div>
+          <div><h3>U beslist in alle rust</h3><p>U krijgt een helder advies op papier. Wat u daarmee doet, bepaalt u zelf; u zit nergens aan vast.</p></div>
+        </div>
+      </div>
+      <div class="werkwijze-cta">
+        <a href="#adviesgesprek" class="btn btn-primary" data-track="werkwijze_cta_click">Plan gratis adviesgesprek</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== EÉN BELANG: DAT VAN U ===== -->
+  <section id="waarom" class="waarom on-navy">
+    <div class="container section section--compact">
+      <div class="section-head" style="margin-bottom:24px;">
+        <h2 class="h2">Eén belang: dat van&nbsp;u.</h2>
+        <p class="lead">Wij verkopen niets. Wij rekenen, adviseren en regelen. U beslist.</p>
+      </div>
+      <div class="waarom-points">
+        <div class="waarom-point rv"><h3>Volledig ontzorgd</h3><p>Van doorrekening tot en met de uitvoering: wij regelen het traject, u heeft er geen omkijken naar.</p></div>
+        <div class="waarom-point rv"><h3>Onafhankelijk</h3><p>Geen panelen, geen batterijen, geen commissie. Alleen advies dat voor ú klopt.</p></div>
+        <div class="waarom-point rv"><h3>U beslist</h3><p>Het gesprek is kosteloos en vrijblijvend. Daarna bepaalt u zelf, in alle rust.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== OVER ONS ===== -->
+  <section id="over-ons" style="background:#fff; border-bottom:1px solid var(--line);">
+    <div class="container section">
+      <div class="section-head">
+        <h2 class="h2">Echte mensen die u kunt bereiken.</h2>
+        <p class="lead">Onafhankelijke adviseurs, gespecialiseerd in de salderingsregeling, eigen verbruik en thuisopslag. Hieronder stelt ons team zich voor.</p>
+      </div>
+      <div class="adv-list">
+        <article class="adv-row rv">
+          <div class="adv-photo"><img src="assets/advisor-1.webp" alt="Mark van der Velde" width="119" height="168" loading="lazy"></div>
+          <div class="adv-id"><h3>Mark van der Velde</h3><div class="adv-role">Senior energieadviseur</div></div>
+          <p>Begeleidt huiseigenaren dagelijks bij hun zonne-energie. Vertaalt de wetswijziging naar heldere keuzes voor uw woning.</p>
+        </article>
+        <article class="adv-row rv">
+          <div class="adv-photo"><img src="assets/advisor-2.webp" alt="Sander de Wit" width="119" height="168" loading="lazy"></div>
+          <div class="adv-id"><h3>Sander de Wit</h3><div class="adv-role">Specialist salderingsregeling</div></div>
+          <p>Volgt de wetgeving op de voet en rekent uw situatie onafhankelijk door, zonder enig verkoopbelang.</p>
+        </article>
+        <article class="adv-row rv">
+          <div class="adv-photo"><img src="assets/advisor-3.webp" alt="Joris Bakker" width="119" height="168" loading="lazy"></div>
+          <div class="adv-id"><h3>Joris Bakker</h3><div class="adv-role">Adviseur thuisopslag</div></div>
+          <p>Beoordeelt nuchter of een thuisbatterij of slim beheer in úw geval loont, of juist niet.</p>
+        </article>
+      </div>
+      <p class="advisors-note">Ons team is telefonisch en op afspraak bereikbaar via de gegevens onderaan deze pagina.</p>
+    </div>
+  </section>
+
+  <!-- ===== VERTROUWENSINDICATOREN =====
+       Vervangt de beoordelingen-sectie totdat er echte, verifieerbare
+       reviews gekoppeld zijn. Geen nepsterren, geen verzonnen cijfers. -->
+  <section aria-label="Vertrouwensindicatoren" style="background:#fff;">
+    <div class="container" style="padding-top:34px; padding-bottom:34px;">
+      <div class="trust-strip rv">
+        <div class="trust-item">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="4" y="3" width="16" height="18" rx="2" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M8 8h8M8 12h8M8 16h5" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+          <span>KvK-geregistreerd</span>
+        </div>
+        <div class="trust-item">
+          <svg class="trust-ico--green" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M8 12.5l2.6 2.6L16 9.5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          <span>Onafhankelijk adviesbureau</span>
+        </div>
+        <div class="trust-item">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3l7 3v5c0 4.5-3 8.2-7 10-4-1.8-7-5.5-7-10V6l7-3z" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/><path d="M9 12l2 2 4-4" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          <span>AVG-conform</span>
+        </div>
+        <div class="trust-item">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M21 11.5a8.4 8.4 0 0 1-12.6 7.3L3 20.5l1.7-5.4A8.4 8.4 0 1 1 21 11.5Z" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          <span>Adviesgesprekken op afspraak</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== BOOKING ===== -->
+  <section id="adviesgesprek">
+    <div class="container section">
+      <div class="section-head">
+        <h2 class="h2">Plan uw gratis adviesgesprek.</h2>
+        <p class="lead" style="max-width:560px;">In drie korte stappen. Onze planner neemt binnen 1 werkdag contact met u op om het gesprek te bevestigen.</p>
+      </div>
+
+      <div style="margin-bottom:28px;">
+        <div class="confirm-block-label">Wat u in het gesprek krijgt</div>
+        <div class="expectations">
+          <div class="expectation rv"><span class="exp-tick" aria-hidden="true">✓</span><span>Een eerlijke analyse van uw situatie, zonder verkoopdruk.</span></div>
+          <div class="expectation rv"><span class="exp-tick" aria-hidden="true">✓</span><span>Helder advies over eigen verbruik, opslag en regelingen.</span></div>
+          <div class="expectation rv"><span class="exp-tick" aria-hidden="true">✓</span><span>U beslist daarna in alle rust, nergens aan gebonden.</span></div>
+        </div>
+      </div>
+
+      <div class="card book-panel" data-booking data-source="site">
+        <noscript><p style="padding:24px;">Het boekingsformulier heeft JavaScript nodig. Bel ons of app via WhatsApp; de gegevens staan onderaan de pagina.</p></noscript>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== BRIEF THUIS / LEAD CAPTURE ===== -->
+  <section class="brief on-navy">
+    <div class="container" style="padding-top:clamp(48px,6vw,72px); padding-bottom:clamp(48px,6vw,72px);">
+      <div class="brief-grid">
+        <div>
+          <h2>Liever eerst de informatie thuis ontvangen?</h2>
+          <p>Laat alleen uw e-mail achter en we sturen u een heldere uitleg over het einde van saldering, geheel vrijblijvend.</p>
+          <div style="margin-top:22px;">
+            <div class="lead-sent" data-lead-sent hidden>
+              <span class="tick" aria-hidden="true">✓</span>
+              <span>Bedankt, u ontvangt de informatie per e-mail.</span>
+            </div>
+            <div class="lead-form" data-lead-form>
+              <div class="lead-row">
+                <input class="field" data-lead-email type="email" aria-label="Uw e-mailadres" placeholder="Uw e-mailadres">
+                <button class="btn btn-primary" data-lead-send style="border:1px solid rgba(255,255,255,.16);">Stuur mij de info</button>
+              </div>
+              <p class="lead-note">Wij gebruiken uw e-mail alleen hiervoor. Zie ons <a href="privacybeleid.html">privacybeleid</a>.</p>
+            </div>
+          </div>
+        </div>
+        <div class="qr-card">
+          <img src="assets/qr.png" alt="QR-code naar salderingsdienst.nl" width="492" height="453" loading="lazy">
+          <div>
+            <strong>Brief van ons ontvangen?</strong>
+            <span>Scan de QR-code in de brief, dan staan uw gegevens al voor u klaar bij het plannen.</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== FAQ ===== -->
+  <section id="vragen" style="background:#fff; border-top:1px solid var(--line);">
+    <div class="container container--narrow section">
+      <div class="section-head" style="margin-bottom:20px;">
+        <h2 class="h2">Goed om te weten.</h2>
+      </div>
+      <p class="faq-intro">Gebaseerd op de officiële wetgeving, bijgewerkt juni 2026. Lees meer bij de <a href="https://www.rijksoverheid.nl/onderwerpen/duurzame-energie/vraag-en-antwoord/salderingsregeling-zonnepanelen" target="_blank" rel="noopener">Rijksoverheid</a>, <a href="https://www.milieucentraal.nl" target="_blank" rel="noopener">MilieuCentraal</a> en de <a href="https://www.eerstekamer.nl" target="_blank" rel="noopener">Eerste Kamer</a>.</p>
+      <div class="faq" data-faq>
+        <div class="faq-item open">
+          <h3 style="margin:0;"><button class="faq-q" aria-expanded="true"><span class="qt">Wat verandert er op 1 januari 2027?</span><svg class="plus" viewBox="0 0 18 18" aria-hidden="true"><path d="M9 2v14M2 9h14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></button></h3>
+          <div class="faq-a"><div><p>De salderingsregeling stopt. U kunt teruggeleverde stroom dan niet meer onbeperkt wegstrepen tegen uw verbruik. Daardoor wordt het aantrekkelijker om uw zonnestroom direct zelf te gebruiken of op te slaan.</p></div></div>
+        </div>
+        <div class="faq-item">
+          <h3 style="margin:0;"><button class="faq-q" aria-expanded="false"><span class="qt">Loont een thuisbatterij nog?</span><svg class="plus" viewBox="0 0 18 18" aria-hidden="true"><path d="M9 2v14M2 9h14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></button></h3>
+          <div class="faq-a"><div><p>Dat hangt af van uw verbruik, uw panelen en uw woning. Voor sommige huishoudens wel, voor andere niet. Wij rekenen het onafhankelijk voor u door, zonder iets te verkopen.</p></div></div>
+        </div>
+        <div class="faq-item">
+          <h3 style="margin:0;"><button class="faq-q" aria-expanded="false"><span class="qt">Wat kost een adviesgesprek?</span><svg class="plus" viewBox="0 0 18 18" aria-hidden="true"><path d="M9 2v14M2 9h14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></button></h3>
+          <div class="faq-a"><div><p>Niets. Het gesprek is volledig kosteloos en vrijblijvend. U zit nergens aan vast.</p></div></div>
+        </div>
+        <div class="faq-item">
+          <h3 style="margin:0;"><button class="faq-q" aria-expanded="false"><span class="qt">Wat is de SalderingsDienst precies?</span><svg class="plus" viewBox="0 0 18 18" aria-hidden="true"><path d="M9 2v14M2 9h14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></button></h3>
+          <div class="faq-a"><div><p>Wij zijn een onafhankelijk, commercieel adviesbureau. We helpen huiseigenaren begrijpen wat het einde van de salderingsregeling voor hun situatie betekent. We zijn niet verbonden aan een leverancier.</p></div></div>
+        </div>
+        <div class="faq-item">
+          <h3 style="margin:0;"><button class="faq-q" aria-expanded="false"><span class="qt">Moet ik al zonnepanelen hebben?</span><svg class="plus" viewBox="0 0 18 18" aria-hidden="true"><path d="M9 2v14M2 9h14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></button></h3>
+          <div class="faq-a"><div><p>Ja. Ons advies richt zich op huiseigenaren die al zonnepanelen hebben en willen weten wat het einde van de salderingsregeling voor hen betekent.</p></div></div>
+        </div>
+        <div class="faq-item">
+          <h3 style="margin:0;"><button class="faq-q" aria-expanded="false"><span class="qt">Waar vindt het gesprek plaats?</span><svg class="plus" viewBox="0 0 18 18" aria-hidden="true"><path d="M9 2v14M2 9h14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></button></h3>
+          <div class="faq-a"><div><p>Bij u thuis. Zo krijgt de adviseur het beste beeld van uw situatie, uw panelen en uw installatie.</p></div></div>
+        </div>
+      </div>
+      <div class="faq-cta">
+        <a href="#adviesgesprek" class="btn btn-primary" data-track="faq_cta_click">Plan gratis adviesgesprek</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== SLOT-CTA ===== -->
+  <section class="closing on-navy">
+    <div class="container section">
+      <div class="closing-solo">
+        <h2 class="h2">Weet waar u aan toe bent na 2027.</h2>
+        <p class="lead">Plan vandaag nog uw gratis adviesgesprek. Helder, onafhankelijk en zonder verplichtingen.</p>
+        <div class="closing-ctas">
+          <a href="#adviesgesprek" class="btn btn-primary btn--lg" style="border:1px solid rgba(255,255,255,.16);" data-track="closing_cta_click">Plan gratis adviesgesprek</a>
+          <a class="btn btn-ghost btn--lg" data-sd-tel data-sd-tel-label data-track="call_click" href="#adviesgesprek">Bel ons</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<!-- ===== FOOTER (compact) ===== -->
+<footer class="site-footer">
+  <div class="container footer-slim">
+    <div class="footer-row1">
+      <div class="brand">
+        <img src="assets/crest.png" alt="" width="427" height="467" loading="lazy">
+        <span class="brand-name">SalderingsDienst</span>
+      </div>
+      <nav class="footer-links" aria-label="Voettekstnavigatie">
+        <a href="#bereken">Bereken impact</a>
+        <a href="#verandert">Wat verandert er</a>
+        <a href="#over-ons">Over ons</a>
+        <a href="kennisbank.html">Kennisbank</a>
+        <a href="#vragen">Vragen</a>
+        <a href="privacybeleid.html">Privacy</a>
+      </nav>
+    </div>
+    <div class="footer-row2">
+      <span class="footer-ref">KvK <span data-sd-kvk></span>, Postbus 8738, 3054 AC Rotterdam</span>
+      <span class="footer-contactline"><a data-sd-tel data-sd-phone-text data-track="call_click" href="#adviesgesprek"></a><a data-sd-mail data-sd-mail-text href="#"></a><a data-sd-wa data-sd-wa-hide href="#adviesgesprek">WhatsApp</a><span data-sd-contact-fallback hidden>Contactgegevens worden bijgewerkt.</span></span>
+      <span>© 2026 SalderingsDienst · Onafhankelijk energieadvies</span>
+    </div>
+  </div>
+</footer>
+
+<!-- ===== ZWEVEND CONTACT ===== -->
+<div class="floating" data-floating>
+  <a class="fab fab--wa fab-sub" data-sd-wa href="#adviesgesprek" title="WhatsApp" aria-label="WhatsApp">
+    <svg width="26" height="26" viewBox="0 0 24 24" fill="#fff" aria-hidden="true"><path d="M12 2a10 10 0 0 0-8.6 15l-1.3 4.8 4.9-1.3A10 10 0 1 0 12 2Zm5.3 14.2c-.2.6-1.3 1.2-1.8 1.2-.5.1-1 .1-1.7-.1-.4-.1-.9-.3-1.6-.6-2.8-1.2-4.6-4-4.7-4.2-.2-.2-1.2-1.5-1.2-2.9 0-1.4.7-2 1-2.3.2-.3.5-.3.7-.3h.5c.2 0 .4 0 .6.5l.8 1.9c.1.2.1.4 0 .6l-.4.6c-.2.2-.3.4-.1.7.2.3.9 1.4 1.9 2.3 1.3 1.1 2.3 1.5 2.6 1.6.3.1.5.1.7-.1l.7-.9c.2-.3.4-.2.7-.1l1.9.9c.3.1.5.2.5.4.1.1.1.7-.1 1.4Z"/></svg>
+  </a>
+  <a class="fab fab--tel fab-sub" data-sd-tel data-track="call_click" href="#adviesgesprek" title="Bel ons" aria-label="Bel ons">
+    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M3 5.5C3 14 10 21 18.5 21a2 2 0 0 0 2-1.7l.3-2a1.5 1.5 0 0 0-1-1.6l-2.4-.8a1.5 1.5 0 0 0-1.6.5l-.7.9a12 12 0 0 1-4.8-4.8l.9-.7a1.5 1.5 0 0 0 .5-1.6l-.8-2.4a1.5 1.5 0 0 0-1.6-1l-2 .3A2 2 0 0 0 3 5.5Z" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+  </a>
+  <button class="fab fab--chat fab-sub" data-chat-open title="Stel een vraag" aria-label="Stel een vraag">
+    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M21 11.5a8.4 8.4 0 0 1-12.6 7.3L3 20.5l1.7-5.4A8.4 8.4 0 1 1 21 11.5Z" stroke="#14324f" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+  </button>
+  <button class="fab fab--main" data-fab-toggle aria-label="Contactopties" aria-expanded="false">
+    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M21 11.5a8.4 8.4 0 0 1-12.6 7.3L3 20.5l1.7-5.4A8.4 8.4 0 1 1 21 11.5Z" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+  </button>
+</div>
+
+<!-- ===== STICKY CTA (mobiel) ===== -->
+<div class="mobile-cta">
+  <a href="#adviesgesprek" class="btn btn-primary">Plan gratis adviesgesprek</a>
+</div>
+
+<!-- ===== DIGITALE ADVISEUR ===== -->
+<div class="chat-panel" data-chat-panel hidden>
+  <div class="chat-head">
+    <div class="chat-head-id">
+      <span class="chat-head-mark" aria-hidden="true">S</span>
+      <div><strong>Digitale adviseur</strong><small>Antwoord meestal binnen enkele seconden</small></div>
+    </div>
+    <button class="chat-close" data-chat-close aria-label="Sluiten">×</button>
+  </div>
+  <div class="chat-body" data-chat-body>
+    <div class="chat-msg chat-msg--bot">Goedendag! Ik beantwoord graag uw vragen over het einde van de salderingsregeling. Wat wilt u weten?</div>
+  </div>
+  <a href="#adviesgesprek" class="btn btn-primary chat-cta" data-chat-cta data-track="chat_cta_click" hidden>Plan gratis adviesgesprek →</a>
+  <div class="chat-foot">
+    <input class="field" data-chat-input aria-label="Uw vraag" placeholder="Stel uw vraag…">
+    <button class="btn btn-primary" data-chat-send>Stuur</button>
+  </div>
+</div>
+
+<!-- ===== COOKIEMELDING ===== -->
+<div class="cookie-bar" data-cookie-bar hidden>
+  <div class="container">
+    <p>We gebruiken noodzakelijke cookies en, met uw toestemming, analytische cookies om de site te verbeteren. <a href="privacybeleid.html">Lees ons privacybeleid</a>.</p>
+    <div class="cookie-actions">
+      <button class="btn btn-ghost" data-cookie-necessary>Alleen noodzakelijk</button>
+      <button class="btn btn-primary" data-cookie-all>Accepteren</button>
+    </div>
+  </div>
+</div>
+
+<script defer src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/gsap.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/ScrollTrigger.min.js"></script>
+<script defer src="js/motion.js"></script>
+<script defer src="js/scrolly.js"></script>
+<script defer src="js/booking.js"></script>
+</body>
+</html>

@@ -1,0 +1,13 @@
+{
+  "name": "salderingsdienst",
+  "private": true,
+  "version": "1.0.0",
+  "description": "SalderingsDienst — statische site + Vercel serverless functions (boekingen, portal, DeepSeek-chat)",
+  "scripts": {
+    "build": "node tools/build-check.mjs",
+    "dev": "node tools/dev-server.mjs"
+  },
+  "dependencies": {
+    "@neondatabase/serverless": "^0.10.4"
+  }
+}

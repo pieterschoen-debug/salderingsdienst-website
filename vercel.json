@@ -1,0 +1,17 @@
+{
+  "cleanUrls": true,
+  "trailingSlash": false,
+  "redirects": [
+    { "source": "/Salderingsdienst v2.dc.html", "destination": "/", "permanent": true },
+    { "source": "/Salderingsdienst v1.dc.html", "destination": "/", "permanent": true },
+    { "source": "/Salderingsdienst.dc.html", "destination": "/", "permanent": true },
+    { "source": "/Salderingsdienst (standalone).html", "destination": "/", "permanent": true },
+    { "source": "/SalderingsDienst Landingspagina.html", "destination": "/", "permanent": true },
+    { "source": "/Kennisbank.dc.html", "destination": "/kennisbank", "permanent": true },
+    { "source": "/Privacybeleid.dc.html", "destination": "/privacybeleid", "permanent": true },
+    { "source": "/Blog Pillar.dc.html", "destination": "/kennisbank/salderingsregeling-gids", "permanent": true },
+    { "source": "/Blog Cluster.dc.html", "destination": "/kennisbank/artikel", "permanent": true },
+    { "source": "/over-ons", "destination": "/#over-ons", "permanent": false },
+    { "source": "/aanvraag", "destination": "/", "permanent": false }
+  ]
+}

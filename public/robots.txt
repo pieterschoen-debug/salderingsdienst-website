@@ -1,0 +1,7 @@
+# robots.txt — SalderingsDienst
+# Crawlen toegestaan voor alle bots.
+User-agent: *
+Allow: /
+
+# Verwijs naar de sitemap (vervang het domein indien nodig).
+Sitemap: https://www.salderingsdienst.nl/sitemap.xml

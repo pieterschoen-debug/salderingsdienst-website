@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Portal | SalderingsDienst</title>
+<meta name="robots" content="noindex,nofollow">
+<link rel="icon" href="assets/crest.png">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=PT+Serif:wght@700&family=Source+Sans+3:wght@400;600&family=Cousine&display=swap" rel="stylesheet">
+
+<link rel="stylesheet" href="css/tokens.css">
+<link rel="stylesheet" href="css/main.css">
+<style>
+  body { padding-bottom: 0; }
+  .portal-page { max-width: 1080px; margin: 0 auto; padding: 32px var(--gutter) 80px; }
+  .portal-topbar { display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: 12px; margin-bottom: 8px; }
+  .portal-topbar h1 { font-size: clamp(26px, 3vw, 34px); }
+  .portal-sub { font-size: 14.5px; color: var(--ink-500); margin-bottom: 28px; }
+
+  .login-card { max-width: 420px; padding: 28px; }
+  .login-card .field { margin: 14px 0; }
+  .login-error { margin-top: 10px; font-size: 14px; color: var(--warn-fg); background: var(--warn-bg); border: 1px solid var(--warn-line); border-radius: var(--radius-sm); padding: 10px 12px; }
+  .login-error[hidden] { display: none; }
+
+  .pt-toolbar { display: flex; flex-wrap: wrap; align-items: center; gap: 10px; margin-bottom: 18px; }
+  .pt-toolbar .chips { flex: 1; }
+  .pt-count { font-size: 13.5px; color: var(--ink-500); }
+  .pt-backend { font-family: var(--font-mono); font-size: 12px; color: var(--ink-400); }
+
+  .pt-list { display: grid; gap: 12px; }
+  .pt-card { background: #fff; border: 1px solid var(--line-2); border-radius: var(--radius-lg); padding: 16px 18px; }
+  .pt-row1 { display: flex; flex-wrap: wrap; align-items: baseline; gap: 8px 16px; }
+  .pt-naam { font-family: var(--font-serif); font-size: 18px; font-weight: 700; color: var(--ink-900); }
+  .pt-ref { font-family: var(--font-mono); font-size: 12px; color: var(--ink-400); }
+  .pt-badge { margin-left: auto; font-size: 12.5px; font-weight: 600; padding: 4px 12px; border-radius: var(--radius-pill); }
+  .pt-badge--warm { background: var(--success-bg); color: var(--success-fg); }
+  .pt-badge--niet { background: var(--paper-3); color: var(--ink-500); border: 1px solid var(--line-2); }
+  .pt-row2 { display: flex; flex-wrap: wrap; gap: 6px 20px; margin-top: 8px; font-size: 14px; color: var(--ink-600); }
+  .pt-row2 a { color: var(--navy-400); font-weight: 600; }
+  .pt-quals { display: flex; flex-wrap: wrap; gap: 6px 14px; margin-top: 12px; padding-top: 12px; border-top: 1px solid var(--line); font-size: 13px; }
+  .pt-qual { display: inline-flex; align-items: center; gap: 6px; color: var(--ink-500); }
+  .pt-qual b { font-weight: 600; }
+  .pt-qual .ok { color: var(--success-fg); font-weight: 700; }
+  .pt-qual .nok { color: var(--warn-fg); font-weight: 700; }
+  .pt-empty { padding: 36px; text-align: center; color: var(--ink-500); background: var(--paper-3); border: 1px dashed var(--line-2); border-radius: var(--radius-lg); font-size: 15px; }
+  .pt-note { margin-top: 22px; font-size: 13px; color: var(--ink-500); line-height: 1.6; }
+  [hidden] { display: none !important; }
+</style>
+</head>
+<body>
+
+<header class="site-header">
+  <div class="container">
+    <a class="brand" href="/">
+      <img src="assets/crest.png" alt="" width="427" height="467">
+      <span class="brand-name">SalderingsDienst</span>
+    </a>
+    <div class="nav-actions">
+      <button class="btn btn-ghost" data-logout hidden>Uitloggen</button>
+    </div>
+  </div>
+</header>
+
+<main class="portal-page">
+  <div class="portal-topbar">
+    <h1>Boekingen &amp; kwalificatie</h1>
+    <span class="pt-backend" data-backend></span>
+  </div>
+  <p class="portal-sub">Intern overzicht. Alleen leads met status <strong>warm gekwalificeerd</strong> zijn verkoopbaar aan de doorverkoop-route.</p>
+
+  <!-- Login -->
+  <div class="card login-card" data-login>
+    <div class="book-step-label">Inloggen</div>
+    <p style="font-size:14px; color:var(--ink-500);">Voer het portal-wachtwoord in (env var <code style="font-family:var(--font-mono); font-size:12.5px;">PORTAL_PASSWORD</code>).</p>
+    <input class="field" type="password" data-pw placeholder="Wachtwoord" autocomplete="current-password" aria-label="Wachtwoord">
+    <button class="btn btn-primary" data-login-btn style="width:100%;">Inloggen</button>
+    <div class="login-error" data-login-error hidden></div>
+  </div>
+
+  <!-- Overzicht -->
+  <div data-overview hidden>
+    <div class="pt-toolbar">
+      <div class="chips" role="group" aria-label="Filter">
+        <button class="chip" data-filter="alle" aria-pressed="true">Alle</button>
+        <button class="chip" data-filter="warm_gekwalificeerd" aria-pressed="false">Warm gekwalificeerd</button>
+        <button class="chip" data-filter="niet_gekwalificeerd" aria-pressed="false">Niet gekwalificeerd</button>
+      </div>
+      <span class="pt-count" data-count></span>
+      <button class="btn btn-ghost" data-refresh>Vernieuwen</button>
+    </div>
+    <div class="pt-list" data-list></div>
+    <div class="pt-empty" data-empty hidden>Nog geen boekingen ontvangen.</div>
+    <p class="pt-note">De zes kwalificatiepunten per boeking: productinteresse, koopwoning, afspraak bevestigd (datum/tijd, ± 1,5 uur), beide beslissers aanwezig, leeftijd (of eigen investering) en verwachting begrepen. De status wordt server-side afgeleid; het front-end wordt niet vertrouwd.</p>
+  </div>
+</main>
+
+<script>
+(function () {
+  'use strict';
+  var loginBox = document.querySelector('[data-login]');
+  var overview = document.querySelector('[data-overview]');
+  var pwInput = document.querySelector('[data-pw]');
+  var loginBtn = document.querySelector('[data-login-btn]');
+  var loginErr = document.querySelector('[data-login-error]');
+  var logoutBtn = document.querySelector('[data-logout]');
+  var listEl = document.querySelector('[data-list]');
+  var emptyEl = document.querySelector('[data-empty]');
+  var countEl = document.querySelector('[data-count]');
+  var backendEl = document.querySelector('[data-backend]');
+  var filter = 'alle';
+  var rows = [];
+
+  function esc(s) { return String(s == null ? '' : s).replace(/[&<>"']/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]; }); }
+
+  function qualLine(label, ok) {
+    return '<span class="pt-qual"><span class="' + (ok ? 'ok' : 'nok') + '">' + (ok ? '✓' : '✕') + '</span><b>' + esc(label) + '</b></span>';
+  }
+
+  function render() {
+    var visible = rows.filter(function (r) { return filter === 'alle' || r.status === filter; });
+    countEl.textContent = visible.length + ' van ' + rows.length + ' boekingen';
+    emptyEl.hidden = visible.length > 0;
+    listEl.innerHTML = visible.map(function (r) {
+      var q = r.qualification || {};
+      var warm = r.status === 'warm_gekwalificeerd';
+      var interesse = Array.isArray(q.productinteresse) && q.productinteresse.length ? q.productinteresse.join(', ') : 'geen';
+      var src = r.source || {};
+      var created = r.created_at ? new Date(r.created_at).toLocaleString('nl-NL', { dateStyle: 'medium', timeStyle: 'short' }) : '';
+      return '<article class="pt-card">' +
+        '<div class="pt-row1">' +
+          '<span class="pt-naam">' + esc(r.naam || 'Onbekend') + '</span>' +
+          '<span class="pt-ref">' + esc(r.ref) + (created ? ' · ' + esc(created) : '') + '</span>' +
+          '<span class="pt-badge ' + (warm ? 'pt-badge--warm' : 'pt-badge--niet') + '">' + (warm ? 'Warm gekwalificeerd · verkoopbaar' : 'Niet gekwalificeerd') + '</span>' +
+        '</div>' +
+        '<div class="pt-row2">' +
+          '<span>' + esc(r.date_iso || '?') + ' om ' + esc(r.time || '?') + ' uur · ' + esc(r.mode === 'thuis' ? 'bij de klant thuis' : 'online') + '</span>' +
+          '<a href="mailto:' + esc(r.email) + '">' + esc(r.email || '') + '</a>' +
+          (r.tel ? '<a href="tel:' + esc(r.tel) + '">' + esc(r.tel) + '</a>' : '') +
+          (r.briefcode ? '<span>Briefcode ' + esc(r.briefcode) + '</span>' : '') +
+          '<span>Bron: ' + esc((src.partner || 'site') + (src.channel === 'embed' ? ' (embed)' : '')) + '</span>' +
+        '</div>' +
+        '<div class="pt-quals">' +
+          qualLine('Interesse: ' + interesse, Array.isArray(q.productinteresse) && q.productinteresse.length > 0) +
+          qualLine('Koopwoning', q.koopwoning === true) +
+          qualLine('Afspraak bevestigd', q.afspraakBevestigd === true) +
+          qualLine('Beslissers aanwezig', q.beideBeslissersAanwezig === true) +
+          qualLine('Jonger dan 75' + (q.jongerDan75 ? '' : (q.eigenInvestering === true ? ' (eigen middelen: ja)' : ' (eigen middelen: nee)')), q.jongerDan75 === true || q.eigenInvestering === true) +
+          qualLine('Verwachting begrepen', q.verwachtingBegrepen === true) +
+        '</div>' +
+      '</article>';
+    }).join('');
+  }
+
+  function load() {
+    fetch('/api/bookings', { credentials: 'same-origin' })
+      .then(function (r) { return r.json().then(function (j) { return { status: r.status, j: j }; }); })
+      .then(function (out) {
+        if (out.status === 401) { show(false); return; }
+        if (!out.j.ok) { throw new Error(out.j.error || 'Onbekende fout'); }
+        rows = out.j.bookings || [];
+        backendEl.textContent = 'opslag: ' + (out.j.backend || '?');
+        show(true);
+        render();
+      })
+      .catch(function (e) {
+        show(true);
+        emptyEl.hidden = false;
+        emptyEl.textContent = 'Ophalen mislukt: ' + e.message;
+      });
+  }
+
+  function show(authed) {
+    loginBox.hidden = authed;
+    overview.hidden = !authed;
+    logoutBtn.hidden = !authed;
+    if (!authed) pwInput.focus();
+  }
+
+  function doLogin() {
+    loginErr.hidden = true;
+    loginBtn.disabled = true; loginBtn.textContent = 'Bezig…';
+    fetch('/api/portal-login', {
+      method: 'POST', credentials: 'same-origin',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ password: pwInput.value })
+    })
+      .then(function (r) { return r.json(); })
+      .then(function (j) {
+        loginBtn.disabled = false; loginBtn.textContent = 'Inloggen';
+        if (j.ok && j.authed) { pwInput.value = ''; load(); }
+        else { loginErr.textContent = j.error || 'Inloggen mislukt.'; loginErr.hidden = false; }
+      })
+      .catch(function () {
+        loginBtn.disabled = false; loginBtn.textContent = 'Inloggen';
+        loginErr.textContent = 'Netwerkfout. Probeer opnieuw.'; loginErr.hidden = false;
+      });
+  }
+  loginBtn.addEventListener('click', doLogin);
+  pwInput.addEventListener('keydown', function (e) { if (e.key === 'Enter') doLogin(); });
+
+  logoutBtn.addEventListener('click', function () {
+    fetch('/api/portal-login', {
+      method: 'POST', credentials: 'same-origin',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ logout: true })
+    }).then(function () { rows = []; show(false); });
+  });
+
+  document.querySelectorAll('[data-filter]').forEach(function (chip) {
+    chip.addEventListener('click', function () {
+      filter = chip.getAttribute('data-filter');
+      document.querySelectorAll('[data-filter]').forEach(function (c) { c.setAttribute('aria-pressed', String(c === chip)); });
+      render();
+    });
+  });
+  document.querySelector('[data-refresh]').addEventListener('click', load);
+
+  /* Bij binnenkomst: kijk of de sessiecookie nog geldig is */
+  fetch('/api/portal-login', { credentials: 'same-origin' })
+    .then(function (r) { return r.json(); })
+    .then(function (j) { if (j.authed) load(); else show(false); })
+    .catch(function () { show(false); });
+})();
+</script>
+</body>
+</html>
