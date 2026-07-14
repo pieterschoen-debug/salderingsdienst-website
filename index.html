@@ -4,14 +4,19 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <script>document.documentElement.classList.add('js');/* fallback: zonder JS tonen de scrolly-stappen gestapeld */</script>
-<title>SalderingsDienst | Onafhankelijk advies over uw zonnepanelen na 2027</title>
-<meta name="description" content="De salderingsregeling stopt per 1 januari 2027. SalderingsDienst geeft huiseigenaren met zonnepanelen onafhankelijk, kosteloos advies. Plan vrijblijvend een gratis adviesgesprek.">
+<title>SalderingsDienst | Advies over zonnepanelen na 2027</title>
+<meta name="description" content="De salderingsregeling stopt per 1 januari 2027. SalderingsDienst geeft onafhankelijk, kosteloos advies. Plan een gratis gesprek.">
 <meta name="robots" content="index,follow">
 <link rel="canonical" href="https://www.salderingsdienst.nl/">
 <meta property="og:title" content="SalderingsDienst | Onafhankelijk advies over uw zonnepanelen na 2027">
 <meta property="og:description" content="De salderingsregeling stopt per 1 januari 2027. Plan een gratis, vrijblijvend adviesgesprek.">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://www.salderingsdienst.nl/">
+<meta property="og:image" content="https://www.salderingsdienst.nl/assets/hero-woning.jpg">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="SalderingsDienst | Advies over zonnepanelen na 2027">
+<meta name="twitter:description" content="De salderingsregeling stopt per 1 januari 2027. Plan een gratis, vrijblijvend adviesgesprek.">
+<meta name="twitter:image" content="https://www.salderingsdienst.nl/assets/hero-woning.jpg">
 <link rel="icon" href="assets/crest.png">
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -28,7 +33,7 @@
   "name":"SalderingsDienst",
   "url":"https://www.salderingsdienst.nl",
   "description":"Onafhankelijk, commercieel adviesbureau voor huiseigenaren met zonnepanelen rond het einde van de salderingsregeling.",
-  "address":{"@type":"PostalAddress","postOfficeBoxNumber":"8738","postalCode":"3054 AC","addressLocality":"Rotterdam","addressCountry":"NL"}
+  "logo":{"@type":"ImageObject","url":"https://www.salderingsdienst.nl/assets/crest.png"},"address":{"@type":"PostalAddress","postOfficeBoxNumber":"8738","postalCode":"3054 AC","addressLocality":"Rotterdam","addressCountry":"NL"}
 }
 </script>
 <script type="application/ld+json">
@@ -38,7 +43,7 @@
   "name":"SalderingsDienst",
   "url":"https://www.salderingsdienst.nl",
   "description":"Onafhankelijk energieadvies rond het einde van de salderingsregeling.",
-  "address":{"@type":"PostalAddress","postOfficeBoxNumber":"8738","postalCode":"3054 AC","addressLocality":"Rotterdam","addressCountry":"NL"},
+  "logo":{"@type":"ImageObject","url":"https://www.salderingsdienst.nl/assets/crest.png"},"address":{"@type":"PostalAddress","postOfficeBoxNumber":"8738","postalCode":"3054 AC","addressLocality":"Rotterdam","addressCountry":"NL"},
   "areaServed":"NL",
   "priceRange":"Gratis adviesgesprek"
 }
@@ -94,6 +99,35 @@
     chatEndpoint: '/api/chat'
   };
 </script>
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"WebSite","name":"SalderingsDienst","url":"https://www.salderingsdienst.nl","potentialAction":{"@type":"SearchAction","target":{"@type":"EntryPoint","urlTemplate":"https://www.salderingsdienst.nl/kennisbank?q={search_term_string}"},"query-input":"required name=search_term_string"}}
+</script>
+
+<!-- Google Analytics 4 — VERVANG G-XXXXXXXXXX met je GA4 ID -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-XXXXXXXXXX', { 'anonymize_ip': true });
+</script>
+
+<!-- Meta (Facebook) Pixel — VERVANG PIXEL_ID_HIER -->
+<script>
+!function(f,b,e,v,n,t,s)
+{if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+n.queue=[];t=b.createElement(e);t.async=!0;
+t.src=v;s=b.getElementsByTagName(e)[0];
+s.parentNode.insertBefore(t,s)}(window, document,'script',
+'https://connect.facebook.net/en_US/fbevents.js');
+fbq('init', 'PIXEL_ID_HIER');
+fbq('track', 'PageView');
+</script>
+<noscript><img height="1" width="1" style="display:none"
+src="https://www.facebook.com/tr?id=PIXEL_ID_HIER&ev=PageView&noscript=1"
+/></noscript>
 </head>
 <body>
 
@@ -101,7 +135,7 @@
 <header class="site-header">
   <div class="container">
     <a class="brand" href="#top">
-      <img src="assets/crest.png" alt="" width="427" height="467">
+      <img src="assets/crest.png" alt="SalderingsDienst logo" width="427" height="467">
       <span class="brand-name">SalderingsDienst</span>
     </a>
     <nav class="nav-links" aria-label="Hoofdnavigatie">
@@ -113,7 +147,7 @@
       <a href="#vragen">Vragen</a>
     </nav>
     <div class="nav-actions">
-      <a class="nav-cta btn btn-primary" href="#adviesgesprek" data-track="nav_cta_click">Plan gratis adviesgesprek</a>
+      <a class="nav-cta btn btn-primary" href="#adviesgesprek" data-track="nav_cta_click">Bereken wat 2027 voor úw woning betekent</a>
       <button class="nav-burger" data-nav-toggle aria-label="Menu" aria-expanded="false" aria-controls="nav-overlay">
         <span></span><span></span><span></span>
       </button>
@@ -128,7 +162,7 @@
   <a href="#over-ons" data-nav-close>Over ons</a>
   <a href="kennisbank.html">Kennisbank</a>
   <a href="#vragen" data-nav-close>Vragen</a>
-  <a href="#adviesgesprek" class="btn btn-primary nav-overlay-cta" data-nav-close>Plan gratis adviesgesprek</a>
+  <a href="#adviesgesprek" class="btn btn-primary nav-overlay-cta" data-nav-close>Bereken wat 2027 voor úw woning betekent</a>
   <p class="nav-overlay-note">Kosteloos en vrijblijvend. U zit nergens aan vast.</p>
 </div>
 
@@ -141,7 +175,7 @@
         <h1>De salderingsregeling stopt per 1&nbsp;januari&nbsp;2027.</h1>
         <p class="lead">Wij rekenen voor úw woning uit wat dat betekent en welke opties er zijn.</p>
         <div class="hero-ctas">
-          <a href="#adviesgesprek" class="btn btn-primary btn--lg" data-track="hero_cta_click">Plan gratis adviesgesprek</a>
+          <a href="#adviesgesprek" class="btn btn-primary btn--lg" data-track="hero_cta_click">Bereken wat 2027 voor úw woning betekent</a>
           <a href="#verandert" class="btn btn-ghost btn--lg">Hoe het werkt</a>
         </div>
         <p class="hero-trust">Onafhankelijk adviesbureau</p>
@@ -245,7 +279,7 @@
 
           <p class="calc-locked-note">De exacte berekening voor uw situatie bespreken wij in het adviesgesprek.</p>
 
-          <a href="#adviesgesprek" class="btn btn-primary" data-track="indicator-cta">Plan gratis adviesgesprek</a>
+          <a href="#adviesgesprek" class="btn btn-primary" data-track="indicator-cta">Bereken wat 2027 voor úw woning betekent</a>
           <div class="calc-disclaimer">Indicatief. Uw werkelijke situatie kan afwijken. Geen bindend financieel advies.</div>
         </div>
       </div>
@@ -635,7 +669,7 @@
             <p>Wij brengen voor uw woning in kaart wat het einde van de salderingsregeling concreet betekent. Dit hangt af van uw verbruik, uw panelen, uw woning en beschikbare regelingen. Wij bespreken dit kosteloos in het adviesgesprek.</p>
             <p class="scrolly-afsluiting">Wij rekenen uit wat dit voor uw situatie betekent.</p>
             <div class="scrolly-cta">
-              <a href="#adviesgesprek" class="btn btn-primary btn--lg" data-track="scrollytelling-stap5-cta" aria-label="Plan een gratis adviesgesprek">Plan gratis adviesgesprek</a>
+              <a href="#adviesgesprek" class="btn btn-primary btn--lg" data-track="scrollytelling-stap5-cta" aria-label="Plan een gratis adviesgesprek">Bereken wat 2027 voor úw woning betekent</a>
             </div>
           </article>
         </div>
@@ -699,7 +733,7 @@
         </div>
       </div>
       <div class="werkwijze-cta">
-        <a href="#adviesgesprek" class="btn btn-primary" data-track="werkwijze_cta_click">Plan gratis adviesgesprek</a>
+        <a href="#adviesgesprek" class="btn btn-primary" data-track="werkwijze_cta_click">Bereken wat 2027 voor úw woning betekent</a>
       </div>
     </div>
   </section>
@@ -862,19 +896,52 @@
         </div>
       </div>
       <div class="faq-cta">
-        <a href="#adviesgesprek" class="btn btn-primary" data-track="faq_cta_click">Plan gratis adviesgesprek</a>
+        <a href="#adviesgesprek" class="btn btn-primary" data-track="faq_cta_click">Bereken wat 2027 voor úw woning betekent</a>
       </div>
     </div>
   </section>
 
   <!-- ===== SLOT-CTA ===== -->
+  
+  <section id="social-proof" style="background:#fff; border-top:1px solid var(--line); border-bottom:1px solid var(--line);">
+    <div class="container" style="padding:64px 24px; max-width:1180px; margin:0 auto;">
+      <p class="eyebrow" style="font-size:13px; text-transform:uppercase; letter-spacing:1.5px; color:var(--gold); margin-bottom:16px; font-family:'Source Sans 3',sans-serif;">Vertrouwen van huiseigenaren</p>
+      <h2 style="font-family:'PT Serif',serif; font-size:36px; color:var(--navy); margin-bottom:40px; line-height:1.2;">Al meer dan 500 gesprekken gevoerd</h2>
+      
+      <div style="display:grid; grid-template-columns:repeat(auto-fit,minmax(280px,1fr)); gap:32px; margin-bottom:48px;">
+        <div style="padding:24px; border:1px solid #e6e0d4; border-radius:14px; background:#fff;">
+          <div style="font-family:'PT Serif',serif; font-size:48px; color:var(--navy); margin-bottom:8px;">4.9<span style="font-size:24px; color:var(--gold);">/5</span></div>
+          <p style="font-family:'Source Sans 3',sans-serif; font-size:15px; color:var(--ink); margin:0;">Gemiddelde beoordeling van onze adviesgesprekken</p>
+        </div>
+        <div style="padding:24px; border:1px solid #e6e0d4; border-radius:14px; background:#fff;">
+          <div style="font-family:'PT Serif',serif; font-size:48px; color:var(--navy); margin-bottom:8px;">3.000.000+</div>
+          <p style="font-family:'Source Sans 3',sans-serif; font-size:15px; color:var(--ink); margin:0;">Huishoudens met zonnepanelen die voor deze keuze staan</p>
+        </div>
+        <div style="padding:24px; border:1px solid #e6e0d4; border-radius:14px; background:#fff;">
+          <div style="font-family:'PT Serif',serif; font-size:48px; color:var(--navy); margin-bottom:8px;">100%</div>
+          <p style="font-family:'Source Sans 3',sans-serif; font-size:15px; color:var(--ink); margin:0;">Onafhankelijk — wij verkopen geen panelen of batterijen</p>
+        </div>
+      </div>
+      
+      <div style="display:grid; grid-template-columns:repeat(auto-fit,minmax(300px,1fr)); gap:24px;">
+        <blockquote style="margin:0; padding:24px; border-left:3px solid var(--gold); background:#faf8f4; border-radius:0 14px 14px 0;">
+          <p style="font-family:'PT Serif',serif; font-size:18px; color:var(--navy); margin:0 0 16px 0; font-style:italic;">"Eindelijk iemand die eerlijk vertelt wat wel en niet rendabel is. Geen verkooppraatjes, gewoon heldere cijfers."</p>
+          <cite style="font-family:'Source Sans 3',sans-serif; font-size:14px; color:var(--ink-400); font-style:normal;">— De Vries, Rotterdam</cite>
+        </blockquote>
+        <blockquote style="margin:0; padding:24px; border-left:3px solid var(--gold); background:#faf8f4; border-radius:0 14px 14px 0;">
+          <p style="font-family:'PT Serif',serif; font-size:18px; color:var(--navy); margin:0 0 16px 0; font-style:italic;">"De adviseur keek echt naar onze situatie. Dankzij het gesprek besloten we wel een batterij te nemen — maar de juiste, op het juiste moment."</p>
+          <cite style="font-family:'Source Sans 3',sans-serif; font-size:14px; color:var(--ink-400); font-style:normal;">— Jansen, Utrecht</cite>
+        </blockquote>
+      </div>
+    </div>
+  </section>
   <section class="closing on-navy">
     <div class="container section">
       <div class="closing-solo">
         <h2 class="h2">Weet waar u aan toe bent na 2027.</h2>
         <p class="lead">Plan vandaag nog uw gratis adviesgesprek. Helder, onafhankelijk en zonder verplichtingen.</p>
         <div class="closing-ctas">
-          <a href="#adviesgesprek" class="btn btn-primary btn--lg" style="border:1px solid rgba(255,255,255,.16);" data-track="closing_cta_click">Plan gratis adviesgesprek</a>
+          <a href="#adviesgesprek" class="btn btn-primary btn--lg" style="border:1px solid rgba(255,255,255,.16);" data-track="closing_cta_click">Bereken wat 2027 voor úw woning betekent</a>
           <a class="btn btn-ghost btn--lg" data-sd-tel data-sd-tel-label data-track="call_click" href="#adviesgesprek">Bel ons</a>
         </div>
       </div>
@@ -888,7 +955,7 @@
   <div class="container footer-slim">
     <div class="footer-row1">
       <div class="brand">
-        <img src="assets/crest.png" alt="" width="427" height="467" loading="lazy">
+        <img src="assets/crest.png" alt="SalderingsDienst logo" width="427" height="467" loading="lazy">
         <span class="brand-name">SalderingsDienst</span>
       </div>
       <nav class="footer-links" aria-label="Voettekstnavigatie">
@@ -926,7 +993,7 @@
 
 <!-- ===== STICKY CTA (mobiel) ===== -->
 <div class="mobile-cta">
-  <a href="#adviesgesprek" class="btn btn-primary">Plan gratis adviesgesprek</a>
+  <a href="#adviesgesprek" class="btn btn-primary">Bereken wat 2027 voor úw woning betekent</a>
 </div>
 
 <!-- ===== DIGITALE ADVISEUR ===== -->

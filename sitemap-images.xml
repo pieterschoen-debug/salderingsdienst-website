@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Image Sitemap SalderingsDienst -->
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+        xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
+  <url>
+    <loc>https://www.salderingsdienst.nl/</loc>
+    <image:image>
+      <image:loc>https://www.salderingsdienst.nl/assets/hero-woning.jpg</image:loc>
+      <image:title>SalderingsDienst - Advies over zonnepanelen na 2027</image:title>
+      <image:caption>Onafhankelijk advies over de gevolgen van het einde van de salderingsregeling</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>https://www.salderingsdienst.nl/assets/hero-photo.webp</image:loc>
+      <image:title>SalderingsDienst adviseur</image:title>
+      <image:caption>Persoonlijk adviesgesprek bij u thuis</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>https://www.salderingsdienst.nl/assets/advisor-1.webp</image:loc>
+      <image:title>Energieadviseur SalderingsDienst</image:title>
+      <image:caption>Onafhankelijk en kosteloos advies</image:caption>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://www.salderingsdienst.nl/kennisbank</loc>
+    <image:image>
+      <image:loc>https://www.salderingsdienst.nl/assets/crest.png</image:loc>
+      <image:title>SalderingsDienst logo</image:title>
+    </image:image>
+  </url>
+</urlset>

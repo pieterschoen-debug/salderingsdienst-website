@@ -3,5 +3,11 @@
 User-agent: *
 Allow: /
 
-# Verwijs naar de sitemap (vervang het domein indien nodig).
+# Crawl-delay voor minder agressieve bots
+Crawl-delay: 1
+
+# Sitemap locatie
 Sitemap: https://www.salderingsdienst.nl/sitemap.xml
+
+# Afbeeldingen sitemap
+Sitemap: https://www.salderingsdienst.nl/sitemap-images.xml
