@@ -1,5 +1,9 @@
-.obsidian/
-Welcome.md
-create a link.md
-uploads/
-archive/
+node_modules/
+.env.local
+.env*.local
+.vercel/
+public/
+
+.vercel
+.env*
+.claude/worktrees/

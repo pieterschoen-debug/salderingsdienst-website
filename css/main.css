@@ -1,9 +1,9 @@
 /* ============================================================
    SalderingsDienst — hoofdstylesheet
-   Mobile-first: basis is 375px; uitbreiding via min-width
-   640 / 900 / 1200. Reveals en intekenende hairlines draaien
-   op CSS scroll-driven animations (compositor); JS is alleen
-   fallback. GSAP raakt uitsluitend de twee energie-scenes.
+   Mobile-first: basis is 390px; uitbreiding via min-width
+   640 / 768 / 900 / 1200. Enige beweging: een subtiele
+   fade-in-up bij het in beeld komen van secties (één
+   IntersectionObserver in motion.js) + micro-interacties.
    ============================================================ */
 
 /* ---------- Basis ---------- */
@@ -51,24 +51,7 @@ button { cursor: pointer; }
 
 .section-head { max-width: 720px; margin-bottom: var(--space-7); }
 
-/* Signatuurelement: de gouden stroomlijn — korte hairline die zich
-   intekent boven elke sectiekop (scroll-driven; statisch als fallback) */
-.section-head::before {
-  content: ''; display: block; width: 46px; height: 2px;
-  background: var(--gold-500); border-radius: 2px;
-  margin-bottom: 18px; transform-origin: left;
-}
 .on-navy .section-head::before { background: var(--gold-300); }
-@keyframes sig-draw { from { transform: scaleX(0); } to { transform: scaleX(1); } }
-@media (prefers-reduced-motion: no-preference) {
-  @supports (animation-timeline: view()) {
-    .section-head::before {
-      animation: sig-draw .9s var(--ease-out) both;
-      animation-timeline: view();
-      animation-range: entry 20% cover 38%;
-    }
-  }
-}
 
 /* ---------- Knoppen ---------- */
 .btn {
@@ -83,7 +66,7 @@ button { cursor: pointer; }
 .btn-primary:disabled { background: var(--navy-400); }
 .btn-primary:disabled::after { transform: scaleX(0); }
 .btn-primary { position: relative; overflow: hidden; background: var(--navy-400); color: #fff; box-shadow: var(--shadow-xs); }
-.btn-primary:hover { background: var(--navy-300); border-color: var(--gold-300); color: #fff; transform: translateY(-1px); box-shadow: var(--shadow-sm); }
+.btn-primary:hover { background: var(--navy-300); color: #fff; transform: translateY(-1px); box-shadow: var(--shadow-sm); }
 /* Gouden stroomlijn onder de primaire knop op hover/focus */
 .btn-primary::after {
   content: ''; position: absolute; left: 12%; right: 12%; bottom: 0; height: 2px;
@@ -116,48 +99,38 @@ button { cursor: pointer; }
 .field:focus { border-color: var(--navy-400); box-shadow: 0 0 0 3px rgba(26,69,113,.12); }
 .field[aria-invalid="true"] { border-color: var(--warn-line); background: var(--warn-bg); }
 
-.placeholder-mark { color: var(--gold-500); font-style: italic; }
+/* Placeholders: onopvallend voor bezoekers, nog wél vindbaar voor de bouwer */
+.placeholder-mark { color: var(--ink-300); font-style: normal; font-size: 12px; opacity: .6; }
 
-/* ---------- Reveal-systeem (één familie, overal hetzelfde) ----------
-   Standaard volledig zichtbaar; scroll-driven waar ondersteund,
-   IntersectionObserver-fallback (motion.js) elders. */
+/* ---------- Reveal-systeem: fade-in-up via IntersectionObserver ----------
+   Standaard volledig zichtbaar (geen JS = geen verstopte content);
+   motion.js voegt .rv-js toe en zet .rv-in bij in beeld komen. */
 @keyframes rv-rise { from { opacity: 0; transform: translateY(16px); } to { opacity: 1; transform: none; } }
 .rv { opacity: 1; }
 @media (prefers-reduced-motion: no-preference) {
-  @supports (animation-timeline: view()) {
-    .rv {
-      animation: rv-rise .5s var(--ease-out) both;
-      animation-timeline: view();
-      animation-range: entry 15% cover 32%;
-    }
-  }
   .rv-js { opacity: 0; transform: translateY(16px); transition: opacity .5s var(--ease-out), transform .5s var(--ease-out); }
   .rv-js.rv-in { opacity: 1; transform: none; }
-  /* Cascade binnen lijsten (alleen relevant voor de JS-fallback;
-     scroll-driven reveals staggeren vanzelf op scrollpositie) */
-  .expectations .rv-js:nth-child(2), .waarom-points .rv-js:nth-child(2), .adv-list .rv-js:nth-child(2), .kb-grid .rv-js:nth-child(2) { transition-delay: .08s; }
-  .expectations .rv-js:nth-child(3), .waarom-points .rv-js:nth-child(3), .adv-list .rv-js:nth-child(3), .kb-grid .rv-js:nth-child(3) { transition-delay: .16s; }
+  /* Rustige cascade binnen lijsten */
+  .sol-list .rv-js:nth-child(2), .quote-list .rv-js:nth-child(2), .stap-list .rv-js:nth-child(2), .stats-grid .rv-js:nth-child(2), .verhaal-punten .rv-js:nth-child(2), .kb-grid .rv-js:nth-child(2) { transition-delay: .08s; }
+  .sol-list .rv-js:nth-child(3), .quote-list .rv-js:nth-child(3), .stap-list .rv-js:nth-child(3), .stats-grid .rv-js:nth-child(3), .verhaal-punten .rv-js:nth-child(3), .kb-grid .rv-js:nth-child(3) { transition-delay: .16s; }
 }
 
-/* Intekenende hairline (werkwijze) — scroll-driven stroke */
-@keyframes draw-line { to { stroke-dashoffset: 0; } }
-@media (prefers-reduced-motion: no-preference) {
-  @supports (animation-timeline: view()) {
-    .draw-line {
-      stroke-dasharray: 100; stroke-dashoffset: 100;
-      animation: draw-line 1s linear both;
-      animation-timeline: view();
-      animation-range: entry 20% cover 65%;
-    }
-  }
+/* ---------- Foto-placeholder: label zichtbaar tot er een echte foto staat.
+   Bestand plaatsen onder assets/ met de juiste naam is genoeg. ---------- */
+.ph { position: relative; overflow: hidden; background: var(--paper-3); }
+.ph::before {
+  content: attr(data-ph); position: absolute; inset: 0;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 13px; color: var(--ink-400); text-align: center; padding: 0 12px;
 }
+.ph img { position: relative; z-index: 1; width: 100%; height: 100%; object-fit: cover; }
 
 /* ============================================================
    NAVIGATIE
    ============================================================ */
 .site-header {
   position: sticky; top: 0; z-index: 50;
-  background: rgba(250,248,244,.92);
+  background: rgba(255,255,255,.96);
   -webkit-backdrop-filter: blur(10px); backdrop-filter: blur(10px);
   border-bottom: 1px solid var(--line);
   transition: box-shadow .3s ease;
@@ -172,7 +145,7 @@ button { cursor: pointer; }
 .nav-cta { display: none; }
 .nav-burger {
   display: inline-flex; flex-direction: column; justify-content: center; gap: 5px;
-  width: 42px; height: 42px; padding: 0 10px;
+  width: 48px; height: 48px; padding: 0 12px;
   border: 1px solid var(--line-2); border-radius: var(--radius-sm); background: #fff;
 }
 .nav-burger span { display: block; height: 1.5px; background: var(--navy-400); transition: transform .3s var(--ease-out), opacity .2s ease; }
@@ -221,17 +194,44 @@ body.nav-open .nav-burger span:nth-child(3) { transform: translateY(-6.5px) rota
 }
 
 /* ============================================================
-   HERO — warm papier + energie-scene
+   HERO — schermvullende adviesfoto met tekst eroverheen
+   Mobiel eerst: eigen staande uitsnede (hero-advies-mobile.jpg),
+   zodat de adviseur in beeld blijft en de download klein blijft.
    ============================================================ */
-.hero { position: relative; overflow: clip; background: var(--paper); border-bottom: 1px solid var(--line); }
-.hero-inner { position: relative; padding-top: 20px; padding-bottom: 44px; display: grid; gap: 24px; }
-.hero-copy h1 { font-size: var(--fs-display); font-weight: 700; line-height: var(--lh-tight); letter-spacing: var(--ls-display); margin: 0 0 16px; }
-.hero-copy .lead { max-width: 540px; margin-bottom: 24px; }
-.hero-ctas { display: flex; flex-wrap: wrap; gap: 12px; margin-bottom: 16px; }
-.hero-trust { font-size: var(--fs-small); color: var(--ink-500); }
+.hero { position: relative; isolation: isolate; background: var(--navy-600); border-bottom: 1px solid var(--line); }
+
+/* De foto vult de sectie; de overlay houdt de witte tekst leesbaar. */
+.hero-media { position: absolute; inset: 0; z-index: -2; display: block; }
+.hero-media img { width: 100%; height: 100%; object-fit: cover; object-position: 50% 30%; }
+.hero::after {
+  content: ''; position: absolute; inset: 0; z-index: -1; pointer-events: none;
+  background:
+    linear-gradient(to top, rgba(11,26,42,.95) 0%, rgba(11,26,42,.86) 30%, rgba(11,26,42,.66) 58%, rgba(11,26,42,.38) 82%, rgba(11,26,42,.26) 100%);
+}
+
+.hero-inner { position: relative; padding-top: 56px; padding-bottom: 40px; min-height: 78svh; display: flex; flex-direction: column; justify-content: flex-end; }
+.hero-copy { max-width: 640px; }
+.hero-copy h1 { max-width: 14ch; font-size: clamp(44px, 4.6vw + 20px, 82px); font-weight: 700; line-height: 1.02; letter-spacing: -1.4px; margin: 0 0 20px; color: #fff; }
+.hero-copy .lead { max-width: 34ch; margin-bottom: 30px; font-size: 17px; color: rgba(255,255,255,.86); }
+.hero-ctas { display: flex; flex-wrap: wrap; gap: 12px; margin-bottom: 18px; }
+.hero-trust { font-size: var(--fs-small); color: var(--on-navy-80); }
+
+/* Kernfeiten als losse witte plaatjes met vinkje (patroon: Green Team). */
+.hero-facts { list-style: none; display: flex; flex-wrap: wrap; gap: 10px; margin: 0 0 30px; padding: 0; }
+.hero-facts li {
+  display: inline-flex; align-items: center; gap: 9px;
+  background: rgba(255,255,255,.96); color: var(--ink-800);
+  border-radius: var(--radius-pill); padding: 10px 16px 10px 13px;
+  font-size: var(--fs-small); font-weight: 600; line-height: 1.25;
+  box-shadow: 0 6px 18px -12px rgba(11,26,42,.6);
+}
+.hero-facts li::before {
+  content: ''; flex-shrink: 0; width: 18px; height: 18px; border-radius: 50%;
+  background: var(--navy-400) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 12'%3E%3Cpath d='M2.5 6.2l2.2 2.2 4.8-5' fill='none' stroke='%23fff' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") center / 12px 12px no-repeat;
+}
 
 /* Hero-entrance (patroon: Luxury Editorial) — eenmalig bij laden, zelfde
-   rise-familie als de scroll-reveals. De scene animeert bewust niet mee (LCP). */
+   rise-familie als de scroll-reveals. De foto animeert bewust niet mee (LCP). */
 @media (prefers-reduced-motion: no-preference) {
   .hero-enter > * { opacity: 0; animation: rv-rise .55s var(--ease-out) forwards; }
   .hero-enter > :nth-child(1) { animation-delay: .04s; }
@@ -241,445 +241,708 @@ body.nav-open .nav-burger span:nth-child(3) { transform: translateY(-6.5px) rota
   .hero-enter > :nth-child(5) { animation-delay: .36s; }
 }
 
-/* Scene-paneel: energie-scene → foto (archief: archive/scene-animation-2027) */
-.scene-wrap { position: relative; }
-.scene-photo { margin: 0; }
-.scene-photo-frame { position: relative; border-radius: var(--radius-xl); overflow: hidden; box-shadow: var(--shadow-hero); }
-/* Signatuur: binnenliggend hairline-passe-partout op de foto */
-.scene-photo-frame::after {
-  content: ''; position: absolute; inset: 12px;
-  border: 1px solid rgba(255,255,255,.55);
-  border-radius: calc(var(--radius-xl) - 8px);
-  pointer-events: none;
+/* Stat-badge: op de donkere foto een glazen chip in plaats van een witte kaart. */
+.hero-badge {
+  display: inline-flex; align-items: baseline; gap: 10px; flex-wrap: wrap;
+  background: rgba(255,255,255,.10); border: 1px solid rgba(255,255,255,.26);
+  backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px);
+  border-radius: var(--radius-sm); padding: 10px 16px; max-width: 100%;
 }
-.scene-photo img { width: 100%; height: auto; aspect-ratio: 16 / 10; object-fit: cover; object-position: 50% 42%; }
-.scene-photo figcaption { font-size: var(--fs-small); color: var(--ink-600); line-height: 1.45; padding: 12px 2px 0; }
-@media (min-width: 900px) { .scene-photo img { aspect-ratio: 1 / 1; } }
+.hero-badge strong { font-family: var(--font-serif); font-size: 24px; font-weight: 700; color: #fff; line-height: 1.1; font-variant-numeric: tabular-nums; }
+.hero-badge span { font-size: 13px; color: rgba(255,255,255,.82); line-height: 1.4; }
+.hero-badge:hover { background: rgba(255,255,255,.16); }
+.hero-badge:hover span { color: #fff; }
 
-/* Hero-foto-entree: kader rijst, foto zoomt rustig uit, bijschrift volgt */
-@media (prefers-reduced-motion: no-preference) {
-  .hero-photo-enter .scene-photo-frame { opacity: 0; animation: rv-rise .7s var(--ease-out) .15s forwards; }
-  .hero-photo-enter .scene-photo img { transform: scale(1.06); animation: hero-img-settle 1.6s var(--ease-out) .15s forwards; }
-  .hero-photo-enter figcaption { opacity: 0; animation: rv-rise .5s var(--ease-out) .75s forwards; }
+/* Mobiel (de meeste bezoekers): staande uitsnede en een compacte stapel,
+   zodat kop, feiten en de hoofdknop samen binnen een telefoonscherm passen.
+   De tweede CTA wordt een tekstlink en de stat-badge vervalt — die informatie
+   staat direct onder de hero al in de urgentiebalk. */
+@media (max-width: 699.5px) {
+  .hero-media img { object-position: 50% 22%; }
+  .hero-inner { min-height: 86svh; padding-top: 32px; padding-bottom: 28px; }
+  .hero-copy h1 { max-width: none; font-size: 38px; line-height: 1.05; letter-spacing: -1px; margin-bottom: 14px; text-wrap: pretty; }
+  .hero-copy .lead { font-size: 16px; max-width: 30ch; margin-bottom: 20px; }
+  .hero-facts { gap: 7px; margin-bottom: 18px; }
+  .hero-facts li { font-size: 13px; padding: 8px 13px 8px 11px; }
+  .hero-facts li::before { width: 16px; height: 16px; background-size: 11px 11px; }
+  .hero-ctas { flex-direction: column; align-items: stretch; gap: 14px; margin-bottom: 0; }
+  .hero-ctas .btn-ghost--dark {
+    background: none; border: 0; padding: 0; min-height: 0;
+    text-decoration: underline; text-underline-offset: 4px;
+    color: rgba(255,255,255,.9); font-size: 15px;
+  }
+  .hero-ctas .btn-ghost--dark:hover { background: none; color: #fff; }
+  .hero-badge { display: none; }
 }
-@keyframes hero-img-settle { to { transform: scale(1); } }
 
 @media (min-width: 900px) {
-  .hero-inner { grid-template-columns: 1.02fr .98fr; gap: clamp(32px, 4vw, 64px); align-items: center; padding-top: 48px; padding-bottom: 72px; }
-  .hero-copy { order: -1; }
-}
-@media (max-width: 899.5px) {
-  .scene-wrap { order: -1; }
-}
-
-/* ============================================================
-   ENERGIE-SCENE "scene5" — 5 stappen (js/scrolly.js)
-   Op desktop scrubt GSAP de lagen en de viewBox (inline styles
-   overschrijven dan onderstaande regels). Deze CSS is de
-   FALLBACK: discreet per stap tonen (reduced motion / geen
-   GSAP), via data-step dat js/scrolly.js zet. De enige
-   loop-beweging zit OP de illustraties zelf: stroom-bolletjes
-   (SMIL animateMotion), vallende druppels, batterijgloed en
-   pulserende dal/piek-pijlen (SMIL). Kalm: alle loops 1,5-3s.
-   ============================================================ */
-
-/* — Laag-zichtbaarheid per stap (fallback, bewust zonder transition) — */
-.scene5 .sc-ground, .scene5 .sc-leak, .scene5 .sc-batt, .scene5 .sc-circ,
-.scene5 .sc-big, .scene5 .sc-tl { opacity: 0; }
-.scene5[data-step="2"] .sc-gold, .scene5[data-step="2"] .sc-blue,
-.scene5[data-step="3"] .sc-gold, .scene5[data-step="3"] .sc-blue, .scene5[data-step="3"] .sc-green,
-.scene5[data-step="4"] .sc-gold, .scene5[data-step="4"] .sc-blue, .scene5[data-step="4"] .sc-green,
-.scene5[data-step="5"] .sc-gold, .scene5[data-step="5"] .sc-blue, .scene5[data-step="5"] .sc-green,
-.scene5[data-step="5"] .sc-base { opacity: 0; }
-.scene5[data-step="4"] .sc-base { opacity: .3; }
-.scene5[data-step="2"] .sc-ground, .scene5[data-step="2"] .sc-leak,
-.scene5[data-step="3"] .sc-batt, .scene5[data-step="3"] .sc-circ,
-.scene5[data-step="4"] .sc-big, .scene5[data-step="4"] .sc-big-dal,
-.scene5[data-step="4"] .sc-big-piek, .scene5[data-step="4"] .sc-big-marge,
-.scene5[data-step="5"] .sc-tl { opacity: 1; }
-
-/* — Stap 2: druppels vallen een voor een (0,8s vallen, om de 2s een druppel) — */
-@keyframes sc5-drop {
-  0%     { opacity: 1; transform: translateY(0); }
-  11%    { opacity: 1; }
-  13.33% { opacity: 0; transform: translateY(26px); }
-  100%   { opacity: 0; transform: translateY(26px); }
-}
-.sc-drop { animation: sc5-drop 6s ease-in infinite; }
-.sc-drop--2 { animation-delay: 2s; }
-.sc-drop--3 { animation-delay: 4s; }
-
-/* — Stap 3/4: batterij laadt — subtiele gouden gloed-pulse — */
-@keyframes sc5-glow { 0%, 100% { fill-opacity: 0; } 50% { fill-opacity: .3; } }
-.sc-glow { animation: sc5-glow 3s ease-in-out infinite; }
-
-/* — Reduced motion: bolletjes weg, druppels/gloed statisch;
-     SMIL-pulsen zet js/scrolly.js stil via pauseAnimations() — */
-@media (prefers-reduced-motion: reduce) {
-  .sc-dot { display: none; }
-  .sc-drop, .sc-glow { animation: none !important; }
+  .hero-inner { padding-top: 96px; padding-bottom: 72px; min-height: 74svh; }
+  .hero-copy h1 { text-wrap: balance; }
 }
 
 /* ============================================================
    URGENTIEBALK — aftellen naar 1 januari 2027
    ============================================================ */
-.urgency { background: var(--navy-600); color: var(--on-navy-80); border-bottom: 1px solid rgba(255,255,255,.06); }
-.urgency .container { display: flex; flex-direction: column; align-items: center; gap: 6px; padding-top: 14px; padding-bottom: 14px; text-align: center; }
-.urgency-main { display: flex; align-items: baseline; justify-content: center; gap: 10px; flex-wrap: wrap; }
-/* Het aantal dagen: navy op een gouden vlak, als officieel stempel */
-.urgency-days { font-family: var(--font-serif); font-size: clamp(24px, 4vw, 32px); font-weight: 700; color: var(--navy-600); line-height: 1; font-variant-numeric: tabular-nums; background: var(--gold-300); border-radius: 6px; padding: 6px 12px 8px; }
-.urgency-text { font-size: var(--fs-small); }
-/* Wettelijke basis onder de teller: feit, klein en rustig */
-.urgency-law { font-size: 12.5px; color: var(--on-navy-40); margin: 2px 0 0; }
-.urgency-side { display: flex; align-items: center; gap: 14px; }
-.urgency-clock { font-family: var(--font-mono); font-size: 13px; line-height: 1; color: var(--on-navy-40); font-variant-numeric: tabular-nums; }
-.urgency a { color: var(--gold-300); font-weight: 600; font-size: var(--fs-small); white-space: nowrap; }
-.urgency a:hover { color: #fff; }
-@media (min-width: 640px) {
-  .urgency .container { flex-direction: row; flex-wrap: wrap; justify-content: space-between; text-align: left; gap: 10px 24px; }
-  .urgency-law { flex-basis: 100%; margin: 0; }
-}
-
-/* Odometer-ticker (patroon: Number Ticker) — elk cijfer een eigen rolkolom.
-   Alleen cijfers die wijzigen bewegen; niets knippert. */
-.odo { display: inline-flex; align-items: flex-end; line-height: 1; }
-.odo-d { position: relative; display: inline-block; width: .62em; height: 1em; overflow: hidden; }
-.odo-col {
-  position: absolute; left: 0; right: 0; top: 0;
-  display: flex; flex-direction: column; align-items: center;
-  transform: translateY(0);
-  transition: transform .7s var(--ease-out);
-}
-.odo--fast .odo-col { transition-duration: .35s; }
-.odo-col b { display: flex; align-items: center; justify-content: center; height: 1em; line-height: 1; font-weight: inherit; }
-/* Scheidingstekens (dubbele punten) in exact hetzelfde 1em-raster als de cijfers */
-.odo-sep { display: flex; align-items: center; justify-content: center; height: 1em; line-height: 1; width: .4em; }
+.urgency { position: relative; background: var(--navy-600); color: var(--on-navy-80); border-bottom: 1px solid rgba(255,255,255,.06); }
+/* Verstreken deel van de periode 1 jan 2025 → 1 jan 2027 (JS zet --urgency-pct één keer) */
+.urgency-progress { position: absolute; left: 0; bottom: 0; height: 1px; width: calc(var(--urgency-pct, 0) * 100%); background: rgba(255,255,255,.28); }
+.urgency .container { display: flex; flex-wrap: wrap; align-items: baseline; gap: 6px 18px; padding-top: 13px; padding-bottom: 13px; }
+.urgency-main { margin: 0; font-size: var(--fs-small); }
+.urgency-days { font-weight: 700; color: #fff; font-variant-numeric: tabular-nums; }
+.urgency-link { color: #fff; font-weight: 600; font-size: var(--fs-small); white-space: nowrap; text-decoration: underline; text-underline-offset: 3px; text-decoration-color: rgba(255,255,255,.4); }
+.urgency-link:hover { text-decoration-color: #fff; }
 
 /* ============================================================
-   ADRES-CHECK + CALCULATOR
+   BESPAARCHECK — één paneel, drie stappen (woning, verbruik,
+   resultaat). Stappenbalk bovenin, per stap één scherm, twee
+   hulpvensters (verbruik schatten en opwek schatten).
    ============================================================ */
-/* Gecentreerde sectiekop voor de compacte calculator */
-.section-head--center { max-width: 640px; margin-left: auto; margin-right: auto; margin-bottom: 16px; text-align: center; }
-.section-head--center::before { margin-left: auto; margin-right: auto; transform-origin: center; }
-.section-head--center .lead { color: var(--ink-600); font-size: var(--fs-body-sm); }
+.funnel {
+  position: relative; max-width: 640px; margin: 0 auto;
+  padding: 30px 20px 24px; border-radius: 24px; box-shadow: var(--shadow-sm);
+}
+/* Belofte-label dat half over de bovenrand valt, zoals in de referentie. */
+.funnel-badge {
+  position: absolute; top: -18px; right: 16px; z-index: 2;
+  background: var(--navy-400); color: #fff;
+  font-size: 14px; font-weight: 700; line-height: 1;
+  padding: 12px 18px; border-radius: var(--radius-pill);
+  box-shadow: var(--shadow-sm);
+}
 
-.calc-grid { display: grid; gap: 16px; }
-.calc-card { padding: 16px; }
-.calc-label { display: block; font-size: 15px; font-weight: 600; color: var(--ink-800); margin-bottom: 12px; }
-.calc-panels-row { display: flex; align-items: center; gap: 18px; margin-bottom: 6px; }
-.calc-panels-num { font-family: var(--font-serif); font-size: 34px; font-weight: 700; color: var(--navy-400); min-width: 48px; text-align: right; font-variant-numeric: tabular-nums; line-height: 1; }
-.calc-kwh { font-size: 13.5px; color: var(--ink-500); margin-bottom: 26px; }
-/* Compacte keuzechips (dagverbruik): één woord per chip */
-.calc-chips { display: flex; gap: 8px; }
-.calc-chips button {
-  appearance: none; flex: 1; text-align: center; cursor: pointer; font-family: inherit;
-  border: 1px solid var(--line-2); background: var(--paper-3); border-radius: var(--radius-md);
-  padding: 10px 8px; min-height: 44px; font-size: 14.5px; font-weight: 600; color: var(--ink-600);
-  transition: background .2s ease, color .2s ease, border-color .2s ease;
+/* ---------- Stappenbalk ---------- */
+.fsteps { display: flex; list-style: none; margin: 0 0 26px; padding: 0; }
+.fstep { flex: 1; display: flex; flex-direction: column; align-items: center; gap: 9px; position: relative; }
+.fstep + .fstep::before {
+  content: ""; position: absolute; top: 19px; left: -50%; right: 50%;
+  margin: 0 27px; height: 2px; background: var(--line-2);
 }
-.calc-chips button:hover { border-color: var(--navy-400); }
-.calc-chips button[aria-checked="true"] { background: var(--navy-400); border-color: var(--navy-400); color: #fff; box-shadow: var(--shadow-xs); }
-.calc-chips-note { font-size: 12px; font-style: italic; color: var(--ink-400); margin: 8px 0 0; }
+.fstep.is-done + .fstep::before, .fstep.is-done::before, .fstep.is-active::before { background: var(--navy-400); }
+.fstep-dot {
+  width: 40px; height: 40px; border-radius: 50%; background: #fff;
+  border: 2px solid var(--line-2); color: var(--ink-400);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 15px; font-weight: 700; position: relative; z-index: 1;
+  transition: background var(--t-fast), border-color var(--t-fast), color var(--t-fast), box-shadow var(--t-fast);
+}
+.fstep-label { font-size: 11px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; color: var(--ink-400); }
+.fstep.is-active .fstep-dot { border-color: var(--navy-400); color: var(--navy-400); box-shadow: 0 0 0 4px rgba(26,69,113,.10); }
+.fstep.is-active .fstep-label { color: var(--navy-400); }
+.fstep.is-done .fstep-dot { background: var(--navy-400); border-color: var(--navy-400); color: #fff; }
+.fstep.is-done .fstep-label { color: var(--ink-800); }
 
-input[type=range].range { -webkit-appearance: none; appearance: none; width: 100%; height: 6px; border-radius: 999px; background: var(--line); outline: none; flex: 1; }
-input[type=range].range::-webkit-slider-thumb { -webkit-appearance: none; appearance: none; width: 24px; height: 24px; border-radius: 50%; background: var(--navy-400); border: 3px solid #fff; box-shadow: var(--shadow-xs); cursor: pointer; margin-top: -9px; }
-input[type=range].range::-moz-range-thumb { width: 24px; height: 24px; border-radius: 50%; background: var(--navy-400); border: 3px solid #fff; box-shadow: var(--shadow-xs); cursor: pointer; }
-input[type=range].range::-webkit-slider-runnable-track { height: 6px; border-radius: 999px; }
+/* ---------- Koppen binnen het paneel ---------- */
+.funnel-title {
+  font-family: var(--font-serif); font-weight: 700;
+  font-size: clamp(27px, 6.4vw, 34px); line-height: 1.14; color: var(--ink-900);
+  margin: 0 0 8px;
+}
+.funnel-title em { font-style: italic; color: var(--navy-400); }
+.funnel-sub { font-size: 15.5px; line-height: 1.5; color: var(--ink-500); margin: 0 0 22px; }
 
-/* Resultaatkaart op navy. Verlies- en positiefkleuren zijn lichtere
-   varianten van merkrood/-groen zodat ze op navy leesbaar blijven. */
-.calc-result {
-  --calc-loss: #e8917d; --calc-green: #9ccfae;
-  background: var(--grad-navy); color: var(--on-navy-80); border: none; padding: 18px; display: flex; flex-direction: column;
-}
-/* Toggle: zonder actie / met batterij en EMS, met schuivende onderstreep */
-.calc-toggle { position: relative; display: flex; gap: 24px; margin-bottom: 18px; border-bottom: 1px solid rgba(255,255,255,.16); }
-.calc-toggle button {
-  appearance: none; background: none; border: 0; cursor: pointer; font-family: inherit;
-  font-size: 14.5px; font-weight: 600; color: var(--on-navy-40); padding: 10px 0 12px; transition: color .2s ease;
-}
-.calc-toggle button:hover, .calc-toggle button[aria-pressed="true"] { color: #fff; }
-.calc-toggle-line { position: absolute; bottom: -1px; left: 0; width: 0; height: 2px; background: var(--calc-loss); }
-@media (prefers-reduced-motion: no-preference) {
-  .calc-toggle-line { transition: transform .3s cubic-bezier(.4, 0, .2, 1), width .3s cubic-bezier(.4, 0, .2, 1), background .3s ease; }
-}
-.calc-result[data-view="met"] .calc-toggle-line { background: var(--gold-300); }
-/* Impact-indicator: pijlen + kwalitatieve tekst, bewust zonder bedragen */
-.impact { margin-bottom: 14px; }
-@media (prefers-reduced-motion: no-preference) {
-  .impact { transition: opacity .15s ease; }
-}
-.impact--fading { opacity: 0; }
-.impact-arrows { display: flex; gap: 6px; margin-bottom: 12px; color: var(--calc-loss); }
-.impact-arrows svg { width: 26px; height: 26px; }
-.calc-result[data-view="met"] .impact-arrows { color: var(--gold-300); }
-.calc-result[data-view="met"] .impact-arrows svg { transform: rotate(180deg); }
-@media (prefers-reduced-motion: no-preference) {
-  .impact-arrows { transition: color .3s ease; }
-  .impact-arrows svg { animation: impact-pulse 1.2s ease-in-out infinite; }
-  .impact-arrows svg:nth-child(2) { animation-delay: .2s; }
-  .impact-arrows svg:nth-child(3) { animation-delay: .4s; }
-}
-@keyframes impact-pulse { 0%, 100% { opacity: .5; } 50% { opacity: 1; } }
-.impact-text {
-  font-family: var(--font-serif); font-size: 24px; font-weight: 700; line-height: 1.3;
-  color: var(--calc-loss); margin: 0 0 6px; transition: color .3s ease;
-}
-.calc-result[data-view="met"] .impact-text { color: var(--gold-300); }
-.impact-sub { font-size: 14px; color: var(--on-navy-60); margin: 0; }
-/* Aanwijzing: erkent het effect, verwijst de exacte cijfers naar het gesprek */
-.impact-note { font-size: 13px; font-style: italic; text-align: center; color: var(--on-navy-60); margin: 0 0 12px; }
-/* Vergrendelde regels: echte berekende waarden, geblurd tot het adviesgesprek */
-.calc-locked { list-style: none; margin: 0 0 12px; padding: 12px 0 2px; border-top: 1px solid rgba(255,255,255,.12); }
-.calc-locked li { display: flex; justify-content: space-between; align-items: center; gap: 14px; padding: 5px 0; font-size: 14px; color: var(--on-navy-60); }
-.calc-locked-val { position: relative; padding-right: 24px; }
-.calc-locked-val strong {
-  display: inline-block; font-weight: 600; color: var(--on-navy-80);
-  font-variant-numeric: tabular-nums; white-space: nowrap;
-  filter: blur(6px); opacity: .6; user-select: none; pointer-events: none;
-}
-@media (prefers-reduced-motion: no-preference) {
-  .calc-locked-val strong { transition: filter .3s ease, opacity .3s ease; }
-}
-.calc-locked li:hover .calc-locked-val strong { filter: blur(4px); opacity: .75; }
-.calc-locked-val svg { position: absolute; right: 0; top: 50%; width: 16px; height: 16px; margin-top: -8px; color: var(--gold-300); }
-.calc-locked-note { font-size: 13px; font-style: italic; text-align: center; color: var(--gold-300); margin: 0 0 auto; }
-.calc-result .btn { margin-top: 16px; border: 1px solid rgba(255,255,255,.16); }
-.calc-disclaimer { font-size: 12px; color: var(--on-navy-40); text-align: center; margin-top: 12px; }
+/* ---------- Velden ---------- */
+.ffgroup { margin-bottom: 20px; }
+.flabel { display: block; font-size: 15px; font-weight: 600; color: var(--ink-800); margin-bottom: 10px; }
+.freq { color: var(--gold-500); }
+.fhint { font-size: 13.5px; line-height: 1.5; color: var(--ink-500); margin: 8px 0 0; }
+.fhint[hidden] { display: none; }
 
-@media (min-width: 900px) { .calc-grid { grid-template-columns: 55fr 45fr; gap: 24px; align-items: stretch; } .calc-card { padding: 20px; } .calc-result { padding: 22px; } }
+.fchoice-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+.fchoice {
+  min-height: 52px; border-radius: 12px; background: #fff;
+  border: 1px solid var(--field); color: var(--ink-800);
+  font-size: 16px; font-weight: 600; cursor: pointer;
+  transition: border-color var(--t-fast), background var(--t-fast), color var(--t-fast), box-shadow var(--t-fast);
+}
+.fchoice:hover { border-color: var(--navy-400); }
+.fchoice[aria-pressed="true"] {
+  border-color: var(--navy-400); background: rgba(26,69,113,.05); color: var(--navy-400);
+  box-shadow: 0 0 0 1px var(--navy-400) inset;
+}
+
+.fselect {
+  width: 100%; min-height: 52px; padding: 0 44px 0 16px;
+  font: inherit; font-size: 16px; color: var(--ink-800);
+  background: #fff; border: 1px solid var(--field); border-radius: 12px;
+  -webkit-appearance: none; appearance: none; cursor: pointer;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20' fill='none' stroke='%231a4571' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M5 8l5 5 5-5'/%3E%3C/svg%3E");
+  background-repeat: no-repeat; background-position: right 16px center; background-size: 18px;
+}
+.fselect:focus-visible { outline: 2px solid var(--navy-400); outline-offset: 2px; }
+
+.finput-wrap {
+  display: flex; align-items: center; gap: 10px; padding: 0 8px 0 14px;
+  min-height: 56px; background: #fff; border: 1px solid var(--field); border-radius: 14px;
+  transition: border-color var(--t-fast), box-shadow var(--t-fast);
+}
+.finput-wrap:focus-within { border-color: var(--navy-400); box-shadow: 0 0 0 3px rgba(26,69,113,.10); }
+.finput-ic { font-size: 18px; line-height: 1; flex-shrink: 0; }
+.finput {
+  flex: 1; min-width: 0; border: 0; background: none; padding: 14px 0;
+  font: inherit; font-size: 16px; color: var(--ink-800);
+}
+.finput:focus { outline: none; }
+.finput::placeholder { color: var(--ink-300); }
+.fhelp {
+  flex-shrink: 0; border: 0; cursor: pointer;
+  background: rgba(26,69,113,.07); color: var(--navy-400);
+  font-size: 14.5px; font-weight: 700; padding: 11px 16px; border-radius: 10px;
+  transition: background var(--t-fast);
+}
+.fhelp:hover { background: rgba(26,69,113,.13); }
+
+.fchecks { display: grid; gap: 12px; margin-bottom: 20px; }
+.fcheck { display: flex; align-items: center; gap: 12px; font-size: 15.5px; color: var(--ink-800); cursor: pointer; }
+.fcheck input { position: absolute; opacity: 0; width: 0; height: 0; }
+.fbox {
+  width: 28px; height: 28px; flex-shrink: 0; border-radius: 8px;
+  border: 1px solid var(--field); background: #fff; position: relative;
+  transition: background var(--t-fast), border-color var(--t-fast);
+}
+.fbox::after {
+  content: ""; position: absolute; left: 9px; top: 4px; width: 7px; height: 13px;
+  border: solid #fff; border-width: 0 2.5px 2.5px 0; transform: rotate(45deg) scale(0);
+  transition: transform var(--t-fast);
+}
+.fcheck input:checked + .fbox { background: var(--navy-400); border-color: var(--navy-400); }
+.fcheck input:checked + .fbox::after { transform: rotate(45deg) scale(1); }
+.fcheck input:focus-visible + .fbox { outline: 2px solid var(--navy-400); outline-offset: 2px; }
+
+.ferror { margin: 0 0 14px; font-size: 14px; color: var(--warn-fg); background: var(--warn-bg); border: 1px solid var(--warn-line); border-radius: 10px; padding: 10px 14px; }
+.ferror[hidden] { display: none; }
+
+/* ---------- Knoppen in het paneel ---------- */
+.fbtn { width: 100%; min-height: 54px; border-radius: 12px; font-size: 17px; font-weight: 700; }
+.fnav { display: grid; grid-template-columns: auto 1fr; gap: 10px; align-items: stretch; }
+/* Naast elkaar past de vervolgknop alleen op één regel met wat minder ruimte. */
+.fnav .fbtn { font-size: 15.5px; padding-left: 8px; padding-right: 8px; }
+.fnav .fbtn-back { font-size: 15px; padding: 0 14px; }
+.fbtn-back {
+  min-height: 54px; border-radius: 12px; font-size: 16px; font-weight: 700;
+  background: var(--paper-3); color: var(--ink-600); border: 1px solid var(--line-2);
+}
+.fbtn-back:hover { background: var(--line); color: var(--ink-800); }
+.fbtn-back--wide { width: 100%; margin-top: 12px; }
+
+/* ---------- Stap 3: uitkomst ---------- */
+.famount {
+  display: flex; align-items: baseline; justify-content: center; gap: 2px;
+  font-family: var(--font-serif); font-weight: 700; color: var(--ink-900);
+  font-size: clamp(46px, 12vw, 62px); line-height: 1.05; font-variant-numeric: tabular-nums;
+  margin: 6px 0 4px;
+}
+.famount-cur { font-size: .62em; color: var(--navy-400); }
+.famount-cents { font-size: .42em; }
+.fnote { display: flex; align-items: center; justify-content: center; gap: 7px; font-size: 14px; color: var(--ink-400); margin: 0 0 26px; }
+.fnote-ic {
+  width: 17px; height: 17px; border-radius: 50%; border: 1px solid var(--ink-300);
+  display: inline-flex; align-items: center; justify-content: center;
+  font-size: 11px; font-weight: 700; font-style: italic;
+}
+.fsubtitle { font-family: var(--font-serif); font-size: 19px; font-weight: 700; color: var(--ink-900); text-align: center; margin: 0 0 16px; }
+.ftiles { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-bottom: 22px; }
+.ftile {
+  display: flex; flex-direction: column; align-items: center; gap: 4px;
+  padding: 16px 6px; background: var(--paper-3); border-radius: 14px; text-align: center;
+}
+.ftile-ic { font-size: 20px; line-height: 1; }
+.ftile strong { font-size: 19px; color: var(--ink-900); font-variant-numeric: tabular-nums; }
+.ftile span:last-child { font-size: 11px; font-weight: 700; letter-spacing: .05em; text-transform: uppercase; color: var(--ink-400); }
+
+/* ---------- Adres-check binnen stap 1 ---------- */
+.calc-addr { padding-top: 18px; border-top: 1px solid var(--line); }
+.addr-row { display: flex; flex-direction: column; gap: 10px; }
+.addr-row .field--pc { flex: 1.3; }
+.addr-row .field--nr { flex: .7; }
+.addr-result { margin-top: 12px; padding: 12px 14px; background: var(--paper-3); border: 1px solid var(--line); border-radius: var(--radius-md); }
+.addr-result[hidden] { display: none; }
+.addr-result-head { display: flex; align-items: center; gap: 10px; margin-bottom: 6px; font-weight: 700; font-size: var(--fs-body-sm); color: var(--ink-800); }
+.addr-result-body { font-size: 14px; line-height: 1.55; color: var(--ink-500); margin: 0; }
+.addr-check-glyph { width: 24px; height: 24px; border-radius: 50%; background: var(--success-bg); color: var(--success-fg); display: inline-flex; align-items: center; justify-content: center; font-size: 13px; font-weight: 700; flex-shrink: 0; }
+.addr-note { margin-top: 8px; font-size: 13px; color: var(--ink-500); }
+
+/* ---------- Terugbelverzoek onder de uitkomst ---------- */
+.callback { border-top: 1px solid var(--line-2); margin-top: 22px; padding-top: 18px; }
+.callback-intro { font-size: 14.5px; line-height: 1.5; color: var(--ink-600); margin: 0 0 12px; }
+.callback-fields { display: grid; gap: 8px; margin-bottom: 10px; }
+.callback .field { min-height: 50px; background: #fff; }
+.callback .btn { width: 100%; }
+.callback-note { font-size: 12.5px; line-height: 1.45; color: var(--ink-400); margin: 10px 0 0; }
+.callback-note[data-state="error"] { color: var(--warn-fg); }
+.callback-done { font-size: 15px; line-height: 1.55; color: var(--ink-800); margin: 0; padding-top: 4px; }
+
+.calc-disclaimer { font-size: 11.5px; line-height: 1.5; color: var(--ink-400); margin-top: 16px; }
+.calc-more { margin-top: 16px; font-size: var(--fs-small); text-align: center; }
+.calc-more a { color: var(--navy-400); font-weight: 600; }
+.calc-more a:hover { text-decoration: underline; }
+
+/* ---------- Hulpvensters ---------- */
+.fmodal {
+  position: fixed; inset: 0; z-index: 90; display: flex; align-items: flex-end; justify-content: center;
+  background: rgba(14,34,54,.55); padding: 0;
+}
+.fmodal[hidden] { display: none; }
+.fmodal-panel {
+  position: relative; width: 100%; max-width: 560px; max-height: 92vh; overflow-y: auto;
+  background: #fff; border-radius: 24px 24px 0 0; padding: 28px 20px 24px;
+}
+.fmodal-close {
+  position: absolute; top: 20px; right: 20px; width: 44px; height: 44px; border: 0;
+  border-radius: 12px; background: var(--paper-3); color: var(--ink-600);
+  font-size: 22px; line-height: 1; cursor: pointer;
+}
+.fmodal-close:hover { background: var(--line); color: var(--ink-800); }
+.fmodal-title { font-family: var(--font-serif); font-size: 27px; font-weight: 700; color: var(--ink-900); margin: 0 0 8px; padding-right: 52px; }
+.fmodal-title em { font-style: italic; color: var(--navy-400); }
+
+.fpersons { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-bottom: 22px; }
+.fpersons button {
+  min-height: 52px; border-radius: 12px; background: #fff; border: 1px solid var(--field);
+  color: var(--ink-800); font-size: 16px; font-weight: 600; cursor: pointer;
+  transition: border-color var(--t-fast), background var(--t-fast), color var(--t-fast), box-shadow var(--t-fast);
+}
+.fpersons button[aria-pressed="true"] { border-color: var(--navy-400); background: rgba(26,69,113,.05); color: var(--navy-400); box-shadow: 0 0 0 1px var(--navy-400) inset; }
+
+.fapps { display: grid; gap: 10px; margin-bottom: 22px; }
+.fapp {
+  display: flex; align-items: center; gap: 12px; text-align: left;
+  min-height: 56px; padding: 0 16px; border-radius: 12px; cursor: pointer;
+  background: #fff; border: 1px solid var(--field); color: var(--ink-800);
+  font-size: 15.5px; font-weight: 600;
+  transition: border-color var(--t-fast), background var(--t-fast), color var(--t-fast), box-shadow var(--t-fast);
+}
+.fapp[aria-pressed="true"] { border-color: var(--navy-400); background: rgba(26,69,113,.05); color: var(--navy-400); box-shadow: 0 0 0 1px var(--navy-400) inset; }
+.fapp-ic { font-size: 18px; line-height: 1; }
+
+.fest {
+  display: flex; align-items: center; justify-content: space-between; gap: 16px;
+  background: var(--paper-3); border-radius: 14px; padding: 18px 20px; margin-bottom: 16px;
+}
+.fest-label { display: block; font-size: 11px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; color: var(--ink-400); margin-bottom: 4px; }
+.fest strong { font-family: var(--font-serif); font-size: 28px; color: var(--navy-400); font-variant-numeric: tabular-nums; }
+.fest-ic { font-size: 26px; line-height: 1; }
+
+/* ---------- Uitkomst naast het boekingsformulier ---------- */
+.fsummary { background: var(--paper-2); border: 1px solid var(--line-2); border-radius: 18px; padding: 22px 20px; margin-bottom: 22px; }
+.fsummary[hidden] { display: none; }
+.fsummary-title { font-family: var(--font-serif); font-size: 22px; font-weight: 700; color: var(--ink-900); margin: 0 0 4px; }
+.fsummary-title em { font-style: italic; color: var(--navy-400); }
+.fsummary-sub { font-size: 14px; color: var(--ink-500); margin: 0 0 10px; }
+.fsummary-amount { font-family: var(--font-serif); font-size: 40px; font-weight: 700; line-height: 1.05; color: var(--navy-400); font-variant-numeric: tabular-nums; }
+.fsummary .fnote { justify-content: flex-start; margin: 6px 0 16px; }
+.fsummary-rows { list-style: none; margin: 0 0 16px; padding: 0; display: grid; gap: 10px; }
+.fsummary-rows li { display: flex; align-items: center; justify-content: space-between; gap: 16px; font-size: 15px; color: var(--ink-600); }
+.fsummary-rows strong { color: var(--ink-900); font-variant-numeric: tabular-nums; }
+
+@media (min-width: 620px) {
+  .funnel { padding: 36px 34px 30px; }
+  .funnel-badge { font-size: 15px; padding: 13px 22px; right: 26px; }
+  .addr-row { flex-direction: row; }
+  .addr-row .btn { flex: 0 0 auto; }
+  .fmodal { align-items: center; padding: 24px; }
+  .fmodal-panel { border-radius: 24px; padding: 32px 30px 28px; }
+  .fpersons { grid-template-columns: repeat(6, 1fr); }
+  .ftile strong { font-size: 22px; }
+}
 
 /* ============================================================
-   SCROLLYTELLING — "Wat verandert er voor uw woning?"
-   Conceptueel, zonder eurobedragen: de "tellers" zijn woorden
-   ("Volle waarde", "Waarde verloren", ...). Mobiel: vijf
-   gestapelde stappen met eigen illustratie. ≥900px: scene sticky
-   links (top 20vh), stappen van 100vh scrollen rechts voorbij en
-   GSAP scrubt de scene (js/scrolly.js).
+   WAAROM JUIST NÚ — vier genummerde punten
+   Mobiel: accordeon (details); ≥768px: open grid, plus verborgen
    ============================================================ */
-.scrolly { background: var(--paper); border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
-.scrolly:focus-visible { outline: 2px solid var(--navy-400); outline-offset: 4px; }
-.scrolly-scene { display: none; }
-/* Vaste kaderverhouding: de viewBox-wissel/zoom per stap verandert
-   zo nooit de hoogte van het sticky paneel; kleinere uitsnedes
-   centreren binnen het kader (xMidYMid meet). */
-.scrolly-scene .scene5 { display: block; width: 100%; max-width: 100%; height: auto; aspect-ratio: 720 / 400; margin: 0 auto; }
-.scrolly-step { padding: 34px 0; border-bottom: 1px solid var(--line); }
-.scrolly-step:last-of-type { border-bottom: none; }
-.scrolly-step .scene-mini { margin: 0 0 20px; }
-.scrolly-step .scene-mini svg { width: 100%; height: auto; }
-.scrolly-step .scrolly-teller { font-family: var(--font-serif); font-size: 32px; font-weight: 700; line-height: 1.1; margin: 0 0 12px; }
-.scrolly-step .scrolly-teller--goud { color: var(--gold-500); }
-.scrolly-step .scrolly-teller--rood { color: #c0392b; }
-.scrolly-step .scrolly-teller-sub { font-size: 14px; color: rgba(26, 69, 113, .7); margin: -6px 0 12px; }
-.scrolly-step h3 { font-size: 24px; line-height: 1.25; color: var(--navy-400); margin-bottom: 10px; }
-.scrolly-step h3.kop-rood { color: #c0392b; }
-.scrolly-step p { color: var(--warm-ink, #3d3d3d); font-size: var(--fs-body); max-width: 45ch; }
-/* Aanwijzing onder de body: subtiel, neutraal — geen waarschuwing */
-.scrolly-step .scrolly-note { font-size: 14px; color: rgba(61, 61, 61, .6); margin-top: 10px; }
-.scrolly-step .scrolly-afsluiting { font-family: var(--font-serif); font-size: 20px; font-weight: 700; color: var(--navy-400); margin-top: 16px; max-width: none; }
-.scrolly-cta { margin-top: 34px; display: flex; flex-wrap: wrap; align-items: center; gap: 16px; }
-.scrolly-cta .btn { max-width: 320px; }
+.nu-list { display: grid; gap: 0; border-top: 1px solid var(--line); }
+.nu-item { padding: 22px 0; border-bottom: 1px solid var(--line); }
+.nu-title { font-size: 17px; font-weight: 600; color: var(--ink-800); line-height: 1.3; margin: 0 0 6px; }
+.nu-body { margin: 0; font-size: var(--fs-body-sm); color: var(--ink-600); max-width: 54ch; }
 
+/* Vanaf tablet naast elkaar: verticale hairlines in plaats van kaarten. */
+@media (min-width: 768px) {
+  .nu-list { grid-template-columns: repeat(3, 1fr); gap: 0 34px; border-bottom: 1px solid var(--line); }
+  .nu-item { border-bottom: none; padding: 26px 0 28px; }
+  .nu-item + .nu-item { border-left: 1px solid var(--line); padding-left: 34px; margin-left: -1px; }
+}
+
+/* ============================================================
+   ONZE OPLOSSINGEN — productkaarten met foto bovenaan
+   ============================================================ */
+.sol-list { display: grid; gap: 34px; }
+.sol-card { display: flex; flex-direction: column; }
+.ph--sol { aspect-ratio: 4 / 3; border-radius: var(--radius-md); }
+.sol-body { padding: 18px 0 0; display: flex; flex-direction: column; flex: 1; }
+.sol-body h3 { font-size: 21px; line-height: 1.2; margin-bottom: 8px; }
+.sol-body > p { font-size: var(--fs-body-sm); color: var(--ink-600); margin-bottom: 14px; }
+.sol-usps { list-style: none; margin: 0 0 18px; padding: 0; border-top: 1px solid var(--line); }
+.sol-usps li {
+  padding: 9px 0; font-size: 14.5px; color: var(--ink-600); line-height: 1.45;
+  border-bottom: 1px solid var(--line);
+}
+.sol-link {
+  margin-top: auto; display: inline-flex; align-items: center; min-height: 48px;
+  color: var(--navy-400); font-weight: 600; font-size: 15px;
+}
+.sol-link:hover { text-decoration: underline; }
+@media (min-width: 768px) {
+  .sol-list { grid-template-columns: repeat(3, 1fr); gap: 20px; }
+  .sol-body { padding: 22px; }
+}
+
+/* ============================================================
+   ZO WERKT HET — vier stappen met foto
+   ============================================================ */
+.stap-list { display: grid; gap: 22px; }
+.stap { display: grid; grid-template-columns: 108px 1fr; gap: 16px; align-items: center; }
+.ph--stap { aspect-ratio: 1 / 1; border-radius: var(--radius-md); }
+.stap-num { font-family: var(--font-serif); font-size: 14px; font-weight: 700; color: var(--gold-500); margin-bottom: 4px; }
+.stap-body h3 { font-size: 18px; line-height: 1.25; margin-bottom: 6px; }
+.stap-body p { font-size: 14.5px; color: var(--ink-600); line-height: 1.5; max-width: 46ch; }
 @media (min-width: 900px) {
-  .scrolly-grid { display: grid; grid-template-columns: 1.05fr .95fr; gap: clamp(40px, 5vw, 72px); align-items: start; }
-  .scrolly-scene { display: block; position: sticky; top: 20vh; padding: 12px 0 24px; }
-  /* 100vh per stap: samen de gevraagde ± 500vh sectiehoogte */
-  .scrolly-step { min-height: 100vh; display: flex; flex-direction: column; justify-content: center; padding: 48px 0; border-bottom: none; }
-  .scrolly-step .scene-mini { display: none; }
+  .stap-list { grid-template-columns: repeat(4, 1fr); gap: 24px; }
+  .stap { grid-template-columns: 1fr; align-items: start; gap: 0; }
+  .ph--stap { aspect-ratio: 14 / 9; width: 100%; margin-bottom: 16px; }
+  .stap-body h3 { font-size: 19px; }
 }
 
-/* Zonder JavaScript: geen sticky scene, alle vijf stappen als
-   statische secties onder elkaar met hun eigen illustratie. */
-html:not(.js) .scrolly-scene { display: none !important; }
-html:not(.js) .scrolly-step { min-height: 0; }
-html:not(.js) .scrolly-step .scene-mini { display: block !important; }
-
 /* ============================================================
-   WAT WIJ DOEN — compacte accordeonlijst (zelfde familie als FAQ,
-   maar met grote serif-nummers als register)
+   EERLIJK VERHAAL — statement-sectie.
+   1. De kop voert uit wat hij zegt: "een mooi praatje" staat
+      gedempt en doorgestreept, het eerlijke deel vol in de inkt.
+   2. Foto en kop grijpen in elkaar: de foto loopt uit beeld en
+      de kop staat als papieren vlak over de rand ervan heen.
+      Zo staan beeld en boodschap tegen elkaar aan in plaats van
+      onder elkaar, en blijft de tekst voluit leesbaar.
+   3. De drie punten schuiven vanzelf door (zie motion.js);
+      zonder JS staan ze alle drie onder elkaar.
    ============================================================ */
-.svc-acc { max-width: 760px; }
-.svc-acc .faq-q { padding: 15px 4px; font-size: 16.5px; }
-.svc-acc .faq-idx { font-size: 22px; min-width: 34px; letter-spacing: -1px; }
-.svc-acc .faq-a p { font-size: 15px; padding: 0 4px 18px 50px; }
+.verhaal { position: relative; overflow: clip; }
+.verhaal-grid { position: relative; }
 
-/* ============================================================
-   WERKWIJZE — drie stappen aan een intekenende hairline
-   ============================================================ */
-.werkwijze-list { position: relative; display: grid; gap: 0; }
-.werkwijze-rail { position: absolute; left: 27px; top: 10px; bottom: 10px; width: 2px; }
-.werkwijze-rail svg { width: 2px; height: 100%; }
-.werkwijze-rail line { stroke: var(--line-2); stroke-width: 2; }
-/* Gouden stroomlijn: puls die langs de werkwijze-rail loopt */
-.werkwijze-rail .rail-pulse { stroke: var(--gold-500); stroke-width: 2; stroke-linecap: round; opacity: 0; }
+/* ---- Foto: mobiel van rand tot rand, direct boven de kop ---- */
+.verhaal-beeld { position: relative; margin: 0 calc(-1 * var(--gutter)); }
+.ph--verhaal { aspect-ratio: 4 / 3; }
+.ph--verhaal img { object-position: 50% 42%; }
+
+/* ---- Kop: papieren vlak dat over de onderrand van de foto valt ---- */
+.verhaal-kop {
+  position: relative; z-index: 2;
+  /* Zelfde navy als het cursieve "bespaarpotentieel" in de bespaarcheck. */
+  font-family: var(--font-serif); color: var(--navy-400);
+  font-size: clamp(28px, 3.4vw + 15px, 54px);
+  line-height: 1.06; letter-spacing: -.7px;
+  width: fit-content; max-width: 100%;
+  margin: -52px calc(-1 * var(--gutter)) 0 calc(-1 * var(--gutter));
+  padding: 22px var(--space-5) 0 var(--gutter);
+  background: var(--paper);
+}
+.verhaal-regel { display: block; text-wrap: balance; }
+/* Zelfde navy, maar teruggedrukt: het praatje mag naar de achtergrond. */
+.verhaal-streep { position: relative; color: var(--navy-400); opacity: .55; white-space: nowrap; }
+.verhaal-streep::after {
+  content: ''; position: absolute; left: -.03em; right: -.03em; top: .66em; height: 2px;
+  background: currentColor; border-radius: 2px;
+  transform: rotate(-.8deg); transform-origin: left center;
+}
 @media (prefers-reduced-motion: no-preference) {
-  .werkwijze-rail .rail-pulse {
-    opacity: .9;
-    stroke-dasharray: 12 88; stroke-dashoffset: 100;
-    animation: rail-run 6s linear infinite;
+  .verhaal-kop.rv-js .verhaal-streep::after { transform: rotate(-.8deg) scaleX(0); }
+  .verhaal-kop.rv-js.rv-in .verhaal-streep::after {
+    transform: rotate(-.8deg) scaleX(1);
+    transition: transform .5s .35s var(--ease-out);
   }
 }
-@keyframes rail-run { from { stroke-dashoffset: 100; } to { stroke-dashoffset: 0; } }
-.werkwijze-step { position: relative; display: flex; gap: 22px; padding: 22px 0; }
-/* Vierkante nummers met navy rand: register-gevoel, officieler dan rond */
-.werkwijze-num {
-  position: relative; z-index: 1; flex-shrink: 0;
-  width: 54px; height: 54px; border-radius: 6px;
-  background: var(--paper); border: 1px solid var(--navy-400);
-  display: flex; align-items: center; justify-content: center;
-  font-family: var(--font-serif); font-size: 22px; font-weight: 700; color: var(--navy-400);
+
+/* ---- Drie punten: basis is een gewone lijst (geen JS = alles leesbaar) ---- */
+.verhaal-slider { position: relative; z-index: 2; margin-top: 26px; }
+.verhaal-slides { list-style: none; margin: 0; padding: 0; }
+.verhaal-slides li { padding: 16px 0; border-top: 1px solid var(--line); }
+.verhaal-slides li:last-child { border-bottom: 1px solid var(--line); }
+.verhaal-slides h3 { font-size: 19px; line-height: 1.3; margin: 0 0 6px; }
+.verhaal-slides p { font-size: var(--fs-body-sm); color: var(--ink-600); line-height: 1.55; max-width: 46ch; }
+.verhaal-nav { display: none; }
+
+/* ---- Slidermodus: motion.js zet .is-slider ---- */
+.verhaal-slider.is-slider .verhaal-slides { display: grid; border-top: 1px solid var(--line); }
+.verhaal-slider.is-slider .verhaal-slides li {
+  grid-area: 1 / 1; border: 0; padding: 18px 0 2px;
+  opacity: 0; visibility: hidden; transform: translateY(10px);
+  transition: opacity .45s var(--ease-out), transform .45s var(--ease-out), visibility 0s .45s;
 }
-.werkwijze-step h3 { font-size: 20px; margin: 12px 0 8px; }
-.werkwijze-step p { color: var(--ink-500); font-size: var(--fs-body-sm); max-width: 58ch; }
-@media (min-width: 900px) {
-  .werkwijze-list { grid-template-columns: repeat(3, 1fr); gap: 32px; }
-  .werkwijze-rail { left: 27px; right: 27px; top: 27px; bottom: auto; width: auto; height: 2px; }
-  .werkwijze-rail svg { width: 100%; height: 2px; }
-  .werkwijze-step { flex-direction: column; gap: 0; padding: 0; }
-  .werkwijze-step h3 { margin-top: 20px; }
+.verhaal-slider.is-slider .verhaal-slides li.is-active {
+  opacity: 1; visibility: visible; transform: none; transition-delay: 0s;
+}
+.verhaal-slider.is-slider .verhaal-nav { display: flex; gap: 10px; margin-top: 10px; }
+.verhaal-tab {
+  position: relative; width: 54px; height: 44px;
+  padding: 0; border: 0; background: transparent;
+}
+.verhaal-tab::before {
+  content: ''; position: absolute; left: 0; right: 0; top: 50%; margin-top: -1px;
+  height: 2px; background: var(--line-2); border-radius: 2px;
+}
+.verhaal-tab-fill {
+  position: absolute; left: 0; right: 0; top: 50%; margin-top: -1px;
+  height: 2px; background: var(--navy-400); border-radius: 2px;
+  transform: scaleX(0); transform-origin: left center;
+}
+.verhaal-tab:hover::before { background: var(--field); }
+
+.verhaal-cta { position: relative; z-index: 2; margin-top: 16px; }
+
+@media (min-width: 640px) {
+  .ph--verhaal { aspect-ratio: 2 / 1; }
+  .verhaal-kop { margin-top: -64px; padding-top: 26px; }
+}
+
+/* Vanaf 1000px: de foto staat als volle kolom rechts, van de
+   bovenrand van de sectie tot tegen de cijferbalk. De kop ligt er
+   met zijn papieren vlak overheen; de punten en de knop blijven
+   links in de kolom. */
+@media (min-width: 1000px) {
+  .verhaal-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 46%) minmax(0, 1fr);
+    column-gap: 44px;
+    align-items: start;
+  }
+  .verhaal-beeld {
+    grid-column: 2; grid-row: 1 / span 3; align-self: stretch; z-index: 0;
+    margin: calc(-1 * var(--pad-section)) calc(-1 * (max(0px, (100vw - var(--container)) / 2) + var(--gutter))) calc(-1 * var(--pad-section)) 0;
+  }
+  .ph--verhaal { aspect-ratio: auto; height: 100%; min-height: 520px; }
+  .verhaal-kop {
+    grid-column: 1 / -1; grid-row: 1;
+    font-size: clamp(38px, 3.9vw, 54px);
+    margin: 0 0 0 calc(-1 * var(--gutter));
+    padding: 0 clamp(38px, 3.6vw, 60px) 18px var(--gutter);
+  }
+  .verhaal-slider { grid-column: 1; grid-row: 2; margin-top: 30px; }
+  .verhaal-slides p { max-width: 42ch; }
+  .verhaal-cta { grid-column: 1; grid-row: 3; margin-top: 30px; }
+}
+@media (min-width: 1200px) {
+  .verhaal-grid { grid-template-columns: minmax(0, 48%) minmax(0, 1fr); }
+  .ph--verhaal { min-height: 580px; }
 }
 
 /* ============================================================
-   EÉN BELANG: DAT VAN U — navy sectie
+   CIJFERS — drie grote getallen op navy
    ============================================================ */
-.waarom { background: var(--grad-navy); }
-.section--compact { padding-top: clamp(40px, 4vw + 20px, 64px); padding-bottom: clamp(40px, 4vw + 20px, 64px); }
-/* Korte punten aan hairlines, als registerlijst onder elkaar:
-   kop en toelichting naast elkaar op desktop, geen kolommengrid */
-/* Gouden hairlines tussen de drie punten (prompt-D: 1px #e7c98a) */
-.waarom-points { display: grid; border-top: 1px solid rgba(231,201,138,.55); max-width: 760px; }
-.waarom-point { padding: 18px 0; border-bottom: 1px solid rgba(231,201,138,.55); }
-.waarom-point h3 { font-family: var(--font-sans); font-size: 16.5px; font-weight: 700; color: #fff; margin-bottom: 6px; }
-.waarom-point p { font-size: 14.5px; color: var(--on-navy-60); max-width: 60ch; }
-@media (min-width: 900px) {
-  .waarom-point { display: grid; grid-template-columns: 220px 1fr; gap: 24px; align-items: baseline; padding: 20px 0; }
-  .waarom-point h3 { margin-bottom: 0; }
+.stats { background: var(--grad-navy); }
+.stats-grid { display: grid; }
+.stat { padding: 18px 0; text-align: center; border-bottom: 1px solid rgba(255,255,255,.12); }
+.stat:last-child { border-bottom: none; }
+.stat strong {
+  display: block; font-family: var(--font-serif);
+  font-size: clamp(38px, 6vw, 52px); font-weight: 700; color: #fff;
+  line-height: 1.05; font-variant-numeric: tabular-nums; margin-bottom: 6px;
+}
+.stat span { font-size: 14.5px; color: var(--on-navy-60); line-height: 1.45; display: inline-block; max-width: 30ch; }
+.stats-note { margin-top: 18px; text-align: center; font-size: 13px; color: var(--on-navy-40); }
+@media (min-width: 768px) {
+  .stats-grid { grid-template-columns: repeat(3, 1fr); gap: 28px; }
+  .stat { border-bottom: none; border-left: 1px solid rgba(255,255,255,.12); padding: 8px 16px; }
+  .stat:first-child { border-left: none; }
 }
 
 /* ============================================================
-   ADVISEURS — magazine-register (patroon: Team Showcase)
-   Grayscale portretten kleuren op hover; rijen met hairlines.
+   KLANTERVARINGEN — drie korte quotes
    ============================================================ */
-.adv-list { border-top: 1px solid var(--line); }
-.adv-row { display: grid; grid-template-columns: 84px 1fr; gap: 6px 20px; padding: 22px 0; border-bottom: 1px solid var(--line); }
-.adv-photo {
-  grid-row: span 2; width: 84px; height: 104px;
-  border-radius: var(--radius-lg); overflow: hidden;
-  box-shadow: 0 12px 24px -12px rgba(20,50,79,.4);
-  transition: box-shadow .3s ease;
+.quote-list { display: grid; gap: 0; border-top: 1px solid var(--line); }
+.quote-card { margin: 0; padding: 22px 0; display: flex; flex-direction: column; border-bottom: 1px solid var(--line); }
+.quote-card blockquote {
+  margin: 0 0 16px; font-family: var(--font-serif);
+  font-size: 17px; line-height: 1.5; color: var(--ink-800);
 }
-.adv-photo img { width: 100%; height: 100%; object-fit: cover; filter: grayscale(1); transition: filter .35s ease; }
-.adv-row:hover .adv-photo img { filter: none; }
-.adv-row:hover .adv-photo { box-shadow: 0 0 0 1.5px var(--gold-400), 0 12px 24px -12px rgba(20,50,79,.4); }
-.adv-id h3 { font-size: 20px; line-height: 1.15; margin-bottom: 3px; }
-.adv-role { font-size: 14px; font-weight: 600; color: var(--ink-500); }
-.adv-row > p { font-size: 14.5px; color: var(--ink-500); max-width: 62ch; align-self: start; }
+.quote-card figcaption { margin-top: auto; display: flex; align-items: center; gap: 12px; }
+.ph--quote { display: block; width: 44px; height: 44px; border-radius: 50%; flex-shrink: 0; }
+.ph--quote::before { content: ''; background: var(--paper-3) center / cover; }
+.quote-name { font-size: 14.5px; font-weight: 600; color: var(--ink-800); }
+.quote-name small { display: block; font-size: 13px; font-weight: 400; color: var(--ink-500); }
+@media (min-width: 768px) {
+  .quote-list { grid-template-columns: repeat(3, 1fr); gap: 0 30px; border-bottom: 1px solid var(--line); }
+  .quote-card { border-bottom: none; padding: 26px 0 28px; }
+  .quote-card + .quote-card { border-left: 1px solid var(--line); padding-left: 30px; margin-left: -1px; }
+}
+
+
+
+/* ============================================================
+   ADVISEURS — carrousel met portretkaarten in verhouding 3/4,
+   naam en rol over de foto, ronde pijlen ernaast. Eén kaart op
+   mobiel, twee vanaf 767px, vier vanaf 1024px; tussenruimte 11px.
+   ============================================================ */
+.team-carousel { position: relative; }
+.team-track {
+  display: flex; gap: 11px; overflow-x: auto; scroll-snap-type: x mandatory;
+  scroll-behavior: smooth; scrollbar-width: none; -webkit-overflow-scrolling: touch;
+}
+.team-track::-webkit-scrollbar { display: none; }
+.team-slide { flex: 0 0 90%; scroll-snap-align: start; }
+/* De kaart is de foto: gevulde achtergrond, één grote hoek rechtsboven. */
+.team-card {
+  position: relative; aspect-ratio: 3 / 4; overflow: hidden;
+  background: var(--navy-500); border-radius: 0 48px 0 0;
+}
+.team-card img {
+  position: absolute; inset: -2px; width: calc(100% + 4px); height: calc(100% + 4px);
+  object-fit: cover; object-position: 50% 0%;
+}
+/* Verloop over de onderste tweederde zodat de naam leesbaar blijft. */
+.team-card::after {
+  content: ""; position: absolute; left: 0; right: 0; top: 33%; bottom: 0; z-index: 1;
+  background: linear-gradient(rgba(0,0,0,0) 0%, rgba(0,0,0,.12) 30%, rgba(0,0,0,.82) 100%);
+}
+.team-card__content {
+  position: absolute; left: 0; right: 0; bottom: 0; z-index: 2;
+  padding: 24px; color: #fff;
+}
+.team-card__name {
+  font-family: var(--font-sans); font-size: 34px; line-height: .92; font-weight: 600;
+  color: #fff; margin: 0 0 12px;
+}
+.team-card__role { font-size: 13px; line-height: 1.3; color: rgba(255,255,255,.8); margin: 0; }
+.team-nav {
+  position: absolute; top: 50%; transform: translateY(-50%); z-index: 3;
+  width: 46px; height: 46px; border-radius: 50%; border: 0; padding: 0;
+  display: flex; align-items: center; justify-content: center; cursor: pointer;
+  background: rgba(255,255,255,.94); color: var(--navy-400);
+  box-shadow: var(--shadow-sm); transition: background var(--t-fast);
+}
+.team-nav:hover { background: #fff; }
+.team-nav svg { width: 20px; height: 20px; }
+.team-nav--prev { left: 10px; }
+.team-nav--next { right: 10px; }
 .advisors-note { margin-top: 20px; font-size: 13.5px; color: var(--ink-500); }
-@media (min-width: 900px) {
-  .adv-row { grid-template-columns: 96px 280px 1fr; gap: 24px; padding: 26px 0; align-items: center; }
-  .adv-photo { grid-row: auto; width: 96px; height: 118px; }
-  .adv-row > p { align-self: center; }
+@media (min-width: 767px) {
+  .team-slide { flex-basis: calc((100% - 11px) / 2); }
+}
+@media (min-width: 1024px) {
+  .team-slide { flex-basis: calc((100% - 33px) / 4); }
+  .team-card { border-radius: 0 72px 0 0; }
+  .team-card__name { font-size: 36px; }
+  .team-nav { width: 58px; height: 58px; }
+  .team-nav svg { width: 24px; height: 24px; }
+  .team-nav--prev { left: -29px; }
+  .team-nav--next { right: -29px; }
+}
+
+/* Transparantie: één regel altijd zichtbaar, de volledige tekst
+   inklapbaar in FAQ-stijl (summary als .faq-q, plus roteert) */
+.transparency-always { margin-top: 26px; font-size: 14.5px; color: var(--ink-500); max-width: 760px; }
+.transparency { max-width: 760px; border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); margin-top: 12px; }
+.transparency summary { list-style: none; cursor: pointer; }
+.transparency summary::-webkit-details-marker { display: none; }
+.transparency[open] .plus { transform: rotate(45deg); }
+.transparency-body { padding: 0 4px 22px; }
+.transparency-body p { font-size: 14.5px; color: var(--ink-600); line-height: 1.65; margin-bottom: 10px; max-width: 68ch; }
+.transparency-body p:last-child { margin-bottom: 0; }
+.transparency-body a { color: var(--navy-400); font-weight: 600; }
+@media (prefers-reduced-motion: no-preference) {
+  .transparency[open] .transparency-body { animation: rv-rise .35s var(--ease-out); }
 }
 
 /* ============================================================
-   BEOORDELINGEN
+   BRONNEN + VERTROUWEN — één verantwoordingsband
+   (zelfde achtergrond, gehalveerde tussenruimte, één hairline)
    ============================================================ */
-/* Reviewblok: samenvattingsbalk + één eerlijke notitiekaart.
-   Geen skeletkaarten; er staan pas beoordelingen zodra de koppeling live is. */
-/* Vertrouwensindicatoren: rustige strip met vier feitelijke signalen */
-.trust-strip {
-  display: grid; grid-template-columns: 1fr 1fr; gap: 16px 20px;
-  background: #fff; border: 1px solid var(--line-2); border-radius: var(--radius-lg);
-  padding: 24px;
+.sources { background: #fff; }
+.sources--band .section { padding-bottom: clamp(28px, 2.5vw + 16px, 45px); }
+.trust-band { background: #fff; border-top: 1px solid var(--line); }
+.trust-band .container { padding-top: clamp(28px, 2.5vw + 16px, 45px); padding-bottom: 34px; }
+.sources-strip { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+.src-item {
+  text-align: center; font-family: var(--font-serif); font-size: 17px; color: var(--ink-600);
+  padding: 22px 16px; border: 1px solid var(--line-2); border-radius: var(--radius-md);
+  background: var(--paper-2); transition: border-color var(--t-fast);
 }
-.trust-item { display: flex; align-items: center; gap: 10px; font-size: 13px; color: var(--ink-600); }
-.trust-item svg { flex-shrink: 0; width: 24px; height: 24px; color: var(--navy-400); }
-.trust-item .trust-ico--green { color: #4a7c59; }
-@media (min-width: 760px) { .trust-strip { grid-template-columns: repeat(4, auto); justify-content: space-between; } }
-
-/* Wettelijke kennisgeving boven een sectie: gewone zin, feitelijk,
-   zonder decoratie of streepje (spec Prompt A+) */
-.law-note {
-  font-family: var(--font-sans); font-size: 14px; color: rgba(26, 69, 113, .7);
-  margin: 0 0 22px;
+.src-item:hover { border-color: var(--navy-400); }
+@media (min-width: 768px) {
+  .sources-strip { grid-template-columns: repeat(4, 1fr); }
+  .src-item { font-size: 18px; }
 }
-
-/* CTA-blokken onder werkwijze en FAQ */
-.werkwijze-cta { margin-top: 34px; }
-.faq-cta { margin-top: 26px; }
 
 /* ============================================================
    BOOKING
    ============================================================ */
-/* Hairline-strook in plaats van drie losse kaartjes */
-.expectations { display: grid; margin-bottom: 28px; border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
-.expectation { display: flex; gap: 11px; align-items: flex-start; padding: 14px 2px; font-size: 14.5px; color: var(--ink-600); line-height: 1.5; border-bottom: 1px solid var(--line); }
-.expectation:last-child { border-bottom: none; }
-.expectation .exp-tick { flex-shrink: 0; color: var(--gold-500); font-size: 14px; font-weight: 700; line-height: 1.5; }
-@media (min-width: 640px) {
-  .expectations { grid-template-columns: repeat(3, 1fr); }
-  .expectation { border-bottom: none; border-left: 1px solid var(--line); padding: 14px 18px; }
-  .expectation:first-child { border-left: none; padding-left: 2px; }
+/* Invulduur-indicatie onder de sectiekop */
+.book-duration { margin-top: 10px; font-size: 13.5px; color: var(--ink-500); }
+
+/* Tweekoloms boekingssectie: links de kop en de beloftes, rechts het
+   formulier. Mobiel staat het formulier vóór de beloftes. */
+.book-layout { display: flex; flex-direction: column; }
+.book-layout .book-head { margin-bottom: 16px; }
+.book-layout .book-panel { order: 3; }
+.book-aside { order: 4; margin-top: 28px; }
+/* De uitkomst van de bespaarcheck staat vóór het formulier. */
+.book-layout .fsummary { order: 2; }
+@media (min-width: 960px) {
+  .book-layout {
+    display: grid; grid-template-columns: 38% 1fr;
+    gap: 0 clamp(32px, 4vw, 56px);
+    grid-template-areas: "head panel" "sum panel" "aside panel" ". panel";
+    align-content: start;
+  }
+  .book-layout .book-head { grid-area: head; }
+  .book-layout .fsummary { grid-area: sum; }
+  .book-aside { grid-area: aside; margin-top: 0; }
+  .book-layout .book-panel { grid-area: panel; }
 }
 
-.book-panel { overflow: hidden; box-shadow: var(--shadow-lg); }
+/* E-mailaanbod op de boekingsbevestiging */
+.post-offer { max-width: 620px; margin: 24px auto 0; padding-top: 20px; border-top: 1px solid var(--line); font-size: 14.5px; color: var(--ink-600); }
+.post-offer-row { display: flex; gap: 10px; margin: 10px 0; flex-wrap: wrap; }
+.field--sm { flex: 1; min-width: 200px; }
+.post-offer-note { font-size: 12.5px; color: var(--ink-400); }
+.post-offer-note a { color: var(--navy-400); font-weight: 600; }
+
+/* Statische beloftelijst bij het boekingsblok: zelfde register als de
+   oude rotator (haarlijnen boven/onder, goudvinkje), maar zonder animatie */
+.exp-list { list-style: none; margin: 0 0 28px; padding: 0; border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
+.exp-list li { display: flex; gap: 11px; align-items: flex-start; padding: 14px 2px; font-size: 14.5px; color: var(--ink-600); line-height: 1.5; border-bottom: 1px solid var(--line); }
+.exp-list li:last-child { border-bottom: none; }
+
+.book-panel { overflow: hidden; box-shadow: var(--shadow-xs); }
 .book-view[hidden] { display: none; }
 .book-flow { max-width: 660px; margin: 0 auto; padding: 24px 20px 30px; }
-.book-step-label { font-size: 16px; font-weight: 600; color: var(--ink-800); margin-bottom: 14px; }
+.book-step-label { font-size: 17px; font-weight: 600; color: var(--ink-800); margin-bottom: 18px; }
+
+/* Laatste stap bundelt de kwalificatievragen; hairlines houden ze uit elkaar
+   zonder er vijf losse blokken van te maken. */
+.bfield-group { padding: 16px 0; border-top: 1px solid var(--line); }
+.bfield-group:first-of-type { padding-top: 0; border-top: none; }
+.bfield-label { font-size: 15px; font-weight: 600; color: var(--ink-800); margin-bottom: 10px; }
+.bfield-group .bstep-note { margin-bottom: 0; }
 @media (min-width: 640px) { .book-flow { padding: 32px 36px 40px; } }
 
-/* Herstelmelding: eerdere concept-invoer teruggezet */
-.book-restore { display: flex; align-items: flex-start; justify-content: space-between; gap: 12px; margin-bottom: 18px; padding: 11px 14px; background: var(--paper-3); border: 1px solid var(--line-2); border-radius: var(--radius-sm); font-size: 13.5px; color: var(--ink-600); }
-.book-restore[hidden] { display: none; }
-.book-restore button { appearance: none; background: none; border: 0; padding: 0 2px; cursor: pointer; font-size: 16px; line-height: 1; color: var(--ink-400); }
-.book-restore button:hover { color: var(--ink-800); }
-
-/* Voortgang: drie segmenten, "Stap x van 3" */
+/* Voortgang: "Stap x van 6" + gouden stroomlijn als voortgangsbalk */
 .bprogress { margin: 0 0 26px; }
 .bprogress-top { display: flex; align-items: baseline; justify-content: space-between; gap: 12px; margin-bottom: 8px; }
 .bprogress-label { font-size: 13px; font-weight: 600; color: var(--ink-500); }
 .bprogress-name { font-family: var(--font-serif); font-size: 15px; font-weight: 700; color: var(--ink-800); }
-.bprogress-seg { display: flex; gap: 6px; }
-.bprogress-seg span { flex: 1; height: 3px; border-radius: 2px; background: var(--line-2); }
-.bprogress-seg span.on { background: var(--navy-400); }
-@media (prefers-reduced-motion: no-preference) {
-  .bprogress-seg span { transition: background .3s ease; }
+.bprogress-track { height: 2px; background: var(--line-2); border-radius: 2px; overflow: hidden; }
+.bprogress-fill {
+  height: 100%; background: var(--gold-500); border-radius: 2px;
+  transform: scaleX(0); transform-origin: left;
+  transition: transform .5s var(--ease-out);
 }
+
+/* Verticale keuzelijst (partner-vraag: langere labels) */
+.chips--column { flex-direction: column; align-items: stretch; }
+.chips--column .chip { justify-content: flex-start; text-align: left; }
 
 /* Stappen zelf: rustige fade+rise bij wisselen */
 .bstep[hidden] { display: none; }
 @media (prefers-reduced-motion: no-preference) {
-  .bstep { animation: rv-rise .3s var(--ease-out); }
+  .bstep { animation: rv-rise .35s var(--ease-out); }
 }
-.bstep-title { font-family: var(--font-serif); font-size: 22px; color: var(--ink-900); margin: 0 0 18px; outline: none; }
 .bstep-nav { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-top: 26px; padding-top: 18px; border-top: 1px solid var(--line); }
+.bstep-hint { font-size: 13.5px; color: var(--ink-500); }
 .bstep-note { font-size: 13.5px; color: var(--ink-500); margin-top: 14px; max-width: 52ch; }
 .book-optin { display: flex; gap: 10px; align-items: flex-start; margin-top: 14px; font-size: 14px; color: var(--ink-600); line-height: 1.5; cursor: pointer; }
 .book-optin input { margin-top: 3px; accent-color: var(--navy-400); width: 16px; height: 16px; flex-shrink: 0; }
 
-/* Veld-blokken met label, subtekst, foutmelding en neutrale flag-tekst */
-.bfield { margin: 0 0 24px; }
-fieldset.bfield { border: 0; padding: 0; min-width: 0; }
-.bfield-label { display: block; font-size: 16px; font-weight: 600; color: var(--ink-800); margin-bottom: 10px; padding: 0; }
-.bfield-sub { font-size: 13.5px; color: var(--ink-500); margin: -6px 0 12px; max-width: 56ch; }
-.bfield-error { display: flex; gap: 7px; margin: 8px 0 0; font-size: 13.5px; font-weight: 600; color: #c0392b; }
-.bfield-error::before { content: '!'; flex-shrink: 0; }
-.bfield-error[hidden] { display: none; }
-.bfield--invalid .field, .bfield--invalid .bradio, .bfield--invalid .chip { border-color: #c0392b; }
-.bfield--valid > .field { border-color: var(--line-2); }
-/* Flags: neutrale informatie voor de planner-route, nadrukkelijk geen waarschuwing */
-.bfield-flag { margin: 10px 0 0; padding: 10px 13px; background: var(--paper-3); border: 1px solid var(--line-2); border-radius: var(--radius-sm); font-size: 13.5px; line-height: 1.5; color: var(--ink-600); max-width: 56ch; }
-.bfield-flag[hidden] { display: none; }
-@media (prefers-reduced-motion: no-preference) {
-  .bfield-flag, .bfield[data-bk="investblok"]:not([hidden]) { animation: rv-rise .2s ease-out; }
-}
-
-/* Chips: multi-select (goud bij selectie) en tijdslots */
 .chips { display: flex; flex-wrap: wrap; gap: 10px; }
+.chips--grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(72px, 1fr)); gap: 10px; }
 .chip {
   display: inline-flex; align-items: center; justify-content: center;
-  padding: 11px 18px; border: 1px solid var(--line-2); border-radius: var(--radius-sm);
+  padding: 11px 18px; border: 1px solid var(--line-2); border-radius: var(--radius-md);
   background: #fff; color: var(--ink-800); font-size: 15px; font-weight: 600;
   transition: border-color var(--t-fast), box-shadow var(--t-fast), background var(--t-fast), color var(--t-fast);
 }
@@ -689,67 +952,95 @@ fieldset.bfield { border: 0; padding: 0; min-width: 0; }
   .chip[aria-pressed="true"] { animation: chip-pop .28s var(--ease-out); }
 }
 @keyframes chip-pop { 0% { transform: scale(.96); } 60% { transform: scale(1.03); } 100% { transform: scale(1); } }
-/* Productinteresse: gouden rand + vinkje, tekst blijft inkt (leesbaar) */
-.chip--q { gap: 7px; }
-.chip--q .chip-tick { display: none; color: var(--gold-500); font-weight: 700; }
-.chip--q[aria-pressed="true"] { background: #fff; border-color: var(--gold-500); box-shadow: inset 0 0 0 1px var(--gold-500); color: var(--ink-800); }
-.chip--q[aria-pressed="true"] .chip-tick { display: inline; }
+.chip--date { flex-direction: column; gap: 2px; min-width: 62px; padding: 11px 8px; }
+.chip--date .wk { font-size: 12px; text-transform: uppercase; letter-spacing: .5px; opacity: .7; font-weight: 600; }
+.chip--date .day { font-size: 20px; font-weight: 700; line-height: 1.1; }
+.chip--date .mon { font-size: 12px; opacity: .7; }
 
-/* Radiogroepen: aanklikbare kaarten met echte radio-inputs */
-.bradios { display: grid; gap: 8px; }
-.bradios--row { grid-template-columns: 1fr; }
-@media (min-width: 640px) { .bradios--row { grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); } }
-.bradio {
-  display: flex; align-items: center; gap: 10px; cursor: pointer;
-  padding: 11px 14px; min-height: 44px; background: #fff;
-  border: 1px solid var(--line-2); border-radius: var(--radius-sm);
-  font-size: 14.5px; font-weight: 600; color: var(--ink-800); line-height: 1.35;
-  transition: border-color var(--t-fast), background var(--t-fast);
+/* Maandkalender voor datumkeuze */
+.book-calendar-wrap { margin-bottom: 20px; }
+.book-calendar {
+  background: #fff; border: 1px solid var(--line-2); border-radius: var(--radius-md);
+  padding: 14px; max-width: 100%;
 }
-.bradio:hover { border-color: var(--navy-400); }
-.bradio input { accent-color: var(--navy-400); width: 16px; height: 16px; flex-shrink: 0; margin: 0; }
-.bradio--on { border-color: var(--navy-400); box-shadow: inset 0 0 0 1px var(--navy-400); background: var(--paper-2); }
-
-/* Datum + adres */
-.bdate { display: block; margin-bottom: 14px; }
-.bdate span { display: block; font-size: 13.5px; font-weight: 600; color: var(--ink-600); margin-bottom: 6px; }
-.bdate .field { max-width: 240px; }
-.badres { display: grid; grid-template-columns: 1fr; gap: 10px; }
-@media (min-width: 640px) { .badres { grid-template-columns: 1.2fr .8fr; max-width: 340px; } }
-
-/* Info-blok verwachtingspatroon */
-.binfo { padding: 13px 15px; background: var(--paper-3); border: 1px solid var(--line-2); border-radius: var(--radius-md); font-size: 14px; line-height: 1.6; color: var(--ink-600); max-width: 56ch; }
-
-/* Stap 3: samenvatting met wijzig-knoppen */
-.bsummary dl { margin: 0 0 22px; }
-.bsum-row { display: flex; align-items: baseline; gap: 12px; padding: 9px 0; border-bottom: 1px solid var(--line); font-size: 14.5px; }
-.bsum-row dt { flex: 0 0 112px; color: var(--ink-500); margin: 0; }
-.bsum-row dd { flex: 1; margin: 0; color: var(--ink-800); font-weight: 600; overflow-wrap: anywhere; }
-.bsum-edit { appearance: none; background: none; border: 0; padding: 0; cursor: pointer; font-family: inherit; font-size: 13px; font-weight: 600; color: var(--navy-400); text-decoration: underline; flex-shrink: 0; min-width: 52px; text-align: right; }
-
-/* Stap 3: agenda-opties */
-.bagenda { margin-bottom: 20px; padding: 16px; background: var(--paper-3); border: 1px solid var(--line-2); border-radius: var(--radius-md); }
-.bagenda .bfield-label { font-size: 14.5px; margin-bottom: 10px; }
-.bagenda-links { display: grid; grid-template-columns: 1fr; gap: 8px; }
-@media (min-width: 640px) { .bagenda-links { grid-template-columns: repeat(3, 1fr); } }
-.bagenda-links .btn { font-size: 14px; padding: 11px 8px; }
-
-/* Verzenden */
-.bsubmit-error { display: flex; gap: 8px; margin: 0 0 4px; font-size: 14px; font-weight: 600; color: #c0392b; }
-.bsubmit-error::before { content: '!'; flex-shrink: 0; }
-.bsubmit-error[hidden] { display: none; }
-.btn-spinner { width: 14px; height: 14px; margin-right: 9px; border: 2px solid rgba(255,255,255,.35); border-top-color: #fff; border-radius: 50%; flex-shrink: 0; }
-@media (prefers-reduced-motion: no-preference) {
-  .btn-spinner { animation: btn-spin .7s linear infinite; }
+.cal-header {
+  display: flex; align-items: center; justify-content: space-between; gap: 12px;
+  margin-bottom: 12px; padding-bottom: 10px; border-bottom: 1px solid var(--line);
 }
-@keyframes btn-spin { to { transform: rotate(360deg); } }
-.book-submit { width: 100%; margin-top: 14px; padding: 15px; font-size: 16px; }
+.cal-title {
+  font-size: 14px; font-weight: 600; color: var(--ink-800);
+  flex: 1; text-align: center;
+}
+.cal-nav {
+  width: 32px; height: 32px; padding: 0; border: 1px solid var(--line-2);
+  border-radius: var(--radius-sm); background: #fff; color: var(--navy-400);
+  font-weight: 600; cursor: pointer; transition: border-color var(--t-fast), background var(--t-fast);
+}
+.cal-nav:hover:not(:disabled) { border-color: var(--navy-400); background: var(--paper-3); }
+.cal-nav:disabled { opacity: .35; cursor: not-allowed; }
+.cal-weekdays {
+  display: grid; grid-template-columns: repeat(7, 1fr); gap: 4px;
+  margin-bottom: 6px; text-align: center;
+}
+.cal-weekdays > div {
+  font-size: 12px; font-weight: 600; color: var(--ink-400); padding: 4px 0;
+}
+.cal-grid {
+  display: grid; grid-template-columns: repeat(7, 1fr); gap: 4px;
+}
+.cal-day {
+  aspect-ratio: 1; display: flex; align-items: center; justify-content: center;
+  font-size: 13px; font-weight: 600; border: 1px solid var(--line-2);
+  border-radius: var(--radius-sm); background: #fff; color: var(--ink-700);
+  cursor: pointer; transition: border-color var(--t-fast), background var(--t-fast), color var(--t-fast);
+  padding: 0;
+}
+.cal-day:hover:not(:disabled) { border-color: var(--navy-400); }
+.cal-day:disabled { opacity: .35; cursor: not-allowed; }
+.cal-day[aria-pressed="true"] {
+  background: var(--navy-400); border-color: var(--navy-400); color: #fff;
+  box-shadow: var(--shadow-xs);
+}
+@media (min-width: 640px) {
+  .book-calendar { padding: 16px; }
+}
+
+.book-fields { display: flex; flex-direction: column; gap: 13px; }
+
+/* Zwevende labels (patroon: Floating Input) + validatie-microinteracties */
+.ffield { position: relative; }
+.ffield .field { padding: 22px 38px 8px 14px; }
+.ffield label {
+  position: absolute; left: 15px; top: 50%; transform: translateY(-50%);
+  font-size: 15px; color: var(--ink-400); pointer-events: none;
+  transition: top .18s ease, transform .18s ease, font-size .18s ease, color .18s ease;
+}
+.ffield .field:focus + label,
+.ffield .field:not(:placeholder-shown) + label {
+  top: 7px; transform: none;
+  font-size: 12px; font-weight: 600;
+  color: var(--ink-500);
+}
+.ffield--valid::after {
+  content: '✓'; position: absolute; right: 14px; top: 50%; transform: translateY(-50%);
+  color: var(--gold-500); font-size: 14px; font-weight: 700;
+  animation: rv-rise .3s var(--ease-out);
+}
+.ffield--invalid .field { border-color: var(--warn-line); background: var(--warn-bg); }
+.ffield-hint { display: none; margin-top: 5px; font-size: 12.5px; color: var(--warn-fg); }
+.ffield--invalid .ffield-hint { display: block; }
+.book-privacy { margin-bottom: 16px; padding: 11px 13px; background: #fff; border: 1px solid var(--line); border-radius: var(--radius-sm); font-size: 13px; line-height: 1.5; color: var(--ink-500); }
+.book-privacy a { color: var(--navy-400); font-weight: 600; }
+.book-summary { margin-top: 16px; background: #fff; border: 1px solid var(--line); border-radius: var(--radius-sm); padding: 14px 16px; font-size: 14.5px; color: var(--ink-500); }
+.book-missing { margin-top: 12px; display: flex; gap: 10px; align-items: flex-start; background: var(--warn-bg); border: 1px solid var(--warn-line); border-radius: var(--radius-sm); padding: 12px 14px; font-size: var(--fs-small); color: var(--warn-fg); line-height: 1.5; }
+.book-missing[hidden] { display: none; }
+.book-submit { width: 100%; margin-top: 16px; padding: 15px; font-size: 16px; }
 .book-footnote { font-size: 13px; color: var(--ink-500); text-align: center; margin: 12px 0 0; line-height: 1.5; }
-.book-footnote a { color: var(--navy-400); font-weight: 600; }
 .book-meta { margin-top: 14px; padding-top: 14px; border-top: 1px solid var(--line); display: flex; flex-wrap: wrap; gap: 8px 16px; align-items: center; justify-content: center; font-size: 13px; color: var(--ink-500); }
 .book-meta .kvk { font-family: var(--font-mono); font-size: 12.5px; }
 .book-alt { margin-top: 12px; text-align: center; font-size: 13.5px; color: var(--ink-500); }
 .book-alt a { color: var(--navy-400); font-weight: 600; }
+.book-noslots { margin-bottom: 30px; padding: 18px; background: var(--paper-3); border: 1px dashed var(--line-2); border-radius: var(--radius-lg); font-size: 14.5px; color: var(--ink-500); }
 
 /* Bevestiging */
 .confirm { padding: clamp(28px, 5vw, 48px); }
@@ -805,27 +1096,6 @@ fieldset.bfield { border: 0; padding: 0; min-width: 0; }
 .portal-actions { display: flex; flex-wrap: wrap; gap: 10px; }
 
 /* ============================================================
-   BRIEF THUIS / LEAD CAPTURE (met QR)
-   ============================================================ */
-.brief { background: var(--navy-900); }
-.brief-grid { display: grid; gap: 32px; align-items: center; }
-.brief h2 { font-size: clamp(24px, 3vw, 32px); line-height: 1.18; margin-bottom: 10px; }
-.brief p { font-size: 16px; color: var(--on-navy-60); }
-.lead-row { display: flex; flex-direction: column; gap: 10px; }
-.lead-row .field { border-color: rgba(255,255,255,.25); }
-.lead-sent { background: rgba(255,255,255,.05); border: 1px solid rgba(255,255,255,.12); border-radius: var(--radius-lg); padding: 20px 22px; display: flex; align-items: center; gap: 12px; color: #fff; font-size: var(--fs-body-sm); }
-.lead-sent[hidden], .lead-form[hidden] { display: none; }
-.lead-sent .tick { width: 30px; height: 30px; border-radius: 50%; background: rgba(231,201,138,.16); color: var(--gold-300); display: inline-flex; align-items: center; justify-content: center; font-weight: 700; flex-shrink: 0; }
-.lead-note { margin-top: 10px; font-size: 12.5px; color: var(--on-navy-40); }
-.lead-note a { color: var(--gold-300); font-weight: 600; }
-.qr-card { background: rgba(255,255,255,.05); border: 1px solid rgba(255,255,255,.12); border-radius: var(--radius-xl); padding: 22px; display: flex; align-items: center; gap: 18px; margin-top: 26px; }
-.qr-card img { width: 88px; height: 81px; border-radius: var(--radius-sm); background: #fff; padding: 6px; flex-shrink: 0; }
-.qr-card strong { display: block; color: #fff; font-size: 15px; margin-bottom: 4px; }
-.qr-card span { font-size: 13.5px; color: var(--on-navy-60); line-height: 1.5; }
-@media (min-width: 640px) { .lead-row { flex-direction: row; } .lead-row .field { flex: 1; } }
-@media (min-width: 900px) { .brief-grid { grid-template-columns: 1.1fr .9fr; gap: 48px; } .qr-card { margin-top: 0; } }
-
-/* ============================================================
    FAQ — "Goed om te weten"
    ============================================================ */
 .faq-intro { font-size: 14.5px; color: var(--ink-500); margin-bottom: 28px; line-height: 1.6; }
@@ -837,7 +1107,7 @@ fieldset.bfield { border: 0; padding: 0; min-width: 0; }
   padding: 20px 4px; display: flex; align-items: baseline; gap: 16px;
   font-size: 17.5px; font-weight: 600; color: var(--ink-800);
 }
-.faq-idx { flex-shrink: 0; font-family: var(--font-serif); font-size: 14px; font-weight: 700; color: var(--navy-400); min-width: 24px; }
+.faq-idx { flex-shrink: 0; font-family: var(--font-serif); font-size: 14px; font-weight: 700; color: var(--gold-500); min-width: 24px; }
 .faq-q .qt {
   flex: 1;
   background-image: linear-gradient(currentColor, currentColor);
@@ -848,15 +1118,22 @@ fieldset.bfield { border: 0; padding: 0; min-width: 0; }
 .faq-q .plus { flex-shrink: 0; width: 18px; height: 18px; color: var(--navy-400); align-self: center; transition: transform .35s var(--ease-out); }
 .faq-item.open .faq-q .plus { transform: rotate(45deg); }
 .faq-a { display: grid; grid-template-rows: 0fr; transition: grid-template-rows .35s var(--ease-out); }
+.faq-item.open .faq-a { grid-template-rows: 1fr; }
 .faq-a > div { overflow: hidden; }
 .faq-a p { font-size: 16px; line-height: 1.65; color: var(--ink-500); padding: 0 4px 22px; max-width: 68ch; }
 @media (min-width: 640px) { .faq-q { font-size: 18.5px; padding: 22px 4px; } }
+/* Doorverwijzing naar de chat onder de laatste vraag */
+.faq-more { margin-top: 20px; font-size: 14.5px; color: var(--ink-500); }
+.faq-chat-link { background: none; border: none; padding: 0; color: var(--navy-400); font-weight: 600; font-size: inherit; text-decoration: underline; cursor: pointer; }
+.faq-chat-link:hover { color: var(--navy-300); }
 
 /* ============================================================
    SLOT-CTA
    ============================================================ */
 .closing { background: var(--grad-navy); }
 .closing-solo { max-width: 640px; text-align: center; margin: 0 auto; }
+.closing-count { font-size: var(--fs-small); color: var(--on-navy-60); margin-bottom: 12px; }
+.closing-count span { font-variant-numeric: tabular-nums; font-weight: 600; color: var(--gold-300); }
 .closing .lead { margin-bottom: 26px; }
 .closing-ctas { display: flex; flex-wrap: wrap; justify-content: center; gap: 14px; }
 
@@ -864,16 +1141,27 @@ fieldset.bfield { border: 0; padding: 0; min-width: 0; }
    FOOTER
    ============================================================ */
 .site-footer { background: var(--navy-900); color: var(--on-navy-60); }
-.footer-slim { padding-top: 26px; padding-bottom: 22px; }
+.footer-slim { padding-top: 30px; padding-bottom: 22px; }
+/* Contactrij bovenin: drie kolommen met harde gegevens */
+.footer-row0 {
+  display: grid; gap: 22px;
+  padding-bottom: 22px; margin-bottom: 16px;
+  border-bottom: 1px solid rgba(255,255,255,.10);
+}
+.footer-col-title { font-size: 13px; font-weight: 600; color: var(--on-navy-40); margin-bottom: 10px; }
+.footer-col p { font-size: 13.5px; color: var(--on-navy-60); line-height: 1.8; }
+.footer-col a:hover { color: #fff; }
+.footer-col small { font-size: 12px; color: var(--on-navy-40); }
+.site-footer .placeholder-mark { color: var(--on-navy-40); opacity: .85; font-size: 12.5px; }
+@media (min-width: 900px) { .footer-row0 { grid-template-columns: repeat(3, 1fr); gap: 32px; } }
 .footer-slim .brand-name { color: #fff; font-size: 17px; }
 .footer-slim .brand img { width: 26px; height: 28px; }
 .footer-row1 { display: flex; flex-direction: column; align-items: flex-start; gap: 14px; padding-bottom: 16px; border-bottom: 1px solid rgba(255,255,255,.1); }
 .footer-links { display: flex; flex-wrap: wrap; gap: 6px 18px; font-size: 13.5px; }
 .footer-links a:hover { color: #fff; }
 .footer-row2 { display: flex; flex-direction: column; gap: 6px; padding-top: 14px; font-size: 12.5px; color: var(--on-navy-30); }
-.footer-ref { font-family: var(--font-mono); font-size: 11.5px; }
-.footer-contactline { display: inline-flex; flex-wrap: wrap; gap: 6px 18px; }
-.footer-contactline a:hover { color: #fff; }
+.footer-row2 a { color: var(--on-navy-40); }
+.footer-row2 a:hover { color: #fff; }
 @media (min-width: 900px) {
   .footer-row1 { flex-direction: row; align-items: center; justify-content: space-between; }
   .footer-row2 { flex-direction: row; flex-wrap: wrap; justify-content: space-between; gap: 8px 20px; }
@@ -889,17 +1177,26 @@ fieldset.bfield { border: 0; padding: 0; min-width: 0; }
 .fab--main:hover { background: var(--navy-300); }
 .fab--wa { background: #25D366; }
 .fab--tel { background: var(--navy-400); }
-.fab--chat { background: var(--gold-500); }
+.fab--chat { background: var(--navy-400); }
+.fab--chat:hover { background: var(--navy-300); }
 .fab-sub { width: 46px; height: 46px; }
 .floating .fab-sub { display: none; }
 .floating.open .fab-sub { display: flex; }
+/* Desktop: alléén de chatknop (WhatsApp en telefoon staan in de footer) */
 @media (min-width: 768px) {
   .floating { right: 22px; bottom: 22px; }
-  .floating .fab-sub { display: flex; }
-  .floating .fab--main { display: none; }
+  .floating .fab-sub { display: none; }
+  .floating .fab--chat { display: flex !important; width: 52px; height: 52px; }
+  .floating .fab--main { display: none !important; }
 }
 
-.mobile-cta { position: fixed; left: 0; right: 0; bottom: 0; z-index: 55; background: #fff; border-top: 1px solid var(--line); padding: 10px 16px; box-shadow: 0 -6px 20px rgba(8,22,38,.1); }
+/* Sticky CTA: verborgen tot de bezoeker voorbij 30% van de pagina is (JS zet .is-visible) */
+.mobile-cta {
+  position: fixed; left: 0; right: 0; bottom: 0; z-index: 55; background: #fff; border-top: 1px solid var(--line); padding: 10px 16px; box-shadow: 0 -6px 20px rgba(8,22,38,.1);
+  opacity: 0; transform: translateY(100%); pointer-events: none;
+  transition: opacity .3s ease, transform .3s ease;
+}
+.mobile-cta.is-visible { opacity: 1; transform: translateY(0); pointer-events: auto; }
 .mobile-cta .btn { width: 100%; box-shadow: none; }
 body { padding-bottom: 76px; }
 @media (min-width: 768px) { .mobile-cta { display: none; } body { padding-bottom: 0; } }
@@ -949,15 +1246,6 @@ body { padding-bottom: 76px; }
 .cookie-bar p { font-size: 14.5px; color: var(--ink-500); line-height: 1.5; max-width: 640px; }
 .cookie-bar p a { color: var(--navy-400); font-weight: 600; }
 .cookie-actions { display: flex; flex-wrap: wrap; gap: 10px; }
-/* Mobiel: bovenaan het scherm, zodat de sticky CTA onderaan vrij blijft;
-   z-index onder de sticky CTA (55), boven de content. */
-@media (max-width: 639.5px) {
-  .cookie-bar {
-    top: 8px; bottom: auto; left: 8px; right: 8px; z-index: 54;
-    border: 1px solid var(--line-2); border-radius: var(--radius-md);
-    box-shadow: var(--shadow-md);
-  }
-}
 @media (min-width: 640px) {
   .cookie-bar {
     left: 22px; right: auto; bottom: 22px; max-width: 400px;
@@ -1016,45 +1304,20 @@ body { padding-bottom: 76px; }
 @media (min-width: 900px) { .article-layout { grid-template-columns: 260px 1fr; gap: 56px; } .toc-card { position: sticky; top: 96px; } }
 
 /* ============================================================
-   SCROLLY-MINIS — vijf illustraties per stap op mobiel
-   (statische eindstand per stap, plus de verticale tijdlijn)
-   ============================================================ */
-.scene-mini { border: 1px solid var(--line); border-radius: var(--radius-md); overflow: hidden; background: var(--paper-2); }
-/* Stap 5 op mobiel: verticaal gestapelde tijdlijn, smal en gecentreerd */
-.scene-mini--tl { padding: 18px 0; }
-.scene-mini--tl svg { display: block; max-width: 132px; margin: 0 auto; }
-
-/* ============================================================
    MOBIELE COMPACTHEID — minder viewport-beslag, sneller scrollen
    ============================================================ */
 @media (max-width: 639.5px) {
   :root { --pad-section: clamp(40px, 5vw + 22px, 56px); }
   .section-head { margin-bottom: 22px; }
-  #bereken .h2 { font-size: 23px; }
-  #bereken .lead { font-size: 15px; }
-  .calc-panels-num { font-size: 28px; }
-  .impact-text { font-size: 20px; }
-  .calc-kwh { margin-bottom: 16px; }
-  .calc-chips { flex-direction: column; }
-  .calc-toggle { gap: 16px; }
-  .calc-toggle button { font-size: 13.5px; }
-  .calc-locked-val strong { filter: blur(5px); }
-  .calc-locked li:hover .calc-locked-val strong { filter: blur(4px); }
-  .calc-locked-val svg { width: 14px; height: 14px; margin-top: -7px; }
-  /* Booking: 16px inputs voorkomen iOS-zoom; samenvatting gestapeld */
-  .book-flow .field { font-size: 16px; }
-  .bsum-row { flex-wrap: wrap; }
-  .bsum-row dt { flex-basis: 100%; }
-  /* Hero-kop compacter op klein scherm; CTA's vol en goed tapbaar */
-  .hero-copy h1 { font-size: 32px; }
-  .hero-ctas .btn, .mobile-cta .btn { width: 100%; min-height: 48px; font-size: 16px; }
-  .hero-ctas { flex-direction: column; }
-  .scrolly-step { padding: 26px 0; }
-  .scrolly-step .scene-mini { margin-bottom: 16px; }
-  .scrolly-step .scrolly-teller { font-size: 28px; }
-  .scrolly-step h3 { font-size: 20px; }
-  .scrolly-step p { font-size: 15px; max-width: 35ch; }
-  .scrolly-cta .btn { width: 100%; max-width: none; }
+  /* Kop max 2 regels op 390px; knoppen full-width in de duimzone */
+  .hero-copy h1 { font-size: 34px; }
+  .hero-ctas .btn, .closing-ctas .btn { width: 100%; }
+  #bereken .section { padding-top: 30px; padding-bottom: 30px; }
+  .funnel { padding: 26px 16px 20px; }
+  .funnel-badge { font-size: 13px; padding: 10px 14px; right: 12px; }
+  .ftile { padding: 14px 4px; }
+  .ftile strong { font-size: 17px; }
+  .fmodal-panel { padding: 24px 16px 20px; }
 }
 
 /* ============================================================
@@ -1066,3 +1329,4 @@ body { padding-bottom: 76px; }
   .rv, .rv-js { opacity: 1 !important; transform: none !important; }
   .draw-line { stroke-dasharray: none !important; stroke-dashoffset: 0 !important; }
 }
+

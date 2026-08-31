@@ -6,14 +6,8 @@
 
    De status wordt hier server-side OPNIEUW afgeleid uit het
    qualification-object; het front-end oordeel wordt niet blind
-   vertrouwd. Drie niveaus:
-     warm_gekwalificeerd  → alle zes criteria gehaald; alleen deze
-                            leads zijn verkoopbaar aan de adviseur.
-     te_kwalificeren      → kern aanwezig maar criteria twijfelachtig;
-                            de planner belt na om te verifiëren.
-     niet_gekwalificeerd  → niet doorverkopen, wel telefonisch nabellen.
-   De bezoeker ziet dit onderscheid nooit; de bevestiging op de site
-   is voor iedereen identiek.
+   vertrouwd. Alleen 'warm_gekwalificeerd' is verkoopbaar aan de
+   doorverkoop-route.
    ============================================================ */
 'use strict';
 
@@ -23,16 +17,13 @@ var rate = require('./_lib/ratelimit');
 
 function deriveStatus(q) {
   if (!q || typeof q !== 'object') return 'niet_gekwalificeerd';
-  var c1 = Array.isArray(q.productinteresse) && q.productinteresse.length > 0; /* productinteresse */
-  var c2 = q.beideBeslissersAanwezig === true;                                 /* beide beslissers */
-  var c3 = q.jongerDan75 === true || q.eigenInvestering === true;              /* leeftijd of eigen middelen */
-  var c4 = q.verwachtingBegrepen === true;                                     /* verwachtingspatroon */
-  var c5 = q.afspraakBevestigd === true;                                       /* datum, tijd, duur */
-  var c6 = q.koopwoning === true;                                              /* koopwoning of appartement (eigendom) */
-  if (c1 && c2 && c3 && c4 && c5 && c6) return 'warm_gekwalificeerd';
-  if (c1 && c5 && c6 && (c2 || c3 || c4)) return 'te_kwalificeren';
-  if (c1 || c5) return 'te_kwalificeren';
-  return 'niet_gekwalificeerd';
+  var ok = Array.isArray(q.productinteresse) && q.productinteresse.length > 0 &&
+    q.koopwoning === true &&
+    q.afspraakBevestigd === true &&
+    q.beideBeslissersAanwezig === true &&
+    (q.jongerDan75 === true || q.eigenInvestering === true) &&
+    q.verwachtingBegrepen === true;
+  return ok ? 'warm_gekwalificeerd' : 'niet_gekwalificeerd';
 }
 
 function readJson(req, maxBytes) {

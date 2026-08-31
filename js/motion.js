@@ -1,8 +1,8 @@
 /* ============================================================
    SalderingsDienst — motion.js
-   Scroll-reveal-fallback, tellers, navigatie, calculator,
-   FAQ, chat, cookiebalk en contact-configuratie.
-   De scenes zelf leven in js/scene.js; booking in js/booking.js.
+   Navigatie, tellers, adres-check, calculator, FAQ, chat,
+   cookiebalk en contact-configuratie. Beweging is beperkt tot
+   één IntersectionObserver voor fade-in-up van secties.
    Alle onderdelen zijn defensief: op subpagina's ontbreken de
    meeste elementen en gebeurt er dan simpelweg niets.
    ============================================================ */
@@ -52,15 +52,11 @@
     if (el) window.SD.track(el.getAttribute('data-track'));
   });
 
-  /* ---------- Contactgegevens: nette fallback zolang ze ontbreken ----------
-     Ongezette waarden (leeg in SD_CONFIG) tonen nergens een placeholder-
-     schreeuw; lege links verdwijnen en de footer meldt één rustige regel
-     "Contactgegevens worden bijgewerkt." (TE VERVANGEN bestaat niet meer.) */
+  /* ---------- Contactgegevens: eerlijke placeholders ---------- */
   var cfg = window.SD_CONFIG || {};
-  var LEGACY_PH = 'TE VERVANGEN'; /* oude configs behandelen als leeg */
-  var clean = function (v) { return (v && v !== LEGACY_PH) ? v : ''; };
-  var phone = clean(cfg.phone), email = clean(cfg.email), kvk = clean(cfg.kvk);
-  var phoneSet = !!phone, emailSet = !!email, kvkSet = !!kvk;
+  var PH = 'TE VERVANGEN';
+  var phone = cfg.phone || PH, email = cfg.email || PH, kvk = cfg.kvk || PH;
+  var phoneSet = phone !== PH, emailSet = email !== PH, kvkSet = kvk !== PH;
   var telHref = phoneSet ? 'tel:+31' + phone.replace(/\D/g, '').replace(/^0/, '') : '#adviesgesprek';
   var waNumber = (cfg.whatsapp || '').replace(/\D/g, '');
   var waHref = waNumber ? 'https://wa.me/' + waNumber : '#adviesgesprek';
@@ -73,25 +69,22 @@
     var sub = function (sel, fn) { root.querySelectorAll(sel).forEach(fn); };
     sub('[data-sd-tel]', function (a) { a.href = telHref; });
     sub('[data-sd-wa]', function (a) { a.href = waHref; });
-    sub('[data-sd-wa-hide]', function (a) { if (!waNumber) a.hidden = true; });
     sub('[data-sd-mail]', function (a) { a.href = emailSet ? 'mailto:' + email : '#'; });
-    sub('[data-sd-kvk]', function (el) { el.textContent = kvkSet ? kvk : 'volgt'; });
-    sub('[data-sd-phone-text]', function (el) { if (phoneSet) el.textContent = phone; else el.hidden = true; });
-    sub('[data-sd-mail-text]', function (el) { if (emailSet) el.textContent = email; else el.hidden = true; });
-    sub('[data-sd-contact-fallback]', function (el) { el.hidden = phoneSet || emailSet || !!waNumber; });
+    sub('[data-sd-kvk]', function (el) { el.textContent = kvk; if (!kvkSet) el.classList.add('placeholder-mark'); });
+    sub('[data-sd-phone-text]', function (el) { el.textContent = phone; if (!phoneSet) el.classList.add('placeholder-mark'); });
+    sub('[data-sd-mail-text]', function (el) { el.textContent = email; if (!emailSet) el.classList.add('placeholder-mark'); });
     sub('[data-sd-tel-label]', function (el) { el.textContent = phoneSet ? 'Bel ' + phone : 'Bel ons'; });
   }
   applyContacts(document);
   window.SD.applyContacts = applyContacts;
 
-  /* ---------- Reveal-fallback (alleen zonder CSS scroll-driven support) ---------- */
-  var hasViewTimeline = CSS.supports && CSS.supports('animation-timeline: view()');
-  if (!hasViewTimeline && !reduceMotion && 'IntersectionObserver' in window) {
+  /* ---------- Fade-in-up bij in beeld komen (enige scroll-beweging) ---------- */
+  if (!reduceMotion && 'IntersectionObserver' in window) {
     var rvObserver = new IntersectionObserver(function (entries) {
       entries.forEach(function (entry) {
         if (entry.isIntersecting) { entry.target.classList.add('rv-in'); rvObserver.unobserve(entry.target); }
       });
-    }, { rootMargin: '0px 0px -12% 0px', threshold: 0.15 });
+    }, { rootMargin: '0px 0px -10% 0px', threshold: 0.1 });
     all('.rv', function (el) { el.classList.add('rv-js'); rvObserver.observe(el); });
   }
 
@@ -125,20 +118,6 @@
     setHdr();
   }
 
-  /* ---------- Hero-parallax (desktop, subtiel; GSAP alleen als aanwezig) ---------- */
-  if (!reduceMotion && window.matchMedia('(min-width: 900px)').matches) {
-    window.addEventListener('load', function () {
-      if (!window.gsap || !window.ScrollTrigger) return;
-      var heroWrap = document.querySelector('.hero .scene-wrap');
-      if (!heroWrap) return;
-      window.gsap.registerPlugin(window.ScrollTrigger);
-      window.gsap.to(heroWrap, {
-        y: 26, ease: 'none',
-        scrollTrigger: { trigger: '.hero', start: 'top top', end: 'bottom top', scrub: true }
-      });
-    });
-  }
-
   /* ---------- Navigatie: burger + full-screen overlay ---------- */
   var burger = document.querySelector('[data-nav-toggle]');
   if (burger) {
@@ -153,180 +132,129 @@
     document.addEventListener('keydown', function (e) { if (e.key === 'Escape') setNav(false); });
   }
 
-  /* ---------- Odometer-ticker (patroon: Number Ticker) ----------
-     Elk cijfer een eigen rolkolom (0–9); alleen wijzigende cijfers
-     bewegen. `stagger` laat bij binnenkomst het grootste cijfer
-     eerst vertrekken (cascade), daarna niet meer. */
-  function makeOdo(container, fast) {
-    container.classList.add('odo');
-    if (fast) container.classList.add('odo--fast');
-    var slots = [];
-    function build(str) {
-      container.innerHTML = '';
-      slots = [];
-      /* De rolkolommen zijn decoratie; het aria-label op de container spreekt. */
-      str.split('').forEach(function (ch) {
-        if (/\d/.test(ch)) {
-          var d = document.createElement('span'); d.className = 'odo-d';
-          d.setAttribute('aria-hidden', 'true');
-          var col = document.createElement('span'); col.className = 'odo-col';
-          for (var n = 0; n < 10; n++) { var b = document.createElement('b'); b.textContent = n; col.appendChild(b); }
-          d.appendChild(col);
-          container.appendChild(d);
-          slots.push({ digit: true, col: col, val: 0 });
-        } else {
-          var s = document.createElement('span'); s.className = 'odo-sep'; s.textContent = ch;
-          s.setAttribute('aria-hidden', 'true');
-          container.appendChild(s);
-          slots.push({ digit: false, ch: ch });
-        }
-      });
-    }
-    return {
-      set: function (str, stagger) {
-        var pattern = str.replace(/\d/g, '0');
-        var current = slots.map(function (s) { return s.digit ? '0' : s.ch; }).join('');
-        if (pattern !== current) build(str);
-        var digits = (str.match(/\d/g) || []).length;
-        var di = 0;
-        str.split('').forEach(function (ch, i) {
-          var slot = slots[i];
-          if (!slot.digit) return;
-          var n = parseInt(ch, 10);
-          var pos = di++;
-          if (slot.val === n) return;
-          slot.val = n;
-          var apply = function () { slot.col.style.transform = 'translateY(-' + n + 'em)'; };
-          if (stagger && !reduceMotion) setTimeout(apply, (pos / Math.max(1, digits)) * 600);
-          else apply();
-        });
-      }
-    };
-  }
-
-  /* ---------- Urgentiebalk: aftellen naar 1 januari 2027 ---------- */
+  /* ---------- Urgentiebalk: dagen tot 1 januari 2027 (statisch per pageview) ---------- */
+  var TARGET = new Date('2027-01-01T00:00:00').getTime();
+  var daysLeft = String(Math.max(0, Math.floor((TARGET - Date.now()) / 86400000)));
   var daysEl = document.querySelector('[data-count-days]');
-  var clockEl = document.querySelector('[data-count-clock]');
-  if (daysEl) {
-    var TARGET = new Date('2027-01-01T00:00:00').getTime();
-    var pad = function (n) { return String(n).padStart(2, '0'); };
-    daysEl.textContent = '';
-    daysEl.setAttribute('role', 'img');
-    var daysOdo = makeOdo(daysEl, false);
-    var clockOdo = clockEl ? makeOdo(clockEl, true) : null;
-    /* Toon vast nullen tot de balk in beeld komt; de cascade rolt ze dan naar de echte stand. */
-    daysOdo.set(String(Math.max(0, Math.floor((TARGET - Date.now()) / 86400000))).replace(/\d/g, '0'));
-    var tick = function (stagger) {
-      var diff = Math.max(0, TARGET - Date.now());
-      var days = String(Math.floor(diff / 86400000));
-      daysOdo.set(days, stagger);
-      daysEl.setAttribute('aria-label', days + ' dagen');
-      if (clockOdo) {
-        var rest = diff % 86400000;
-        clockOdo.set(pad(Math.floor(rest / 3600000)) + ':' + pad(Math.floor(rest % 3600000 / 60000)) + ':' + pad(Math.floor(rest % 60000 / 1000)));
-      }
-    };
-    var started = false;
-    var startCountdown = function () {
-      if (started) return; started = true;
-      tick(true); /* entree: cascade van groot naar klein cijfer */
-      setInterval(function () { tick(false); }, 1000);
-    };
-    if ('IntersectionObserver' in window && !reduceMotion) {
-      new IntersectionObserver(function (entries, obs) {
-        if (entries.some(function (en) { return en.isIntersecting; })) { startCountdown(); obs.disconnect(); }
-      }, { threshold: 0.4 }).observe(daysEl);
-    } else { startCountdown(); }
+  if (daysEl) { daysEl.textContent = daysLeft; daysEl.setAttribute('aria-label', daysLeft + ' dagen'); }
+  document.querySelectorAll('[data-count-days-2]').forEach(function (el) { el.textContent = daysLeft; });
+  /* Voortgangslijn: verstreken deel van 1 jan 2025 → 1 jan 2027 (één keer gezet) */
+  var urgencyBar = document.querySelector('[data-urgency-progress]');
+  if (urgencyBar) {
+    var U_START = new Date('2025-01-01T00:00:00').getTime();
+    var pct = Math.min(1, Math.max(0, (Date.now() - U_START) / (TARGET - U_START)));
+    urgencyBar.style.setProperty('--urgency-pct', String(pct));
   }
 
-  /* ---------- Impact-indicator (bewust GEEN calculator) ----------
-     Toont nooit een eurobedrag of berekening; het contrast tussen
-     "Zonder actie" (rood, dalend) en "Met batterij + EMS" (goud,
-     stijgend) vertelt het verhaal. Panelen en dagverbruik zijn
-     alleen context voor het gesprek, er wordt niets mee gerekend.
-     De exacte cijfers horen in het adviesgesprek thuis. ---------- */
-  var panelsInput = document.getElementById('calc-panels');
-  if (panelsInput) {
-    var IMPACT = {
-      zonder: {
-        text: 'Uw zonnestroom verliest aanzienlijk aan waarde',
-        sub: 'Per 1 januari 2027 vervalt de salderingsregeling'
-      },
-      met: {
-        text: 'Uw zonnestroom behoudt vrijwel de volle waarde',
-        sub: 'Inclusief extra inkomen via energiemanagement'
+  /* ---------- Sticky mobiele CTA: pas tonen ná de hero ---------- */
+  var mobileCta = document.querySelector('.mobile-cta');
+  var heroEl = document.querySelector('.hero');
+  if (mobileCta && heroEl && 'IntersectionObserver' in window) {
+    new IntersectionObserver(function (entries) {
+      entries.forEach(function (en) { mobileCta.classList.toggle('is-visible', !en.isIntersecting && en.boundingClientRect.bottom < 0); });
+    }, { threshold: 0 }).observe(heroEl);
+  }
+
+  /* ---------- Adres-check ---------- */
+  var pcInput = document.querySelector('[data-addr-pc]');
+  if (pcInput) {
+    var nrInput = document.querySelector('[data-addr-nr]');
+    var checkBtn = document.querySelector('[data-addr-check]');
+    var resultBox = document.querySelector('[data-addr-result]');
+    var addrEl = document.querySelector('[data-addr-address]');
+    var checking = false;
+    var pcOk = function () { return /^\s*\d{4}\s*[a-zA-Z]{2}\s*$/.test(pcInput.value) && nrInput.value.trim(); };
+    /* De adrescheck is optioneel: de knop staat nooit disabled (de
+       calculator werkt sowieso zonder adres). Ongeldige invoer wordt
+       pas bij het klikken gemarkeerd. */
+    var refresh = function () { checkBtn.disabled = checking; };
+    var clearInvalid = function () { pcInput.removeAttribute('aria-invalid'); nrInput.removeAttribute('aria-invalid'); };
+    pcInput.addEventListener('input', clearInvalid);
+    nrInput.addEventListener('input', clearInvalid);
+    checkBtn.addEventListener('click', function () {
+      if (checking) return;
+      if (!pcOk()) {
+        var pcValid = /^\s*\d{4}\s*[a-zA-Z]{2}\s*$/.test(pcInput.value);
+        pcInput.setAttribute('aria-invalid', String(!pcValid));
+        nrInput.setAttribute('aria-invalid', String(!nrInput.value.trim()));
+        (pcValid ? nrInput : pcInput).focus();
+        return;
       }
-    };
-    var view = 'zonder';
-    var resultCard = document.querySelector('[data-calc-result]');
-    var panelsEl = document.querySelector('[data-calc-panels]');
-    var countEl = document.querySelector('[data-calc-count]');
-    var impactEl = document.querySelector('[data-impact]');
-    var impactText = document.querySelector('[data-impact-text]');
-    var impactSub = document.querySelector('[data-impact-sub]');
-    var toggleLine = document.querySelector('.calc-toggle-line');
+      checking = true;
+      checkBtn.textContent = 'Bezig…'; refresh();
+      resultBox.hidden = true;
+      window.SD.track('address_check');
+      setTimeout(function () {
+        checking = false;
+        checkBtn.textContent = 'Controleer'; refresh();
+        addrEl.textContent = pcInput.value.toUpperCase().replace(/\s+/g, ' ').trim() + ' ' + nrInput.value.trim();
+        resultBox.hidden = false;
+      }, 700);
+    });
+  }
 
-    var moveToggleLine = function () {
-      var active = document.querySelector('.calc-toggle button[aria-pressed="true"]');
-      if (active && toggleLine) {
-        toggleLine.style.width = active.offsetWidth + 'px';
-        toggleLine.style.transform = 'translateX(' + active.offsetLeft + 'px)';
+  /* De bespaarcheck zelf staat in js/funnel.js; die vult ook
+     window.SD.calcState voor het terugbelverzoek hieronder. */
+
+  /* ---------- Terugbelverzoek bij de calculator ----------
+     Twee velden: wie belt u en waarover. De uitkomst van de calculator gaat
+     mee in de lead, zodat de adviseur het gesprek kan voorbereiden. */
+  var cbForm = document.querySelector('[data-callback]');
+  if (cbForm) {
+    var cbPhone = cbForm.querySelector('[data-cb-phone]');
+    var cbEmail = cbForm.querySelector('[data-cb-email]');
+    var cbNote = cbForm.querySelector('[data-cb-note]');
+    var cbDefaultNote = cbNote.textContent;
+
+    var phoneOk = function (v) { return v.replace(/[^0-9]/g, '').length >= 10; };
+    var mailOk = function (v) { return /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(v); };
+
+    var flag = function (el, ok) {
+      if (ok) el.removeAttribute('aria-invalid'); else el.setAttribute('aria-invalid', 'true');
+      return ok;
+    };
+
+    cbForm.addEventListener('submit', function (e) {
+      e.preventDefault();
+      var phone = cbPhone.value.trim();
+      var email = cbEmail.value.trim();
+      var okPhone = flag(cbPhone, phoneOk(phone));
+      var okMail = flag(cbEmail, mailOk(email));
+      if (!okPhone || !okMail) {
+        cbNote.setAttribute('data-state', 'error');
+        cbNote.textContent = !okPhone
+          ? 'Vul een geldig telefoonnummer in, dan bellen wij u.'
+          : 'Vul een geldig e-mailadres in.';
+        (okPhone ? cbEmail : cbPhone).focus();
+        return;
       }
-    };
+      cbNote.removeAttribute('data-state');
+      cbNote.textContent = cbDefaultNote;
 
-    var renderPanels = function () {
-      var n = parseInt(panelsInput.value, 10);
-      panelsEl.textContent = n;
-      countEl.textContent = n;
-    };
-
-    var applyImpact = function () {
-      impactText.textContent = IMPACT[view].text;
-      impactSub.textContent = IMPACT[view].sub;
-    };
-
-    var fadeTimer = null;
-    var setView = function (v, animate) {
-      view = v;
-      resultCard.setAttribute('data-view', v);
-      all('.calc-toggle button', function (b) {
-        b.setAttribute('aria-pressed', String(b.getAttribute('data-calc-view') === v));
+      var calc = window.SD.calcState ? window.SD.calcState() : {};
+      window.SD.track('lead_capture', { via: 'calculator' });
+      window.SD.lead({
+        schema: 'sd.lead.v1',
+        type: 'callback_request',
+        ref: 'SD-BEL-' + Date.now().toString(36).toUpperCase().slice(-6),
+        createdAt: new Date().toISOString(),
+        contact: { email: email, phone: phone },
+        calculator: calc,
+        consent: { privacyNotice: true, callback: true },
+        source: { page: location.pathname, utm: (window.SD.utm || {}) }
       });
-      moveToggleLine();
-      if (animate && !reduceMotion) {
-        /* Cross-fade: uit (150ms), tekst wisselen, weer in. */
-        clearTimeout(fadeTimer);
-        impactEl.classList.add('impact--fading');
-        fadeTimer = setTimeout(function () {
-          applyImpact();
-          impactEl.classList.remove('impact--fading');
-        }, 150);
-      } else {
-        applyImpact();
-      }
-    };
 
-    /* Slider is context, geen invoer voor een berekening. */
-    var sliderTrackTimer = null;
-    panelsInput.addEventListener('input', function () {
-      renderPanels();
-      clearTimeout(sliderTrackTimer);
-      sliderTrackTimer = setTimeout(function () { window.SD.track('indicator-slider'); }, 200);
+      cbForm.innerHTML = '<p class="callback-done">Bedankt, wij bellen u binnen één werkdag op ' +
+        phone.replace(/[<>&]/g, '') + ' met de doorrekening voor uw woning.</p>';
     });
+  }
 
-    all('[data-calc-usage] button', function (btn) {
-      btn.addEventListener('click', function () {
-        all('[data-calc-usage] button', function (b) { b.setAttribute('aria-checked', String(b === btn)); });
-      });
+  /* ---------- Transparantie-uitklapper: tracken bij openen ---------- */
+  var transparency = document.querySelector('[data-transparency]');
+  if (transparency) {
+    transparency.addEventListener('toggle', function () {
+      if (transparency.open) window.SD.track('transparency_open');
     });
-
-    all('.calc-toggle button', function (btn) {
-      btn.addEventListener('click', function () { setView(btn.getAttribute('data-calc-view'), true); });
-    });
-
-    window.addEventListener('resize', moveToggleLine);
-    renderPanels();
-    setView('zonder', false);
   }
 
   /* ---------- FAQ-accordion (één open tegelijk) ---------- */
@@ -348,56 +276,14 @@
     });
   });
 
-  /* ---------- Brief thuis / lead capture ---------- */
-  var leadEmail = document.querySelector('[data-lead-email]');
-  if (leadEmail) {
-    var leadSend = document.querySelector('[data-lead-send]');
-    var submitLead = function () {
-      if (!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(leadEmail.value.trim())) {
-        leadEmail.focus();
-        leadEmail.setAttribute('aria-invalid', 'true');
-        return;
-      }
-      leadEmail.removeAttribute('aria-invalid');
-      window.SD.track('lead_capture');
-      window.SD.lead({
-        schema: 'sd.lead.v1',
-        type: 'info_request',
-        ref: 'SD-INFO-' + Date.now().toString(36).toUpperCase().slice(-6),
-        createdAt: new Date().toISOString(),
-        contact: { email: leadEmail.value.trim() },
-        consent: { privacyNotice: true, infoEmail: true },
-        source: { page: location.pathname, utm: window.SD.utm || {} }
-      });
-      document.querySelector('[data-lead-form]').hidden = true;
-      document.querySelector('[data-lead-sent]').hidden = false;
-    };
-    leadSend.addEventListener('click', submitLead);
-    leadEmail.addEventListener('keydown', function (e) { if (e.key === 'Enter') { e.preventDefault(); submitLead(); } });
-  }
-
-  /* ---------- Zwevend contact (mobiele FAB) ----------
-     Op mobiel tonen we de subknoppen 3 seconden en vouwen dan samen
-     tot één knop; scrollen vouwt ook meteen samen (minder schermruimte). */
+  /* ---------- Zwevend contact (mobiele FAB) ---------- */
   var fabToggle = document.querySelector('[data-fab-toggle]');
   if (fabToggle) {
-    var floating = document.querySelector('[data-floating]');
-    var setFab = function (open) {
-      floating.classList.toggle('open', open);
-      fabToggle.setAttribute('aria-expanded', String(open));
-    };
     fabToggle.addEventListener('click', function () {
-      setFab(!floating.classList.contains('open'));
+      var floating = document.querySelector('[data-floating]');
+      var open = floating.classList.toggle('open');
+      fabToggle.setAttribute('aria-expanded', String(open));
     });
-    var isMobile = window.matchMedia('(max-width: 767.5px)').matches;
-    if (isMobile && !reduceMotion) {
-      setFab(true);
-      var fabTimer = setTimeout(function () { setFab(false); }, 3000);
-      window.addEventListener('scroll', function () {
-        clearTimeout(fabTimer);
-        if (floating.classList.contains('open')) setFab(false);
-      }, { passive: true });
-    }
   }
 
   /* ---------- Digitale adviseur (chat) ---------- */
@@ -430,7 +316,7 @@
 
     /* Backend: /api/chat (Vercel function → Kimi/Moonshot AI). De systemprompt en
        kennis leven server-side; hier gaat alleen de gespreksgeschiedenis heen. */
-    var CHAT_FALLBACK = 'De digitale adviseur is hier even niet beschikbaar. Plan gerust een gratis adviesgesprek of app ons via WhatsApp, we helpen u graag persoonlijk verder.';
+    var CHAT_FALLBACK = 'De adviseur is hier even niet beschikbaar. Plan gerust een kosteloos adviesgesprek of app ons via WhatsApp, we helpen u graag persoonlijk verder.';
     var runChat = function () {
       var q = chatInput.value.trim();
       if (!q || chatLoading) return;
@@ -485,5 +371,115 @@
     };
     cookieBar.querySelector('[data-cookie-all]').addEventListener('click', function () { choose('all', 'consent_all'); });
     cookieBar.querySelector('[data-cookie-necessary]').addEventListener('click', function () { choose('necessary'); });
+  }
+})();
+
+/* ------------------------------------------------------------
+   Adviseurs-carrousel: de pijlen schuiven precies één kaart op
+   en lopen aan het eind door naar het begin.
+   ------------------------------------------------------------ */
+(function () {
+  'use strict';
+  var carousel = document.querySelector('[data-team-carousel]');
+  if (!carousel) return;
+  var track = carousel.querySelector('[data-team-track]');
+  var prev = carousel.querySelector('[data-team-prev]');
+  var next = carousel.querySelector('[data-team-next]');
+  if (!track || !prev || !next) return;
+
+  function step() {
+    var slide = track.querySelector('.team-slide');
+    return slide ? Math.round(slide.getBoundingClientRect().width) + 11 : track.clientWidth;
+  }
+
+  function go(dir) {
+    var max = Math.max(0, track.scrollWidth - track.clientWidth);
+    var target = track.scrollLeft + dir * step();
+    if (dir > 0 && track.scrollLeft >= max - 2) target = 0;
+    else if (dir < 0 && track.scrollLeft <= 2) target = max;
+    target = Math.max(0, Math.min(max, target));
+    if (track.scrollTo) track.scrollTo({ left: target, behavior: 'smooth' });
+    else track.scrollLeft = target;
+  }
+
+  prev.addEventListener('click', function () { go(-1); });
+  next.addEventListener('click', function () { go(1); });
+})();
+
+/* ------------------------------------------------------------
+   Eerlijk verhaal: de drie punten schuiven vanzelf door.
+   Zonder JS of met prefers-reduced-motion blijven ze gewoon
+   onder elkaar staan; pas hier zetten we de slidermodus aan.
+   De balkjes eronder lopen mee als voortgang en zijn klikbaar.
+   Loopt alleen wanneer de sectie in beeld is en pauzeert bij
+   muis, toetsenbordfocus of een verborgen tab.
+   ------------------------------------------------------------ */
+(function () {
+  'use strict';
+  var slider = document.querySelector('[data-verhaal-slider]');
+  if (!slider) return;
+  if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
+  var slides = Array.prototype.slice.call(slider.querySelectorAll('[data-verhaal-slides] > li'));
+  var tabs = Array.prototype.slice.call(slider.querySelectorAll('.verhaal-tab'));
+  if (slides.length < 2 || tabs.length !== slides.length) return;
+
+  var DUUR = 6000;
+  var index = 0, elapsed = 0, vorige = null, raf = null, gepauzeerd = false;
+
+  function vul(deel) {
+    tabs.forEach(function (tab, i) {
+      var fill = tab.querySelector('.verhaal-tab-fill');
+      if (fill) fill.style.transform = 'scaleX(' + (i < index ? 1 : i === index ? deel : 0) + ')';
+    });
+  }
+
+  function toon(i) {
+    index = (i + slides.length) % slides.length;
+    elapsed = 0;
+    slides.forEach(function (li, n) { li.classList.toggle('is-active', n === index); });
+    tabs.forEach(function (tab, n) {
+      if (n === index) tab.setAttribute('aria-current', 'true');
+      else tab.removeAttribute('aria-current');
+    });
+    vul(0);
+  }
+
+  function stap(ts) {
+    if (vorige === null) vorige = ts;
+    var dt = ts - vorige;
+    vorige = ts;
+    if (!gepauzeerd && !document.hidden) {
+      elapsed += dt;
+      if (elapsed >= DUUR) toon(index + 1);
+      else vul(elapsed / DUUR);
+    }
+    raf = requestAnimationFrame(stap);
+  }
+
+  function start() { if (raf === null) { vorige = null; raf = requestAnimationFrame(stap); } }
+  function stop() { if (raf !== null) { cancelAnimationFrame(raf); raf = null; } }
+
+  slider.classList.add('is-slider');
+  toon(0);
+
+  tabs.forEach(function (tab, i) {
+    tab.addEventListener('click', function () { toon(i); vorige = null; });
+  });
+  slider.addEventListener('mouseenter', function () { gepauzeerd = true; });
+  slider.addEventListener('mouseleave', function () { gepauzeerd = false; vorige = null; });
+  slider.addEventListener('focusin', function () { gepauzeerd = true; });
+  slider.addEventListener('focusout', function () { gepauzeerd = false; vorige = null; });
+  /* Na een verborgen tab niet in één klap een slide doorspringen. */
+  document.addEventListener('visibilitychange', function () { vorige = null; });
+
+  if ('IntersectionObserver' in window) {
+    new IntersectionObserver(function (entries) {
+      entries.forEach(function (e) {
+        if (e.isIntersecting) start(); else stop();
+      });
+    }, { threshold: 0.25 }).observe(slider);
+  } else {
+    start();
   }
 })();

@@ -4,26 +4,22 @@
    Draait identiek op de eigen pagina (index.html) en in het
    embedbare widget (widget.html via js/embed.js op partnersites).
 
-   Flow: DRIE stappen. De zes kwalificatiepunten ("6 van Succes")
-   worden uit de antwoorden afgeleid en server-side beoordeeld:
-     1. Onderwerp & afspraak → productinteresse, woningtype,
-                               datum/tijd/duur (1,5 uur)
-     2. Uw gegevens          → contact, adres, beide beslissers,
-                               leeftijd (+ eigen middelen bij 75+),
-                               verwachtingspatroon
-     3. Bevestiging          → samenvatting, agenda, verzenden
-   De boeking gaat ALTIJD door; een afwijkend antwoord is een FLAG
-   voor de planner (partner_afwezig, leeftijd_75_plus_onzeker,
-   huur_of_anders), nooit een blokkade of afwijzing in de UI.
-   De bevestiging is voor iedereen identiek.
+   Flow: zes korte stappen, één vraag per scherm. De zes
+   kwalificatiepunten ("6 van Succes") zijn verweven in stappen
+   die de bezoeker toch al doorloopt:
+     1. Moment    (datum + tijd, geen persoonsgegevens: laagste drempel)
+     2. Gegevens  (naam, e-mail, telefoon)
+     3. Situatie  (alle kwalificatievragen + verwachtingspatroon + verzenden)
+   De boeking gaat ALTIJD door; de kwalificatie bepaalt alleen de
+   interne status: 'warm_gekwalificeerd' of 'niet_gekwalificeerd'.
 
    Uitkanalen per bevestigde afspraak:
    1. localStorage 'sd_adviesgesprek' + wachtrij 'sd_lead_queue'
    2. CustomEvent 'sd:lead' (via SD.lead in motion.js)
-   3. POST naar SD_CONFIG.bookingEndpoint (default /api/bookings);
-      het antwoord bepaalt de succes-/foutmelding op stap 3.
-   Concept-invoer staat in localStorage 'sd_booking_draft' en wordt
-   tot 24 uur hersteld (met melding, nooit auto-submit).
+   3. POST naar SD_CONFIG.bookingEndpoint (default /api/bookings)
+   4. optionele POST naar SD_CONFIG.leadEndpoint (webhook/CRM)
+   Beschikbaarheid is nog een stub (10 werkdagen vooruit):
+   vervang fetchAvailability() door een echte bron bij livegang.
    Let op: nooit toISOString() voor lokale datums (CET-verschuiving).
    ============================================================ */
 (function () {
@@ -35,9 +31,6 @@
   var SD = window.SD || { track: function () {}, fire: function () {}, utm: {} };
   var CFG = window.SD_CONFIG || {};
   var DURATION_MIN = 90; /* het gesprek duurt ± 1,5 uur */
-  var DRAFT_KEY = 'sd_booking_draft';
-  var DRAFT_MAX_AGE = 24 * 60 * 60 * 1000;
-  var reduceMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
   /* ---------- Context: eigen pagina of embed ---------- */
   var inIframe = false;
@@ -49,19 +42,19 @@
   /* ---------- State ---------- */
   var state = {
     step: 1,
-    products: [],            /* criterium 1: productinteresse */
-    woning: null,            /* criterium 6: woningtype */
-    dateIso: null, time: null, /* criterium 5: moment (duur vast 1,5 uur) */
-    naam: '', email: '', tel: '', postcode: '', huisnummer: '',
-    partner: null,           /* criterium 2: 'alleen' | 'samen' | 'partner_afwezig' */
-    leeftijd: null,          /* criterium 3: '<75' | '75+' */
-    invest: null,            /* criterium 3: 'ja' | 'nee' (alleen bij 75+) */
-    verwachting: false,      /* criterium 4: verwachtingspatroon bevestigd */
-    sendInfo: false,
+    interests: [],            /* 1. productinteresse */
+    woning: null,             /* 2. 'koop' | 'huur' */
+    dateIso: null, time: null,/* 3. moment */
+    mode: 'thuis',            /* 4. locatie */
+    partner: null,            /* 4. 'samen' | 'partner_afwezig' | 'alleen' */
+    jonger75: null,           /* 5. true | false */
+    eigenMiddelen: null,      /* 5. true | false | null (alleen relevant bij 75+) */
+    verwachting: false,       /* 6. verwachtingspatroon begrepen */
+    naam: '', email: '', tel: '', briefcode: '', sendInfo: false,
     view: 'form', bookingRef: '', softLeadSaved: false
   };
   var STEPS = 3;
-  var STEP_LABELS = ['Onderwerp en afspraak', 'Uw gegevens', 'Bevestiging'];
+  var STEP_LABELS = ['Moment', 'Gegevens', 'Uw situatie'];
 
   /* ---------- Hulpfuncties ---------- */
   function pad2(n) { return String(n).padStart(2, '0'); }
@@ -75,212 +68,152 @@
   function cap(s) { return s.replace(/^\w/, function (c) { return c.toUpperCase(); }); }
   function esc(s) { return String(s).replace(/[&<>"']/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]; }); }
 
-  /* ---------- Opties ---------- */
-  var PRODUCTS = [
+  /* Vrije datumkeuze: morgen tot 6 maanden vooruit */
+  function generateAvailableDates() {
+    var out = []; var d = new Date(); d.setHours(0, 0, 0, 0);
+    d.setDate(d.getDate() + 1); /* start morgen */
+    var end = new Date(d); end.setMonth(end.getMonth() + 6);
+    while (d < end) {
+      out.push(localIso(d));
+      d.setDate(d.getDate() + 1);
+    }
+    return out;
+  }
+  /* Halfuursloten 09:00 tot 17:00 (17 sloten) */
+  function generateHalfHourSlots() {
+    var slots = []; var h = 9, m = 0;
+    while (h < 17 || (h === 17 && m === 0)) {
+      slots.push(pad2(h) + ':' + pad2(m));
+      m += 30;
+      if (m >= 60) { h++; m = 0; }
+    }
+    return slots;
+  }
+  var availableDates = generateAvailableDates();
+  var TIMES = generateHalfHourSlots();
+  var slots = []; /* niet meer gebruikt */
+
+  var INTERESTS = [
     { id: 'zonnepanelen', t: 'Zonnepanelen na 2027' },
     { id: 'thuisbatterij', t: 'Thuisbatterij' },
-    { id: 'warmtepomp', t: 'Warmtepomp' },
-    { id: 'ems', t: 'Slim energiemanagement (EMS)' },
-    { id: 'weet_niet', t: 'Weet ik nog niet' }
+    { id: 'warmtepomp', t: 'Warmtepomp' }
   ];
-  var WONING = [
-    { id: 'koopwoning', t: 'Koopwoning' },
-    { id: 'huurwoning', t: 'Huurwoning' },
-    { id: 'appartement_eigendom', t: 'Appartement (eigendom)' },
-    { id: 'anders', t: 'Anders' }
-  ];
+  var WONING = [{ id: 'koop', t: 'Koopwoning' }, { id: 'huur', t: 'Huurwoning' }];
+  var MODES = [{ id: 'thuis', t: 'Bij mij thuis' }, { id: 'online', t: 'Online' }];
   var PARTNER = [
-    { id: 'alleen', t: 'Ik woon alleen' },
-    { id: 'samen', t: 'Ik woon samen, partner is aanwezig' },
-    { id: 'partner_afwezig', t: 'Ik woon samen, partner is niet aanwezig' }
+    { id: 'samen', t: 'Ja, en die is bij het gesprek' },
+    { id: 'partner_afwezig', t: 'Ja, maar die kan er niet bij zijn' },
+    { id: 'alleen', t: 'Nee, ik beslis alleen' }
   ];
-  var LEEFTIJD = [
-    { id: '<75', t: 'Jonger dan 75 jaar', track: 'jonger75' },
-    { id: '75+', t: '75 jaar of ouder', track: '75plus' }
-  ];
-  var INVEST = [
-    { id: 'ja', t: 'Ja', track: 'invest_ja' },
-    { id: 'nee', t: 'Nee / Weet ik niet', track: 'invest_nee' }
-  ];
-  var TIMES = ['09:00', '10:30', '13:00', '14:30', '16:00', '19:00', '20:30'];
+  var JA_NEE = [{ id: 'ja', t: 'Ja' }, { id: 'nee', t: 'Nee' }];
+  var MIDDELEN = [{ id: 'ja', t: 'Ja' }, { id: 'nee', t: 'Nee / weet ik nog niet' }];
 
-  function productLabels() {
-    return state.products.map(function (id) {
-      var p = PRODUCTS.filter(function (x) { return x.id === id; })[0];
-      return p ? p.t : id;
-    }).join(', ');
-  }
-  function optLabel(list, id) {
-    var o = list.filter(function (x) { return x.id === id; })[0];
-    return o ? o.t : '';
-  }
-
-  /* Datumgrenzen: alleen toekomstige dagen, maximaal 60 dagen vooruit. */
-  var today = new Date(); today.setHours(0, 0, 0, 0);
-  var minDate = new Date(today); minDate.setDate(minDate.getDate() + 1);
-  var maxDate = new Date(today); maxDate.setDate(maxDate.getDate() + 60);
-
-  function validDate(iso) {
-    if (!iso || !/^\d{4}-\d{2}-\d{2}$/.test(iso)) return false;
-    var d = new Date(iso + 'T00:00:00');
-    return !isNaN(d) && d >= minDate && d <= maxDate;
-  }
   function validEmail() { return /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(state.email.trim()); }
-  function validTel() { return (state.tel.match(/\d/g) || []).length >= 10; }
-  function validPostcode() { return /^\d{4}\s?[a-zA-Z]{2}$/.test(state.postcode.trim()); }
-  function hasDT() { return validDate(state.dateIso) && !!state.time; }
+  function hasDT() { return !!(state.dateIso && state.time); }
 
-  /* ---------- Kwalificatie ("6 van Succes") + flags ---------- */
-  function buildFlags() {
-    return {
-      partner_afwezig: state.partner === 'partner_afwezig',
-      leeftijd_75_plus_onzeker: state.leeftijd === '75+' && state.invest !== 'ja',
-      huur_of_anders: state.woning === 'huurwoning' || state.woning === 'anders'
-    };
-  }
+  /* ---------- Kwalificatie ("6 van Succes") ---------- */
   function buildQualification() {
     return {
-      productinteresse: state.products.slice(),
-      woningtype: state.woning,
-      koopwoning: state.woning === 'koopwoning' || state.woning === 'appartement_eigendom',
-      afspraakBevestigd: hasDT(),
+      productinteresse: state.interests.slice(),
+      koopwoning: state.woning === 'koop',
+      afspraakBevestigd: hasDT() && state.verwachting !== null,
       beideBeslissersAanwezig: state.partner === 'samen' || state.partner === 'alleen',
       partnerSituatie: state.partner,
-      jongerDan75: state.leeftijd === '<75',
-      eigenInvestering: state.leeftijd === '75+' ? state.invest === 'ja' : null,
+      jongerDan75: state.jonger75 === true,
+      eigenInvestering: state.jonger75 === false ? state.eigenMiddelen === true : null,
       verwachtingBegrepen: !!state.verwachting,
-      durationMin: DURATION_MIN,
-      flags: buildFlags()
+      durationMin: DURATION_MIN
     };
   }
-  /* Indicatief; de server leidt de status opnieuw af en is leidend. */
   function deriveStatus(q) {
-    var c1 = q.productinteresse.length > 0;
-    var c2 = q.beideBeslissersAanwezig;
-    var c3 = q.jongerDan75 || q.eigenInvestering === true;
-    var c4 = q.verwachtingBegrepen;
-    var c5 = q.afspraakBevestigd;
-    var c6 = q.koopwoning;
-    if (c1 && c2 && c3 && c4 && c5 && c6) return 'warm_gekwalificeerd';
-    if (c1 && c5 && c6 && (c2 || c3 || c4)) return 'te_kwalificeren';
-    if (c1 || c5) return 'te_kwalificeren';
-    return 'niet_gekwalificeerd';
+    var ok = q.productinteresse.length > 0 &&
+      q.koopwoning &&
+      q.afspraakBevestigd &&
+      q.beideBeslissersAanwezig &&
+      (q.jongerDan75 || q.eigenInvestering === true) &&
+      q.verwachtingBegrepen;
+    return ok ? 'warm_gekwalificeerd' : 'niet_gekwalificeerd';
   }
 
   /* ---------- Template ---------- */
-  function fieldError(msg) {
-    return '<p class="bfield-error" role="alert" aria-live="polite" hidden>' + esc(msg) + '</p>';
+  function chipsHtml(name, extraClass) {
+    return '<div class="chips' + (extraClass ? ' ' + extraClass : '') + '" data-bk="' + name + '"></div>';
   }
   mount.innerHTML =
     '<div class="book-view" data-view="form">' +
       '<div class="book-flow">' +
-        '<div class="book-restore" data-bk="restore" role="status" hidden>' +
-          '<span>Uw eerdere invoer is hersteld. Controleer de gegevens.</span>' +
-          '<button type="button" data-bk="restoreclose" aria-label="Melding sluiten">&times;</button>' +
-        '</div>' +
-        '<div class="bprogress">' +
+        '<div class="bprogress" aria-hidden="false">' +
           '<div class="bprogress-top"><span class="bprogress-label" data-bk="steplabel">Stap 1 van ' + STEPS + '</span><span class="bprogress-name" data-bk="stepname"></span></div>' +
-          '<div class="bprogress-seg" aria-hidden="true"><span data-seg="1"></span><span data-seg="2"></span><span data-seg="3"></span></div>' +
+          '<div class="bprogress-track"><div class="bprogress-fill" data-bk="fill"></div></div>' +
         '</div>' +
 
-        /* ===== STAP 1: Onderwerp & afspraak ===== */
+        /* Stap 1 zet de laagste drempel: een moment kiezen kost niets en
+           vraagt nog geen enkel persoonsgegeven. */
         '<div class="bstep" data-bstep="1">' +
-          '<div class="bfield" data-field="products">' +
-            '<div class="bfield-label" id="bkq-products">Waar wilt u advies over?</div>' +
-            '<div class="bfield-sub">Meerdere opties mogelijk</div>' +
-            '<div class="chips" role="group" aria-labelledby="bkq-products" data-bk="products"></div>' +
-            fieldError('Selecteer minimaal een onderwerp.') +
-          '</div>' +
-          '<fieldset class="bfield" data-field="woning">' +
-            '<legend class="bfield-label">Woont u in een...</legend>' +
-            '<div class="bradios bradios--row" data-bk="woning"></div>' +
-            '<p class="bfield-flag" data-bk="woningflag" hidden>In sommige gevallen is advies ook mogelijk bij huurwoningen. Onze planner neemt contact met u op om dit te bespreken.</p>' +
-            fieldError('Selecteer uw woningtype.') +
-          '</fieldset>' +
-          '<div class="bfield" data-field="moment">' +
-            '<div class="bfield-label" id="bkq-moment">Wanneer schikt het u?</div>' +
-            '<div class="bfield-sub">Het gesprek duurt ongeveer 1,5 uur</div>' +
-            '<label class="bdate"><span>Datum</span>' +
-              '<input type="date" class="field" data-bk="date" min="' + localIso(minDate) + '" max="' + localIso(maxDate) + '" aria-describedby="bkq-moment">' +
-            '</label>' +
-            '<div class="chips chips--times" role="group" aria-label="Tijd" data-bk="times"></div>' +
-            '<p class="bstep-note">Het adviesgesprek werkt het beste wanneer beide beslissers aanwezig zijn. Kiest u een tijd waarbij u beiden aanwezig kunt zijn.</p>' +
-            fieldError('Selecteer een datum en tijd.') +
-          '</div>' +
-          '<div class="bstep-nav"><span></span><button type="button" class="btn btn-primary" data-bnext="2" data-track="booking_step1_continue">Verder</button></div>' +
+          '<div class="book-step-label">Kies een datum</div>' +
+          '<div class="book-noslots" data-bk="noslots" hidden>Er is op dit moment geen beschikbaarheid. Laat uw gegevens achter, dan plannen wij met u in.</div>' +
+          '<div class="book-calendar-wrap" data-bk="calendar"></div>' +
+          '<div class="book-step-label" style="margin-top:26px;">Kies een tijd</div>' +
+          chipsHtml('times') +
+          '<p class="bstep-note">Reserveer ruim: het gesprek duurt ongeveer <strong>1,5 uur</strong>.</p>' +
+          '<div class="bstep-nav"><span class="bstep-hint" data-bk="hint1">Kies een datum en een tijd.</span>' +
+          '<button class="btn btn-primary" data-bnext="2" disabled>Verder</button></div>' +
         '</div>' +
 
-        /* ===== STAP 2: Uw gegevens ===== */
         '<div class="bstep" data-bstep="2" hidden>' +
-          '<div class="bfield" data-field="naam">' +
-            '<label class="bfield-label" for="bk3-naam">Uw naam</label>' +
-            '<input class="field" id="bk3-naam" data-bk="naam" placeholder="Voor- en achternaam" autocomplete="name">' +
-            fieldError('Vul uw voor- en achternaam in.') +
+          '<div class="book-step-label">Naar wie mogen wij de bevestiging sturen?</div>' +
+          '<div class="book-privacy"><span>Uw gegevens worden versleuteld verstuurd en alleen gebruikt voor het inplannen van het adviesgesprek. Zie ons <a href="privacybeleid.html" target="_blank" rel="noopener">privacybeleid</a>.</span></div>' +
+          '<div class="book-fields">' +
+            '<div class="ffield"><input class="field" data-bk="naam" id="bk-naam" placeholder=" " autocomplete="name"><label for="bk-naam">Naam</label></div>' +
+            '<div class="ffield"><input class="field" data-bk="email" id="bk-email" type="email" placeholder=" " autocomplete="email"><label for="bk-email">E-mailadres</label><small class="ffield-hint">Vul een geldig e-mailadres in, bijvoorbeeld naam@voorbeeld.nl.</small></div>' +
+            '<div class="ffield"><input class="field" data-bk="tel" id="bk-tel" type="tel" placeholder=" " autocomplete="tel"><label for="bk-tel">Telefoon (optioneel)</label></div>' +
+            '<div class="ffield"><input class="field" data-bk="briefcode" id="bk-briefcode" placeholder=" "><label for="bk-briefcode">Briefcode van uw brief (optioneel)</label></div>' +
           '</div>' +
-          '<div class="bfield" data-field="email">' +
-            '<label class="bfield-label" for="bk3-email">Uw e-mailadres</label>' +
-            '<input class="field" id="bk3-email" data-bk="email" type="email" placeholder="naam@voorbeeld.nl" autocomplete="email">' +
-            fieldError('Vul een geldig e-mailadres in.') +
-          '</div>' +
-          '<div class="bfield" data-field="tel">' +
-            '<label class="bfield-label" for="bk3-tel">Uw telefoonnummer</label>' +
-            '<input class="field" id="bk3-tel" data-bk="tel" type="tel" placeholder="06-12345678" autocomplete="tel">' +
-            fieldError('Vul een geldig telefoonnummer in.') +
-          '</div>' +
-          '<div class="bfield" data-field="adres">' +
-            '<div class="bfield-label" id="bkq-adres">Uw adres</div>' +
-            '<div class="badres" role="group" aria-labelledby="bkq-adres">' +
-              '<input class="field" data-bk="postcode" placeholder="1234 AB" autocomplete="postal-code" aria-label="Postcode">' +
-              '<input class="field" data-bk="huisnummer" placeholder="1" autocomplete="address-line1" aria-label="Huisnummer">' +
-            '</div>' +
-            fieldError('Vul een geldige postcode en huisnummer in.') +
-          '</div>' +
-          '<fieldset class="bfield" data-field="partner">' +
-            '<legend class="bfield-label">Met wie mogen wij het gesprek aangaan?</legend>' +
-            '<div class="bradios" data-bk="partner"></div>' +
-            '<p class="bfield-flag" data-bk="partnerflag" hidden>Onze planner zal u telefonisch benaderen om een geschikt moment te vinden waarop u beiden aanwezig kunt zijn.</p>' +
-            fieldError('Selecteer een optie.') +
-          '</fieldset>' +
-          '<fieldset class="bfield" data-field="leeftijd">' +
-            '<legend class="bfield-label">In welke leeftijdscategorie valt u?</legend>' +
-            '<div class="bradios bradios--row" data-bk="leeftijd"></div>' +
-            fieldError('Selecteer uw leeftijdscategorie.') +
-          '</fieldset>' +
-          '<fieldset class="bfield" data-field="invest" data-bk="investblok" hidden>' +
-            '<legend class="bfield-label">Investeringsbereidheid</legend>' +
-            '<div class="bfield-sub">Mocht er een passende oplossing uit het adviesgesprek komen, zou u dan bereid zijn om met eigen middelen te investeren in het verduurzamen van uw woning?</div>' +
-            '<div class="bradios bradios--row" data-bk="invest"></div>' +
-            '<p class="bfield-flag" data-bk="investflag" hidden>Onze planner neemt contact met u op om de mogelijkheden te bespreken.</p>' +
-            fieldError('Selecteer een optie.') +
-          '</fieldset>' +
-          '<div class="bfield" data-field="verwachting">' +
-            '<div class="bfield-label">Wat mag u verwachten?</div>' +
-            '<div class="binfo">Onze adviseur komt vrijblijvend langs om een persoonlijk advies te geven. Wanneer het advies goed voelt, kan de adviseur u ook helpen bij de uitvoering. U zit nergens aan vast.</div>' +
-            '<label class="book-optin"><input type="checkbox" data-bk="verwachting"><span>Ik begrijp dat het gesprek vrijblijvend is en dat de adviseur mij kan helpen bij de uitvoering wanneer het gevoel goed is.</span></label>' +
-            fieldError('Bevestig dat u het verwachtingspatroon heeft gelezen.') +
-          '</div>' +
-          '<label class="book-optin"><input type="checkbox" data-bk="sendinfo" data-track="booking_lead_capture_email"><span>Stuur mij ook alvast de uitleg per e-mail (vrijblijvend)</span></label>' +
-          '<div class="bstep-nav"><button type="button" class="btn btn-ghost" data-bback="1">Terug</button>' +
-          '<button type="button" class="btn btn-primary" data-bnext="3" data-track="booking_step2_continue">Verder</button></div>' +
+          '<div class="bstep-nav"><button class="btn btn-ghost" data-bback="1">Terug</button>' +
+          '<button class="btn btn-primary" data-bnext="3" disabled>Verder</button></div>' +
         '</div>' +
 
-        /* ===== STAP 3: Bevestiging ===== */
+        /* Alle kwalificatievragen staan bij elkaar in de laatste stap: op dat
+           moment staat het moment al vast en is de drempel om te stoppen hoog. */
         '<div class="bstep" data-bstep="3" hidden>' +
-          '<h3 class="bstep-title" data-bk="s3title" tabindex="-1">Controleer uw gegevens</h3>' +
-          '<div class="bsummary" data-bk="summary"></div>' +
-          '<div class="bagenda">' +
-            '<div class="bfield-label">Voeg de afspraak toe aan uw agenda</div>' +
-            '<div class="bagenda-links">' +
-              '<a class="btn btn-ghost" data-bk="ics" href="#" download="adviesgesprek-salderingsdienst.ics" data-track="booking_agenda_ics">Download .ics</a>' +
-              '<a class="btn btn-ghost" data-bk="gcal" href="#" target="_blank" rel="noopener" data-track="booking_agenda_google">Google Agenda</a>' +
-              '<a class="btn btn-ghost" data-bk="outlook" href="#" target="_blank" rel="noopener" data-track="booking_agenda_outlook">Outlook</a>' +
-            '</div>' +
+          '<div class="book-step-label">Nog een paar vragen, zodat de adviseur zich kan voorbereiden</div>' +
+
+          '<div class="bfield-group">' +
+            '<div class="bfield-label">Waar wilt u advies over?</div>' +
+            chipsHtml('interests') +
           '</div>' +
-          '<p class="bsubmit-error" data-bk="submiterror" role="alert" aria-live="polite" hidden>Er is iets misgegaan. Probeer het opnieuw of neem contact met ons op.</p>' +
-          '<button type="button" class="btn btn-primary book-submit" data-bk="submit" data-track="booking_step3_submit">Bevestig mijn adviesgesprek</button>' +
-          '<p class="book-footnote">Wij gebruiken uw gegevens alleen voor dit adviesgesprek. Zie ons <a href="privacybeleid.html" target="_blank" rel="noopener">privacybeleid</a>.</p>' +
-          '<div class="bstep-nav" style="justify-content:flex-start; border-top:none; padding-top:0; margin-top:8px;"><button type="button" class="btn btn-ghost" data-bback="2">Terug</button></div>' +
-          '<div class="book-meta"><span>KvK <span class="kvk" data-sd-kvk></span></span><span>Kosteloos &amp; vrijblijvend</span><span>Onafhankelijk advies</span></div>' +
+          '<div class="bfield-group">' +
+            '<div class="bfield-label">Woont u in een koop- of huurwoning?</div>' +
+            chipsHtml('woning') +
+            '<p class="bstep-note" data-bk="woningnote">Zo stemmen we het advies af op uw woonsituatie.</p>' +
+          '</div>' +
+          '<div class="bfield-group">' +
+            '<div class="bfield-label">Waar wilt u het gesprek?</div>' +
+            chipsHtml('modes') +
+          '</div>' +
+          '<div class="bfield-group">' +
+            '<div class="bfield-label">Beslist u samen met iemand?</div>' +
+            chipsHtml('partner', 'chips--column') +
+            '<p class="bstep-note">Beslist u samen? Plan het moment dan zo dat u er allebei bij kunt zijn; dat voorkomt een tweede gesprek.</p>' +
+          '</div>' +
+          '<div class="bfield-group">' +
+            '<div class="bfield-label">Bent u jonger dan 75?</div>' +
+            chipsHtml('jonger75') +
+            '<div data-bk="middelenblok" hidden>' +
+              '<div class="bfield-label" style="margin-top:18px;">Zou u een eventuele investering uit eigen middelen doen?</div>' +
+              chipsHtml('middelen') +
+            '</div>' +
+            '<p class="bstep-note">Sommige regelingen en financieringen zijn leeftijdsgebonden. Zo weet de adviseur wat er voor u geldt.</p>' +
+          '</div>' +
+
+          '<label class="book-optin"><input type="checkbox" data-bk="verwachting"><span>Ik weet dat de adviseur kosteloos en vrijblijvend langskomt, en dat SalderingsDienst het ook echt voor mij kan regelen als het advies past.</span></label>' +
+          '<label class="book-optin"><input type="checkbox" data-bk="sendinfo"><span>Stuur mij ook alvast de heldere uitleg over het einde van de saldering per e-mail (vrijblijvend).</span></label>' +
+          '<div class="book-summary" data-bk="summary"></div>' +
+          '<div class="book-missing" role="status" data-bk="missing" hidden><span aria-hidden="true" style="flex-shrink:0; font-weight:700;">!</span><span data-bk="missingtext"></span></div>' +
+          '<button class="btn btn-primary book-submit" data-bk="submit">Bevestig kosteloos adviesgesprek</button>' +
+          '<p class="book-footnote">U ontvangt direct een bevestiging. Wij nemen binnen 24 uur contact op. Geen account nodig.</p>' +
+          '<div class="bstep-nav" style="justify-content:flex-start; border-top:none; padding-top:0; margin-top:10px;"><button class="btn btn-ghost" data-bback="2">Terug</button></div>' +
+          '<div class="book-meta"><span>KvK <span class="kvk" data-sd-kvk></span></span><span>Kosteloos en vrijblijvend advies</span></div>' +
           '<div class="book-alt">Liever telefonisch? <a data-sd-tel data-track="call_click" href="#adviesgesprek">Bel ons</a> of <a data-sd-wa href="#adviesgesprek">app via WhatsApp</a>.</div>' +
         '</div>' +
       '</div>' +
@@ -290,13 +223,13 @@
       '<div class="confirm">' +
         '<div class="confirm-head">' +
           '<div class="confirm-glyph" aria-hidden="true">✓</div>' +
-          '<h3>Uw aanvraag is verstuurd</h3>' +
-          '<p>Bedankt, <span data-bk="cnaam"></span>. Onze planner neemt binnen 1 werkdag contact met u op om het gesprek te bevestigen. U ontvangt daarna een bevestiging per e-mail op <span data-bk="cemail"></span>.</p>' +
+          '<h3>Uw afspraak staat genoteerd</h3>' +
+          '<p>Bedankt, <span data-bk="cnaam"></span>. U ontvangt een bevestiging op <span data-bk="cemail"></span>. Wij nemen binnen 24 uur contact met u op.</p>' +
         '</div>' +
         '<div class="confirm-cards">' +
           '<div class="confirm-card">' +
-            '<div class="photo"><img src="assets/advisor-1.webp" alt="Uw adviseur" width="119" height="168" loading="lazy"></div>' +
-            '<div><div class="confirm-kicker">Uw adviseur</div><div class="confirm-strong">Mark van der Velde</div><div class="confirm-sub">Senior energieadviseur</div></div>' +
+            '<div class="photo"><img src="assets/adviseur-xavier.jpg" alt="Uw adviseur" width="560" height="832" loading="lazy"></div>' +
+            '<div><div class="confirm-kicker">Uw adviseur</div><div class="confirm-strong">Xavier Schröder</div><div class="confirm-sub">Senior energieadviseur</div></div>' +
           '</div>' +
           '<div class="confirm-card" style="gap:20px;">' +
             '<div><div class="confirm-kicker confirm-kicker--muted">Datum</div><div class="confirm-strong" style="font-size:15.5px;" data-bk="cdate"></div></div>' +
@@ -304,16 +237,20 @@
             '<div><div class="confirm-kicker confirm-kicker--muted">Duur</div><div class="confirm-strong" style="font-size:15.5px;">± 1,5 uur</div></div>' +
           '</div>' +
         '</div>' +
+        '<div class="confirm-block"><div class="confirm-block-label">Wat kunt u verwachten</div><ul>' +
+          '<li>Een eerlijke analyse van uw situatie, zonder verkoopdruk.</li>' +
+          '<li>Helder advies over eigen verbruik, opslag en regelingen.</li>' +
+          '<li>U beslist daarna in alle rust, nergens aan gebonden.</li></ul></div>' +
         '<div class="confirm-block"><div class="confirm-block-label">Voorbereiding op uw gesprek</div><ul>' +
           '<li>Houd uw laatste jaarafrekening van energie bij de hand.</li>' +
           '<li>Weet ongeveer hoeveel zonnepanelen u heeft en sinds wanneer.</li>' +
           '<li>Beslist u samen? Zorg dat u er allebei bent, dan hoeft niets dubbel.</li></ul></div>' +
         '<div class="confirm-agenda">' +
-          '<div class="confirm-block-label">Voeg de afspraak toe aan uw agenda</div>' +
+          '<div class="confirm-block-label">Zet de afspraak in uw agenda</div>' +
           '<div class="confirm-agenda-links">' +
-            '<a class="btn btn-primary" data-bk="ics2" href="#" download="adviesgesprek-salderingsdienst.ics" data-track="booking_agenda_ics"><svg viewBox="0 0 16 16" width="15" height="15" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="12" height="11" rx="2"/><path d="M2 6.5h12M5.5 1.5v3M10.5 1.5v3M8 8.5v3.4M6.4 10.3 8 11.9l1.6-1.6"/></svg>Download .ics</a>' +
-            '<a class="btn btn-ghost" data-bk="gcal2" href="#" target="_blank" rel="noopener" data-track="booking_agenda_google">Google Agenda</a>' +
-            '<a class="btn btn-ghost" data-bk="outlook2" href="#" target="_blank" rel="noopener" data-track="booking_agenda_outlook">Outlook</a>' +
+            '<a class="btn btn-primary" data-bk="ics" href="#" download="adviesgesprek-salderingsdienst.ics"><svg viewBox="0 0 16 16" width="15" height="15" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="12" height="11" rx="2"/><path d="M2 6.5h12M5.5 1.5v3M10.5 1.5v3M8 8.5v3.4M6.4 10.3 8 11.9l1.6-1.6"/></svg>Agenda (.ics)</a>' +
+            '<a class="btn btn-ghost" data-bk="gcal" href="#" target="_blank" rel="noopener">Google Agenda</a>' +
+            '<a class="btn btn-ghost" data-bk="outlook" href="#" target="_blank" rel="noopener">Outlook</a>' +
           '</div>' +
           '<p class="confirm-agenda-note">Werkt met Apple Agenda, Google, Outlook en elke andere agenda-app. De afspraak duurt ± 1,5 uur.</p>' +
         '</div>' +
@@ -332,7 +269,7 @@
         '<div class="timeline">' +
           '<div class="timeline-item"><div class="timeline-rail"><div class="timeline-dot timeline-dot--done">✓</div><div class="timeline-line timeline-line--done"></div></div><div class="timeline-body"><strong>Aangevraagd</strong><span>Door u ingediend</span></div></div>' +
           '<div class="timeline-item"><div class="timeline-rail"><div class="timeline-dot timeline-dot--done">✓</div><div class="timeline-line timeline-line--done"></div></div><div class="timeline-body"><strong>Bevestigd</strong><span data-bk="pslot">Gepland</span></div></div>' +
-          '<div class="timeline-item"><div class="timeline-rail"><div class="timeline-dot timeline-dot--current">3</div><div class="timeline-line"></div></div><div class="timeline-body"><strong>Adviesgesprek</strong><span>Bij u thuis</span></div></div>' +
+          '<div class="timeline-item"><div class="timeline-rail"><div class="timeline-dot timeline-dot--current">3</div><div class="timeline-line"></div></div><div class="timeline-body"><strong>Adviesgesprek</strong><span data-bk="pmode">Bij u thuis</span></div></div>' +
           '<div class="timeline-item"><div class="timeline-rail"><div class="timeline-dot timeline-dot--todo">4</div></div><div class="timeline-body"><strong>Advies of offerte</strong><span>Na het gesprek</span></div></div>' +
         '</div>' +
         '<div class="portal-docs">Documenten van uw gesprek verschijnen hier zodra ze beschikbaar zijn.</div>' +
@@ -345,229 +282,181 @@
     '</div>';
 
   /* ---------- Elementen ---------- */
+  function q(sel) { return mount.querySelector(sel); }
   function bk(name) { return mount.querySelector('[data-bk="' + name + '"]'); }
   var els = {
     views: mount.querySelectorAll('.book-view'),
-    restore: bk('restore'), restoreclose: bk('restoreclose'),
-    steplabel: bk('steplabel'), stepname: bk('stepname'),
-    segs: mount.querySelectorAll('[data-seg]'),
-    products: bk('products'), woning: bk('woning'), woningflag: bk('woningflag'),
-    date: bk('date'), times: bk('times'),
-    naam: bk('naam'), email: bk('email'), tel: bk('tel'),
-    postcode: bk('postcode'), huisnummer: bk('huisnummer'),
-    partner: bk('partner'), partnerflag: bk('partnerflag'),
-    leeftijd: bk('leeftijd'), investblok: bk('investblok'), invest: bk('invest'), investflag: bk('investflag'),
+    interests: bk('interests'), woning: bk('woning'), woningnote: bk('woningnote'),
+    calendar: bk('calendar'), times: bk('times'), noslots: bk('noslots'),
+    modes: bk('modes'), partner: bk('partner'),
+    jonger75: bk('jonger75'), middelen: bk('middelen'), middelenblok: bk('middelenblok'),
+    naam: bk('naam'), email: bk('email'), tel: bk('tel'), briefcode: bk('briefcode'),
     verwachting: bk('verwachting'), sendinfo: bk('sendinfo'),
-    s3title: bk('s3title'), summary: bk('summary'),
-    submit: bk('submit'), submiterror: bk('submiterror'),
-    ics: bk('ics'), gcal: bk('gcal'), outlook: bk('outlook'),
-    ics2: bk('ics2'), gcal2: bk('gcal2'), outlook2: bk('outlook2'),
+    summary: bk('summary'), missing: bk('missing'), missingtext: bk('missingtext'),
+    submit: bk('submit'),
+    steplabel: bk('steplabel'), stepname: bk('stepname'), fill: bk('fill'),
     cnaam: bk('cnaam'), cemail: bk('cemail'), cdate: bk('cdate'), ctime: bk('ctime'),
-    pref: bk('pref'), pmagic: bk('pmagic'), pslot: bk('pslot')
+    ics: bk('ics'), gcal: bk('gcal'), outlook: bk('outlook'),
+    pref: bk('pref'), pmagic: bk('pmagic'), pslot: bk('pslot'), pmode: bk('pmode')
   };
+  var calendarState = { month: null, year: null }; /* track huidige maand */
 
-  /* ---------- Validatie per veld ---------- */
-  var validators = {
-    products: function () { return state.products.length > 0; },
-    woning: function () { return !!state.woning; },
-    moment: function () { return hasDT(); },
-    naam: function () { return state.naam.trim().length >= 2; },
-    email: validEmail,
-    tel: validTel,
-    adres: function () { return validPostcode() && state.huisnummer.trim().length > 0; },
-    partner: function () { return !!state.partner; },
-    leeftijd: function () { return !!state.leeftijd; },
-    invest: function () { return state.leeftijd !== '75+' || state.invest !== null; },
-    verwachting: function () { return !!state.verwachting; }
-  };
-  var STEP_FIELDS = {
-    1: ['products', 'woning', 'moment'],
-    2: ['naam', 'email', 'tel', 'adres', 'partner', 'leeftijd', 'invest', 'verwachting']
-  };
-  function fieldBox(key) { return mount.querySelector('[data-field="' + key + '"]'); }
-  function setFieldError(key, show) {
-    var box = fieldBox(key);
-    if (!box) return;
-    box.classList.toggle('bfield--invalid', !!show);
-    box.classList.toggle('bfield--valid', !show && validators[key]());
-    var err = box.querySelector('.bfield-error');
-    if (err) err.hidden = !show;
-  }
-  function revalidate(key) { setFieldError(key, !validators[key]()); }
-  function clearIfValid(key) { if (validators[key]()) setFieldError(key, false); }
-  function validateStep(n) {
-    var firstBad = null;
-    (STEP_FIELDS[n] || []).forEach(function (key) {
-      var ok = validators[key]();
-      setFieldError(key, !ok);
-      if (!ok && !firstBad) firstBad = key;
-    });
-    if (firstBad) {
-      var box = fieldBox(firstBad);
-      var input = box && box.querySelector('input');
-      if (input) input.focus();
-      else if (box) box.scrollIntoView({ block: 'center', behavior: reduceMotion ? 'auto' : 'smooth' });
+  /* ---------- Maandkalender voor datumkeuze ---------- */
+  function renderCalendar() {
+    var mo = ['januari', 'februari', 'maart', 'april', 'mei', 'juni', 'juli', 'augustus', 'september', 'oktober', 'november', 'december'];
+    var today = new Date(); today.setHours(0, 0, 0, 0);
+    var tomorrow = new Date(today); tomorrow.setDate(tomorrow.getDate() + 1);
+    var maxDate = new Date(tomorrow); maxDate.setMonth(maxDate.getMonth() + 6);
+
+    if (calendarState.month === null) {
+      calendarState.month = tomorrow.getMonth();
+      calendarState.year = tomorrow.getFullYear();
     }
-    return !firstBad;
+
+    var currentMonth = new Date(calendarState.year, calendarState.month, 1);
+    var prevMonthEnd = new Date(calendarState.year, calendarState.month, 0);
+    var nextMonth = new Date(calendarState.year, calendarState.month + 1, 1);
+
+    /* grenzen: terug kan zolang de vorige maand nog een kiesbare dag heeft */
+    var canPrev = prevMonthEnd >= tomorrow;
+    var canNext = nextMonth <= maxDate;
+
+    var html = '<div class="book-calendar"><div class="cal-header">' +
+      '<button type="button" class="cal-nav cal-prev" aria-label="Vorige maand"' + (canPrev ? '' : ' disabled') + '>←</button>' +
+      '<div class="cal-title">' + mo[currentMonth.getMonth()] + ' ' + currentMonth.getFullYear() + '</div>' +
+      '<button type="button" class="cal-nav cal-next" aria-label="Volgende maand"' + (canNext ? '' : ' disabled') + '>→</button>' +
+      '</div>';
+
+    /* weekdagafkortingen */
+    html += '<div class="cal-weekdays"><div>ma</div><div>di</div><div>wo</div><div>do</div><div>vr</div><div>za</div><div>zo</div></div>';
+
+    /* daggrid */
+    var firstDay = currentMonth.getDay(); /* 0=zo, 1=ma */
+    var firstDayMon = (firstDay === 0) ? 6 : firstDay - 1; /* 0=ma */
+    var daysInMonth = new Date(currentMonth.getFullYear(), currentMonth.getMonth() + 1, 0).getDate();
+
+    html += '<div class="cal-grid">';
+
+    /* lege cellen vóór eerste dag */
+    for (var i = 0; i < firstDayMon; i++) {
+      html += '<div></div>';
+    }
+
+    /* dagen */
+    for (var day = 1; day <= daysInMonth; day++) {
+      var d = new Date(currentMonth.getFullYear(), currentMonth.getMonth(), day);
+      var iso = localIso(d);
+      var isDisabled = d < tomorrow || d >= maxDate;
+      var isSelected = state.dateIso === iso;
+      html += '<button type="button" class="cal-day' + (isSelected ? ' cal-day--selected' : '') + '"' +
+        ' data-iso="' + iso + '" aria-label="' + esc(cap(fmtFull(iso))) + '"' +
+        (isDisabled ? ' disabled' : '') +
+        ' aria-pressed="' + isSelected + '">' + day + '</button>';
+    }
+
+    html += '</div></div>';
+
+    els.calendar.innerHTML = html;
+
+    /* event listeners */
+    var dayBtns = els.calendar.querySelectorAll('.cal-day');
+    dayBtns.forEach(function (btn) {
+      btn.addEventListener('click', function () {
+        state.dateIso = this.getAttribute('data-iso');
+        dayBtns.forEach(function (b) {
+          b.setAttribute('aria-pressed', b === btn ? 'true' : 'false');
+        });
+        update();
+      });
+    });
+
+    var prevBtn = els.calendar.querySelector('.cal-prev');
+    var nextBtn = els.calendar.querySelector('.cal-next');
+
+    prevBtn.addEventListener('click', function () {
+      calendarState.month--;
+      if (calendarState.month < 0) {
+        calendarState.month = 11;
+        calendarState.year--;
+      }
+      renderCalendar();
+    });
+
+    nextBtn.addEventListener('click', function () {
+      calendarState.month++;
+      if (calendarState.month > 11) {
+        calendarState.month = 0;
+        calendarState.year++;
+      }
+      renderCalendar();
+    });
   }
 
-  /* ---------- Chips en radio's ---------- */
+  /* ---------- Chips (selectie in-place, focus blijft staan) ---------- */
   function buildChips(holder, items, opts) {
     holder.innerHTML = '';
     items.forEach(function (item) {
       var b = document.createElement('button');
       b.type = 'button';
       b.className = 'chip' + (opts.cls ? ' ' + opts.cls : '');
-      b.innerHTML = (opts.cls === 'chip--q' ? '<span class="chip-tick" aria-hidden="true">✓</span>' : '') + esc(opts.text(item));
-      if (opts.track) b.setAttribute('data-track', opts.track(item));
+      b.innerHTML = opts.html(item);
       b.setAttribute('aria-pressed', String(opts.isOn(item)));
       b.addEventListener('click', function () {
         opts.pick(item);
         holder.querySelectorAll('.chip').forEach(function (c, i) {
           c.setAttribute('aria-pressed', String(opts.isOn(items[i])));
         });
-        opts.after();
+        update();
       });
       holder.appendChild(b);
     });
   }
-  var radioSeq = 0;
-  function buildRadios(holder, name, items, isOn, onPick, trackPrefix) {
-    holder.innerHTML = '';
-    var group = 'bk-' + name + '-' + (++radioSeq);
-    items.forEach(function (item) {
-      var label = document.createElement('label');
-      label.className = 'bradio';
-      var input = document.createElement('input');
-      input.type = 'radio';
-      input.name = group;
-      input.value = item.id;
-      input.checked = isOn(item);
-      if (trackPrefix) input.setAttribute('data-track', trackPrefix + (item.track || item.id));
-      var span = document.createElement('span');
-      span.textContent = item.t;
-      label.appendChild(input); label.appendChild(span);
-      if (input.checked) label.classList.add('bradio--on');
-      input.addEventListener('change', function () {
-        onPick(item);
-        holder.querySelectorAll('.bradio').forEach(function (l, i) {
-          l.classList.toggle('bradio--on', isOn(items[i]));
-        });
-        afterChange();
-      });
-      holder.appendChild(label);
-    });
-  }
-
   function renderAll() {
-    buildChips(els.products, PRODUCTS, {
-      cls: 'chip--q',
-      text: function (o) { return o.t; },
-      track: function (o) { return 'booking_product_' + o.id; },
-      isOn: function (o) { return state.products.indexOf(o.id) !== -1; },
+    buildChips(els.interests, INTERESTS, {
+      html: function (o) { return esc(o.t); },
+      isOn: function (o) { return state.interests.indexOf(o.id) !== -1; },
       pick: function (o) {
-        var i = state.products.indexOf(o.id);
-        if (i === -1) state.products.push(o.id); else state.products.splice(i, 1);
+        var i = state.interests.indexOf(o.id);
+        if (i === -1) state.interests.push(o.id); else state.interests.splice(i, 1);
         SD.fire('qual_interest_selected');
-      },
-      after: function () { clearIfValid('products'); afterChange(); }
+      }
     });
-    buildRadios(els.woning, 'woning', WONING,
-      function (o) { return state.woning === o.id; },
-      function (o) { state.woning = o.id; clearIfValid('woning'); },
-      'booking_woning_');
-    buildChips(els.times, TIMES.map(function (t) { return { id: t, t: t }; }), {
-      text: function (o) { return o.t; },
-      isOn: function (o) { return state.time === o.id; },
-      pick: function (o) { state.time = o.id; },
-      after: function () { clearIfValid('moment'); afterChange(); }
+    buildChips(els.woning, WONING, {
+      html: function (o) { return esc(o.t); },
+      isOn: function (o) { return state.woning === o.id; },
+      pick: function (o) { state.woning = o.id; }
     });
-    buildRadios(els.partner, 'partner', PARTNER,
-      function (o) { return state.partner === o.id; },
-      function (o) { state.partner = o.id; clearIfValid('partner'); },
-      'booking_partner_');
-    buildRadios(els.leeftijd, 'leeftijd', LEEFTIJD,
-      function (o) { return state.leeftijd === o.id; },
-      function (o) {
-        state.leeftijd = o.id;
-        if (o.id === '<75') state.invest = null;
-        clearIfValid('leeftijd'); clearIfValid('invest');
-      },
-      'booking_leeftijd_');
-    buildRadios(els.invest, 'invest', INVEST,
-      function (o) { return state.invest === o.id; },
-      function (o) { state.invest = o.id; clearIfValid('invest'); },
-      'booking_leeftijd_');
+    renderCalendar();
+    els.noslots.hidden = true;
+    els.times.classList.add('chips--grid');
+    buildChips(els.times, TIMES, {
+      html: function (t) { return t; },
+      isOn: function (t) { return state.time === t; },
+      pick: function (t) { state.time = t; }
+    });
+    buildChips(els.modes, MODES, {
+      html: function (m) { return esc(m.t); },
+      isOn: function (m) { return state.mode === m.id; },
+      pick: function (m) { state.mode = m.id; }
+    });
+    buildChips(els.partner, PARTNER, {
+      html: function (m) { return esc(m.t); },
+      isOn: function (m) { return state.partner === m.id; },
+      pick: function (m) { state.partner = m.id; }
+    });
+    buildChips(els.jonger75, JA_NEE, {
+      html: function (m) { return esc(m.t); },
+      isOn: function (m) { return state.jonger75 === (m.id === 'ja'); },
+      pick: function (m) { state.jonger75 = (m.id === 'ja'); if (state.jonger75) state.eigenMiddelen = null; }
+    });
+    buildChips(els.middelen, MIDDELEN, {
+      html: function (m) { return esc(m.t); },
+      isOn: function (m) { return state.eigenMiddelen === (m.id === 'ja'); },
+      pick: function (m) { state.eigenMiddelen = (m.id === 'ja'); }
+    });
   }
 
-  /* ---------- Flags en afgeleide UI (neutrale info, geen waarschuwing) ---------- */
-  function afterChange() {
-    els.woningflag.hidden = !(state.woning === 'huurwoning' || state.woning === 'anders');
-    els.partnerflag.hidden = state.partner !== 'partner_afwezig';
-    els.investblok.hidden = state.leeftijd !== '75+';
-    els.investflag.hidden = state.invest !== 'nee';
-    fireProgress();
-    saveDraftSoon();
-    notifyHeight();
-  }
-  function fireProgress() {
-    if (state.products.length || state.dateIso || state.naam) SD.fire('booking_started', { source: sourceTag });
-    if (hasDT()) SD.fire('slot_selected');
-    if (state.naam.trim() && validEmail()) SD.fire('contact_filled');
-  }
-  function maybeSoftLead() {
-    if (state.softLeadSaved) return;
-    if (state.naam.trim() && (validEmail() || state.tel.trim())) {
-      try { localStorage.setItem('sd_soft_lead', JSON.stringify({ naam: state.naam, email: state.email, tel: state.tel, ts: Date.now() })); } catch (e) {}
-      SD.track('soft_lead');
-      state.softLeadSaved = true;
-    }
-  }
-
-  /* ---------- Tekstvelden: on-blur validatie, Enter = volgend veld ---------- */
-  function bindText(el, key, prop) {
-    el.addEventListener('input', function () {
-      state[prop] = el.value;
-      clearIfValid(key);
-      maybeSoftLead();
-      saveDraftSoon();
-    });
-    el.addEventListener('blur', function () { if (state[prop]) revalidate(key); });
-  }
-  bindText(els.naam, 'naam', 'naam');
-  bindText(els.email, 'email', 'email');
-  bindText(els.tel, 'tel', 'tel');
-  bindText(els.postcode, 'adres', 'postcode');
-  bindText(els.huisnummer, 'adres', 'huisnummer');
-  els.date.addEventListener('change', function () {
-    state.dateIso = validDate(els.date.value) ? els.date.value : null;
-    clearIfValid('moment');
-    saveDraftSoon();
-  });
-  els.date.addEventListener('blur', function () { if (els.date.value) revalidate('moment'); });
-  els.verwachting.addEventListener('change', function () {
-    state.verwachting = els.verwachting.checked;
-    clearIfValid('verwachting');
-    saveDraftSoon();
-  });
-  els.sendinfo.addEventListener('change', function () {
-    state.sendInfo = els.sendinfo.checked;
-    if (state.sendInfo) SD.track('lead_capture', { via: 'booking' });
-    saveDraftSoon();
-  });
-  mount.addEventListener('keydown', function (e) {
-    if (e.key !== 'Enter') return;
-    var t = e.target;
-    if (t.tagName !== 'INPUT' || t.type === 'checkbox' || t.type === 'radio') return;
-    e.preventDefault();
-    var step = t.closest('.bstep');
-    if (!step) return;
-    var fields = Array.prototype.slice.call(step.querySelectorAll('input.field'));
-    var next = fields[fields.indexOf(t) + 1];
-    if (next) next.focus();
-  });
-
-  /* ---------- Stappen ---------- */
+  /* ---------- Weergave ---------- */
   function showView(name) {
     state.view = name;
     els.views.forEach(function (v) { v.hidden = v.getAttribute('data-view') !== name; });
@@ -580,73 +469,105 @@
     });
     els.steplabel.textContent = 'Stap ' + n + ' van ' + STEPS;
     els.stepname.textContent = STEP_LABELS[n - 1];
-    els.segs.forEach(function (seg, i) { seg.classList.toggle('on', i < n); });
-    if (n === 3) renderSummary();
+    els.fill.style.transform = 'scaleX(' + (n / STEPS) + ')';
     if (moveFocus) {
-      mount.scrollIntoView({ block: 'start', behavior: reduceMotion ? 'auto' : 'smooth' });
-      var target = n === 3 ? els.s3title
-        : mount.querySelector('.bstep[data-bstep="' + n + '"] input, .bstep[data-bstep="' + n + '"] .chip');
-      if (target) target.focus({ preventScroll: true });
+      var label = mount.querySelector('.bstep[data-bstep="' + n + '"] .book-step-label');
+      if (label) { label.setAttribute('tabindex', '-1'); label.focus({ preventScroll: false }); }
     }
-    SD.track('booking_step' + n + '_view');
-    saveDraftSoon();
+    SD.track('booking_step_view', { step: n });
     notifyHeight();
   }
   mount.addEventListener('click', function (e) {
     var next = e.target.closest('[data-bnext]');
-    if (next) {
-      var to = parseInt(next.getAttribute('data-bnext'), 10);
-      if (validateStep(to - 1)) showStep(to, true);
-      else notifyHeight();
-      return;
-    }
+    if (next && !next.disabled) { showStep(parseInt(next.getAttribute('data-bnext'), 10), true); return; }
     var back = e.target.closest('[data-bback]');
-    if (back) { showStep(parseInt(back.getAttribute('data-bback'), 10), true); return; }
-    var goto = e.target.closest('[data-bgoto]');
-    if (goto) { showStep(parseInt(goto.getAttribute('data-bgoto'), 10), true); }
+    if (back) { showStep(parseInt(back.getAttribute('data-bback'), 10), true); }
   });
 
-  /* ---------- Stap 3: samenvatting + agenda ---------- */
-  function summaryRow(label, value, gotoStep) {
-    return '<div class="bsum-row"><dt>' + esc(label) + '</dt><dd>' + value + '</dd>' +
-      (gotoStep ? '<button type="button" class="bsum-edit" data-bgoto="' + gotoStep + '">Wijzigen</button>' : '<span class="bsum-edit" aria-hidden="true"></span>') +
-      '</div>';
+  /* ---------- Validatie per stap + samenvatting ---------- */
+  function stepReady(n) {
+    switch (n) {
+      case 1: return hasDT();
+      case 2: return state.naam.trim().length > 1 && validEmail();
+      default: return true;
+    }
   }
-  function renderSummary() {
-    var partnerText = state.partner === 'samen' ? 'Aanwezig bij het gesprek'
-      : state.partner === 'partner_afwezig' ? 'Niet aanwezig bij het gesprek'
-      : 'U woont alleen';
-    els.summary.innerHTML = '<dl>' +
-      summaryRow('Advies over', esc(productLabels()), 1) +
-      summaryRow('Woning', esc(optLabel(WONING, state.woning)) + ', ' + esc(state.postcode.toUpperCase() + ' ' + state.huisnummer), 1) +
-      summaryRow('Datum en tijd', esc(cap(fmtFull(state.dateIso)) + ' om ' + state.time + ' uur'), 1) +
-      summaryRow('Gespreksduur', '1,5 uur', 0) +
-      summaryRow('Met', esc(state.naam), 2) +
-      summaryRow('Partner', esc(partnerText), 2) +
-      summaryRow('Contact', esc(state.email) + ' / ' + esc(state.tel), 2) +
-      '</dl>';
-    setAgendaLinks([els.ics, els.gcal, els.outlook]);
-    els.submiterror.hidden = true;
+  function missingList() {
+    var missing = [];
+    if (!state.dateIso) missing.push('een datum');
+    if (!state.time) missing.push('een tijd');
+    if (!state.naam.trim()) missing.push('uw naam');
+    if (!validEmail()) missing.push('een geldig e-mailadres');
+    if (!state.interests.length) missing.push('waar u advies over wilt');
+    if (!state.woning) missing.push('of u koopt of huurt');
+    if (!state.mode) missing.push('waar u het gesprek wilt');
+    if (!state.partner) missing.push('of u samen beslist');
+    if (state.jonger75 === null) missing.push('of u jonger dan 75 bent');
+    if (state.jonger75 === false && state.eigenMiddelen === null) missing.push('of u uit eigen middelen zou investeren');
+    if (!state.verwachting) missing.push('het vinkje bij wat u van het gesprek mag verwachten');
+    return missing;
   }
+  function update() {
+    for (var n = 1; n <= STEPS - 1; n++) {
+      var btn = mount.querySelector('[data-bnext="' + (n + 1) + '"]');
+      if (btn) btn.disabled = !stepReady(n);
+    }
+    var hint1 = bk('hint1');
+    if (hint1) hint1.hidden = hasDT();
+    els.middelenblok.hidden = state.jonger75 !== false;
+    els.woningnote.textContent = state.woning === 'huur'
+      ? 'Ook voor huurders zetten we de mogelijkheden op een rij; het gesprek gaat gewoon door.'
+      : 'Zo stemmen we het advies af op uw woonsituatie.';
+    els.summary.innerHTML = hasDT()
+      ? 'U bevestigt: <strong>' + esc(cap(fmtFull(state.dateIso))) + ' om ' + esc(state.time) + ' uur</strong>, duur ± 1,5 uur, '
+        + (state.mode === 'thuis' ? 'bij u thuis' : 'online') + '. <a href="#" data-bk="editslot">Moment wijzigen</a>'
+      : 'Ga terug naar stap 3 om een datum en tijd te kiezen.';
+    var edit = bk('editslot');
+    if (edit) edit.addEventListener('click', function (e) { e.preventDefault(); showStep(3, true); });
+    if (!missingList().length) els.missing.hidden = true;
+    fireProgress();
+    notifyHeight();
+  }
+  function fireProgress() {
+    if (state.interests.length || state.dateIso || state.naam) SD.fire('booking_started', { briefcode: state.briefcode || null, source: sourceTag });
+    if (hasDT()) SD.fire('slot_selected');
+    if (state.naam.trim() && validEmail()) SD.fire('contact_filled');
+  }
+  function maybeSoftLead() {
+    if (state.softLeadSaved) return;
+    if (state.naam.trim() && (validEmail() || state.tel.trim())) {
+      try { localStorage.setItem('sd_soft_lead', JSON.stringify({ naam: state.naam, email: state.email, tel: state.tel, ts: Date.now() })); } catch (e) {}
+      SD.track('soft_lead');
+      state.softLeadSaved = true;
+    }
+  }
+  function setFF(input, valid, invalid) {
+    var ff = input.closest('.ffield');
+    if (!ff) return;
+    ff.classList.toggle('ffield--valid', !!valid);
+    ff.classList.toggle('ffield--invalid', !!invalid);
+  }
+  els.naam.addEventListener('input', function () { state.naam = this.value; setFF(this, state.naam.trim(), false); maybeSoftLead(); update(); });
+  els.email.addEventListener('input', function () { state.email = this.value; setFF(this, validEmail(), false); maybeSoftLead(); update(); });
+  els.email.addEventListener('blur', function () { setFF(this, validEmail(), state.email.trim() && !validEmail()); });
+  els.tel.addEventListener('input', function () { state.tel = this.value; maybeSoftLead(); update(); });
+  els.briefcode.addEventListener('input', function () { state.briefcode = this.value; });
+  els.verwachting.addEventListener('change', function () { state.verwachting = this.checked; update(); });
+  els.sendinfo.addEventListener('change', function () { state.sendInfo = this.checked; });
 
-  /* ---------- Agenda (.ics + Google + Outlook, lokale tijd) ---------- */
-  var EVT_TITLE = 'Adviesgesprek SalderingsDienst';
+  /* ---------- Agenda-integratie (.ics + Google + Outlook, lokale tijd) ---------- */
+  var EVT_TITLE = 'Kosteloos adviesgesprek SalderingsDienst';
   function evtTimes() {
     var ds = new Date(state.dateIso + 'T' + state.time + ':00');
     return { start: ds, end: new Date(ds.getTime() + DURATION_MIN * 60000) };
   }
-  function evtLocation() {
-    var pc = state.postcode.trim().toUpperCase(), nr = state.huisnummer.trim();
-    return pc && nr ? pc + ' ' + nr : 'Bij u thuis';
-  }
+  function evtLocation() { return state.mode === 'thuis' ? 'Bij u thuis' : 'Online (wij bellen u)'; }
   function evtDescription() {
-    return 'Persoonlijk adviesgesprek over ' + productLabels() + '.\n\n'
-      + 'Uw adviseur bespreekt: salderingsregeling 2027, thuisbatterij, warmtepomp, EMS-handel.\n\n'
-      + 'Duur: 1,5 uur.\n\nSalderingsDienst, onafhankelijk adviesbureau'
-      + (state.bookingRef ? '\nReferentie: ' + state.bookingRef : '');
+    return 'Uw kosteloze adviesgesprek van ongeveer 1,5 uur (' + (state.mode === 'thuis' ? 'bij u thuis' : 'online') + ').'
+      + (state.bookingRef ? ' Referentie: ' + state.bookingRef + '.' : '');
   }
   function fmtCompact(x) { return '' + x.getFullYear() + pad2(x.getMonth() + 1) + pad2(x.getDate()) + 'T' + pad2(x.getHours()) + pad2(x.getMinutes()) + '00'; }
-  function icsEscape(s) { return s.replace(/\\/g, '\\\\').replace(/[,;]/g, '\\$&').replace(/\n/g, '\\n'); }
+  function icsEscape(s) { return s.replace(/\\/g, '\\\\').replace(/[,;]/g, '\\$&'); }
   function icsHref() {
     if (!hasDT()) return '#';
     var t = evtTimes();
@@ -658,13 +579,9 @@
       'LOCATION:' + icsEscape(evtLocation()),
       'DESCRIPTION:' + icsEscape(evtDescription()),
       'STATUS:CONFIRMED',
-      /* Herinnering 24 uur voor aanvang */
-      'BEGIN:VALARM', 'TRIGGER:-PT24H', 'ACTION:DISPLAY', 'DESCRIPTION:' + icsEscape(EVT_TITLE), 'END:VALARM',
       'END:VEVENT', 'END:VCALENDAR'].join('\r\n');
     return 'data:text/calendar;charset=utf-8,' + encodeURIComponent(ics);
   }
-  /* Google krijgt lokale tijd + expliciete tijdzone (ctz) in plaats van
-     UTC: dat blijft ook rond zomer-/wintertijd correct. */
   function gcalHref() {
     if (!hasDT()) return '#';
     var t = evtTimes();
@@ -685,10 +602,22 @@
       + '&location=' + encodeURIComponent(evtLocation())
       + '&body=' + encodeURIComponent(evtDescription());
   }
-  function setAgendaLinks(list) {
-    if (list[0]) list[0].href = icsHref();
-    if (list[1]) list[1].href = gcalHref();
-    if (list[2]) list[2].href = outlookHref();
+
+  function fillConfirm() {
+    els.cnaam.textContent = state.naam;
+    els.cemail.textContent = state.email;
+    els.cdate.textContent = state.dateIso ? cap(fmtFull(state.dateIso)) : '';
+    els.ctime.textContent = state.time || '';
+    els.ics.href = icsHref();
+    els.gcal.href = gcalHref();
+    els.outlook.href = outlookHref();
+  }
+  function fillPortal() {
+    var ref = state.bookingRef || 'SD-XXXXXX';
+    els.pref.textContent = ref;
+    els.pmagic.textContent = 'salderingsdienst.nl/aanvraag?volg=' + ref;
+    els.pslot.textContent = state.dateIso ? (fmtFull(state.dateIso) + ' om ' + (state.time || '') + ' uur') : 'Gepland';
+    els.pmode.textContent = state.mode === 'thuis' ? 'Bij u thuis' : 'Online';
   }
 
   /* ---------- Leadpakket (schema sd.lead.v1) + backend-POST ---------- */
@@ -699,164 +628,69 @@
       type: 'adviesgesprek',
       ref: ref,
       createdAt: new Date().toISOString(),
-      contact: {
-        naam: state.naam.trim(), email: state.email.trim(), tel: state.tel.trim(),
-        postcode: state.postcode.trim().toUpperCase(), huisnummer: state.huisnummer.trim()
-      },
-      appointment: { dateIso: state.dateIso, time: state.time, durationMin: DURATION_MIN, mode: 'thuis', timezone: 'Europe/Amsterdam' },
+      contact: { naam: state.naam.trim(), email: state.email.trim(), tel: state.tel.trim() },
+      appointment: { dateIso: state.dateIso, time: state.time, durationMin: DURATION_MIN, mode: state.mode, timezone: 'Europe/Amsterdam' },
       qualification: qual,
-      status: deriveStatus(qual), /* indicatief; server-side is leidend */
-      briefcode: null,
+      status: deriveStatus(qual),
+      berekening: (window.SD && window.SD.funnel) || null,
+      briefcode: state.briefcode.trim().toUpperCase() || null,
       consent: { privacyNotice: true, infoEmail: state.sendInfo },
       source: { page: location.pathname, utm: SD.utm || {}, channel: inIframe ? 'embed' : 'site', partner: sourceTag }
     };
   }
   function postBooking(lead) {
     var ep = CFG.bookingEndpoint !== undefined ? CFG.bookingEndpoint : '/api/bookings';
-    if (!ep || !window.fetch) {
-      /* Geen endpoint geconfigureerd: de wachtrij (sd_lead_queue) is de bron. */
-      return Promise.resolve({ ok: true, offline: true });
-    }
-    var timeout = new Promise(function (_, reject) { setTimeout(function () { reject(new Error('timeout')); }, 8000); });
-    var req = fetch(ep, {
-      method: 'POST', keepalive: true,
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(lead)
-    });
-    return Promise.race([req, timeout]);
+    if (!ep || !window.fetch) return;
+    try {
+      fetch(ep, {
+        method: 'POST', keepalive: true,
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(lead)
+      }).catch(function () {}); /* fire-and-forget; wachtrij blijft de bron */
+    } catch (e) {}
   }
 
-  var submitting = false;
   els.submit.addEventListener('click', function () {
-    if (submitting) return;
-    /* Vangnet: stap 1 en 2 zijn al gevalideerd om hier te komen. */
-    if (!validateStep(1)) { showStep(1, true); return; }
-    if (!validateStep(2)) { showStep(2, true); return; }
-
-    submitting = true;
-    els.submiterror.hidden = true;
-    els.submit.disabled = true;
-    els.submit.innerHTML = '<span class="btn-spinner" aria-hidden="true"></span>Bezig met verwerken...';
-
+    var missing = missingList();
+    if (missing.length) {
+      els.missingtext.textContent = 'Nog even nodig: ' + missing.join(', ') + '.';
+      els.missing.hidden = false;
+      setFF(els.naam, false, !state.naam.trim());
+      setFF(els.email, false, !validEmail());
+      SD.track('booking_submit_incomplete', { missing: missing });
+      notifyHeight();
+      return;
+    }
     var ref = state.bookingRef || ('SD-' + Date.now().toString(36).toUpperCase().slice(-6));
     state.bookingRef = ref;
+    try { localStorage.setItem('sd_adviesgesprek', JSON.stringify(persistShape(ref))); } catch (e) {}
     var lead = buildLead(ref);
-    if (SD.lead) SD.lead(lead); /* wachtrij + CustomEvent, ook als de POST faalt */
-
-    function done(ok) {
-      submitting = false;
-      els.submit.disabled = false;
-      els.submit.textContent = 'Bevestig mijn adviesgesprek';
-      if (!ok) {
-        els.submiterror.hidden = false;
-        SD.track('booking_submit_error');
-        notifyHeight();
-        return;
-      }
-      try { localStorage.setItem('sd_adviesgesprek', JSON.stringify(persistShape(ref))); } catch (e) {}
-      try { localStorage.removeItem(DRAFT_KEY); } catch (e) {}
-      SD.fire('booking_completed', { ref: ref, sendInfo: state.sendInfo, status: lead.status, source: sourceTag });
-      SD.track('booking_step3_success');
-      SD.track('booking_qualification', { status: lead.status });
-      fillConfirm();
-      showView('confirm');
-    }
-    postBooking(lead).then(
-      function (res) { done(!!(res && res.ok)); },
-      function () { done(false); }
-    );
+    if (SD.lead) SD.lead(lead);
+    postBooking(lead);
+    SD.fire('booking_completed', { mode: state.mode, ref: ref, briefcode: state.briefcode || null, sendInfo: state.sendInfo, status: lead.status, source: sourceTag });
+    SD.track('booking_qualification', { status: lead.status });
+    if (state.sendInfo) SD.track('lead_capture', { via: 'booking' });
+    els.missing.hidden = true;
+    fillConfirm();
+    showView('confirm');
   });
 
   function persistShape(ref) {
     return {
-      ref: ref, dateIso: state.dateIso, time: state.time,
+      dateIso: state.dateIso, time: state.time, mode: state.mode,
       naam: state.naam, email: state.email, tel: state.tel,
-      postcode: state.postcode, huisnummer: state.huisnummer,
-      products: state.products, woning: state.woning, partner: state.partner,
-      leeftijd: state.leeftijd, invest: state.invest,
-      verwachting: state.verwachting, sendInfo: state.sendInfo
+      briefcode: state.briefcode, sendInfo: state.sendInfo, ref: ref,
+      interests: state.interests, woning: state.woning, partner: state.partner,
+      jonger75: state.jonger75, eigenMiddelen: state.eigenMiddelen, verwachting: state.verwachting
     };
   }
 
-  /* ---------- Concept (sd_booking_draft): opslaan en herstellen ---------- */
-  function hasAnyInput(d) {
-    return !!((d.products && d.products.length) || d.woning || d.dateIso || d.time ||
-      (d.naam && d.naam.trim()) || (d.email && d.email.trim()) || (d.tel && d.tel.trim()) ||
-      (d.postcode && d.postcode.trim()) || d.partner || d.leeftijd || d.verwachting);
-  }
-  var draftTimer = null;
-  function saveDraftSoon() {
-    clearTimeout(draftTimer);
-    draftTimer = setTimeout(function () {
-      if (!hasAnyInput(state)) return; /* geen leeg concept bewaren */
-      try {
-        localStorage.setItem(DRAFT_KEY, JSON.stringify({
-          step: state.step,
-          formData: persistShape(''),
-          timestamp: new Date().toISOString()
-        }));
-      } catch (e) {}
-    }, 500);
-  }
-  function applyStored(d) {
-    state.products = Array.isArray(d.products) ? d.products : (d.interests || []);
-    state.woning = d.woning === 'koop' ? 'koopwoning' : d.woning === 'huur' ? 'huurwoning' : (d.woning || null);
-    state.dateIso = validDate(d.dateIso) ? d.dateIso : null;
-    state.time = TIMES.indexOf(d.time) !== -1 ? d.time : null;
-    state.naam = d.naam || ''; state.email = d.email || ''; state.tel = d.tel || '';
-    state.postcode = d.postcode || ''; state.huisnummer = d.huisnummer || '';
-    state.partner = d.partner || null;
-    state.leeftijd = d.leeftijd || (d.jonger75 === true ? '<75' : d.jonger75 === false ? '75+' : null);
-    state.invest = d.invest || (d.eigenMiddelen === true ? 'ja' : d.eigenMiddelen === false ? 'nee' : null);
-    state.verwachting = !!d.verwachting;
-    state.sendInfo = !!d.sendInfo;
-    els.naam.value = state.naam; els.email.value = state.email; els.tel.value = state.tel;
-    els.postcode.value = state.postcode; els.huisnummer.value = state.huisnummer;
-    els.date.value = state.dateIso || '';
-    els.verwachting.checked = state.verwachting;
-    els.sendinfo.checked = state.sendInfo;
-    renderAll();
-    afterChange();
-  }
-  function restoreDraft() {
-    var draft = null;
-    try { draft = JSON.parse(localStorage.getItem(DRAFT_KEY)); } catch (e) {}
-    if (!draft || !draft.formData || !hasAnyInput(draft.formData)) return false;
-    var age = Date.now() - new Date(draft.timestamp || 0).getTime();
-    if (!(age >= 0 && age < DRAFT_MAX_AGE)) {
-      try { localStorage.removeItem(DRAFT_KEY); } catch (e) {}
-      return false;
-    }
-    applyStored(draft.formData);
-    state.step = [1, 2, 3].indexOf(draft.step) !== -1 ? draft.step : 1;
-    /* Nooit verder dan de eerste onvolledige stap herstellen. */
-    if (state.step > 1 && !validators.products() ) state.step = 1;
-    els.restore.hidden = false;
-    SD.track('booking_draft_restored');
-    return true;
-  }
-  els.restoreclose.addEventListener('click', function () { els.restore.hidden = true; notifyHeight(); });
-
-  /* ---------- Bevestiging en portaal ---------- */
-  function fillConfirm() {
-    els.cnaam.textContent = state.naam;
-    els.cemail.textContent = state.email;
-    els.cdate.textContent = state.dateIso ? cap(fmtFull(state.dateIso)) : '';
-    els.ctime.textContent = state.time || '';
-    setAgendaLinks([els.ics2, els.gcal2, els.outlook2]);
-  }
-  function fillPortal() {
-    var ref = state.bookingRef || 'SD-XXXXXX';
-    els.pref.textContent = ref;
-    els.pmagic.textContent = 'salderingsdienst.nl/aanvraag?volg=' + ref;
-    els.pslot.textContent = state.dateIso ? (fmtFull(state.dateIso) + ' om ' + (state.time || '') + ' uur') : 'Gepland';
-  }
   bk('goportal').addEventListener('click', function () { SD.fire('portal_view'); fillPortal(); showView('portal'); });
   [bk('goform'), bk('goform2')].forEach(function (btn) {
     btn.addEventListener('click', function () {
       SD.track('reschedule_start');
-      renderAll(); afterChange();
-      showStep(1, true);
+      renderAll(); update();
+      showStep(3);
       showView('form');
     });
   });
@@ -877,8 +711,8 @@
   window.addEventListener('load', notifyHeight);
   window.addEventListener('resize', notifyHeight);
 
-  /* ---------- Init: bevestigde boeking, ?volg= of concept ---------- */
-  if (SD.applyContacts) SD.applyContacts(mount);
+  /* ---------- Init: herstel opgeslagen boeking + ?volg= ---------- */
+  if (SD.applyContacts) SD.applyContacts(mount); /* tel/WhatsApp/KvK in het zojuist gerenderde widget */
   renderAll();
 
   var wantPortal = false;
@@ -887,18 +721,45 @@
   var stored = null;
   try { stored = JSON.parse(localStorage.getItem('sd_adviesgesprek')); } catch (e) {}
   if (stored) {
-    applyStored(stored);
+    state.dateIso = stored.dateIso || null;
+    state.time = stored.time || null;
+    state.mode = stored.mode || 'thuis';
+    state.naam = stored.naam || '';
+    state.email = stored.email || '';
+    state.tel = stored.tel || '';
+    state.briefcode = stored.briefcode || '';
+    state.sendInfo = !!stored.sendInfo;
     state.bookingRef = stored.ref || '';
+    state.interests = stored.interests || [];
+    state.woning = stored.woning || null;
+    state.partner = stored.partner || null;
+    state.jonger75 = (typeof stored.jonger75 === 'boolean') ? stored.jonger75 : null;
+    state.eigenMiddelen = (typeof stored.eigenMiddelen === 'boolean') ? stored.eigenMiddelen : null;
+    state.verwachting = !!stored.verwachting;
+    els.naam.value = state.naam; els.email.value = state.email;
+    els.tel.value = state.tel; els.briefcode.value = state.briefcode;
+    els.verwachting.checked = state.verwachting;
+    els.sendinfo.checked = state.sendInfo;
+    renderAll();
     if (wantPortal) { fillPortal(); showView('portal'); }
     else { fillConfirm(); showView('confirm'); }
   } else if (wantPortal) {
     fillPortal();
     showView('portal');
-  } else {
-    restoreDraft();
   }
 
-  afterChange();
+  /* Uitkomst van de bespaarcheck overnemen: koopwoning is daar al
+     gevraagd, dus die vraag hoeft de bezoeker hier niet nog eens. */
+  function applyFunnel(f) {
+    if (!f || typeof f.koopwoning !== 'boolean') return;
+    state.woning = f.koopwoning ? 'koop' : 'huur';
+    renderAll();
+    update();
+  }
+  window.addEventListener('sd:funnel', function (e) { applyFunnel(e.detail); });
+  applyFunnel(window.SD && window.SD.funnel);
+
   showStep(state.step);
+  update();
   SD.track('booking_page_view', { source: sourceTag, channel: inIframe ? 'embed' : 'site' });
 })();

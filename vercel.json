@@ -12,6 +12,7 @@
     { "source": "/Blog Pillar.dc.html", "destination": "/kennisbank/salderingsregeling-gids", "permanent": true },
     { "source": "/Blog Cluster.dc.html", "destination": "/kennisbank/artikel", "permanent": true },
     { "source": "/over-ons", "destination": "/#over-ons", "permanent": false },
-    { "source": "/aanvraag", "destination": "/", "permanent": false }
+    { "source": "/aanvraag", "destination": "/adviesgesprek", "permanent": false },
+    { "source": "/gratis-adviesgesprek", "destination": "/adviesgesprek", "permanent": false }
   ]
 }

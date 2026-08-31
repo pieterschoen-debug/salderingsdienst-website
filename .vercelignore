@@ -1,0 +1,11 @@
+.claude
+.git
+node_modules
+uploads
+archive
+public
+readme.md
+redesign-log.md
+.env
+.env.local
+.env*.local

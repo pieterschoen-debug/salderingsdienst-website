@@ -4,7 +4,7 @@
    Deze check vervangt de klassieke build:
    1. syntaxcontrole (node --check) op alle eigen JS-bestanden
    2. aanwezigheid van de kernbestanden
-   3. verplichte markers in index.html / widget.html
+   3. verplichte markers in index.html / adviesgesprek.html / widget.html
    4. veiligheidscheck: geen API-keys per ongeluk in de code
    Exit 0 = build geslaagd.
    ============================================================ */
@@ -21,7 +21,7 @@ const ok = (msg) => console.log('  ✓ ' + msg);
 /* 1. Syntax */
 console.log('Syntaxcontrole:');
 const jsFiles = [
-  'js/motion.js', 'js/booking.js', 'js/scrolly.js', 'js/embed.js',
+  'js/motion.js', 'js/funnel.js', 'js/booking.js', 'js/embed.js',
   'api/bookings.js', 'api/portal-login.js', 'api/chat.js',
   'api/_lib/store.js', 'api/_lib/auth.js', 'api/_lib/ratelimit.js'
 ];
@@ -38,7 +38,7 @@ for (const f of jsFiles) {
 
 /* 2. Kernbestanden */
 console.log('Kernbestanden:');
-for (const f of ['index.html', 'widget.html', 'portal.html', 'css/tokens.css', 'css/main.css', 'vercel.json', 'assets/hero-woning.jpg']) {
+for (const f of ['index.html', 'adviesgesprek.html', 'widget.html', 'portal.html', 'css/tokens.css', 'css/main.css', 'vercel.json', 'assets/hero-advies.jpg', 'assets/hero-advies-mobile.jpg']) {
   if (existsSync(join(root, f))) ok(f); else fail(f + ' ontbreekt');
 }
 
@@ -46,13 +46,15 @@ for (const f of ['index.html', 'widget.html', 'portal.html', 'css/tokens.css', '
 console.log('Markers:');
 const idx = readFileSync(join(root, 'index.html'), 'utf8');
 const widget = readFileSync(join(root, 'widget.html'), 'utf8');
+const boeking = readFileSync(join(root, 'adviesgesprek.html'), 'utf8');
 const markers = [
-  [idx, 'data-booking', 'index.html: boekingsmount (data-booking)'],
+  [boeking, 'data-booking', 'adviesgesprek.html: boekingsmount (data-booking)'],
+  [idx, 'adviesgesprek.html', 'index.html: link naar de boekingspagina'],
+  [idx, 'data-funnel', 'index.html: bespaarcheck (data-funnel)'],
   [idx, "whatsapp: '31639369781'", 'index.html: WhatsApp-nummer in SD_CONFIG'],
   [idx, 'bookingEndpoint', 'index.html: bookingEndpoint'],
   [idx, 'chatEndpoint', 'index.html: chatEndpoint'],
   [idx, 'application/ld+json', 'index.html: JSON-LD aanwezig'],
-  [idx, 'data-scrolly-scene', 'index.html: scene5-scrollytelling (5 stappen)'],
   [widget, 'data-booking', 'widget.html: boekingsmount'],
 ];
 for (const [haystack, needle, label] of markers) {
@@ -81,7 +83,7 @@ const pub = join(root, 'public');
 rmSync(pub, { recursive: true, force: true });
 mkdirSync(pub, { recursive: true });
 const PUBLIC_ITEMS = [
-  'index.html', 'widget.html', 'portal.html', 'kennisbank.html', 'privacybeleid.html',
+  'index.html', 'adviesgesprek.html', 'widget.html', 'portal.html', 'kennisbank.html', 'privacybeleid.html',
   'kennisbank', 'css', 'js', 'assets', 'robots.txt', 'sitemap.xml'
 ];
 for (const item of PUBLIC_ITEMS) {
