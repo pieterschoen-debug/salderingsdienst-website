@@ -450,16 +450,6 @@ body.nav-open .nav-burger span:nth-child(3) { transform: translateY(-6.5px) rota
 .ftile span:last-child { font-size: 11px; font-weight: 700; letter-spacing: .05em; text-transform: uppercase; color: var(--ink-400); }
 
 /* ---------- Adres-check binnen stap 1 ---------- */
-.calc-addr { padding-top: 18px; border-top: 1px solid var(--line); }
-.addr-row { display: flex; flex-direction: column; gap: 10px; }
-.addr-row .field--pc { flex: 1.3; }
-.addr-row .field--nr { flex: .7; }
-.addr-result { margin-top: 12px; padding: 12px 14px; background: var(--paper-3); border: 1px solid var(--line); border-radius: var(--radius-md); }
-.addr-result[hidden] { display: none; }
-.addr-result-head { display: flex; align-items: center; gap: 10px; margin-bottom: 6px; font-weight: 700; font-size: var(--fs-body-sm); color: var(--ink-800); }
-.addr-result-body { font-size: 14px; line-height: 1.55; color: var(--ink-500); margin: 0; }
-.addr-check-glyph { width: 24px; height: 24px; border-radius: 50%; background: var(--success-bg); color: var(--success-fg); display: inline-flex; align-items: center; justify-content: center; font-size: 13px; font-weight: 700; flex-shrink: 0; }
-.addr-note { margin-top: 8px; font-size: 13px; color: var(--ink-500); }
 
 /* ---------- Terugbelverzoek onder de uitkomst ---------- */
 .callback { border-top: 1px solid var(--line-2); margin-top: 22px; padding-top: 18px; }
@@ -537,8 +527,6 @@ body.nav-open .nav-burger span:nth-child(3) { transform: translateY(-6.5px) rota
 @media (min-width: 620px) {
   .funnel { padding: 36px 34px 30px; }
   .funnel-badge { font-size: 15px; padding: 13px 22px; right: 26px; }
-  .addr-row { flex-direction: row; }
-  .addr-row .btn { flex: 0 0 auto; }
   .fmodal { align-items: center; padding: 24px; }
   .fmodal-panel { border-radius: 24px; padding: 32px 30px 28px; }
   .fpersons { grid-template-columns: repeat(6, 1fr); }
@@ -549,28 +537,157 @@ body.nav-open .nav-burger span:nth-child(3) { transform: translateY(-6.5px) rota
    WAAROM JUIST NÚ — vier genummerde punten
    Mobiel: accordeon (details); ≥768px: open grid, plus verborgen
    ============================================================ */
-.nu-list { display: grid; gap: 0; border-top: 1px solid var(--line); }
-.nu-item { padding: 22px 0; border-bottom: 1px solid var(--line); }
-.nu-title { font-size: 17px; font-weight: 600; color: var(--ink-800); line-height: 1.3; margin: 0 0 6px; }
-.nu-body { margin: 0; font-size: var(--fs-body-sm); color: var(--ink-600); max-width: 54ch; }
+/* ============================================================
+   WAAROM SALDERINGSDIENST — het register.
+   1. De drie punten hangen aan één doorlopende lijn. Die lijn
+      loopt vol naarmate u er langs scrolt (scroll-driven CSS,
+      met @supports; browsers zonder ondersteuning houden een
+      stille haarlijn over).
+   2. Elk punt tekent zichzelf in zodra het in beeld komt: eerst
+      de haarlijn van links naar rechts, dan komt de kop van
+      achter die lijn omhoog, dan volgt de tekst.
+   3. Op desktop blijft de sectiekop links staan terwijl de
+      punten er langs schuiven, zodat de vraag in beeld blijft
+      terwijl de antwoorden binnenkomen.
+   Zonder JS of met reduced motion staat alles stil en zichtbaar.
+   ============================================================ */
+.nu-list { list-style: none; margin: 0; padding: 0; position: relative; }
 
-/* Vanaf tablet naast elkaar: verticale hairlines in plaats van kaarten. */
-@media (min-width: 768px) {
-  .nu-list { grid-template-columns: repeat(3, 1fr); gap: 0 34px; border-bottom: 1px solid var(--line); }
-  .nu-item { border-bottom: none; padding: 26px 0 28px; }
-  .nu-item + .nu-item { border-left: 1px solid var(--line); padding-left: 34px; margin-left: -1px; }
+/* De ruggengraat van het register: een stille haarlijn met een
+   inkten lijn eroverheen die meeloopt met de scrollpositie. */
+.nu-list::before,
+.nu-list::after { content: ''; position: absolute; left: 0; top: 0; bottom: 0; width: 1px; }
+.nu-list::before { background: var(--line); }
+.nu-list::after { background: var(--navy-400); opacity: .45; transform: scaleY(0); transform-origin: top center; }
+@keyframes nu-spine { from { transform: scaleY(0); } to { transform: scaleY(1); } }
+@supports (animation-timeline: view()) {
+  @media (prefers-reduced-motion: no-preference) {
+    .nu-list::after {
+      animation: nu-spine linear both;
+      animation-timeline: view();
+      animation-range: entry 60% cover 78%;
+    }
+  }
+}
+
+.nu-item { position: relative; padding: 26px 0 30px clamp(20px, 4vw, 34px); }
+/* Haarlijn boven elk punt; de kop komt er vanachter vandaan. */
+.nu-item::before {
+  content: ''; position: absolute; left: 0; right: 0; top: 0; height: 1px;
+  background: var(--line-2); transform-origin: left center;
+}
+.nu-title {
+  font-family: var(--font-serif); font-weight: 400; color: var(--ink-900);
+  font-size: clamp(21px, 1.2vw + 16px, 28px); line-height: 1.28; letter-spacing: -.3px;
+  margin: 0 0 10px; padding-bottom: .1em;
+}
+.nu-title > span { display: block; }
+.nu-body { margin: 0; font-size: var(--fs-body-sm); color: var(--ink-600); line-height: 1.6; max-width: 50ch; }
+
+@media (prefers-reduced-motion: no-preference) {
+  /* De standaard fade-in-up laten we hier los: dit blok heeft zijn
+     eigen choreografie, anders bewegen de delen twee keer. */
+  .nu-item.rv-js { opacity: 1; transform: none; }
+  .nu-item.rv-js::before { transform: scaleX(0); transition: transform .85s var(--ease-out); }
+  .nu-item.rv-js.rv-in::before { transform: scaleX(1); }
+
+  .nu-item.rv-js .nu-title { overflow: hidden; }
+  .nu-item.rv-js .nu-title > span { transform: translateY(115%); transition: transform .8s .1s var(--ease-out); }
+  .nu-item.rv-js.rv-in .nu-title > span { transform: none; }
+
+  .nu-item.rv-js .nu-body {
+    opacity: 0; transform: translateY(9px);
+    transition: opacity .65s .3s var(--ease-out), transform .65s .3s var(--ease-out);
+  }
+  .nu-item.rv-js.rv-in .nu-body { opacity: 1; transform: none; }
+
+  /* Komen ze samen in beeld (desktop), dan lopen ze na elkaar binnen. */
+  .nu-list .rv-js:nth-child(2)::before { transition-delay: .1s; }
+  .nu-list .rv-js:nth-child(2) .nu-title > span { transition-delay: .2s; }
+  .nu-list .rv-js:nth-child(2) .nu-body { transition-delay: .4s; }
+  .nu-list .rv-js:nth-child(3)::before { transition-delay: .2s; }
+  .nu-list .rv-js:nth-child(3) .nu-title > span { transition-delay: .3s; }
+  .nu-list .rv-js:nth-child(3) .nu-body { transition-delay: .5s; }
+}
+
+/* Vanaf 900px: kop links (blijft staan), register rechts. */
+@media (min-width: 900px) {
+  .waarom-grid {
+    display: grid; align-items: start;
+    grid-template-columns: minmax(0, 33%) minmax(0, 1fr);
+    column-gap: clamp(40px, 5vw, 90px);
+  }
+  .waarom-head { position: sticky; top: 106px; margin-bottom: 0; }
+  /* Iets kleiner dan een gewone sectiekop: "SalderingsDienst" is een
+     lang woord en moet in deze smalle kolom heel blijven (geen afbreekstreepjes). */
+  .waarom-head .h2 { font-size: clamp(26px, 1.6vw + 16px, 38px); margin-bottom: 0; }
+  .nu-item { padding: 34px 0 42px clamp(30px, 3vw, 44px); }
+  .nu-body { font-size: var(--fs-body); max-width: 46ch; }
 }
 
 /* ============================================================
-   ONZE OPLOSSINGEN — productkaarten met foto bovenaan
+   ONZE OPLOSSINGEN — een horizontale lade.
+   1. De rij loopt rechts door tot voorbij de schermrand, zodat de
+      volgende kaart altijd om de hoek piept: zichtbaar dat er meer
+      staat, zonder dat er iets geroepen hoeft te worden.
+   2. Vegen werkt native (scroll-snap); op desktop staan er twee
+      haarlijnpijlen naast de sectiekop, niet over de kaarten heen.
+   3. Onder de rij loopt een voortgangsbalk mee in plaats van
+      bolletjes, in dezelfde taal als het register bij "waarom" en
+      de aftelbalk bovenaan.
+   Zonder JS blijft het een gewone, scrollbare rij kaarten.
    ============================================================ */
-.sol-list { display: grid; gap: 34px; }
-.sol-card { display: flex; flex-direction: column; }
-.ph--sol { aspect-ratio: 4 / 3; border-radius: var(--radius-md); }
-.sol-body { padding: 18px 0 0; display: flex; flex-direction: column; flex: 1; }
+/* Kop met de pijlen ernaast: de bediening hoort bij de titel en
+   ligt niet als knop over de kaarten heen. */
+.sol-head { display: flex; align-items: flex-end; justify-content: space-between; gap: 30px; }
+.sol-head .section-head { margin-bottom: var(--space-6); }
+.sol-nav { display: none; }
+.sol-arrow {
+  width: 46px; height: 46px; border-radius: 50%; padding: 0;
+  display: flex; align-items: center; justify-content: center;
+  background: transparent; border: 1px solid var(--line-2); color: var(--navy-400);
+  transition: background var(--t-fast), border-color var(--t-fast), color var(--t-fast);
+}
+.sol-arrow svg { width: 19px; height: 19px; }
+.sol-arrow:hover { background: var(--navy-400); border-color: var(--navy-400); color: #fff; }
+.sol-arrow[aria-disabled="true"] { opacity: .3; pointer-events: none; }
+
+/* De lade zelf. Rechts loopt hij door tot voorbij de schermrand, zodat
+   de volgende kaart altijd om de hoek piept. */
+.sol-track {
+  list-style: none; margin: 0; padding: 0 0 4px;
+  display: flex; gap: 16px;
+  overflow-x: auto; overscroll-behavior-x: contain;
+  scroll-snap-type: x mandatory; scroll-behavior: smooth;
+  scrollbar-width: none; -webkit-overflow-scrolling: touch;
+  margin-right: calc(-1 * (max(0px, (100vw - var(--container)) / 2) + var(--gutter)));
+  padding-right: var(--gutter);
+}
+.sol-track::-webkit-scrollbar { display: none; }
+
+.sol-card {
+  position: relative; flex: 0 0 84%; scroll-snap-align: start;
+  display: flex; flex-direction: column; overflow: hidden;
+  background: var(--paper-2); border: 1px solid var(--line-2); border-radius: var(--radius-lg);
+  transition: border-color .35s ease, box-shadow .35s var(--ease-out);
+}
+/* De kaart in het midden krijgt een navylijn over zijn bovenrand;
+   die schuift mee terwijl u door de lade veegt (motion.js). */
+.sol-card::after {
+  content: ''; position: absolute; left: 0; right: 0; top: 0; height: 2px; z-index: 2;
+  background: var(--navy-400); transform: scaleX(0); transform-origin: left center;
+  transition: transform .6s var(--ease-out);
+}
+.sol-card.is-current::after { transform: scaleX(1); }
+.sol-card.is-current { border-color: var(--field); box-shadow: var(--shadow-lg); }
+
+.ph--sol { aspect-ratio: 4 / 3; border-radius: 0; }
+.ph--sol img { transition: transform 1.2s var(--ease-out); }
+.sol-card:hover .ph--sol img { transform: scale(1.03); }
+.sol-body { padding: 20px; display: flex; flex-direction: column; flex: 1; }
 .sol-body h3 { font-size: 21px; line-height: 1.2; margin-bottom: 8px; }
-.sol-body > p { font-size: var(--fs-body-sm); color: var(--ink-600); margin-bottom: 14px; }
-.sol-usps { list-style: none; margin: 0 0 18px; padding: 0; border-top: 1px solid var(--line); }
+.sol-body > p { font-size: var(--fs-body-sm); color: var(--ink-600); margin-bottom: 16px; }
+.sol-usps { list-style: none; margin: 0 0 14px; padding: 0; border-top: 1px solid var(--line); }
 .sol-usps li {
   padding: 9px 0; font-size: 14.5px; color: var(--ink-600); line-height: 1.45;
   border-bottom: 1px solid var(--line);
@@ -580,9 +697,24 @@ body.nav-open .nav-burger span:nth-child(3) { transform: translateY(-6.5px) rota
   color: var(--navy-400); font-weight: 600; font-size: 15px;
 }
 .sol-link:hover { text-decoration: underline; }
+
+/* Voortgangsbalk in plaats van bolletjes: de duim toont hoeveel er
+   naast het scherm staat en waar u bent. */
+.sol-progress { position: relative; height: 2px; margin-top: 26px; background: var(--line); }
+.sol-progress span {
+  position: absolute; left: 0; top: 0; bottom: 0; width: 30%;
+  background: var(--navy-400); transform-origin: left center;
+}
+
+@media (min-width: 640px) { .sol-card { flex-basis: 56%; } }
 @media (min-width: 768px) {
-  .sol-list { grid-template-columns: repeat(3, 1fr); gap: 20px; }
-  .sol-body { padding: 22px; }
+  .sol-nav { display: flex; gap: 10px; margin-bottom: calc(var(--space-6) + 2px); }
+  .sol-card { flex-basis: 44%; }
+  .sol-body { padding: 24px; }
+}
+@media (min-width: 1100px) {
+  .sol-track { gap: 20px; }
+  .sol-card { flex-basis: 36%; }
 }
 
 /* ============================================================
@@ -619,6 +751,20 @@ body.nav-open .nav-burger span:nth-child(3) { transform: translateY(-6.5px) rota
 .verhaal-beeld { position: relative; margin: 0 calc(-1 * var(--gutter)); }
 .ph--verhaal { aspect-ratio: 4 / 3; }
 .ph--verhaal img { object-position: 50% 42%; }
+/* Bij elk punt hoort een eigen foto. Ze liggen op elkaar; alleen de
+   actieve is zichtbaar. De wissel is een rustige crossfade met een
+   minieme inzoom, iets trager dan de tekst, zodat het beeld meebeweegt
+   zonder de aandacht van het punt weg te trekken. */
+.ph--verhaal .verhaal-foto {
+  position: absolute; inset: 0; z-index: 1;
+  width: 100%; height: 100%; object-fit: cover;
+  opacity: 0; transform: scale(1.035);
+  transition: opacity .85s var(--ease-out), transform 6.8s linear;
+}
+.ph--verhaal .verhaal-foto.is-active { opacity: 1; transform: scale(1); z-index: 2; }
+@media (prefers-reduced-motion: reduce) {
+  .ph--verhaal .verhaal-foto { transition: none; transform: none; }
+}
 
 /* ---- Kop: papieren vlak dat over de onderrand van de foto valt ---- */
 .verhaal-kop {
@@ -825,7 +971,6 @@ body.nav-open .nav-burger span:nth-child(3) { transform: translateY(-6.5px) rota
 
 /* Transparantie: één regel altijd zichtbaar, de volledige tekst
    inklapbaar in FAQ-stijl (summary als .faq-q, plus roteert) */
-.transparency-always { margin-top: 26px; font-size: 14.5px; color: var(--ink-500); max-width: 760px; }
 .transparency { max-width: 760px; border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); margin-top: 12px; }
 .transparency summary { list-style: none; cursor: pointer; }
 .transparency summary::-webkit-details-marker { display: none; }

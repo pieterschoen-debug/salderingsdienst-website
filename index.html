@@ -160,26 +160,29 @@
     <div class="urgency-progress" data-urgency-progress aria-hidden="true"></div>
   </section>
 
-  <!-- ===== 3. WAAROM SALDERINGSDIENST ===== -->
-  <section id="waarom-nu">
-    <div class="container section">
-      <div class="section-head">
+  <!-- ===== 3. WAAROM SALDERINGSDIENST =====
+       Een register: links de kop, die op desktop blijft staan terwijl de
+       drie punten er rechts langs schuiven. Elk punt hangt aan een
+       doorlopende lijn en tekent zich in zodra het in beeld komt. -->
+  <section id="waarom-nu" class="waarom">
+    <div class="container section waarom-grid">
+      <div class="section-head waarom-head">
         <h2 class="h2">Waarom SalderingsDienst het verschil maakt.</h2>
       </div>
-      <div class="nu-list">
-        <div class="nu-item rv">
-          <h3 class="nu-title">Eerst rekenen, dan pas adviseren</h3>
+      <ol class="nu-list">
+        <li class="nu-item rv">
+          <h3 class="nu-title"><span>Eerst rekenen, dan pas adviseren</span></h3>
           <p class="nu-body">U krijgt een doorrekening van uw eigen verbruik en opwek. Pas daarna bespreken we of een oplossing loont, en welke.</p>
-        </div>
-        <div class="nu-item rv">
-          <h3 class="nu-title">Eén aanspreekpunt tot en met de installatie</h3>
+        </li>
+        <li class="nu-item rv">
+          <h3 class="nu-title"><span>Uw vaste aanspreekpunt tot en met de installatie</span></h3>
           <p class="nu-body">Advies, levering, subsidieaanvraag en installatie door gecertificeerde partners. U hoeft zelf niets te regelen.</p>
-        </div>
-        <div class="nu-item rv">
-          <h3 class="nu-title">Gespecialiseerd in de salderingsregeling</h3>
+        </li>
+        <li class="nu-item rv">
+          <h3 class="nu-title"><span>Gespecialiseerd in de salderingsregeling</span></h3>
           <p class="nu-body">Wij volgen de wetgeving rond 1 januari 2027 op de voet en vertalen die naar wat het voor uw woning betekent.</p>
-        </div>
-      </div>
+        </li>
+      </ol>
     </div>
   </section>
 
@@ -228,20 +231,6 @@
               <option>A+</option><option>A</option><option>B</option><option>C</option>
               <option>D</option><option>E</option><option>F</option>
             </select>
-          </div>
-
-          <div class="ffgroup calc-addr">
-            <div class="flabel">Uw adres (optioneel)</div>
-            <div class="addr-row">
-              <input class="field field--pc" data-addr-pc aria-label="Postcode" placeholder="Postcode (1234 AB)" autocomplete="postal-code">
-              <input class="field field--nr" data-addr-nr aria-label="Huisnummer" placeholder="Huisnr.">
-              <button type="button" class="btn btn-ghost" data-addr-check>Controleer</button>
-            </div>
-            <div class="addr-result" data-addr-result hidden>
-              <div class="addr-result-head"><span class="addr-check-glyph">✓</span><span data-addr-address></span></div>
-              <p class="addr-result-body">Voor woningen zoals deze stopt het salderingsvoordeel vanaf 2027. Hieronder ziet u wat dat indicatief betekent.</p>
-            </div>
-            <p class="addr-note">Geen verplichtingen, uw gegevens worden niet gedeeld.</p>
           </div>
 
           <p class="ferror" data-ferror="1" hidden></p>
@@ -318,7 +307,7 @@
                      aria-label="E-mailadres" placeholder="E-mailadres" autocomplete="email" inputmode="email">
             </div>
             <button type="submit" class="btn btn-ghost" data-track="calc_callback_submit">Bel mij met de uitkomst</button>
-            <p class="callback-note" data-cb-note>Wij bellen binnen één werkdag. Geen verplichtingen, uw gegevens worden niet gedeeld.</p>
+            <p class="callback-note" data-cb-note>Wij bellen binnen 1 werkdag. Geen verplichtingen, uw gegevens worden niet gedeeld.</p>
           </form>
 
           <div class="calc-disclaimer">Indicatieve schatting op basis van landelijke gemiddelden. Uw werkelijke situatie kan afwijken; dit is geen bindend financieel advies.</div>
@@ -329,15 +318,46 @@
     </div>
   </section>
 
-  <!-- ===== 5. ONZE OPLOSSINGEN ===== -->
-  <section id="oplossingen">
+  <!-- ===== 5. ONZE OPLOSSINGEN =====
+       Een lade die tot voorbij de rechterrand van het scherm doorloopt:
+       de volgende kaart piept altijd om de hoek, zodat zichtbaar is dat
+       er meer staat. Vegen op mobiel, pijlen bij de kop op desktop. De
+       kaart die in het midden staat krijgt een navylijn over de bovenrand
+       (zie motion.js). Zonder JS blijft het een gewone scrollbare rij. -->
+  <section id="oplossingen" class="sol">
     <div class="container section">
-      <div class="section-head">
-        <h2 class="h2">Onze oplossingen.</h2>
-        <p class="lead">Eerst het advies, daarna — als u dat wilt — de uitvoering. Alles via één aanspreekpunt.</p>
+      <div class="sol-head">
+        <div class="section-head">
+          <h2 class="h2">Onze oplossingen.</h2>
+          <p class="lead">Eerst het advies, daarna de uitvoering als u dat wilt. Alles via hetzelfde aanspreekpunt.</p>
+        </div>
+        <div class="sol-nav">
+          <button type="button" class="sol-arrow" data-sol-prev aria-label="Vorige oplossing">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 4 7 12l8 8" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </button>
+          <button type="button" class="sol-arrow" data-sol-next aria-label="Volgende oplossing">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m9 4 8 8-8 8" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </button>
+        </div>
       </div>
-      <div class="sol-list">
-        <article class="sol-card rv">
+
+      <ul class="sol-track" data-sol-track>
+        <li class="sol-card rv">
+          <div class="ph ph--sol" data-ph="Foto: zonnepanelen">
+            <img src="assets/product-zonnepanelen.jpg" alt="Twee installateurs leggen zonnepanelen op een schuin dak." width="1280" height="720" loading="lazy" onerror="this.remove()">
+          </div>
+          <div class="sol-body">
+            <h3>Zonnepanelen</h3>
+            <p>Nieuwe panelen op uw dak, vooraf doorgerekend op opbrengst en terugverdientijd.</p>
+            <ul class="sol-usps">
+              <li>Legplan en opbrengst vooraf berekend</li>
+              <li>Advies over paneelkeuze en garantie</li>
+              <li>Installatie door gecertificeerde partners</li>
+            </ul>
+            <a href="adviesgesprek.html" class="sol-link" data-track="sol_zonnepanelen_click">Meer informatie</a>
+          </div>
+        </li>
+        <li class="sol-card rv">
           <div class="ph ph--sol" data-ph="Foto: thuisbatterij">
             <img src="assets/product-batterij.jpg" alt="Thuisbatterij aan de muur van een woning." width="640" height="400" loading="lazy" onerror="this.remove()">
           </div>
@@ -351,8 +371,8 @@
             </ul>
             <a href="adviesgesprek.html" class="sol-link" data-track="sol_batterij_click">Meer informatie</a>
           </div>
-        </article>
-        <article class="sol-card rv">
+        </li>
+        <li class="sol-card rv">
           <div class="ph ph--sol" data-ph="Foto: slimme energiesturing">
             <img src="assets/product-sturing.jpg" alt="App met realtime inzicht in energieverbruik." width="640" height="400" loading="lazy" onerror="this.remove()">
           </div>
@@ -366,23 +386,25 @@
             </ul>
             <a href="adviesgesprek.html" class="sol-link" data-track="sol_sturing_click">Meer informatie</a>
           </div>
-        </article>
-        <article class="sol-card rv">
-          <div class="ph ph--sol" data-ph="Foto: zonnepanelen-optimalisatie">
+        </li>
+        <li class="sol-card rv">
+          <div class="ph ph--sol" data-ph="Foto: bestaande installatie">
             <img src="assets/product-zon.jpg" alt="Installateur bij zonnepanelen op een dak." width="640" height="400" loading="lazy" onerror="this.remove()">
           </div>
           <div class="sol-body">
-            <h3>Zonnepanelen-optimalisatie</h3>
-            <p>Haalt meer uit uw bestaande installatie, ook zonder extra panelen.</p>
+            <h3>Meer uit uw bestaande dak</h3>
+            <p>Haalt meer uit uw huidige installatie, ook zonder extra panelen.</p>
             <ul class="sol-usps">
               <li>Meer opbrengst uit bestaand dak</li>
               <li>Advies over uitbreiding</li>
-              <li>Gecertificeerde installatie</li>
+              <li>Controle van omvormer en instellingen</li>
             </ul>
             <a href="adviesgesprek.html" class="sol-link" data-track="sol_zon_click">Meer informatie</a>
           </div>
-        </article>
-      </div>
+        </li>
+      </ul>
+
+      <div class="sol-progress" data-sol-progress aria-hidden="true"><span data-sol-thumb></span></div>
     </div>
   </section>
 
@@ -421,7 +443,7 @@
           <div class="stap-body">
             <div class="stap-num">Stap 3</div>
             <h3>Helder advies op papier</h3>
-            <p>U ziet precies wat in uw geval loont — en wat niet.</p>
+            <p>U ziet precies wat in uw geval loont, en wat niet.</p>
           </div>
         </div>
         <div class="stap rv">
@@ -442,9 +464,14 @@
   <section id="eerlijk-verhaal" class="verhaal">
     <div class="container section verhaal-grid">
 
+      <!-- Bij elk punt hoort een eigen foto; ze liggen op elkaar en
+           wisselen mee met de slider (zie motion.js). Zonder JS blijft
+           de eerste foto staan. -->
       <figure class="verhaal-beeld rv">
-        <div class="ph ph--verhaal" data-ph="Foto: eerlijk-verhaal.jpg">
-          <img src="assets/eerlijk-verhaal.jpg" alt="Adviseur bespreekt de doorrekening met twee huiseigenaren aan de eettafel." width="1536" height="1024" loading="lazy" onerror="this.remove()">
+        <div class="ph ph--verhaal" data-ph="Foto: eerlijk-verhaal-1.jpg" data-verhaal-fotos>
+          <img class="verhaal-foto is-active" src="assets/eerlijk-verhaal-1.jpg" alt="Adviseur neemt de doorrekening met een pen door aan de eettafel bij twee huiseigenaren." width="1536" height="1024" loading="lazy" onerror="this.remove()">
+          <img class="verhaal-foto" src="assets/eerlijk-verhaal-2.jpg" alt="" aria-hidden="true" width="1536" height="1024" loading="lazy" onerror="this.remove()">
+          <img class="verhaal-foto" src="assets/eerlijk-verhaal-3.jpg" alt="" aria-hidden="true" width="1536" height="1024" loading="lazy" onerror="this.remove()">
         </div>
       </figure>
 
@@ -510,7 +537,6 @@
     <div class="container section">
       <div class="section-head">
         <h2 class="h2">Echte mensen die u kunt bereiken.</h2>
-        <p class="lead">Gespecialiseerd in de salderingsregeling, eigen verbruik en thuisopslag.</p>
       </div>
       <!-- Adviseurs: portretkaarten 3/4 in een carrousel, naam en rol over
            de foto. Eén kaart op mobiel, twee op tablet, vier op desktop. -->
@@ -587,11 +613,10 @@
           <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m9 4 8 8-8 8" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
         </button>
       </div>
-      <p class="transparency-always">SalderingsDienst is een onafhankelijke organisatie en geen onderdeel van de Rijksoverheid.</p>
       <details class="transparency" data-transparency>
-        <summary class="faq-q"><span class="qt">Hoe wij werken — advies én uitvoering</span><svg class="plus" viewBox="0 0 18 18" aria-hidden="true"><path d="M9 2v14M2 9h14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></summary>
+        <summary class="faq-q"><span class="qt">Hoe wij werken: advies en uitvoering</span><svg class="plus" viewBox="0 0 18 18" aria-hidden="true"><path d="M9 2v14M2 9h14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></summary>
         <div class="transparency-body">
-          <p>Wij rekenen eerst uw situatie onafhankelijk door; dat advies is kosteloos en vrijblijvend. Kiest u voor een oplossing, dan kunt u die direct via ons afnemen — levering, subsidie en installatie via gecertificeerde partners. Dat is nooit verplicht: u beslist zelf.</p>
+          <p>Wij rekenen eerst uw situatie onafhankelijk door; dat advies is kosteloos en vrijblijvend. Kiest u voor een oplossing, dan kunt u die direct via ons afnemen: levering, subsidie en installatie via gecertificeerde partners. Dat is nooit verplicht: u beslist zelf.</p>
           <p>Heeft u een klacht? Dan kunt u zich melden via ons <a href="privacybeleid.html#klachten">klachtenmeldpunt</a>.</p>
         </div>
       </details>

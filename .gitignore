@@ -7,3 +7,6 @@ public/
 .vercel
 .env*
 .claude/worktrees/
+
+# Bronbeelden (grote PNG-originelen): blijven lokaal, de site gebruikt de jpg-versies.
+archive/bronbeelden/

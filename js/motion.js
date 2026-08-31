@@ -155,44 +155,6 @@
     }, { threshold: 0 }).observe(heroEl);
   }
 
-  /* ---------- Adres-check ---------- */
-  var pcInput = document.querySelector('[data-addr-pc]');
-  if (pcInput) {
-    var nrInput = document.querySelector('[data-addr-nr]');
-    var checkBtn = document.querySelector('[data-addr-check]');
-    var resultBox = document.querySelector('[data-addr-result]');
-    var addrEl = document.querySelector('[data-addr-address]');
-    var checking = false;
-    var pcOk = function () { return /^\s*\d{4}\s*[a-zA-Z]{2}\s*$/.test(pcInput.value) && nrInput.value.trim(); };
-    /* De adrescheck is optioneel: de knop staat nooit disabled (de
-       calculator werkt sowieso zonder adres). Ongeldige invoer wordt
-       pas bij het klikken gemarkeerd. */
-    var refresh = function () { checkBtn.disabled = checking; };
-    var clearInvalid = function () { pcInput.removeAttribute('aria-invalid'); nrInput.removeAttribute('aria-invalid'); };
-    pcInput.addEventListener('input', clearInvalid);
-    nrInput.addEventListener('input', clearInvalid);
-    checkBtn.addEventListener('click', function () {
-      if (checking) return;
-      if (!pcOk()) {
-        var pcValid = /^\s*\d{4}\s*[a-zA-Z]{2}\s*$/.test(pcInput.value);
-        pcInput.setAttribute('aria-invalid', String(!pcValid));
-        nrInput.setAttribute('aria-invalid', String(!nrInput.value.trim()));
-        (pcValid ? nrInput : pcInput).focus();
-        return;
-      }
-      checking = true;
-      checkBtn.textContent = 'Bezig…'; refresh();
-      resultBox.hidden = true;
-      window.SD.track('address_check');
-      setTimeout(function () {
-        checking = false;
-        checkBtn.textContent = 'Controleer'; refresh();
-        addrEl.textContent = pcInput.value.toUpperCase().replace(/\s+/g, ' ').trim() + ' ' + nrInput.value.trim();
-        resultBox.hidden = false;
-      }, 700);
-    });
-  }
-
   /* De bespaarcheck zelf staat in js/funnel.js; die vult ook
      window.SD.calcState voor het terugbelverzoek hieronder. */
 
@@ -244,7 +206,7 @@
         source: { page: location.pathname, utm: (window.SD.utm || {}) }
       });
 
-      cbForm.innerHTML = '<p class="callback-done">Bedankt, wij bellen u binnen één werkdag op ' +
+      cbForm.innerHTML = '<p class="callback-done">Bedankt, wij bellen u binnen 1 werkdag op ' +
         phone.replace(/[<>&]/g, '') + ' met de doorrekening voor uw woning.</p>';
     });
   }
@@ -407,6 +369,77 @@
 })();
 
 /* ------------------------------------------------------------
+   Oplossingen-lade: pijlen schuiven precies een kaart op, de
+   voortgangsbalk loopt mee met de scrollpositie en de kaart die
+   het dichtst bij het midden staat krijgt zijn navylijn. Alles
+   hangt aan de native scrollpositie, dus vegen, pijlen en
+   toetsenbord komen op hetzelfde uit.
+   ------------------------------------------------------------ */
+(function () {
+  'use strict';
+  var track = document.querySelector('[data-sol-track]');
+  if (!track) return;
+  var kaarten = Array.prototype.slice.call(track.querySelectorAll('.sol-card'));
+  if (!kaarten.length) return;
+  var prev = document.querySelector('[data-sol-prev]');
+  var next = document.querySelector('[data-sol-next]');
+  var thumb = document.querySelector('[data-sol-thumb]');
+  var rail = document.querySelector('[data-sol-progress]');
+  var wacht = false;
+
+  function stap() {
+    var eerste = kaarten[0];
+    var gap = parseFloat(getComputedStyle(track).columnGap) || 16;
+    return Math.round(eerste.getBoundingClientRect().width) + gap;
+  }
+
+  function max() { return Math.max(0, track.scrollWidth - track.clientWidth); }
+
+  function teken() {
+    wacht = false;
+    var m = max();
+    var x = track.scrollLeft;
+
+    /* Voortgangsbalk: breedte = zichtbaar deel, positie = scrollpositie. */
+    if (thumb && rail) {
+      var deel = track.clientWidth / track.scrollWidth;
+      var railW = rail.clientWidth;
+      var duimW = Math.max(28, railW * deel);
+      thumb.style.width = duimW + 'px';
+      thumb.style.transform = 'translateX(' + (m > 0 ? (x / m) * (railW - duimW) : 0) + 'px)';
+    }
+
+    /* Actieve kaart: die met zijn midden het dichtst bij het midden
+       van de lade staat. */
+    var midden = track.getBoundingClientRect().left + track.clientWidth / 2;
+    var beste = 0, best = Infinity;
+    kaarten.forEach(function (kaart, i) {
+      var r = kaart.getBoundingClientRect();
+      var d = Math.abs(r.left + r.width / 2 - midden);
+      if (d < best) { best = d; beste = i; }
+    });
+    kaarten.forEach(function (kaart, i) { kaart.classList.toggle('is-current', i === beste); });
+
+    if (prev) prev.setAttribute('aria-disabled', String(x <= 2));
+    if (next) next.setAttribute('aria-disabled', String(x >= m - 2));
+  }
+
+  function plan() { if (!wacht) { wacht = true; requestAnimationFrame(teken); } }
+
+  function ga(richting) {
+    var doel = Math.max(0, Math.min(max(), track.scrollLeft + richting * stap()));
+    if (track.scrollTo) track.scrollTo({ left: doel, behavior: 'smooth' });
+    else track.scrollLeft = doel;
+  }
+
+  if (prev) prev.addEventListener('click', function () { ga(-1); });
+  if (next) next.addEventListener('click', function () { ga(1); });
+  track.addEventListener('scroll', plan, { passive: true });
+  window.addEventListener('resize', plan);
+  teken();
+})();
+
+/* ------------------------------------------------------------
    Eerlijk verhaal: de drie punten schuiven vanzelf door.
    Zonder JS of met prefers-reduced-motion blijven ze gewoon
    onder elkaar staan; pas hier zetten we de slidermodus aan.
@@ -424,6 +457,13 @@
   var tabs = Array.prototype.slice.call(slider.querySelectorAll('.verhaal-tab'));
   if (slides.length < 2 || tabs.length !== slides.length) return;
 
+  /* Bij elk punt hoort een foto. Zijn het er niet evenveel (of ontbreekt
+     het blok), dan blijft het beeld gewoon staan en wisselt alleen de tekst. */
+  var fotos = Array.prototype.slice.call(
+    document.querySelectorAll('[data-verhaal-fotos] > .verhaal-foto')
+  );
+  if (fotos.length !== slides.length) fotos = [];
+
   var DUUR = 6000;
   var index = 0, elapsed = 0, vorige = null, raf = null, gepauzeerd = false;
 
@@ -438,6 +478,7 @@
     index = (i + slides.length) % slides.length;
     elapsed = 0;
     slides.forEach(function (li, n) { li.classList.toggle('is-active', n === index); });
+    fotos.forEach(function (img, n) { img.classList.toggle('is-active', n === index); });
     tabs.forEach(function (tab, n) {
       if (n === index) tab.setAttribute('aria-current', 'true');
       else tab.removeAttribute('aria-current');
