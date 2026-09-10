@@ -14,6 +14,7 @@
 var store = require('./_lib/store');
 var auth = require('./_lib/auth');
 var rate = require('./_lib/ratelimit');
+var pipedrive = require('./_lib/pipedrive');
 
 function deriveStatus(q) {
   if (!q || typeof q !== 'object') return 'niet_gekwalificeerd';
@@ -74,8 +75,12 @@ module.exports = async function handler(req, res) {
     lead.status = deriveStatus(lead.qualification);
     try {
       var saved = await store.saveBooking(lead);
+      /* Pipedrive is bewust de tweede stap: de lead staat al vast in de
+         opslag hierboven. syncBooking gooit nooit, dus een storing bij
+         Pipedrive levert de bezoeker geen foutmelding op. */
+      var pd = await pipedrive.syncBooking(lead);
       res.setHeader('Content-Type', 'application/json');
-      return res.end(JSON.stringify({ ok: true, ref: lead.ref, status: lead.status, backend: saved.backend }));
+      return res.end(JSON.stringify({ ok: true, ref: lead.ref, status: lead.status, backend: saved.backend, crm: !!(pd && pd.ok) }));
     } catch (e) {
       console.error('bookings save error:', e && e.message);
       res.statusCode = 500;
