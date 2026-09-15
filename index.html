@@ -135,17 +135,14 @@
       <source media="(max-width: 900px)" srcset="assets/hero-advies-960.jpg" width="960" height="540">
       <img src="assets/hero-advies.jpg" alt="Energieadviseur bespreekt de doorrekening met een huiseigenaar aan de eettafel." width="1385" height="779" fetchpriority="high">
     </picture>
+    <!-- Drie dingen, meer niet: het probleem, wat wij doen, waar u begint.
+         "Bereken uw impact" staat direct eronder al in de urgentiebalk. -->
     <div class="container hero-inner">
       <div class="hero-copy hero-enter">
-        <h1>Uw zonnepanelen, ook na 2027 rendabel.</h1>
-        <p class="lead">De salderingsregeling stopt op 1 januari 2027. Wij rekenen kosteloos voor u door wat dat betekent.</p>
-        <ul class="hero-facts" aria-label="Kernfeiten">
-          <li>Kosteloos en vrijblijvend</li>
-          <li>Advies, levering en installatie</li>
-        </ul>
+        <h1><span>De saldering</span> <span>stopt in 2027.</span></h1>
+        <p class="lead">Wij rekenen door wat dat voor uw woning betekent.</p>
         <div class="hero-ctas">
-          <a href="adviesgesprek.html" class="btn btn-primary btn--lg" data-track="hero_cta_click">Plan kosteloos adviesgesprek</a>
-          <a href="#bereken" class="btn btn-ghost btn-ghost--dark btn--lg" data-track="hero_calc_click">Bereken uw impact</a>
+          <a href="adviesgesprek.html" class="btn btn--lg hero-cta" data-track="hero_cta_click">Plan kosteloos adviesgesprek</a>
         </div>
       </div>
     </div>
@@ -329,7 +326,7 @@
       <div class="sol-head">
         <div class="section-head">
           <h2 class="h2">Onze oplossingen.</h2>
-          <p class="lead">Eerst het advies, daarna de uitvoering als u dat wilt. Alles via hetzelfde aanspreekpunt.</p>
+          <p class="lead">Eerst het advies, daarna de uitvoering als u dat wilt.</p>
         </div>
         <div class="sol-nav">
           <button type="button" class="sol-arrow" data-sol-prev aria-label="Vorige oplossing">
@@ -348,10 +345,9 @@
           </div>
           <div class="sol-body">
             <h3>Zonnepanelen</h3>
-            <p>Nieuwe panelen op uw dak, vooraf doorgerekend op opbrengst en terugverdientijd.</p>
+            <p>Nieuwe panelen, vooraf doorgerekend op opbrengst.</p>
             <ul class="sol-usps">
               <li>Legplan en opbrengst vooraf berekend</li>
-              <li>Advies over paneelkeuze en garantie</li>
               <li>Installatie door gecertificeerde partners</li>
             </ul>
             <a href="adviesgesprek.html" class="sol-link" data-track="sol_zonnepanelen_click">Meer informatie</a>
@@ -359,15 +355,14 @@
         </li>
         <li class="sol-card rv">
           <div class="ph ph--sol" data-ph="Foto: thuisbatterij">
-            <img src="assets/product-batterij.jpg" alt="Thuisbatterij aan de muur van een woning." width="640" height="400" loading="lazy" onerror="this.remove()">
+            <img src="assets/product-batterij-otgu.jpg" alt="Drie thuisbatterijen in verschillende formaten." width="1280" height="720" loading="lazy" onerror="this.remove()">
           </div>
           <div class="sol-body">
             <h3>Thuisbatterij</h3>
-            <p>Slaat uw zonnestroom overdag op, zodat u die 's avonds zelf gebruikt.</p>
+            <p>Bewaart zonnestroom van overdag voor de avond.</p>
             <ul class="sol-usps">
-              <li>Tot 70% eigen zonnestroom</li>
-              <li>Slimme aansturing op dynamische tarieven</li>
-              <li>Geen terugleverkosten</li>
+              <li>Meer van uw zonnestroom zelf gebruiken</li>
+              <li>Slim laden op dynamische tarieven</li>
             </ul>
             <a href="adviesgesprek.html" class="sol-link" data-track="sol_batterij_click">Meer informatie</a>
           </div>
@@ -378,10 +373,9 @@
           </div>
           <div class="sol-body">
             <h3>Slimme energiesturing</h3>
-            <p>Stuurt uw batterij en verbruik automatisch op de actuele stroomprijs.</p>
+            <p>Stuurt batterij en verbruik op de stroomprijs.</p>
             <ul class="sol-usps">
               <li>Laadt bij lage prijzen, levert bij piek</li>
-              <li>Automatisch, geen omkijken naar</li>
               <li>Realtime inzicht via app</li>
             </ul>
             <a href="adviesgesprek.html" class="sol-link" data-track="sol_sturing_click">Meer informatie</a>
@@ -393,11 +387,10 @@
           </div>
           <div class="sol-body">
             <h3>Meer uit uw bestaande dak</h3>
-            <p>Haalt meer uit uw huidige installatie, ook zonder extra panelen.</p>
+            <p>Meer uit uw huidige installatie, zonder extra panelen.</p>
             <ul class="sol-usps">
-              <li>Meer opbrengst uit bestaand dak</li>
-              <li>Advies over uitbreiding</li>
               <li>Controle van omvormer en instellingen</li>
+              <li>Advies over uitbreiding</li>
             </ul>
             <a href="adviesgesprek.html" class="sol-link" data-track="sol_zon_click">Meer informatie</a>
           </div>
@@ -408,55 +401,50 @@
     </div>
   </section>
 
-  <!-- ===== 6. ZO WERKT HET ===== -->
-  <section id="werkwijze" style="background:#fff; border-top:1px solid var(--line); border-bottom:1px solid var(--line);">
-    <div class="container section">
-      <div class="section-head">
+  <!-- ===== 6. ZO WERKT HET =====
+       Fotoreeks met genummerde bijschriften: eerst de vier beelden als
+       één strook, daaronder de vier stappen met de titel ingelopen in
+       de zin. Desktop: kop en bijschriften links, strook rechts. -->
+  <section id="werkwijze" class="werk" style="background:#fff; border-top:1px solid var(--line); border-bottom:1px solid var(--line);">
+    <div class="container section werk-grid">
+      <div class="section-head werk-head">
         <h2 class="h2">Zo werkt het.</h2>
         <p class="lead">Van eerste gesprek tot werkende installatie, in vier stappen.</p>
       </div>
-      <div class="stap-list">
-        <div class="stap rv">
-          <div class="ph ph--stap" data-ph="Foto: adviesgesprek plannen">
-            <img src="assets/stap-1.jpg" alt="Huiseigenaar plant online een adviesgesprek in." width="560" height="360" loading="lazy" onerror="this.remove()">
-          </div>
-          <div class="stap-body">
-            <div class="stap-num">Stap 1</div>
-            <h3>Plan uw gesprek</h3>
-            <p>Kies online een moment dat u uitkomt, thuis of online.</p>
-          </div>
-        </div>
-        <div class="stap rv">
-          <div class="ph ph--stap" data-ph="Foto: doorrekening">
-            <img src="assets/stap-2.jpg" alt="Adviseur rekent de situatie van een woning door." width="560" height="360" loading="lazy" onerror="this.remove()">
-          </div>
-          <div class="stap-body">
-            <div class="stap-num">Stap 2</div>
-            <h3>Wij rekenen uw situatie door</h3>
-            <p>Op basis van uw panelen, verbruik en woning.</p>
-          </div>
-        </div>
-        <div class="stap rv">
-          <div class="ph ph--stap" data-ph="Foto: advies op papier">
-            <img src="assets/stap-3.jpg" alt="Huiseigenaren nemen het advies op papier door." width="560" height="360" loading="lazy" onerror="this.remove()">
-          </div>
-          <div class="stap-body">
-            <div class="stap-num">Stap 3</div>
-            <h3>Helder advies op papier</h3>
-            <p>U ziet precies wat in uw geval loont, en wat niet.</p>
-          </div>
-        </div>
-        <div class="stap rv">
-          <div class="ph ph--stap" data-ph="Foto: installatie">
-            <img src="assets/stap-4.jpg" alt="Thuisbatterij zoals wij die leveren en laten installeren." width="560" height="360" loading="lazy" onerror="this.remove()">
-          </div>
-          <div class="stap-body">
-            <div class="stap-num">Stap 4</div>
-            <h3>Wij regelen levering, subsidie en installatie</h3>
-            <p>Als u dat wilt, voeren gecertificeerde partners alles uit.</p>
-          </div>
-        </div>
+
+      <div class="werk-strook rv">
+        <figure class="ph werk-foto">
+          <img src="assets/stap-1.jpg" alt="Huiseigenaar plant online een adviesgesprek in." width="560" height="360" loading="lazy" onerror="this.remove()">
+        </figure>
+        <figure class="ph werk-foto">
+          <img src="assets/stap-2.jpg" alt="Adviseur rekent de situatie van een woning door." width="560" height="360" loading="lazy" onerror="this.remove()">
+        </figure>
+        <figure class="ph werk-foto">
+          <img src="assets/werkwijze-3.jpg" alt="Adviseur neemt het advies op papier door met een huiseigenaar aan de keukentafel." width="900" height="848" loading="lazy" onerror="this.remove()">
+        </figure>
+        <figure class="ph werk-foto">
+          <img src="assets/werkwijze-4.jpg" alt="Installateur van SalderingsDienst sluit een thuisbatterij aan." width="900" height="1107" loading="lazy" onerror="this.remove()">
+        </figure>
       </div>
+
+      <ol class="werk-stappen rv">
+        <li>
+          <span class="werk-idx" aria-hidden="true">1</span>
+          <div class="werk-tekst"><h3>Plan uw gesprek.</h3> <p>Thuis of online, wanneer het u uitkomt.</p></div>
+        </li>
+        <li>
+          <span class="werk-idx" aria-hidden="true">2</span>
+          <div class="werk-tekst"><h3>Wij rekenen uw situatie door.</h3> <p>Op basis van uw panelen, verbruik en woning.</p></div>
+        </li>
+        <li>
+          <span class="werk-idx" aria-hidden="true">3</span>
+          <div class="werk-tekst"><h3>Helder advies op papier.</h3> <p>Wat in uw geval loont, en wat niet.</p></div>
+        </li>
+        <li>
+          <span class="werk-idx" aria-hidden="true">4</span>
+          <div class="werk-tekst"><h3>Wij regelen levering, subsidie en installatie.</h3> <p>Door gecertificeerde partners, als u dat wilt.</p></div>
+        </li>
+      </ol>
     </div>
   </section>
 
@@ -504,31 +492,45 @@
         </div>
       </div>
 
-      <div class="verhaal-cta rv">
-        <a href="adviesgesprek.html" class="btn btn-primary btn--lg" data-track="verhaal_cta_click">Plan kosteloos adviesgesprek</a>
-      </div>
-
     </div>
   </section>
 
-  <!-- ===== 8. CIJFERS ===== -->
-  <section class="stats on-navy" aria-label="Kerncijfers">
-    <div class="container section section--compact">
-      <div class="stats-grid">
-        <div class="stat rv">
-          <strong>tot 70%</strong>
-          <span>eigen verbruik van uw zonnestroom</span>
-        </div>
-        <div class="stat rv">
-          <strong>5 tot 7 jaar</strong>
-          <span>indicatieve terugverdientijd</span>
-        </div>
-        <div class="stat rv">
-          <strong>±€0,20</strong>
-          <span>prijsverschil per kWh tussen dal en piek</span>
-        </div>
+  <!-- ===== 8. GRIP OP UW STROOM =====
+       Eén stroomlijn als beeld: zon, batterij, huis. Een gouden draad
+       verbindt de drie voordelen van links naar rechts, zodat het
+       verhaal zich laat lezen als een zin in plaats van drie kaarten.
+       Mobiel en desktop lezen allebei horizontaal; op desktop staat de
+       kop links en de lijn rechts. Vertrouwenspunten fluisteren eronder. -->
+  <section class="grip on-navy" aria-labelledby="grip-kop">
+    <div class="container section grip-grid">
+      <div class="grip-head rv">
+        <h2 class="h2" id="grip-kop">Meer grip op uw eigen stroom.</h2>
+        <p>Eerst rekenen, dan pas adviseren.</p>
       </div>
-      <p class="stats-note">Indicatieve waarden; uw situatie rekenen wij persoonlijk door.</p>
+
+      <ol class="grip-flow rv">
+        <li>
+          <svg class="grip-glyph" viewBox="0 0 48 48" aria-hidden="true" focusable="false">
+            <circle class="ic-accent" cx="24" cy="24" r="6"/>
+            <path d="M24 7v4M24 37v4M7 24h4M37 24h4M12 12l2.8 2.8M33.2 33.2 36 36M36 12l-2.8 2.8M14.8 33.2 12 36"/>
+          </svg>
+          <h3><span>Meer zelf</span> <span>gebruiken</span></h3>
+        </li>
+        <li>
+          <svg class="grip-glyph" viewBox="0 0 48 48" aria-hidden="true" focusable="false">
+            <path d="M18.5 12h11a2.5 2.5 0 0 1 2.5 2.5v23a2.5 2.5 0 0 1-2.5 2.5h-11a2.5 2.5 0 0 1-2.5-2.5v-23a2.5 2.5 0 0 1 2.5-2.5zM21 8h6"/>
+            <path class="ic-accent" d="M20.5 34.5h7M20.5 29.5h7"/>
+          </svg>
+          <h3><span>Slimmer</span> <span>omgaan</span></h3>
+        </li>
+        <li>
+          <svg class="grip-glyph" viewBox="0 0 48 48" aria-hidden="true" focusable="false">
+            <path d="M8 23 24 9l16 14M12.5 19.5V39h23V19.5"/>
+            <path class="ic-accent" d="M20.5 39v-8h7v8"/>
+          </svg>
+          <h3><span>Minder</span> <span>afhankelijk</span></h3>
+        </li>
+      </ol>
     </div>
   </section>
 
@@ -623,80 +625,99 @@
     </div>
   </section>
 
-  <!-- ===== 10. KLANTERVARINGEN ===== -->
-  <section id="ervaringen">
-    <div class="container section">
-      <div class="section-head">
+  <!-- ===== 10. KLANTERVARINGEN =====
+       Eén stem vooraan. Henk zegt letterlijk waar wij voor staan, dus
+       zijn citaat staat groot op een navy vlak, zijn gezicht half over
+       de rand, en de kernzin tekent zich in goud onder. Ineke en Ruud
+       volgen als rustige echo: versprongen, zonder lijnen of kaarten.
+       Desktop: het vlak links, kop en echo's rechts. -->
+  <section id="ervaringen" class="erv">
+    <div class="container section erv-grid">
+      <div class="section-head erv-head">
         <h2 class="h2">Wat huiseigenaren zeggen.</h2>
       </div>
-      <div class="quote-list">
-        <figure class="quote-card rv">
-          <blockquote>„Eindelijk iemand die eerst rekent en dan pas adviseert. De batterij hing er drie weken later.”</blockquote>
-          <figcaption>
-            <span class="ph ph--quote" data-ph="Foto"><img src="assets/klant-1.jpg" alt="Henk uit Apeldoorn" width="96" height="96" loading="lazy" onerror="this.remove()"></span>
-            <span class="quote-name">Henk <small>Apeldoorn</small></span>
-          </figcaption>
-        </figure>
-        <figure class="quote-card rv">
-          <blockquote>„Het advies was gratis en duidelijk. De subsidieaanvraag hebben ze volledig uit handen genomen.”</blockquote>
-          <figcaption>
-            <span class="ph ph--quote" data-ph="Foto"><img src="assets/klant-2.jpg" alt="Ineke uit Breda" width="96" height="96" loading="lazy" onerror="this.remove()"></span>
-            <span class="quote-name">Ineke <small>Breda</small></span>
-          </figcaption>
-        </figure>
-        <figure class="quote-card rv">
-          <blockquote>„Geen verkooppraatje. In ons geval bleek een kleinere batterij voldoende, dat scheelde flink.”</blockquote>
-          <figcaption>
-            <span class="ph ph--quote" data-ph="Foto"><img src="assets/klant-3.jpg" alt="Ruud uit Zwolle" width="96" height="96" loading="lazy" onerror="this.remove()"></span>
-            <span class="quote-name">Ruud <small>Zwolle</small></span>
-          </figcaption>
-        </figure>
-      </div>
+
+      <figure class="erv-spot rv">
+        <blockquote>„Eindelijk iemand die <span class="erv-kern">eerst rekent en dan pas adviseert</span>. De batterij hing er drie weken later.”</blockquote>
+        <figcaption>
+          <span class="ph erv-face" data-ph="Foto"><img src="assets/klant-1.jpg" alt="Henk uit Apeldoorn" width="256" height="256" loading="lazy" onerror="this.remove()"></span>
+          <span class="erv-name">Henk <small>Apeldoorn</small></span>
+        </figcaption>
+      </figure>
+
+      <figure class="erv-echo rv">
+        <blockquote>„Het advies was gratis en duidelijk. De subsidieaanvraag hebben ze volledig uit handen genomen.”</blockquote>
+        <figcaption>
+          <span class="ph erv-face" data-ph="Foto"><img src="assets/klant-2.jpg" alt="Ineke uit Breda" width="256" height="256" loading="lazy" onerror="this.remove()"></span>
+          <span class="erv-name">Ineke <small>Breda</small></span>
+        </figcaption>
+      </figure>
+
+      <figure class="erv-echo erv-echo--in rv">
+        <blockquote>„Geen verkooppraatje. In ons geval bleek een kleinere batterij voldoende, dat scheelde flink.”</blockquote>
+        <figcaption>
+          <span class="ph erv-face" data-ph="Foto"><img src="assets/klant-3.jpg" alt="Ruud uit Zwolle" width="256" height="256" loading="lazy" onerror="this.remove()"></span>
+          <span class="erv-name">Ruud <small>Zwolle</small></span>
+        </figcaption>
+      </figure>
     </div>
   </section>
 
   <!-- ===== 13. FAQ ===== -->
+  <!-- FAQ: rustige accordion. Het open antwoord ligt op een warm papieren
+       vlak, de knop wordt van plus naar min in een navy cirkel, en de
+       chatregel sluit af als persoonlijke vervolgstap. Desktop: kop en
+       chat links, vragen rechts. Stijlen gescoped op .faq--home zodat de
+       kennisbank-FAQ ongemoeid blijft. -->
   <section id="vragen" style="background:#fff; border-top:1px solid var(--line);">
-    <div class="container container--narrow section">
-      <div class="section-head" style="margin-bottom:20px;">
+    <div class="container container--narrow section faq-layout">
+      <div class="section-head">
         <h2 class="h2">Veelgestelde vragen.</h2>
       </div>
-      <div class="faq" data-faq>
+      <div class="faq faq--home" data-faq>
         <div class="faq-item open">
-          <h3 style="margin:0;"><button class="faq-q" aria-expanded="true"><span class="qt">Hoe lang duurt het gesprek gemiddeld?</span><svg class="plus" viewBox="0 0 18 18" aria-hidden="true"><path d="M9 2v14M2 9h14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></button></h3>
+          <h3 style="margin:0;"><button class="faq-q" aria-expanded="true"><span class="qt">Hoe lang duurt het gesprek gemiddeld?</span><span class="faq-toggle" aria-hidden="true"></span></button></h3>
           <div class="faq-a"><div><p>Het adviesgesprek duurt gemiddeld ongeveer 1,5 uur. U kiest zelf of de adviseur bij u thuis langskomt of dat het gesprek online plaatsvindt; bij u thuis krijgt de adviseur het meest complete beeld van uw situatie. De adviseur neemt de tijd om al uw vragen te beantwoorden.</p></div></div>
         </div>
         <div class="faq-item">
-          <h3 style="margin:0;"><button class="faq-q" aria-expanded="false"><span class="qt">Moet ik iets voorbereiden voor het gesprek?</span><svg class="plus" viewBox="0 0 18 18" aria-hidden="true"><path d="M9 2v14M2 9h14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></button></h3>
+          <h3 style="margin:0;"><button class="faq-q" aria-expanded="false"><span class="qt">Moet ik iets voorbereiden voor het gesprek?</span><span class="faq-toggle" aria-hidden="true"></span></button></h3>
           <div class="faq-a"><div><p>Vooraf neemt de adviseur telefonisch contact met u op voor een korte kennismaking. In dat gesprek geeft de adviseur aan welke documenten of gegevens handig zijn om alvast klaar te leggen, zoals uw jaarafrekening en het aantal zonnepanelen. Zo kan de adviseur zich goed voorbereiden en u tijdens het gesprek gericht adviseren.</p></div></div>
         </div>
         <div class="faq-item">
-          <h3 style="margin:0;"><button class="faq-q" aria-expanded="false"><span class="qt">Met wie heb ik het gesprek?</span><svg class="plus" viewBox="0 0 18 18" aria-hidden="true"><path d="M9 2v14M2 9h14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></button></h3>
+          <h3 style="margin:0;"><button class="faq-q" aria-expanded="false"><span class="qt">Met wie heb ik het gesprek?</span><span class="faq-toggle" aria-hidden="true"></span></button></h3>
           <div class="faq-a"><div><p>U spreekt met de adviseur die u gedurende het hele traject begeleidt. Deze adviseur is uw vaste contactpersoon en helpt u van begin tot eind. Vanuit ons kantoor ondersteunen wij de adviseurs, zodat de kwaliteit van alle gesprekken gewaarborgd blijft.</p></div></div>
         </div>
         <div class="faq-item">
-          <h3 style="margin:0;"><button class="faq-q" aria-expanded="false"><span class="qt">Krijg ik ook een offerte tijdens het gesprek?</span><svg class="plus" viewBox="0 0 18 18" aria-hidden="true"><path d="M9 2v14M2 9h14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></button></h3>
+          <h3 style="margin:0;"><button class="faq-q" aria-expanded="false"><span class="qt">Krijg ik ook een offerte tijdens het gesprek?</span><span class="faq-toggle" aria-hidden="true"></span></button></h3>
           <div class="faq-a"><div><p>Ja. Na afloop van het gesprek ontvangt u een duidelijke offerte met een overzicht van de kosten en de mogelijkheden. De adviseur bespreekt stap voor stap wat het beste past bij uw situatie, zodat u precies weet waar u aan toe bent bij de vervolgstappen.</p></div></div>
         </div>
         <div class="faq-item">
-          <h3 style="margin:0;"><button class="faq-q" aria-expanded="false"><span class="qt">Wat als ik nog niet zeker weet wat ik wil?</span><svg class="plus" viewBox="0 0 18 18" aria-hidden="true"><path d="M9 2v14M2 9h14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></button></h3>
+          <h3 style="margin:0;"><button class="faq-q" aria-expanded="false"><span class="qt">Wat als ik nog niet zeker weet wat ik wil?</span><span class="faq-toggle" aria-hidden="true"></span></button></h3>
           <div class="faq-a"><div><p>Dat is geen probleem. Het adviesgesprek is er juist om samen met de adviseur te ontdekken wat het beste past bij uw wensen en situatie. U kunt al uw vragen stellen en rustig de mogelijkheden verkennen. Het gesprek is kosteloos en verplicht u tot niets.</p></div></div>
         </div>
       </div>
-      <p class="faq-more">Staat uw vraag er niet bij? <button type="button" class="faq-chat-link" data-chat-open data-track="faq_chat_open">Stel hem via de chat</button></p>
+      <div class="faq-chat">
+        <span class="faq-chat-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M4 6.5A2.5 2.5 0 0 1 6.5 4h11A2.5 2.5 0 0 1 20 6.5v7a2.5 2.5 0 0 1-2.5 2.5H11l-4.5 3.5V16A2.5 2.5 0 0 1 4 13.5z"/></svg></span>
+        <p><span class="faq-chat-title">Staat uw vraag er niet bij?</span> <button type="button" class="faq-chat-link" data-chat-open data-track="faq_chat_open">Stel hem via de chat</button></p>
+      </div>
     </div>
   </section>
 
   <!-- ===== 14. SLOT-CTA ===== -->
+  <!-- Slot: rustig beslismoment. Telregel, kop, één korte zin, één
+       warm witte hoofdknop (zelfde als in de hero) en het telefoonnummer
+       als stille tweede weg. De zin herhaalt de knoptekst niet meer. -->
   <section class="closing on-navy">
     <div class="container section">
       <div class="closing-solo">
-        <p class="closing-count">Nog <span data-count-days-2>…</span> dagen tot 1 januari 2027</p>
-        <h2 class="h2">Weet waar u aan toe bent na 2027.</h2>
-        <p class="lead">Plan vandaag nog uw kosteloze adviesgesprek. Zonder verplichtingen.</p>
+        <div class="closing-text">
+          <p class="closing-count">Nog <span data-count-days-2>…</span> dagen tot 1 januari 2027</p>
+          <h2 class="h2">Weet waar u aan toe bent na 2027.</h2>
+          <p class="lead">Kosteloos en zonder verplichtingen.</p>
+        </div>
         <div class="closing-ctas">
-          <a href="adviesgesprek.html" class="btn btn-primary btn--lg" style="border:1px solid rgba(255,255,255,.16);" data-track="closing_cta_click">Plan kosteloos adviesgesprek</a>
-          <a class="btn btn-ghost btn--lg" data-sd-tel data-sd-tel-label data-track="call_click" href="#adviesgesprek">Bel ons</a>
+          <a href="adviesgesprek.html" class="btn btn--lg hero-cta closing-cta" data-track="closing_cta_click">Plan kosteloos adviesgesprek</a>
+          <a class="closing-tel" data-sd-tel data-sd-tel-label data-track="call_click" href="#adviesgesprek">Bel ons</a>
         </div>
       </div>
     </div>
