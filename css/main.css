@@ -217,16 +217,16 @@ body.nav-open .nav-burger span:nth-child(3) { transform: translateY(-6.5px) rota
 
 .hero-inner {
   position: relative; display: flex; flex-direction: column; justify-content: flex-end;
-  min-height: 80svh; padding-top: 96px; padding-bottom: 56px;
+  min-height: 84svh; padding-top: 96px; padding-bottom: 56px;
 }
 /* Op desktop staat het hoofd van de adviseur rond 33–51% van de breedte;
-   kop en regel blijven daar links van. De kop breekt altijd na
-   "De saldering", zodat het ritme op elke breedte gelijk is. */
+   de hero is hoog genoeg dat kop en regel onder de kin vallen. Op
+   desktop staat elke zin van de kop op een eigen regel. */
 .hero-copy { max-width: none; }
 .hero-copy h1 {
   margin: 0; color: #fff;
-  font-size: clamp(44px, 3vw + 16px, 54px); font-weight: 700;
-  line-height: 1; letter-spacing: -1.4px;
+  font-size: clamp(40px, 2.4vw + 14px, 46px); font-weight: 700;
+  line-height: 1.04; letter-spacing: -1.2px;
 }
 .hero-copy h1 span { display: block; width: fit-content; white-space: nowrap; }
 .hero-copy .lead {
@@ -262,7 +262,9 @@ body.nav-open .nav-burger span:nth-child(3) { transform: translateY(-6.5px) rota
   }
   /* 100svh min header (77px) en de urgentiebalk (twee regels, 77px). */
   .hero-inner { min-height: calc(100svh - 156px); padding-top: 40px; padding-bottom: 28px; }
-  .hero-copy h1 { font-size: clamp(38px, 12.4vw, 54px); letter-spacing: -1.2px; }
+  .hero-copy h1 { font-size: clamp(32px, 9.4vw, 40px); letter-spacing: -.8px; }
+  /* Op mobiel mag de eerste zin over twee regels lopen. */
+  .hero-copy h1 span { white-space: normal; }
   .hero-copy .lead { max-width: 26ch; margin-top: 14px; font-size: 17px; }
   .hero-ctas { margin-top: 26px; }
   .hero-cta { width: 100%; }
