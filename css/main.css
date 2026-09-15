@@ -721,10 +721,10 @@ body.nav-open .nav-burger span:nth-child(3) { transform: translateY(-6.5px) rota
    Zoals een fotoreportage in een tijdschrift: eerst de vier beelden
    als één aaneengesloten strook (gesprek, rekenen, papier,
    batterij), daaronder de vier stappen als korte bijschriften.
-   De titel loopt in de zin in, zodat elke stap twee regels blijft.
+   Onder elke foto-stap staat alleen de titel, met het nummer in de marge.
+   Op mobiel staan de foto's als vierkant met pijlen van 1 naar 4.
    Het nummer staat alleen in de marge van het bijschrift; de foto's
    blijven schoon en lezen vanzelf van links naar rechts.
-   Mobiel ongeveer 570px hoog (was 728px).
    ============================================================ */
 .werk { --werk-nr: 24px; }
 
@@ -739,20 +739,40 @@ body.nav-open .nav-burger span:nth-child(3) { transform: translateY(-6.5px) rota
 .werk-foto:nth-child(3) img { object-position: 47% 45%; }
 .werk-foto:nth-child(4) img { object-position: 55% 62%; }
 /* Zelfde grote hoek rechtsboven als de adviseurskaarten, op schaal. */
-.werk-foto:last-child { border-radius: 0 28px 0 0; }
+.werk-foto:nth-child(4) { border-radius: 0 28px 0 0; }
+
+/* Pijlen voor de volgorde op mobiel; elders verborgen. */
+.werk-pijl { display: none; }
+
+/* Mobiel: de vier foto's als vierkant, met de klok mee geplaatst, en
+   pijlen van 1 naar 2 (rechts), 2 naar 3 (omlaag) en 3 naar 4 (links).
+   Geen pijl terug naar 1. De volgorde in de HTML blijft 1 tot en met 4. */
+@media (max-width: 639.5px) {
+  .werk-strook { grid-template-columns: minmax(0, 1fr) 32px minmax(0, 1fr); grid-template-rows: auto 32px auto; gap: 0; }
+  .werk-foto { aspect-ratio: 1 / 1; }
+  .werk-foto:nth-child(1) { grid-area: 1 / 1; }
+  .werk-foto:nth-child(2) { grid-area: 1 / 3; border-radius: 0 28px 0 0; }
+  .werk-foto:nth-child(3) { grid-area: 3 / 3; }
+  .werk-foto:nth-child(4) { grid-area: 3 / 1; border-radius: 0; }
+  .werk-pijl { display: grid; place-items: center; color: var(--navy-400); }
+  .werk-pijl svg { width: 18px; height: 18px; fill: none; stroke: currentColor; stroke-width: 1.6; stroke-linecap: round; stroke-linejoin: round; }
+  .werk-pijl--1 { grid-area: 1 / 2; }
+  .werk-pijl--2 { grid-area: 2 / 3; }
+  .werk-pijl--2 svg { transform: rotate(90deg); }
+  .werk-pijl--3 { grid-area: 3 / 2; }
+  .werk-pijl--3 svg { transform: rotate(180deg); }
+}
 
 /* ---- De bijschriften ---- */
-.werk-stappen { list-style: none; margin: 22px 0 0; padding: 0; display: grid; gap: 16px; }
+.werk-stappen { list-style: none; margin: 22px 0 0; padding: 0; display: grid; gap: 14px; }
 .werk-stappen li { display: grid; grid-template-columns: var(--werk-nr) minmax(0, 1fr); column-gap: 10px; align-items: baseline; }
-.werk-idx { font-family: var(--font-serif); font-weight: 700; font-size: 15px; line-height: 1; color: var(--navy-400); text-align: center; }
-.werk-tekst { font-size: 15px; line-height: 1.56; color: var(--ink-600); }
-.werk-tekst h3 { display: inline; font-size: 16px; line-height: 1.3; color: var(--ink-900); }
-.werk-tekst p { display: inline; margin: 0; }
+.werk-idx { font-family: var(--font-serif); font-weight: 700; font-size: 17px; line-height: 1; color: var(--navy-400); text-align: center; }
+.werk-tekst h3 { font-size: 18px; line-height: 1.3; color: var(--ink-900); }
 
 @media (min-width: 640px) {
   .werk { --werk-nr: 30px; }
   .werk-foto { aspect-ratio: 4 / 5; }
-  .werk-foto:last-child { border-radius: 0 40px 0 0; }
+  .werk-foto:nth-child(4) { border-radius: 0 40px 0 0; }
   .werk-stappen { grid-template-columns: 1fr 1fr; gap: 16px 32px; margin-top: 26px; }
 }
 
@@ -769,10 +789,9 @@ body.nav-open .nav-burger span:nth-child(3) { transform: translateY(-6.5px) rota
   /* De strook vult de volle hoogte van kop plus bijschriften. */
   .werk-strook { grid-area: strook; gap: 8px; align-self: stretch; min-height: 380px; }
   .werk-foto { aspect-ratio: auto; }
-  .werk-foto:last-child { border-radius: 0 48px 0 0; }
+  .werk-foto:nth-child(4) { border-radius: 0 48px 0 0; }
   .werk-stappen { grid-area: stappen; grid-template-columns: 1fr; gap: 18px; margin: 0; align-self: start; }
-  .werk-tekst { font-size: 16px; }
-  .werk-tekst h3 { font-size: 18px; }
+  .werk-tekst h3 { font-size: 21px; }
 }
 
 /* ============================================================
