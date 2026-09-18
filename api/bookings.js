@@ -27,6 +27,29 @@ function deriveStatus(q) {
   return ok ? 'warm_gekwalificeerd' : 'niet_gekwalificeerd';
 }
 
+/* Leads als CSV, zodat ze zonder tussenstap in Sheets of Excel te openen
+   zijn. Semicolon als scheidingsteken: dat is wat Nederlandse Excel
+   verwacht. De BOM ervoor houdt accenten heel. */
+var CSV_KOLOMMEN = ['created_at', 'ref', 'naam', 'email', 'tel', 'date_iso', 'time', 'mode', 'status', 'briefcode', 'sendinfo'];
+
+function csvVeld(waarde) {
+  if (waarde === null || waarde === undefined) return '';
+  var t = String(waarde);
+  /* Een cel die met =, +, - of @ begint wordt door Excel als formule
+     uitgevoerd; een enkel aanhalingsteken ervoor voorkomt dat. */
+  if (/^[=+\-@]/.test(t)) t = "'" + t;
+  return '"' + t.replace(/"/g, '""') + '"';
+}
+
+function naarCsv(rows) {
+  var regels = [CSV_KOLOMMEN.join(';')];
+  for (var i = 0; i < rows.length; i++) {
+    var r = rows[i];
+    regels.push(CSV_KOLOMMEN.map(function (k) { return csvVeld(r[k]); }).join(';'));
+  }
+  return '\ufeff' + regels.join('\r\n') + '\r\n';
+}
+
 function readJson(req, maxBytes) {
   return new Promise(function (resolve, reject) {
     if (req.body !== undefined) {
@@ -99,6 +122,12 @@ module.exports = async function handler(req, res) {
     }
     try {
       var out = await store.listBookings(req.query && req.query.limit);
+      if (req.query && req.query.format === 'csv') {
+        var bestand = 'leads-' + new Date().toISOString().slice(0, 10) + '.csv';
+        res.setHeader('Content-Type', 'text/csv; charset=utf-8');
+        res.setHeader('Content-Disposition', 'attachment; filename="' + bestand + '"');
+        return res.end(naarCsv(out.rows));
+      }
       res.setHeader('Content-Type', 'application/json');
       return res.end(JSON.stringify({ ok: true, backend: out.backend, bookings: out.rows }));
     } catch (e) {

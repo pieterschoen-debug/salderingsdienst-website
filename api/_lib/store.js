@@ -2,9 +2,13 @@
    SalderingsDienst — api/_lib/store.js
    Opslag-adapter voor boekingen. Kies de backend via env vars:
 
-   1. Supabase (aanbevolen om mee te starten):
+   1. Supabase (in gebruik):
         SUPABASE_URL=https://xxxx.supabase.co
-        SUPABASE_SERVICE_ROLE_KEY=eyJ...   (Service role, NIET de anon key)
+        SUPABASE_ANON_KEY=sb_publishable_...   (schrijven; RLS laat alleen
+                                                insert toe, niet lezen)
+        SD_READ_SECRET=...                     (lezen via rpc sd_list_bookings)
+      Of, als alternatief voor die laatste twee:
+        SUPABASE_SERVICE_ROLE_KEY=eyJ...       (lezen en schrijven ineens)
       Tabel aanmaken (SQL editor in Supabase):
         create table if not exists sd_bookings (
           ref text primary key,
@@ -50,26 +54,52 @@ function rowFromLead(lead) {
 /* ---------- Supabase (REST, geen dependencies) ---------- */
 function supabaseCfg() {
   var url = process.env.SUPABASE_URL;
-  var key = process.env.SUPABASE_SERVICE_ROLE_KEY || process.env.SUPABASE_SERVICE_KEY;
+  var service = process.env.SUPABASE_SERVICE_ROLE_KEY || process.env.SUPABASE_SERVICE_KEY || '';
+  var key = service || process.env.SUPABASE_ANON_KEY || '';
   if (!url || !key) return null;
-  return { url: url.replace(/\/$/, ''), key: key };
+  return { url: url.replace(/\/$/, ''), key: key, service: !!service };
 }
 async function supabaseSave(row) {
   var cfg = supabaseCfg();
-  var res = await fetch(cfg.url + '/rest/v1/sd_bookings?on_conflict=ref', {
+  /* Bewust een gewone insert, geen upsert: een upsert vraagt in Supabase ook
+     leesrechten, en de publieke sleutel mag alleen schrijven. Komt dezelfde
+     referentie twee keer binnen (bezoeker die opnieuw verstuurt), dan geeft
+     Postgres 23505 en beschouwen we de lead als al opgeslagen. */
+  var res = await fetch(cfg.url + '/rest/v1/sd_bookings', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
       apikey: cfg.key,
       Authorization: 'Bearer ' + cfg.key,
-      Prefer: 'resolution=merge-duplicates,return=minimal'
+      Prefer: 'return=minimal'
     },
     body: JSON.stringify(row)
   });
-  if (!res.ok) throw new Error('Supabase insert mislukt: ' + res.status + ' ' + (await res.text()).slice(0, 300));
+  if (res.ok) return;
+  var tekst = await res.text();
+  if (res.status === 409 || tekst.indexOf('23505') !== -1) return;
+  throw new Error('Supabase insert mislukt: ' + res.status + ' ' + tekst.slice(0, 300));
 }
 async function supabaseList(limit) {
   var cfg = supabaseCfg();
+  /* Met de service role key mag er rechtstreeks worden gelezen. Draaien we
+     op de anon key, dan blokkeert RLS het lezen bewust: de lijst komt dan
+     via de RPC sd_list_bookings, die eerst SD_READ_SECRET controleert. */
+  if (!cfg.service) {
+    var geheim = process.env.SD_READ_SECRET || '';
+    if (!geheim) throw new Error('SD_READ_SECRET ontbreekt (nodig om te lezen zonder service role key).');
+    var rpc = await fetch(cfg.url + '/rest/v1/rpc/sd_list_bookings', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        apikey: cfg.key,
+        Authorization: 'Bearer ' + cfg.key
+      },
+      body: JSON.stringify({ p_secret: geheim, p_limit: limit })
+    });
+    if (!rpc.ok) throw new Error('Supabase rpc mislukt: ' + rpc.status + ' ' + (await rpc.text()).slice(0, 200));
+    return rpc.json();
+  }
   var res = await fetch(cfg.url + '/rest/v1/sd_bookings?select=*&order=created_at.desc&limit=' + limit, {
     headers: { apikey: cfg.key, Authorization: 'Bearer ' + cfg.key }
   });
