@@ -1,33 +1,40 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- Sitemap SalderingsDienst. Vervang het domein en werk de datums bij bij publicatie. -->
+<!-- Sitemap SalderingsDienst. Alleen indexeerbare, bestaande pagina's.
+     /portal en /widget staan hier bewust niet in: die dragen een noindex. -->
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>https://www.salderingsdienst.nl/</loc>
+    <lastmod>2026-09-17</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
   </url>
   <url>
     <loc>https://www.salderingsdienst.nl/adviesgesprek</loc>
+    <lastmod>2026-09-17</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
-    <loc>https://www.salderingsdienst.nl/kennisbank</loc>
-    <changefreq>weekly</changefreq>
+    <loc>https://www.salderingsdienst.nl/kennisbank/salderingsregeling-gids</loc>
+    <lastmod>2026-09-17</lastmod>
+    <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://www.salderingsdienst.nl/kennisbank/salderingsregeling-gids</loc>
+    <loc>https://www.salderingsdienst.nl/kennisbank/thuisbatterij-na-2027</loc>
+    <lastmod>2026-09-17</lastmod>
     <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://www.salderingsdienst.nl/kennisbank</loc>
+    <lastmod>2026-09-17</lastmod>
+    <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://www.salderingsdienst.nl/kennisbank/artikel</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  <url>
     <loc>https://www.salderingsdienst.nl/privacybeleid</loc>
+    <lastmod>2026-09-17</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.3</priority>
   </url>

@@ -1,6 +1,22 @@
 {
   "cleanUrls": true,
   "trailingSlash": false,
+  "headers": [
+    {
+      "source": "/(.*)",
+      "headers": [
+        { "key": "X-Content-Type-Options", "value": "nosniff" },
+        { "key": "Referrer-Policy", "value": "strict-origin-when-cross-origin" },
+        { "key": "Permissions-Policy", "value": "geolocation=(), microphone=(), camera=(), interest-cohort=()" }
+      ]
+    },
+    {
+      "source": "/assets/(.*)",
+      "headers": [
+        { "key": "Cache-Control", "value": "public, max-age=604800, stale-while-revalidate=86400" }
+      ]
+    }
+  ],
   "redirects": [
     { "source": "/Salderingsdienst v2.dc.html", "destination": "/", "permanent": true },
     { "source": "/Salderingsdienst v1.dc.html", "destination": "/", "permanent": true },
@@ -10,7 +26,8 @@
     { "source": "/Kennisbank.dc.html", "destination": "/kennisbank", "permanent": true },
     { "source": "/Privacybeleid.dc.html", "destination": "/privacybeleid", "permanent": true },
     { "source": "/Blog Pillar.dc.html", "destination": "/kennisbank/salderingsregeling-gids", "permanent": true },
-    { "source": "/Blog Cluster.dc.html", "destination": "/kennisbank/artikel", "permanent": true },
+    { "source": "/Blog Cluster.dc.html", "destination": "/kennisbank/thuisbatterij-na-2027", "permanent": true },
+    { "source": "/kennisbank/artikel", "destination": "/kennisbank/thuisbatterij-na-2027", "permanent": true },
     { "source": "/over-ons", "destination": "/#over-ons", "permanent": false },
     { "source": "/aanvraag", "destination": "/adviesgesprek", "permanent": false },
     { "source": "/gratis-adviesgesprek", "destination": "/adviesgesprek", "permanent": false }

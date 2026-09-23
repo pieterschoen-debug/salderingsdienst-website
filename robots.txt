@@ -1,7 +1,68 @@
 # robots.txt — SalderingsDienst
-# Crawlen toegestaan voor alle bots.
+#
+# Uitgangspunt: alle publieke pagina's mogen worden gecrawld. De regels
+# hieronder zijn expliciet opgeschreven zodat bij een latere wijziging
+# duidelijk blijft welke bots welke rol hebben. Zonder deze blokken geldt
+# hetzelfde resultaat via "User-agent: *"; ze zijn dus een vangnet, geen truc.
+#
+# Er zijn twee soorten bots en dat onderscheid is een zakelijke keuze:
+#   1. Zoek- en verwijsbots. Die halen pagina's op om ze te kunnen tonen of
+#      citeren in zoekresultaten en AI-antwoorden. Blokkeren betekent hier:
+#      onvindbaar worden. Deze willen wij dus toelaten.
+#   2. Trainingsbots. Die verzamelen tekst om modellen mee te trainen. Dat
+#      levert geen directe verwijzing op. Wij laten ze nu toe, maar dat mag
+#      zonder gevolgen voor de vindbaarheid worden teruggedraaid.
+#
+# Bronnen (gecontroleerd op 17 september 2026):
+#   https://developers.openai.com/api/docs/bots
+#   https://support.claude.com/en/articles/8896518
+
 User-agent: *
 Allow: /
 
-# Verwijs naar de sitemap (vervang het domein indien nodig).
+# --- Zoeken en verwijzen: toelaten ---
+User-agent: Googlebot
+Allow: /
+
+User-agent: Bingbot
+Allow: /
+
+# Toont pagina's in de zoekfunctie van ChatGPT.
+User-agent: OAI-SearchBot
+Allow: /
+
+# Haalt een pagina op wanneer een gebruiker er in ChatGPT naar vraagt.
+User-agent: ChatGPT-User
+Allow: /
+
+# Verbetert de kwaliteit van zoekantwoorden van Claude.
+User-agent: Claude-SearchBot
+Allow: /
+
+# Haalt een pagina op wanneer een gebruiker er in Claude naar vraagt.
+User-agent: Claude-User
+Allow: /
+
+User-agent: PerplexityBot
+Allow: /
+
+# --- Trainingsdata: nu toegestaan, bewust te heroverwegen ---
+User-agent: GPTBot
+Allow: /
+
+User-agent: ClaudeBot
+Allow: /
+
+User-agent: Google-Extended
+Allow: /
+
+User-agent: Applebot-Extended
+Allow: /
+
+# --- Portaal en widget ---
+# /portal en /widget horen niet in zoekresultaten thuis. Dat is geregeld met
+# een noindex in die pagina's zelf en bewust NIET met een Disallow hier: een
+# geblokkeerde pagina wordt niet opgehaald, waardoor de noindex nooit gelezen
+# wordt en de URL alsnog kaal in de resultaten kan verschijnen.
+
 Sitemap: https://www.salderingsdienst.nl/sitemap.xml

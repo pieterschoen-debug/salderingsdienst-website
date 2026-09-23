@@ -11,7 +11,14 @@
 <meta property="og:description" content="De salderingsregeling stopt per 1 januari 2027. Plan een kosteloos adviesgesprek.">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://www.salderingsdienst.nl/">
-<link rel="icon" href="assets/crest.png">
+<meta property="og:site_name" content="SalderingsDienst">
+<meta property="og:locale" content="nl_NL">
+<meta property="og:image" content="https://www.salderingsdienst.nl/assets/og-salderingsdienst.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Een adviseur van SalderingsDienst in gesprek met een huiseigenaar aan de eettafel.">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="assets/crest-146.png">
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -23,33 +30,56 @@
 <script type="application/ld+json">
 {
   "@context":"https://schema.org",
-  "@type":"Organization",
-  "name":"SalderingsDienst",
-  "url":"https://www.salderingsdienst.nl",
-  "description":"SalderingsDienst adviseert huiseigenaren met zonnepanelen over het einde van de salderingsregeling en levert desgewenst duurzaamheidsoplossingen zoals thuisbatterijen en slimme energiesturing, inclusief installatie via gecertificeerde partners."
-}
-</script>
-<script type="application/ld+json">
-{
-  "@context":"https://schema.org",
-  "@type":"LocalBusiness",
-  "name":"SalderingsDienst",
-  "url":"https://www.salderingsdienst.nl",
-  "description":"Doorgerekend energieadvies rond het einde van de salderingsregeling, met desgewenst levering en installatie van thuisbatterijen en slimme sturing.",
-  "areaServed":"NL",
-  "priceRange":"Kosteloos adviesgesprek"
-}
-</script>
-<script type="application/ld+json">
-{
-  "@context":"https://schema.org",
-  "@type":"Service",
-  "name":"Advies en oplossingen einde salderingsregeling",
-  "serviceType":"Energieadvies en levering van thuisbatterijen en slimme energiesturing",
-  "provider":{"@type":"Organization","name":"SalderingsDienst","url":"https://www.salderingsdienst.nl"},
-  "areaServed":{"@type":"Country","name":"Nederland"},
-  "description":"Kosteloos en vrijblijvend adviesgesprek voor huiseigenaren met zonnepanelen over het einde van de salderingsregeling per 1 januari 2027. Wie dat wil, kan de geadviseerde oplossing direct via SalderingsDienst afnemen: levering, subsidie en installatie via gecertificeerde partners.",
-  "offers":{"@type":"Offer","price":"0","priceCurrency":"EUR"}
+  "@graph":[
+    {
+      "@type":"Organization",
+      "@id":"https://www.salderingsdienst.nl/#organization",
+      "name":"SalderingsDienst",
+      "url":"https://www.salderingsdienst.nl/",
+      "logo":{
+        "@type":"ImageObject",
+        "url":"https://www.salderingsdienst.nl/assets/salderingsdienst-logo-navy-960x396.png",
+        "width":960,
+        "height":396
+      },
+      "image":"https://www.salderingsdienst.nl/assets/og-salderingsdienst.jpg",
+      "description":"SalderingsDienst adviseert huiseigenaren met zonnepanelen over het einde van de salderingsregeling en levert desgewenst duurzaamheidsoplossingen zoals thuisbatterijen en slimme energiesturing, inclusief installatie via gecertificeerde partners.",
+      "telephone":"+31639369781",
+      "email":"info@salderingsdienst.nl",
+      "address":{
+        "@type":"PostalAddress",
+        "streetAddress":"Jonas Daniël Meijerplein 25 C 2",
+        "postalCode":"1011 RG",
+        "addressLocality":"Amsterdam",
+        "addressCountry":"NL"
+      },
+      "identifier":[
+        {"@type":"PropertyValue","propertyID":"KvK","value":"42165216"}
+      ],
+      "areaServed":{"@type":"Country","name":"Nederland"},
+      "knowsLanguage":"nl-NL",
+      "disambiguatingDescription":"SalderingsDienst is een particuliere onderneming en maakt geen deel uit van de Rijksoverheid."
+    },
+    {
+      "@type":"WebSite",
+      "@id":"https://www.salderingsdienst.nl/#website",
+      "url":"https://www.salderingsdienst.nl/",
+      "name":"SalderingsDienst",
+      "inLanguage":"nl-NL",
+      "publisher":{"@id":"https://www.salderingsdienst.nl/#organization"}
+    },
+    {
+      "@type":"Service",
+      "@id":"https://www.salderingsdienst.nl/#adviesdienst",
+      "name":"Advies en oplossingen einde salderingsregeling",
+      "serviceType":"Energieadvies en levering van thuisbatterijen en slimme energiesturing",
+      "provider":{"@id":"https://www.salderingsdienst.nl/#organization"},
+      "areaServed":{"@type":"Country","name":"Nederland"},
+      "audience":{"@type":"Audience","audienceType":"Huiseigenaren met zonnepanelen in Nederland"},
+      "description":"Kosteloos en vrijblijvend adviesgesprek voor huiseigenaren met zonnepanelen over het einde van de salderingsregeling per 1 januari 2027. Wie dat wil, kan de geadviseerde oplossing direct via SalderingsDienst afnemen: levering, subsidie en installatie via gecertificeerde partners.",
+      "offers":{"@type":"Offer","price":"0","priceCurrency":"EUR","description":"Het adviesgesprek zelf is kosteloos. Voor eventuele producten en installatie geldt een aparte offerte."}
+    }
+  ]
 }
 </script>
 <script type="application/ld+json">
@@ -75,9 +105,9 @@
   /* Contactgegevens — eerlijke placeholders, duidelijk gemarkeerd. */
   window.SD_CONFIG = {
     phone: '06 3936 9781',
-    email: 'TE VERVANGEN',
+    email: 'info@salderingsdienst.nl',
     whatsapp: '31639369781',
-    kvk: 'TE VERVANGEN',
+    kvk: '42165216',
     /* Optioneel: URL van uw webhook/CRM. Elke bevestigde afspraak en
        info-aanvraag wordt daar als JSON (schema sd.lead.v1) heen gePOST.
        Leeg = alleen lokale wachtrij ('sd_lead_queue') + 'sd:lead'-event. */
@@ -96,7 +126,7 @@
 <header class="site-header">
   <div class="container">
     <a class="brand" href="#top">
-      <img src="assets/crest.png" alt="" width="427" height="467">
+      <img src="assets/crest-146.png" alt="" width="146" height="160">
       <span class="brand-name">SalderingsDienst</span>
     </a>
     <nav class="nav-links" aria-label="Hoofdnavigatie">
@@ -311,7 +341,7 @@
         </div>
       </div>
 
-      <p class="calc-more"><a href="kennisbank.html">Meer over onze berekenwijze</a></p>
+      <p class="calc-more"><a href="kennisbank/salderingsregeling-gids.html#rekenen">Zo rekent u het zelf na, met uw jaarafrekening</a></p>
     </div>
   </section>
 
@@ -611,6 +641,15 @@
               </div>
             </div>
           </article>
+          <article class="team-slide">
+            <div class="team-card">
+              <img src="assets/adviseur-mats.jpg" alt="Mats, adviseur" width="560" height="747" loading="lazy">
+              <div class="team-card__content">
+                <h3 class="team-card__name">Mats</h3>
+                <p class="team-card__role">Adviseur</p>
+              </div>
+            </div>
+          </article>
         </div>
         <button class="team-nav team-nav--prev" type="button" data-team-prev aria-label="Vorige adviseur">
           <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 4 7 12l8 8" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
@@ -704,6 +743,12 @@
         <span class="faq-chat-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M4 6.5A2.5 2.5 0 0 1 6.5 4h11A2.5 2.5 0 0 1 20 6.5v7a2.5 2.5 0 0 1-2.5 2.5H11l-4.5 3.5V16A2.5 2.5 0 0 1 4 13.5z"/></svg></span>
         <p><span class="faq-chat-title">Staat uw vraag er niet bij?</span> <button type="button" class="faq-chat-link" data-chat-open data-track="faq_chat_open">Stel hem via de chat</button></p>
       </div>
+
+      <div class="readmore-list" style="margin-top:36px;">
+        <div class="kb-label" style="margin-bottom:2px;">Liever eerst zelf lezen</div>
+        <a href="kennisbank/salderingsregeling-gids.html" class="card card--hover" data-track="kb_link_gids"><span>Einde salderingsregeling 2027: wat verandert er en wat kost het u?</span><span aria-hidden="true">&rarr;</span></a>
+        <a href="kennisbank/thuisbatterij-na-2027.html" class="card card--hover" data-track="kb_link_batterij"><span>Verdient een thuisbatterij zich terug na 2027?</span><span aria-hidden="true">&rarr;</span></a>
+      </div>
     </div>
   </section>
 
@@ -737,19 +782,19 @@
         <div class="footer-col-title">Contact</div>
         <p>Telefoon: <a data-sd-tel data-sd-phone-text data-track="call_click" href="#adviesgesprek"></a><br>
         WhatsApp: <a data-sd-wa href="#adviesgesprek">stuur ons een bericht</a><br>
-        E-mail: <span class="placeholder-mark">info@salderingsdienst.nl</span><br>
+        E-mail: <a href="mailto:info@salderingsdienst.nl" data-track="email_click">info@salderingsdienst.nl</a><br>
         Op werkdagen van 9:00 tot 17:00</p>
       </div>
       <div class="footer-col">
         <div class="footer-col-title">Gegevens</div>
         <p>SalderingsDienst · KvK <span data-sd-kvk></span><br>
-        Bezoekadres: <span class="placeholder-mark">Straat 1, 1234 AB Plaats</span><br>
+        Vestigingsadres: Jonas Dani&euml;l Meijerplein 25 C 2, 1011 RG Amsterdam<br>
         <a href="adviesgesprek.html">Plan adviesgesprek</a> · <a href="privacybeleid.html">Privacybeleid</a></p>
       </div>
     </div>
     <div class="footer-row1">
       <div class="brand">
-        <img src="assets/crest.png" alt="" width="427" height="467" loading="lazy">
+        <img src="assets/crest-146.png" alt="" width="146" height="160" loading="lazy">
         <span class="brand-name">SalderingsDienst</span>
       </div>
       <nav class="footer-links" aria-label="Voettekstnavigatie">
@@ -760,7 +805,7 @@
       </nav>
     </div>
     <div class="footer-row2">
-      <span>© 2026 SalderingsDienst · Onafhankelijke organisatie, geen onderdeel van de Rijksoverheid</span>
+      <span>© 2026 SalderingsDienst</span>
     </div>
   </div>
 </footer>
