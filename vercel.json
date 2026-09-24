@@ -28,6 +28,8 @@
     { "source": "/Blog Pillar.dc.html", "destination": "/kennisbank/salderingsregeling-gids", "permanent": true },
     { "source": "/Blog Cluster.dc.html", "destination": "/kennisbank/thuisbatterij-na-2027", "permanent": true },
     { "source": "/kennisbank/artikel", "destination": "/kennisbank/thuisbatterij-na-2027", "permanent": true },
+    { "source": "/voorwaarden", "destination": "/algemene-voorwaarden", "permanent": false },
+    { "source": "/algemene-voorwaarden-consumenten", "destination": "/algemene-voorwaarden", "permanent": false },
     { "source": "/over-ons", "destination": "/#over-ons", "permanent": false },
     { "source": "/aanvraag", "destination": "/adviesgesprek", "permanent": false },
     { "source": "/gratis-adviesgesprek", "destination": "/adviesgesprek", "permanent": false }

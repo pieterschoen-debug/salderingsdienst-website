@@ -84,6 +84,7 @@ rmSync(pub, { recursive: true, force: true });
 mkdirSync(pub, { recursive: true });
 const PUBLIC_ITEMS = [
   'index.html', 'adviesgesprek.html', 'widget.html', 'portal.html', 'kennisbank.html', 'privacybeleid.html',
+  'algemene-voorwaarden.html', 'algemene-voorwaarden-zakelijk.html',
   'kennisbank', 'css', 'js', 'assets', 'robots.txt', 'sitemap.xml'
 ];
 for (const item of PUBLIC_ITEMS) {

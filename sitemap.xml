@@ -33,6 +33,18 @@
     <priority>0.7</priority>
   </url>
   <url>
+    <loc>https://www.salderingsdienst.nl/algemene-voorwaarden</loc>
+    <lastmod>2026-09-24</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.3</priority>
+  </url>
+  <url>
+    <loc>https://www.salderingsdienst.nl/algemene-voorwaarden-zakelijk</loc>
+    <lastmod>2026-09-24</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.3</priority>
+  </url>
+  <url>
     <loc>https://www.salderingsdienst.nl/privacybeleid</loc>
     <lastmod>2026-09-17</lastmod>
     <changefreq>yearly</changefreq>

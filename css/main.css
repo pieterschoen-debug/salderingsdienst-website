@@ -1835,3 +1835,60 @@ h1, h2, h3, .h2, .funnel-title, .kb-pillar h3, .kb-card h3 {
   .draw-line { stroke-dasharray: none !important; stroke-dashoffset: 0 !important; }
 }
 
+
+/* ============================================================
+   ALGEMENE VOORWAARDEN — genummerde artikelen en leden
+   Juridische tekst leest alleen als het nummer naast de tekst
+   staat en niet erin. Vandaar een vaste nummerkolom in plaats
+   van een ol-counter: de nummering komt letterlijk uit de akte
+   en mag niet meeschuiven als er een lid bijkomt.
+   ============================================================ */
+.legal-switch { display: inline-flex; flex-wrap: wrap; gap: 4px; padding: 4px; margin: 0 0 28px; background: var(--paper-2); border: 1px solid var(--line-2); border-radius: 999px; }
+.legal-switch a { padding: 8px 18px; font-size: 14.5px; font-weight: 600; color: var(--ink-500); border-radius: 999px; }
+.legal-switch a:hover { color: var(--navy-400); }
+.legal-switch a[aria-current="page"] { background: var(--navy-400); color: #fff; }
+
+.legal-meta { display: grid; gap: 4px; font-size: 14px; line-height: 1.6; color: var(--ink-500); margin: 0 0 32px; }
+
+.legal-scope { padding: 18px 22px; margin: 0 0 40px; background: var(--paper-2); border-left: 4px solid var(--gold-400); }
+.legal-scope p { font-size: 15.5px; line-height: 1.7; color: var(--ink-600); margin: 0; }
+.legal-scope a { color: var(--navy-400); text-decoration: underline; text-underline-offset: 2px; }
+
+.legal-art { margin: 0 0 34px; scroll-margin-top: 96px; }
+.legal-art > h2 { font-size: 20px; margin: 0 0 14px; line-height: 1.3; }
+
+.clauses { list-style: none; margin: 0; padding: 0; }
+.clauses > li { display: grid; grid-template-columns: 46px 1fr; margin-bottom: 12px; }
+.clauses > li > .no { font-family: var(--font-mono); font-size: 14px; line-height: 1.75; color: var(--ink-500); padding-top: 1px; }
+.clauses > li > .txt { font-size: 16.5px; line-height: 1.75; color: var(--ink-600); }
+.clauses .txt > a { color: var(--navy-400); text-decoration: underline; text-underline-offset: 2px; }
+.clauses .txt > strong { color: var(--ink-800); font-weight: 600; }
+.clauses .sub { list-style: none; margin: 10px 0 2px; padding: 0; }
+.clauses .sub > li { display: grid; grid-template-columns: 34px 1fr; margin-bottom: 9px; }
+.clauses .sub > li > .no { font-family: var(--font-mono); font-size: 14px; color: var(--ink-500); }
+
+.legal-annex { margin-top: 56px; padding-top: 32px; border-top: 1px solid var(--line-2); }
+.legal-annex h2 { font-size: 20px; margin: 0 0 12px; }
+.legal-form { padding: 22px 24px; margin-top: 18px; background: var(--paper-2); font-size: 16px; line-height: 1.9; color: var(--ink-600); }
+.legal-form p { margin: 0 0 14px; }
+.legal-form p:last-child { margin-bottom: 0; }
+.legal-form .fill { display: inline-block; min-width: 180px; border-bottom: 1px solid var(--line-2); }
+
+.toc-card--long nav { gap: 8px; font-size: 14px; }
+@media (min-width: 900px) {
+  .toc-card--long nav { max-height: calc(100vh - 210px); overflow-y: auto; padding-right: 6px; }
+}
+
+@media (max-width: 639.5px) {
+  .clauses > li { grid-template-columns: 38px 1fr; }
+  .clauses .sub > li { grid-template-columns: 30px 1fr; }
+  .clauses > li > .txt { font-size: 16px; }
+}
+
+/* Afdrukken: voorwaarden moeten op papier compleet en leesbaar zijn. */
+@media print {
+  .site-header, .site-footer, .legal-switch, .article-layout > aside, .legal-print-hide { display: none !important; }
+  .article-layout { display: block; }
+  .legal-art { page-break-inside: avoid; }
+  body { background: #fff; }
+}
