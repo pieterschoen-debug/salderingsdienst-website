@@ -1,7 +1,7 @@
 /* ============================================================
    SalderingsDienst — motion.js
-   Navigatie, tellers, adres-check, calculator, FAQ, chat,
-   cookiebalk en contact-configuratie. Beweging is beperkt tot
+   Navigatie, tellers, adres-check, calculator, FAQ, chat
+   en contact-configuratie (cookiebalk: js/analytics.js). Beweging is beperkt tot
    één IntersectionObserver voor fade-in-up van secties.
    Alle onderdelen zijn defensief: op subpagina's ontbreken de
    meeste elementen en gebeurt er dan simpelweg niets.
@@ -320,20 +320,9 @@
     chatInput.addEventListener('keydown', function (e) { if (e.key === 'Enter') { e.preventDefault(); runChat(); } });
   }
 
-  /* ---------- Cookiemelding ---------- */
-  var cookieBar = document.querySelector('[data-cookie-bar]');
-  if (cookieBar) {
-    var hasChoice = false;
-    try { hasChoice = !!localStorage.getItem('sd_cookie'); } catch (e) {}
-    if (!hasChoice) cookieBar.hidden = false;
-    var choose = function (val, evt) {
-      try { localStorage.setItem('sd_cookie', val); } catch (e) {}
-      if (evt) window.SD.track(evt);
-      cookieBar.hidden = true;
-    };
-    cookieBar.querySelector('[data-cookie-all]').addEventListener('click', function () { choose('all', 'consent_all'); });
-    cookieBar.querySelector('[data-cookie-necessary]').addEventListener('click', function () { choose('necessary'); });
-  }
+  /* De cookiebalk is op 25 september 2026 verwijderd: GA4 meet
+     zonder toestemmingsvraag, dus een keuzebalk zou niets meer
+     aansturen. Zie js/analytics.js. */
 })();
 
 /* ------------------------------------------------------------

@@ -21,7 +21,7 @@ const ok = (msg) => console.log('  ✓ ' + msg);
 /* 1. Syntax */
 console.log('Syntaxcontrole:');
 const jsFiles = [
-  'js/motion.js', 'js/funnel.js', 'js/booking.js', 'js/embed.js',
+  'js/motion.js', 'js/funnel.js', 'js/booking.js', 'js/embed.js', 'js/analytics.js',
   'api/bookings.js', 'api/portal-login.js', 'api/chat.js',
   'api/_lib/store.js', 'api/_lib/auth.js', 'api/_lib/ratelimit.js'
 ];
@@ -47,6 +47,7 @@ console.log('Markers:');
 const idx = readFileSync(join(root, 'index.html'), 'utf8');
 const widget = readFileSync(join(root, 'widget.html'), 'utf8');
 const boeking = readFileSync(join(root, 'adviesgesprek.html'), 'utf8');
+const analytics = readFileSync(join(root, 'js/analytics.js'), 'utf8');
 const markers = [
   [boeking, 'data-booking', 'adviesgesprek.html: boekingsmount (data-booking)'],
   [idx, 'adviesgesprek.html', 'index.html: link naar de boekingspagina'],
@@ -56,6 +57,9 @@ const markers = [
   [idx, 'chatEndpoint', 'index.html: chatEndpoint'],
   [idx, 'application/ld+json', 'index.html: JSON-LD aanwezig'],
   [widget, 'data-booking', 'widget.html: boekingsmount'],
+  [idx, 'js/analytics.js', 'index.html: GA4-laag (js/analytics.js)'],
+  [analytics, 'G-XN788FNCZS', 'analytics.js: GA4-meet-id'],
+  [analytics, 'anonymize_ip', 'analytics.js: IP-anonimisering aan'],
 ];
 for (const [haystack, needle, label] of markers) {
   if (haystack.includes(needle)) ok(label); else fail(label + ' — marker "' + needle + '" niet gevonden');
