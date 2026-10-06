@@ -23,7 +23,8 @@ console.log('Syntaxcontrole:');
 const jsFiles = [
   'js/motion.js', 'js/funnel.js', 'js/booking.js', 'js/embed.js', 'js/analytics.js',
   'api/bookings.js', 'api/portal-login.js', 'api/chat.js',
-  'api/_lib/store.js', 'api/_lib/auth.js', 'api/_lib/ratelimit.js'
+  'api/_lib/store.js', 'api/_lib/auth.js', 'api/_lib/ratelimit.js',
+  'api/_lib/attributie.js', 'api/_lib/pipedrive.js', 'tools/attributie-test.mjs'
 ];
 for (const f of jsFiles) {
   const p = join(root, f);
@@ -34,6 +35,16 @@ for (const f of jsFiles) {
   } catch (e) {
     fail(f + ' — syntaxfout:\n' + String(e.stderr || e.message).slice(0, 500));
   }
+}
+
+/* 1b. Zelftest herkomst-classificatie (api/_lib/attributie.js) */
+console.log('Attributie:');
+try {
+  const uit = execFileSync(process.execPath, [join(root, 'tools/attributie-test.mjs')], { stdio: 'pipe' }).toString();
+  const regels = uit.trim().split('\n');
+  ok('attributie-test: ' + regels[regels.length - 1]);
+} catch (e) {
+  fail('attributie-test mislukt:\n' + String((e.stderr || '') + (e.stdout || '') || e.message).slice(0, 1500));
 }
 
 /* 2. Kernbestanden */

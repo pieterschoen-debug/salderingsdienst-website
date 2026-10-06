@@ -15,6 +15,7 @@ var store = require('./_lib/store');
 var auth = require('./_lib/auth');
 var rate = require('./_lib/ratelimit');
 var pipedrive = require('./_lib/pipedrive');
+var attributie = require('./_lib/attributie');
 
 function deriveStatus(q) {
   if (!q || typeof q !== 'object') return 'niet_gekwalificeerd';
@@ -96,6 +97,9 @@ module.exports = async function handler(req, res) {
     }
     /* Status server-side afleiden; front-end waarde negeren */
     lead.status = deriveStatus(lead.qualification);
+    /* Herkomst: whitelist, geen persoonsgegevens, en het verkeerskanaal
+       wordt hier afgeleid (nooit uit de client overgenomen). */
+    lead.source = attributie.saneerSource(lead.source);
     try {
       var saved = await store.saveBooking(lead);
       /* Pipedrive is bewust de tweede stap: de lead staat al vast in de

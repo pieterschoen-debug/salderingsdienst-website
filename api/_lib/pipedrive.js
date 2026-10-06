@@ -127,9 +127,11 @@ function notitieTekst(lead) {
   r.push('Afspraak bevestigd: ' + (q.afspraakBevestigd === true ? 'ja' : 'nee'));
   r.push('');
   r.push('Uitkomst: ' + (lead.status === 'warm_gekwalificeerd' ? 'gekwalificeerd' : 'niet gekwalificeerd'));
-  if (s.utm_source || s.referrer || s.pad) {
+  if (s.utm_source || s.referrer || s.pad || s.verkeerskanaal || s.landing) {
     r.push('');
     r.push('<b>Herkomst</b>');
+    if (s.verkeerskanaal) r.push('Verkeerskanaal: ' + s.verkeerskanaal);
+    if (s.landing) r.push('Landingspagina: ' + s.landing);
     if (s.utm_source) r.push('Bron: ' + s.utm_source + (s.utm_campaign ? ' / ' + s.utm_campaign : ''));
     if (s.referrer) r.push('Verwijzer: ' + s.referrer);
     if (s.pad) r.push('Pagina: ' + s.pad);

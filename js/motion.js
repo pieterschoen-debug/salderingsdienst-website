@@ -12,17 +12,56 @@
   var reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
   /* ---------- Gedeelde tracking-laag (ook gebruikt door booking.js) ---------- */
-  var utm = {};
+  /* Herkomst (first touch): bij het eerste bezoek in een sessie leggen we
+     landingspagina, verwijzende hostnaam en UTM-parameters vast in
+     sessionStorage ('sd_attrib'). Latere pagina's lezen die terug, zodat een
+     lead ook na doorklikken nog aan de eerste aanraking hangt. Alleen
+     paden en hostnamen; de waarden gaan nooit terug in een URL. */
+  var OWN_HOSTS = ['www.salderingsdienst.nl', 'salderingsdienst.nl'];
+  var UTM_KEYS = ['utm_source', 'utm_medium', 'utm_campaign', 'utm_content', 'utm_term', 'ref'];
+
+  var nu = {};
   try {
     var params = new URLSearchParams(location.search);
-    ['utm_source', 'utm_medium', 'utm_campaign', 'utm_content', 'ref'].forEach(function (k) {
-      if (params.get(k)) utm[k] = params.get(k);
+    UTM_KEYS.forEach(function (k) {
+      var v = params.get(k);
+      if (v) nu[k] = String(v).slice(0, 100);
     });
   } catch (e) {}
+
+  var refHost = '';
+  try {
+    if (document.referrer) {
+      refHost = new URL(document.referrer).hostname.toLowerCase();
+      if (OWN_HOSTS.indexOf(refHost) !== -1 || refHost === location.hostname.toLowerCase()) refHost = '';
+    }
+  } catch (e) { refHost = ''; }
+
+  var attrib = null;
+  try {
+    attrib = JSON.parse(sessionStorage.getItem('sd_attrib'));
+    if (!attrib || typeof attrib !== 'object') attrib = null;
+  } catch (e) { attrib = null; }
+
+  if (!attrib) {
+    attrib = { landing: location.pathname, referrer: refHost, utm: nu, ts: new Date().toISOString() };
+  } else {
+    /* bestaande sessiewaarden winnen; alleen ontbrekende UTM-sleutels worden aangevuld */
+    var oud = (attrib.utm && typeof attrib.utm === 'object') ? attrib.utm : {};
+    Object.keys(nu).forEach(function (k) { if (!oud[k]) oud[k] = nu[k]; });
+    attrib.utm = oud;
+    if (!attrib.landing) attrib.landing = location.pathname;
+    if (typeof attrib.referrer !== 'string') attrib.referrer = '';
+  }
+  try { sessionStorage.setItem('sd_attrib', JSON.stringify(attrib)); } catch (e) {}
+
+  /* utm blijft hetzelfde object, zodat bestaande verwijzingen (booking.js) kloppen */
+  var utm = attrib.utm;
 
   var fired = {};
   window.SD = {
     utm: utm,
+    attrib: attrib,
     track: function (name, extra) { if (window.sdTrack) window.sdTrack(name, Object.assign({}, utm, extra || {})); },
     fire: function (name, extra) { if (fired[name]) return; fired[name] = 1; window.SD.track(name, extra); },
     /* Leadkanaal (schema sd.lead.v1) — één route voor alle formulieren:
@@ -203,7 +242,11 @@
         contact: { email: email, phone: phone },
         calculator: calc,
         consent: { privacyNotice: true, callback: true },
-        source: { page: location.pathname, utm: (window.SD.utm || {}) }
+        source: {
+          page: location.pathname, pad: location.pathname,
+          landing: window.SD.attrib.landing, referrer: window.SD.attrib.referrer,
+          utm: (window.SD.utm || {}), channel: 'site'
+        }
       });
 
       cbForm.innerHTML = '<p class="callback-done">Bedankt, wij bellen u binnen 1 werkdag op ' +

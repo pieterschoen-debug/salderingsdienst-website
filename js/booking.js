@@ -635,8 +635,30 @@
       berekening: (window.SD && window.SD.funnel) || null,
       briefcode: state.briefcode.trim().toUpperCase() || null,
       consent: { privacyNotice: true, infoEmail: state.sendInfo },
-      source: { page: location.pathname, utm: SD.utm || {}, channel: inIframe ? 'embed' : 'site', partner: sourceTag }
+      source: buildSource()
     };
+  }
+  /* Herkomst van de lead: eerste aanraking (landing, referrer-hostnaam, UTM)
+     uit SD.attrib plus de pagina waar het formulier is verstuurd. Alleen
+     paden en hostnamen, geen querystrings, geen persoonsgegevens. Het
+     verkeerskanaal leidt de server zelf af. Zonder SD.attrib (embed zonder
+     motion.js) vallen we terug op de huidige pagina. */
+  function buildSource() {
+    var at = (window.SD && window.SD.attrib) || {};
+    var utm = (at.utm && Object.keys(at.utm).length ? at.utm : SD.utm) || {};
+    var s = {
+      page: location.pathname,
+      pad: location.pathname,
+      landing: at.landing || location.pathname,
+      utm: utm,
+      channel: inIframe ? 'embed' : 'site',
+      partner: sourceTag
+    };
+    /* Zonder meting laten we referrer weg: de server maakt er dan 'onbekend' van, niet 'direct' */
+    if (typeof at.referrer === 'string') s.referrer = at.referrer;
+    /* Plat bovenaan, zodat de Pipedrive-notitie ze direct leest */
+    ['utm_source', 'utm_medium', 'utm_campaign'].forEach(function (k) { if (utm[k]) s[k] = utm[k]; });
+    return s;
   }
   function postBooking(lead) {
     var ep = CFG.bookingEndpoint !== undefined ? CFG.bookingEndpoint : '/api/bookings';
