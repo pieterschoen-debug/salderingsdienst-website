@@ -140,7 +140,7 @@
 <header class="site-header">
   <div class="container">
     <a class="brand" href="#top">
-      <img src="assets/crest-146.png" alt="" width="146" height="160">
+      <picture><source type="image/webp" srcset="assets/crest-146.webp"><img src="assets/crest-146.png" alt="" width="146" height="160"></picture>
       <span class="brand-name">SalderingsDienst</span>
     </a>
     <nav class="nav-links" aria-label="Hoofdnavigatie">
@@ -175,6 +175,9 @@
   <!-- ===== 1. HERO ===== -->
   <section class="hero">
     <picture class="hero-media">
+      <source media="(max-width: 699.5px)" type="image/webp" srcset="assets/hero-advies-mobile.webp" width="909" height="1136">
+      <source media="(max-width: 900px)" type="image/webp" srcset="assets/hero-advies-960.webp" width="960" height="540">
+      <source type="image/webp" srcset="assets/hero-advies.webp" width="1385" height="779">
       <source media="(max-width: 699.5px)" srcset="assets/hero-advies-mobile.jpg" width="909" height="1136">
       <source media="(max-width: 900px)" srcset="assets/hero-advies-960.jpg" width="960" height="540">
       <img src="assets/hero-advies.jpg" alt="Energieadviseur bespreekt de doorrekening met een huiseigenaar aan de eettafel." width="1385" height="779" fetchpriority="high">
@@ -385,7 +388,7 @@
       <ul class="sol-track" data-sol-track>
         <li class="sol-card rv">
           <div class="ph ph--sol" data-ph="Foto: zonnepanelen">
-            <img src="assets/product-zonnepanelen.jpg" alt="Twee installateurs leggen zonnepanelen op een schuin dak." width="1280" height="720" loading="lazy" onerror="this.remove()">
+            <picture><source type="image/webp" srcset="assets/product-zonnepanelen-960.webp 960w, assets/product-zonnepanelen.webp 1280w" sizes="(max-width: 699px) 280px, 460px"><img src="assets/product-zonnepanelen.jpg" alt="Twee installateurs leggen zonnepanelen op een schuin dak." width="1280" height="720" loading="lazy" onerror="this.remove()"></picture>
           </div>
           <div class="sol-body">
             <h3>Zonnepanelen</h3>
@@ -399,7 +402,7 @@
         </li>
         <li class="sol-card rv">
           <div class="ph ph--sol" data-ph="Foto: thuisbatterij">
-            <img src="assets/product-batterij-otgu.jpg" alt="Drie thuisbatterijen in verschillende formaten." width="1280" height="720" loading="lazy" onerror="this.remove()">
+            <picture><source type="image/webp" srcset="assets/product-batterij-otgu-960.webp 960w, assets/product-batterij-otgu.webp 1280w" sizes="(max-width: 699px) 280px, 460px"><img src="assets/product-batterij-otgu.jpg" alt="Drie thuisbatterijen in verschillende formaten." width="1280" height="720" loading="lazy" onerror="this.remove()"></picture>
           </div>
           <div class="sol-body">
             <h3>Thuisbatterij</h3>
@@ -427,7 +430,7 @@
         </li>
         <li class="sol-card rv">
           <div class="ph ph--sol" data-ph="Foto: slimme energiesturing">
-            <img src="assets/product-sturing.jpg" alt="App met realtime inzicht in energieverbruik." width="640" height="400" loading="lazy" onerror="this.remove()">
+            <picture><source type="image/webp" srcset="assets/product-sturing.webp"><img src="assets/product-sturing.jpg" alt="App met realtime inzicht in energieverbruik." width="640" height="400" loading="lazy" onerror="this.remove()"></picture>
           </div>
           <div class="sol-body">
             <h3>Slimme energiesturing</h3>
@@ -441,7 +444,7 @@
         </li>
         <li class="sol-card rv">
           <div class="ph ph--sol" data-ph="Foto: bestaande installatie">
-            <img src="assets/product-zon.jpg" alt="Installateur bij zonnepanelen op een dak." width="640" height="400" loading="lazy" onerror="this.remove()">
+            <picture><source type="image/webp" srcset="assets/product-zon.webp"><img src="assets/product-zon.jpg" alt="Installateur bij zonnepanelen op een dak." width="640" height="400" loading="lazy" onerror="this.remove()"></picture>
           </div>
           <div class="sol-body">
             <h3>Meer uit uw bestaande dak</h3>
@@ -472,16 +475,16 @@
 
       <div class="werk-strook rv">
         <figure class="ph werk-foto">
-          <img src="assets/stap-1.jpg" alt="Huiseigenaar plant online een adviesgesprek in." width="560" height="360" loading="lazy" onerror="this.remove()">
+          <picture><source type="image/webp" srcset="assets/stap-1.webp"><img src="assets/stap-1.jpg" alt="Huiseigenaar plant online een adviesgesprek in." width="560" height="360" loading="lazy" onerror="this.remove()"></picture>
         </figure>
         <figure class="ph werk-foto">
-          <img src="assets/stap-2.jpg" alt="Adviseur rekent de situatie van een woning door." width="560" height="360" loading="lazy" onerror="this.remove()">
+          <picture><source type="image/webp" srcset="assets/stap-2.webp"><img src="assets/stap-2.jpg" alt="Adviseur rekent de situatie van een woning door." width="560" height="360" loading="lazy" onerror="this.remove()"></picture>
         </figure>
         <figure class="ph werk-foto">
-          <img src="assets/werkwijze-3.jpg" alt="Adviseur neemt het advies op papier door met een huiseigenaar aan de keukentafel." width="900" height="848" loading="lazy" onerror="this.remove()">
+          <picture><source type="image/webp" srcset="assets/werkwijze-3.webp"><img src="assets/werkwijze-3.jpg" alt="Adviseur neemt het advies op papier door met een huiseigenaar aan de keukentafel." width="900" height="848" loading="lazy" onerror="this.remove()"></picture>
         </figure>
         <figure class="ph werk-foto">
-          <img src="assets/werkwijze-4.jpg" alt="Installateur van SalderingsDienst sluit een thuisbatterij aan." width="900" height="1107" loading="lazy" onerror="this.remove()">
+          <picture><source type="image/webp" srcset="assets/werkwijze-4.webp"><img src="assets/werkwijze-4.jpg" alt="Installateur van SalderingsDienst sluit een thuisbatterij aan." width="900" height="1107" loading="lazy" onerror="this.remove()"></picture>
         </figure>
         <!-- Pijlen voor het rondje op mobiel (1 → 2 → 3 → 4); elders verborgen. -->
         <span class="werk-pijl werk-pijl--1" aria-hidden="true"><svg viewBox="0 0 24 24" focusable="false"><path d="M4 12h15M13 6l6 6-6 6"/></svg></span>
@@ -519,9 +522,9 @@
            de eerste foto staan. -->
       <figure class="verhaal-beeld rv">
         <div class="ph ph--verhaal" data-ph="Foto: eerlijk-verhaal-1.jpg" data-verhaal-fotos>
-          <img class="verhaal-foto is-active" src="assets/eerlijk-verhaal-1.jpg" alt="Adviseur neemt de doorrekening met een pen door aan de eettafel bij twee huiseigenaren." width="1536" height="1024" loading="lazy" onerror="this.remove()">
-          <img class="verhaal-foto" src="assets/eerlijk-verhaal-2.jpg" alt="Adviseur laat aan de eettafel een geprinte uitleg over de onbalansmarkt zien aan twee huiseigenaren." width="1536" height="1024" loading="lazy" onerror="this.remove()">
-          <img class="verhaal-foto" src="assets/eerlijk-verhaal-3.jpg" alt="Adviseur geeft een huiseigenaar een hand aan de eettafel, met de offerte op een tablet." width="1536" height="1024" loading="lazy" onerror="this.remove()">
+          <picture><source type="image/webp" srcset="assets/eerlijk-verhaal-1-960.webp 960w, assets/eerlijk-verhaal-1.webp 1536w" sizes="(max-width: 699px) 100vw, 725px"><img class="verhaal-foto is-active" src="assets/eerlijk-verhaal-1.jpg" alt="Adviseur neemt de doorrekening met een pen door aan de eettafel bij twee huiseigenaren." width="1536" height="1024" loading="lazy" onerror="this.remove()"></picture>
+          <picture><source type="image/webp" srcset="assets/eerlijk-verhaal-2-960.webp 960w, assets/eerlijk-verhaal-2.webp 1536w" sizes="(max-width: 699px) 100vw, 725px"><img class="verhaal-foto" src="assets/eerlijk-verhaal-2.jpg" alt="Adviseur laat aan de eettafel een geprinte uitleg over de onbalansmarkt zien aan twee huiseigenaren." width="1536" height="1024" loading="lazy" onerror="this.remove()"></picture>
+          <picture><source type="image/webp" srcset="assets/eerlijk-verhaal-3-960.webp 960w, assets/eerlijk-verhaal-3.webp 1536w" sizes="(max-width: 699px) 100vw, 725px"><img class="verhaal-foto" src="assets/eerlijk-verhaal-3.jpg" alt="Adviseur geeft een huiseigenaar een hand aan de eettafel, met de offerte op een tablet." width="1536" height="1024" loading="lazy" onerror="this.remove()"></picture>
         </div>
       </figure>
 
@@ -608,7 +611,7 @@
         <div class="team-track" data-team-track>
           <article class="team-slide">
             <div class="team-card">
-              <img src="assets/adviseur-kim.jpg" alt="Kim, adviseur" width="560" height="747" loading="lazy">
+              <picture><source type="image/webp" srcset="assets/adviseur-kim.webp"><img src="assets/adviseur-kim.jpg" alt="Kim, adviseur" width="560" height="747" loading="lazy"></picture>
               <div class="team-card__content">
                 <h3 class="team-card__name">Kim</h3>
                 <p class="team-card__role">Adviseur</p>
@@ -617,7 +620,7 @@
           </article>
           <article class="team-slide">
             <div class="team-card">
-              <img src="assets/adviseur-xavier.jpg" alt="Xavier, adviseur" width="560" height="832" loading="lazy">
+              <picture><source type="image/webp" srcset="assets/adviseur-xavier.webp"><img src="assets/adviseur-xavier.jpg" alt="Xavier, adviseur" width="560" height="832" loading="lazy"></picture>
               <div class="team-card__content">
                 <h3 class="team-card__name">Xavier</h3>
                 <p class="team-card__role">Adviseur</p>
@@ -626,7 +629,7 @@
           </article>
           <article class="team-slide">
             <div class="team-card">
-              <img src="assets/adviseur-marco.jpg" alt="Marco, adviseur" width="560" height="747" loading="lazy">
+              <picture><source type="image/webp" srcset="assets/adviseur-marco.webp"><img src="assets/adviseur-marco.jpg" alt="Marco, adviseur" width="560" height="747" loading="lazy"></picture>
               <div class="team-card__content">
                 <h3 class="team-card__name">Marco</h3>
                 <p class="team-card__role">Adviseur</p>
@@ -635,7 +638,7 @@
           </article>
           <article class="team-slide">
             <div class="team-card">
-              <img src="assets/adviseur-naomi.jpg" alt="Naomi, adviseur" width="560" height="747" loading="lazy">
+              <picture><source type="image/webp" srcset="assets/adviseur-naomi.webp"><img src="assets/adviseur-naomi.jpg" alt="Naomi, adviseur" width="560" height="747" loading="lazy"></picture>
               <div class="team-card__content">
                 <h3 class="team-card__name">Naomi</h3>
                 <p class="team-card__role">Adviseur</p>
@@ -644,7 +647,7 @@
           </article>
           <article class="team-slide">
             <div class="team-card">
-              <img src="assets/adviseur-pieter.jpg" alt="Pieter, adviseur" width="560" height="747" loading="lazy">
+              <picture><source type="image/webp" srcset="assets/adviseur-pieter.webp"><img src="assets/adviseur-pieter.jpg" alt="Pieter, adviseur" width="560" height="747" loading="lazy"></picture>
               <div class="team-card__content">
                 <h3 class="team-card__name">Pieter</h3>
                 <p class="team-card__role">Adviseur</p>
@@ -653,7 +656,7 @@
           </article>
           <article class="team-slide">
             <div class="team-card">
-              <img src="assets/adviseur-reener.jpg" alt="Reener, adviseur" width="560" height="841" loading="lazy">
+              <picture><source type="image/webp" srcset="assets/adviseur-reener.webp"><img src="assets/adviseur-reener.jpg" alt="Reener, adviseur" width="560" height="841" loading="lazy"></picture>
               <div class="team-card__content">
                 <h3 class="team-card__name">Reener</h3>
                 <p class="team-card__role">Adviseur</p>
@@ -662,7 +665,7 @@
           </article>
           <article class="team-slide">
             <div class="team-card">
-              <img src="assets/adviseur-silvester.jpg" alt="Silvester, adviseur" width="560" height="747" loading="lazy">
+              <picture><source type="image/webp" srcset="assets/adviseur-silvester.webp"><img src="assets/adviseur-silvester.jpg" alt="Silvester, adviseur" width="560" height="747" loading="lazy"></picture>
               <div class="team-card__content">
                 <h3 class="team-card__name">Silvester</h3>
                 <p class="team-card__role">Adviseur</p>
@@ -671,7 +674,7 @@
           </article>
           <article class="team-slide">
             <div class="team-card">
-              <img src="assets/adviseur-mats.jpg" alt="Mats, adviseur" width="560" height="747" loading="lazy">
+              <picture><source type="image/webp" srcset="assets/adviseur-mats.webp"><img src="assets/adviseur-mats.jpg" alt="Mats, adviseur" width="560" height="747" loading="lazy"></picture>
               <div class="team-card__content">
                 <h3 class="team-card__name">Mats</h3>
                 <p class="team-card__role">Adviseur</p>
@@ -711,7 +714,7 @@
       <figure class="erv-spot rv">
         <blockquote>„Eindelijk iemand die <span class="erv-kern">eerst rekent en dan pas adviseert</span>. De batterij hing er drie weken later.”</blockquote>
         <figcaption>
-          <span class="ph erv-face" data-ph="Foto"><img src="assets/klant-1.jpg" alt="Henk uit Apeldoorn" width="256" height="256" loading="lazy" onerror="this.remove()"></span>
+          <span class="ph erv-face" data-ph="Foto"><picture><source type="image/webp" srcset="assets/klant-1.webp"><img src="assets/klant-1.jpg" alt="Henk uit Apeldoorn" width="256" height="256" loading="lazy" onerror="this.remove()"></picture></span>
           <span class="erv-name">Henk <small>Apeldoorn</small></span>
         </figcaption>
       </figure>
@@ -719,7 +722,7 @@
       <figure class="erv-echo rv">
         <blockquote>„Het advies was gratis en duidelijk. De subsidieaanvraag hebben ze volledig uit handen genomen.”</blockquote>
         <figcaption>
-          <span class="ph erv-face" data-ph="Foto"><img src="assets/klant-2.jpg" alt="Ineke uit Breda" width="256" height="256" loading="lazy" onerror="this.remove()"></span>
+          <span class="ph erv-face" data-ph="Foto"><picture><source type="image/webp" srcset="assets/klant-2.webp"><img src="assets/klant-2.jpg" alt="Ineke uit Breda" width="256" height="256" loading="lazy" onerror="this.remove()"></picture></span>
           <span class="erv-name">Ineke <small>Breda</small></span>
         </figcaption>
       </figure>
@@ -727,7 +730,7 @@
       <figure class="erv-echo erv-echo--in rv">
         <blockquote>„Geen verkooppraatje. In ons geval bleek een kleinere batterij voldoende, dat scheelde flink.”</blockquote>
         <figcaption>
-          <span class="ph erv-face" data-ph="Foto"><img src="assets/klant-3.jpg" alt="Ruud uit Zwolle" width="256" height="256" loading="lazy" onerror="this.remove()"></span>
+          <span class="ph erv-face" data-ph="Foto"><picture><source type="image/webp" srcset="assets/klant-3.webp"><img src="assets/klant-3.jpg" alt="Ruud uit Zwolle" width="256" height="256" loading="lazy" onerror="this.remove()"></picture></span>
           <span class="erv-name">Ruud <small>Zwolle</small></span>
         </figcaption>
       </figure>
@@ -823,7 +826,7 @@
     </div>
     <div class="footer-row1">
       <div class="brand">
-        <img src="assets/crest-146.png" alt="" width="146" height="160" loading="lazy">
+        <picture><source type="image/webp" srcset="assets/crest-146.webp"><img src="assets/crest-146.png" alt="" width="146" height="160" loading="lazy"></picture>
         <span class="brand-name">SalderingsDienst</span>
       </div>
       <nav class="footer-links" aria-label="Voettekstnavigatie">

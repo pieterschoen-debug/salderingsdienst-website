@@ -492,7 +492,7 @@
   /* Bij elk punt hoort een foto. Zijn het er niet evenveel (of ontbreekt
      het blok), dan blijft het beeld gewoon staan en wisselt alleen de tekst. */
   var fotos = Array.prototype.slice.call(
-    document.querySelectorAll('[data-verhaal-fotos] > .verhaal-foto')
+    document.querySelectorAll('[data-verhaal-fotos] .verhaal-foto')
   );
   if (fotos.length !== slides.length) fotos = [];
 
