@@ -117,6 +117,9 @@ const PUBLIC_ITEMS = [
   'index.html', 'adviesgesprek.html', 'widget.html', 'portal.html', 'kennisbank.html', 'rekentool.html', 'privacybeleid.html',
   'algemene-voorwaarden.html', 'algemene-voorwaarden-zakelijk.html', '404.html',
   'kennisbank', 'css', 'js', 'assets', 'robots.txt', 'sitemap.xml',
+  /* Favicon-set: favicon.ico moet op /favicon.ico staan; manifest verwijst naar icon-192/512 */
+  'favicon.ico', 'favicon-32.png', 'favicon-48.png', 'favicon-96.png', 'apple-touch-icon.png',
+  'icon-192.png', 'icon-512.png', 'site.webmanifest',
   /* IndexNow-sleutelbestand: eigendomsbewijs voor Bing e.a.; de sleutel is geen geheim */
   'dd25f0443c785e86156a53255caeb1c6.txt'
 ];
