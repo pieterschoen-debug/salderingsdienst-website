@@ -61,7 +61,7 @@ const boeking = readFileSync(join(root, 'adviesgesprek.html'), 'utf8');
 const analytics = readFileSync(join(root, 'js/analytics.js'), 'utf8');
 const markers = [
   [boeking, 'data-booking', 'adviesgesprek.html: boekingsmount (data-booking)'],
-  [idx, 'adviesgesprek.html', 'index.html: link naar de boekingspagina'],
+  [idx, 'href="/adviesgesprek"', 'index.html: link naar de boekingspagina (schone URL)'],
   [idx, 'data-funnel', 'index.html: bespaarcheck (data-funnel)'],
   [idx, "whatsapp: '31639369781'", 'index.html: WhatsApp-nummer in SD_CONFIG'],
   [idx, 'bookingEndpoint', 'index.html: bookingEndpoint'],
@@ -99,7 +99,7 @@ rmSync(pub, { recursive: true, force: true });
 mkdirSync(pub, { recursive: true });
 const PUBLIC_ITEMS = [
   'index.html', 'adviesgesprek.html', 'widget.html', 'portal.html', 'kennisbank.html', 'privacybeleid.html',
-  'algemene-voorwaarden.html', 'algemene-voorwaarden-zakelijk.html',
+  'algemene-voorwaarden.html', 'algemene-voorwaarden-zakelijk.html', '404.html',
   'kennisbank', 'css', 'js', 'assets', 'robots.txt', 'sitemap.xml'
 ];
 for (const item of PUBLIC_ITEMS) {

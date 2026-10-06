@@ -1,52 +1,57 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Sitemap SalderingsDienst. Alleen indexeerbare, bestaande pagina's.
-     /portal en /widget staan hier bewust niet in: die dragen een noindex. -->
+     /portal en /widget staan hier bewust niet in: die dragen een noindex.
+     lastmod = datum van de laatste inhoudelijke wijziging van die pagina
+     (git log -1 --format=%cd --date=short -- <bestand>). Werk lastmod bij
+     bij elke contentwijziging, en zet in artikelen dateModified in de
+     JSON-LD op dezelfde datum. Een lastmod die niet klopt, leert Google
+     dat het veld niet te vertrouwen is. -->
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>https://www.salderingsdienst.nl/</loc>
-    <lastmod>2026-09-17</lastmod>
+    <lastmod>2026-09-25</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
   </url>
   <url>
     <loc>https://www.salderingsdienst.nl/adviesgesprek</loc>
-    <lastmod>2026-09-17</lastmod>
+    <lastmod>2026-09-25</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
     <loc>https://www.salderingsdienst.nl/kennisbank/salderingsregeling-gids</loc>
-    <lastmod>2026-09-17</lastmod>
+    <lastmod>2026-09-25</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://www.salderingsdienst.nl/kennisbank/thuisbatterij-na-2027</loc>
-    <lastmod>2026-09-17</lastmod>
+    <lastmod>2026-09-25</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://www.salderingsdienst.nl/kennisbank</loc>
-    <lastmod>2026-09-17</lastmod>
+    <lastmod>2026-09-25</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://www.salderingsdienst.nl/algemene-voorwaarden</loc>
-    <lastmod>2026-09-24</lastmod>
+    <lastmod>2026-09-25</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.3</priority>
   </url>
   <url>
     <loc>https://www.salderingsdienst.nl/algemene-voorwaarden-zakelijk</loc>
-    <lastmod>2026-09-24</lastmod>
+    <lastmod>2026-09-25</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.3</priority>
   </url>
   <url>
     <loc>https://www.salderingsdienst.nl/privacybeleid</loc>
-    <lastmod>2026-09-17</lastmod>
+    <lastmod>2026-09-25</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.3</priority>
   </url>

@@ -97,9 +97,9 @@
 </script>
 
 <script>
-  /* Conversie-tracking: GA4 achter de cookiebalk, zie js/analytics.js */
+  /* Conversie-tracking: GA4 zonder cookiebalk (besluit 25 september 2026), zie js/analytics.js */
 
-  /* Contactgegevens — eerlijke placeholders, duidelijk gemarkeerd. */
+  /* Contactgegevens van SalderingsDienst (telefoon, e-mail, WhatsApp, KvK). */
   window.SD_CONFIG = {
     phone: '06 3936 9781',
     email: 'info@salderingsdienst.nl',
@@ -132,11 +132,11 @@
       <a href="#oplossingen">Oplossingen</a>
       <a href="#werkwijze">Werkwijze</a>
       <a href="#over-ons">Over ons</a>
-      <a href="kennisbank.html">Kennisbank</a>
+      <a href="/kennisbank">Kennisbank</a>
       <a href="#vragen">Vragen</a>
     </nav>
     <div class="nav-actions">
-      <a class="nav-cta btn btn-primary" href="adviesgesprek.html" data-track="nav_cta_click">Plan adviesgesprek</a>
+      <a class="nav-cta btn btn-primary" href="/adviesgesprek" data-track="nav_cta_click">Plan adviesgesprek</a>
       <button class="nav-burger" data-nav-toggle aria-label="Menu" aria-expanded="false" aria-controls="nav-overlay">
         <span></span><span></span><span></span>
       </button>
@@ -149,9 +149,9 @@
   <a href="#oplossingen" data-nav-close>Oplossingen</a>
   <a href="#werkwijze" data-nav-close>Werkwijze</a>
   <a href="#over-ons" data-nav-close>Over ons</a>
-  <a href="kennisbank.html">Kennisbank</a>
+  <a href="/kennisbank">Kennisbank</a>
   <a href="#vragen" data-nav-close>Vragen</a>
-  <a href="adviesgesprek.html" class="btn btn-primary nav-overlay-cta" data-nav-close>Plan adviesgesprek</a>
+  <a href="/adviesgesprek" class="btn btn-primary nav-overlay-cta" data-nav-close>Plan adviesgesprek</a>
 </div>
 
 <main id="top">
@@ -170,7 +170,7 @@
         <h1><span>Eerst uw situatie begrijpen.</span> <span>Dan pas adviseren.</span></h1>
         <p class="lead">Wij rekenen door wat 2027 voor uw woning betekent.</p>
         <div class="hero-ctas">
-          <a href="adviesgesprek.html" class="btn btn--lg hero-cta" data-track="hero_cta_click">Plan kosteloos adviesgesprek</a>
+          <a href="/adviesgesprek" class="btn btn--lg hero-cta" data-track="hero_cta_click">Plan kosteloos adviesgesprek</a>
         </div>
       </div>
     </div>
@@ -320,7 +320,7 @@
             <div class="ftile"><span class="ftile-ic" aria-hidden="true">☀️</span><strong data-f-tile-opwek>0</strong><span>kWh opwek</span></div>
           </div>
 
-          <a class="btn btn-primary fbtn" href="adviesgesprek.html" data-f-cta data-track="funnel_cta_click">Plan kosteloos adviesgesprek&nbsp;→</a>
+          <a class="btn btn-primary fbtn" href="/adviesgesprek" data-f-cta data-track="funnel_cta_click">Plan kosteloos adviesgesprek&nbsp;→</a>
           <button type="button" class="btn fbtn-back fbtn-back--wide" data-fback="2">← Gegevens aanpassen</button>
 
           <form class="callback" data-callback novalidate>
@@ -339,7 +339,7 @@
         </div>
       </div>
 
-      <p class="calc-more"><a href="kennisbank/salderingsregeling-gids.html#rekenen">Zo rekent u het zelf na, met uw jaarafrekening</a></p>
+      <p class="calc-more"><a href="/kennisbank/salderingsregeling-gids#rekenen">Zo rekent u het zelf na, met uw jaarafrekening</a></p>
     </div>
   </section>
 
@@ -378,7 +378,7 @@
               <li>Legplan en opbrengst vooraf berekend</li>
               <li>Installatie door gecertificeerde partners</li>
             </ul>
-            <a href="adviesgesprek.html" class="sol-link" data-track="sol_zonnepanelen_click">Meer informatie</a>
+            <a href="/adviesgesprek" class="sol-link" data-track="sol_zonnepanelen_click">Meer informatie</a>
           </div>
         </li>
         <li class="sol-card rv">
@@ -392,7 +392,7 @@
               <li>Meer van uw zonnestroom zelf gebruiken</li>
               <li>Slim laden op dynamische tarieven</li>
             </ul>
-            <a href="adviesgesprek.html" class="sol-link" data-track="sol_batterij_click">Meer informatie</a>
+            <a href="/adviesgesprek" class="sol-link" data-track="sol_batterij_click">Meer informatie</a>
           </div>
         </li>
         <li class="sol-card rv">
@@ -406,7 +406,7 @@
               <li>Vooraf doorgerekend op uw isolatie en afgiftesysteem</li>
               <li>Werkt samen met uw zonnestroom en batterij</li>
             </ul>
-            <a href="adviesgesprek.html" class="sol-link" data-track="sol_warmtepomp_click">Meer informatie</a>
+            <a href="/adviesgesprek" class="sol-link" data-track="sol_warmtepomp_click">Meer informatie</a>
           </div>
         </li>
         <li class="sol-card rv">
@@ -420,7 +420,7 @@
               <li>Laadt bij lage prijzen, levert bij piek</li>
               <li>Realtime inzicht via app</li>
             </ul>
-            <a href="adviesgesprek.html" class="sol-link" data-track="sol_sturing_click">Meer informatie</a>
+            <a href="/adviesgesprek" class="sol-link" data-track="sol_sturing_click">Meer informatie</a>
           </div>
         </li>
         <li class="sol-card rv">
@@ -434,7 +434,7 @@
               <li>Controle van omvormer en instellingen</li>
               <li>Advies over uitbreiding</li>
             </ul>
-            <a href="adviesgesprek.html" class="sol-link" data-track="sol_zon_click">Meer informatie</a>
+            <a href="/adviesgesprek" class="sol-link" data-track="sol_zon_click">Meer informatie</a>
           </div>
         </li>
       </ul>
@@ -674,7 +674,7 @@
         <summary class="faq-q"><span class="qt">Hoe wij werken: advies en uitvoering</span><svg class="plus" viewBox="0 0 18 18" aria-hidden="true"><path d="M9 2v14M2 9h14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></summary>
         <div class="transparency-body">
           <p>Wij rekenen eerst uw situatie onafhankelijk door; dat advies is kosteloos en vrijblijvend. Kiest u voor een oplossing, dan kunt u die direct via ons afnemen: levering, subsidie en installatie via gecertificeerde partners. Dat is nooit verplicht: u beslist zelf.</p>
-          <p>Heeft u een klacht? Dan kunt u zich melden via ons <a href="privacybeleid.html#klachten">klachtenmeldpunt</a>.</p>
+          <p>Heeft u een klacht? Dan kunt u zich melden via ons <a href="/privacybeleid#klachten">klachtenmeldpunt</a>.</p>
         </div>
       </details>
     </div>
@@ -758,8 +758,8 @@
 
       <div class="readmore-list" style="margin-top:36px;">
         <div class="kb-label" style="margin-bottom:2px;">Liever eerst zelf lezen</div>
-        <a href="kennisbank/salderingsregeling-gids.html" class="card card--hover" data-track="kb_link_gids"><span>Einde salderingsregeling 2027: wat verandert er en wat kost het u?</span><span aria-hidden="true">&rarr;</span></a>
-        <a href="kennisbank/thuisbatterij-na-2027.html" class="card card--hover" data-track="kb_link_batterij"><span>Verdient een thuisbatterij zich terug na 2027?</span><span aria-hidden="true">&rarr;</span></a>
+        <a href="/kennisbank/salderingsregeling-gids" class="card card--hover" data-track="kb_link_gids"><span>Einde salderingsregeling 2027: wat verandert er en wat kost het u?</span><span aria-hidden="true">&rarr;</span></a>
+        <a href="/kennisbank/thuisbatterij-na-2027" class="card card--hover" data-track="kb_link_batterij"><span>Verdient een thuisbatterij zich terug na 2027?</span><span aria-hidden="true">&rarr;</span></a>
       </div>
     </div>
   </section>
@@ -777,7 +777,7 @@
           <p class="lead">Kosteloos en zonder verplichtingen.</p>
         </div>
         <div class="closing-ctas">
-          <a href="adviesgesprek.html" class="btn btn--lg hero-cta closing-cta" data-track="closing_cta_click">Plan kosteloos adviesgesprek</a>
+          <a href="/adviesgesprek" class="btn btn--lg hero-cta closing-cta" data-track="closing_cta_click">Plan kosteloos adviesgesprek</a>
           <a class="closing-tel" data-sd-tel data-sd-tel-label data-track="call_click" href="#adviesgesprek">Bel ons</a>
         </div>
       </div>
@@ -801,7 +801,7 @@
         <div class="footer-col-title">Gegevens</div>
         <p>SalderingsDienst · KvK <span data-sd-kvk></span><br>
         Vestigingsadres: Jonas Dani&euml;l Meijerplein 25 C 2, 1011 RG Amsterdam<br>
-        <a href="adviesgesprek.html">Plan adviesgesprek</a> · <a href="algemene-voorwaarden.html">Algemene voorwaarden</a> · <a href="privacybeleid.html">Privacybeleid</a></p>
+        <a href="/adviesgesprek">Plan adviesgesprek</a> · <a href="/algemene-voorwaarden">Algemene voorwaarden</a> · <a href="/algemene-voorwaarden-zakelijk">Voorwaarden zakelijk</a> · <a href="/privacybeleid">Privacybeleid</a></p>
       </div>
     </div>
     <div class="footer-row1">
@@ -811,10 +811,11 @@
       </div>
       <nav class="footer-links" aria-label="Voettekstnavigatie">
         <a href="#top">Home</a>
-        <a href="kennisbank.html">Kennisbank</a>
-        <a href="algemene-voorwaarden.html">Voorwaarden</a>
-        <a href="privacybeleid.html">Privacy</a>
-        <a href="privacybeleid.html#klachten">Klachtenmeldpunt</a>
+        <a href="/kennisbank">Kennisbank</a>
+        <a href="/algemene-voorwaarden">Voorwaarden</a>
+        <a href="/algemene-voorwaarden-zakelijk">Voorwaarden zakelijk</a>
+        <a href="/privacybeleid">Privacy</a>
+        <a href="/privacybeleid#klachten">Klachtenmeldpunt</a>
       </nav>
     </div>
     <div class="footer-row2">
@@ -841,7 +842,7 @@
 
 <!-- ===== STICKY CTA (mobiel) ===== -->
 <div class="mobile-cta">
-  <a href="adviesgesprek.html" class="btn btn-primary">Plan kosteloos adviesgesprek</a>
+  <a href="/adviesgesprek" class="btn btn-primary">Plan kosteloos adviesgesprek</a>
 </div>
 
 <!-- ===== DIGITALE ADVISEUR ===== -->
@@ -856,7 +857,7 @@
   <div class="chat-body" data-chat-body>
     <div class="chat-msg chat-msg--bot">Goedendag. Ik ben uw adviseur. Heeft u een vraag over de salderingsregeling of wilt u een afspraak maken?</div>
   </div>
-  <a href="adviesgesprek.html" class="btn btn-primary chat-cta" data-chat-cta data-track="chat_cta_click" hidden>Plan kosteloos adviesgesprek</a>
+  <a href="/adviesgesprek" class="btn btn-primary chat-cta" data-chat-cta data-track="chat_cta_click" hidden>Plan kosteloos adviesgesprek</a>
   <div class="chat-foot">
     <input class="field" data-chat-input aria-label="Uw vraag" placeholder="Stel uw vraag…">
     <button class="btn btn-primary" data-chat-send>Stuur</button>

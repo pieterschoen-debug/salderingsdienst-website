@@ -2,7 +2,8 @@
    SalderingsDienst — tools/dev-server.mjs  (npm run dev)
    Lokale ontwikkelserver die het Vercel-gedrag nabootst:
    - statische bestanden vanuit de repo-root, met cleanUrls
-     (/portal → portal.html, /widget → widget.html)
+     (/portal → portal.html, /kennisbank → kennisbank.html; /x.html
+     gaat met 308 naar /x) en 404.html met status 404 bij onbekende routes
    - /api/<naam> → de serverless functions in api/ (CommonJS)
    - leest .env.local voor DEEPSEEK_API_KEY, PORTAL_PASSWORD, enz.
    Niet voor productie; Vercel draait de functions zelf.
@@ -60,11 +61,29 @@ const server = http.createServer(async (req, res) => {
 
   /* Statische bestanden + cleanUrls */
   if (BLOCKED.some((re) => re.test(pathname))) { res.statusCode = 403; return res.end('Verboden'); }
+  /* Net als Vercel (cleanUrls): /x.html gaat met 308 naar /x, /index.html naar /. */
+  if (/\.html$/i.test(pathname) && pathname !== '/404.html' && existsSync(normalize(join(root, pathname)))) {
+    const schoon = pathname.replace(/(^|\/)index\.html$/i, '$1').replace(/\.html$/i, '') || '/';
+    res.statusCode = 308;
+    res.setHeader('Location', schoon + (url.search || ''));
+    return res.end();
+  }
   if (pathname === '/') pathname = '/index.html';
   let filePath = normalize(join(root, pathname));
   if (!filePath.startsWith(root)) { res.statusCode = 403; return res.end('Verboden'); }
-  if (!existsSync(filePath) && !extname(pathname) && existsSync(filePath + '.html')) filePath += '.html';
-  if (!existsSync(filePath) || !statSync(filePath).isFile()) { res.statusCode = 404; return res.end('Niet gevonden: ' + pathname); }
+  /* Schone URL: /kennisbank → kennisbank.html, ook als er een map kennisbank/ naast staat. */
+  const isBestand = (p) => existsSync(p) && statSync(p).isFile();
+  if (!isBestand(filePath) && !extname(pathname) && isBestand(filePath + '.html')) filePath += '.html';
+  if (!isBestand(filePath)) {
+    /* Onbekende route: 404.html met status 404 (zoals Vercel bij statische uitvoer). */
+    const nietGevonden = join(root, '404.html');
+    res.statusCode = 404;
+    if (existsSync(nietGevonden)) {
+      res.setHeader('Content-Type', MIME['.html']);
+      return res.end(readFileSync(nietGevonden));
+    }
+    return res.end('Niet gevonden: ' + pathname);
+  }
   res.setHeader('Content-Type', MIME[extname(filePath).toLowerCase()] || 'application/octet-stream');
   res.end(readFileSync(filePath));
 });
