@@ -91,6 +91,111 @@
     });
   }
 
+  /* ---------- Leverancierskeuze (optioneel) ----------
+     Leest window.SD_LEVERANCIERS uit js/data/leveranciers-2027.js,
+     dezelfde dataset als de tabel op
+     /kennisbank/terugleververgoeding-2027-per-leverancier. Kiesbaar zijn
+     rijen met een vergoeding en terugleverkosten per kWh; rijen die
+     alleen van een vergelijkingssite komen staan in een aparte groep en
+     noemen die site in de bronregel. Laadt de dataset niet, dan blijft
+     het veld verborgen en werkt de tool zoals altijd. In de URL staat
+     alleen het id (lv=). */
+  var LV = window.SD_LEVERANCIERS;
+  var lvBlok = q('[data-rk-leverancier-blok]');
+  var lvSelect = q('[data-rk-leverancier]');
+  var lvNote = q('[data-rk-leverancier-bron]');
+  var lvRijen = {};
+  var lvGekozen = '';
+
+  function lvKiesbaar(r) {
+    return r && (r.status === 'geverifieerd' || r.status === 'secundair')
+      && typeof r.vergoeding_ct_kwh === 'number' && typeof r.terugleverkosten_ct_kwh === 'number';
+  }
+  function lvEur(ct) { return Math.round(ct * 100) / 10000; }
+  function lvDatum(iso) {
+    var d = String(iso || '').split('-');
+    var maanden = ['januari', 'februari', 'maart', 'april', 'mei', 'juni', 'juli', 'augustus', 'september', 'oktober', 'november', 'december'];
+    return d.length === 3 ? parseInt(d[2], 10) + ' ' + maanden[parseInt(d[1], 10) - 1] + ' ' + d[0] : String(iso || '');
+  }
+  function lvToonBron(r) {
+    if (!lvNote) return;
+    lvNote.textContent = '';
+    if (!r) { lvNote.hidden = true; return; }
+    var b = (r.bronnen && r.bronnen[0]) || {};
+    lvNote.appendChild(document.createTextNode(r.status === 'secundair'
+      ? 'Bron: vergelijkingssite, niet bij de leverancier zelf gecontroleerd: '
+      : 'Bron, gecontroleerd bij de leverancier: '));
+    if (b.url) {
+      var a = document.createElement('a');
+      a.href = b.url; a.rel = 'nofollow noopener'; a.target = '_blank';
+      a.textContent = b.naam || r.leverancier;
+      lvNote.appendChild(a);
+    } else lvNote.appendChild(document.createTextNode(b.naam || r.leverancier));
+    var netto = r.vergoeding_ct_kwh - r.terugleverkosten_ct_kwh;
+    lvNote.appendChild(document.createTextNode(', peildatum ' + lvDatum(r.peildatum || LV.peildatum) + '. Netto '
+      + netto.toLocaleString('nl-NL', { maximumFractionDigits: 2 }) + ' cent per kWh'
+      + (netto < 0 ? '; zet de ondergrens hieronder uit als uw contract netto geld kost.' : '.')));
+    lvNote.hidden = false;
+  }
+  function lvKies(id, schrijf) {
+    var r = lvRijen[id];
+    lvGekozen = r ? id : '';
+    if (lvSelect) lvSelect.value = lvGekozen;
+    if (r) {
+      state.terugleververgoeding_bruto_eur_kwh = lvEur(r.vergoeding_ct_kwh);
+      state.terugleverkosten_eur_kwh = lvEur(r.terugleverkosten_ct_kwh);
+    }
+    lvToonBron(r || null);
+    if (schrijf) { schrijfVelden(); plan(); }
+  }
+  function lvLeesUrl() {
+    var m = /(?:^|[?&])lv=([a-z0-9-]+)/.exec(location.search);
+    if (!m || !lvRijen[m[1]]) return false;
+    lvKies(m[1], false);
+    return true;
+  }
+  function lvLosKoppelen() {
+    /* Wie een van beide bedragen zelf aanpast, rekent niet meer met de leverancier. */
+    var r = lvRijen[lvGekozen];
+    if (!r) return;
+    if (Math.abs(state.terugleververgoeding_bruto_eur_kwh - lvEur(r.vergoeding_ct_kwh)) > 1e-9
+      || Math.abs(state.terugleverkosten_eur_kwh - lvEur(r.terugleverkosten_ct_kwh)) > 1e-9) {
+      lvGekozen = '';
+      if (lvSelect) lvSelect.value = '';
+      lvToonBron(null);
+    }
+  }
+  (function lvOpbouwen() {
+    if (!lvSelect || !LV || !LV.rijen || !LV.rijen.length) return;
+    var groepen = {
+      geverifieerd: { label: 'Gecontroleerd bij de leverancier', el: null },
+      secundair: { label: 'Alleen via een vergelijkingssite', el: null }
+    };
+    LV.rijen.forEach(function (r) {
+      if (!lvKiesbaar(r)) return;
+      lvRijen[r.id] = r;
+      var g = groepen[r.status];
+      if (!g.el) { g.el = document.createElement('optgroup'); g.el.label = g.label; }
+      var o = document.createElement('option');
+      o.value = r.id;
+      o.textContent = r.leverancier + ', ' + r.contractvorm;
+      g.el.appendChild(o);
+    });
+    if (groepen.geverifieerd.el) lvSelect.appendChild(groepen.geverifieerd.el);
+    if (groepen.secundair.el) lvSelect.appendChild(groepen.secundair.el);
+    if (!Object.keys(lvRijen).length) return;
+    if (lvBlok) lvBlok.hidden = false;
+    lvSelect.addEventListener('change', function () {
+      if (lvSelect.value) { lvKies(lvSelect.value, true); return; }
+      /* Zelf invullen: terug naar de standaardwaarden met bron. */
+      lvKies('', false);
+      state.terugleververgoeding_bruto_eur_kwh = STANDAARD.terugleververgoeding_bruto_eur_kwh;
+      state.terugleverkosten_eur_kwh = STANDAARD.terugleverkosten_eur_kwh;
+      schrijfVelden();
+      plan();
+    });
+  })();
+
   /* ---------- URL (delen) ---------- */
   function leesUrl() {
     var gevonden = false;
@@ -122,7 +227,8 @@
       if (key === 'netto_vergoeding_min_nul') { if (v !== std) delen.push(kort + '=' + (v ? 1 : 0)); return; }
       if (typeof v === 'number' && Math.abs(v - std) > 1e-9) delen.push(kort + '=' + String(Math.round(v * 10000) / 10000));
     });
-    var url = location.pathname + (delen.length ? '?' + delen.join('&') : '') + location.hash;
+    if (lvGekozen) delen.push('lv=' + lvGekozen);
+    var url =location.pathname + (delen.length ? '?' + delen.join('&') : '') + location.hash;
     try { history.replaceState(null, '', url); } catch (e) {}
   }
 
@@ -332,8 +438,15 @@
   var reset = q('[data-rk-reset]');
   if (reset) reset.addEventListener('click', function () {
     zetStandaard();
+    lvKies('', false);
     schrijfVelden();
     plan();
+  });
+
+  /* Zelf aangepaste vergoeding of terugleverkosten koppelt de leverancier los. */
+  all('[data-rk="terugleververgoeding_bruto_eur_kwh"], [data-rk="terugleverkosten_eur_kwh"]').forEach(function (el) {
+    el.addEventListener('input', lvLosKoppelen);
+    el.addEventListener('blur', lvLosKoppelen);
   });
 
   /* Link delen */
@@ -412,6 +525,7 @@
 
   /* ---------- Start ---------- */
   var uitUrl = leesUrl();
+  if (lvLeesUrl()) uitUrl = true;
   schrijfVelden();
   render();
   if (uitUrl) { clearTimeout(tMeet); tMeet = setTimeout(meet, 2500); }
