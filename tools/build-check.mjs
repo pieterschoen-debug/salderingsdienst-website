@@ -116,7 +116,9 @@ mkdirSync(pub, { recursive: true });
 const PUBLIC_ITEMS = [
   'index.html', 'adviesgesprek.html', 'widget.html', 'portal.html', 'kennisbank.html', 'rekentool.html', 'privacybeleid.html',
   'algemene-voorwaarden.html', 'algemene-voorwaarden-zakelijk.html', '404.html',
-  'kennisbank', 'css', 'js', 'assets', 'robots.txt', 'sitemap.xml'
+  'kennisbank', 'css', 'js', 'assets', 'robots.txt', 'sitemap.xml',
+  /* IndexNow-sleutelbestand: eigendomsbewijs voor Bing e.a.; de sleutel is geen geheim */
+  'dd25f0443c785e86156a53255caeb1c6.txt'
 ];
 for (const item of PUBLIC_ITEMS) {
   const src = join(root, item);
