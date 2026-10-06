@@ -18,7 +18,8 @@
      cycli, restvraag ÷ rendement) en levert dat × rendement;
    - 2026: jaarsaldering; teruglevering tot het eigen verbruik is
      het all-in tarief waard, daarboven de terugleververgoeding;
-     terugleverkosten per teruggeleverde kWh in beide jaren;
+     terugleverkosten per teruggeleverde kWh in beide jaren (voor 2026
+     optioneel een eigen bedrag, terugleverkosten_2026_eur_kwh);
    - 2027: afname tegen het all-in tarief, teruglevering tegen
      vergoeding min terugleverkosten, per maand niet onder nul
      (instelbaar);
@@ -32,10 +33,16 @@
 })(typeof self !== 'undefined' ? self : this, function () {
   'use strict';
 
-  var MODEL_VERSIE = '1.0.0';
+  var MODEL_VERSIE = '1.1.0';
   var PEILDATUM = '2026-10-06';
 
   var CHANGELOG = {
+    '1.1.0': {
+      datum: '2026-10-06',
+      wijzigingen: [
+        'Optionele invoer terugleverkosten_2026_eur_kwh voor de referentie 2026 (standaard gelijk aan de terugleverkosten 2027): lagere kosten in 2027 veranderen de kosten in 2026 niet meer, zodat het verlies per jaar niet instort bij een leverancier met hoge kosten nu en lagere kosten straks.'
+      ]
+    },
     '1.0.0': {
       datum: '2026-10-06',
       wijzigingen: [
@@ -65,6 +72,8 @@
     /* 50% van het kale leveringstarief (zonder btw): 0,1469 / 1,21 × 0,5 */
     terugleververgoeding_bruto_eur_kwh: round(LEVERING_KAAL_INCL_BTW / 1.21 * 0.5, 3),
     terugleverkosten_eur_kwh: 0.02,
+    /* null = gelijk aan terugleverkosten_eur_kwh (de kosten 2027) */
+    terugleverkosten_2026_eur_kwh: null,
     batterij_kwh: 5,
     batterij_prijs_per_kwh_eur: 900,
     batterij_prijs_eur: null,          /* null = prijs per kWh × kWh */
@@ -125,6 +134,7 @@
       stroomprijs_allin_eur_kwh: clamp(getal(i.stroomprijs_allin_eur_kwh, s.stroomprijs_allin_eur_kwh), 0, 5),
       terugleververgoeding_bruto_eur_kwh: clamp(getal(i.terugleververgoeding_bruto_eur_kwh, s.terugleververgoeding_bruto_eur_kwh), -5, 5),
       terugleverkosten_eur_kwh: clamp(getal(i.terugleverkosten_eur_kwh, s.terugleverkosten_eur_kwh), 0, 5),
+      terugleverkosten_2026_eur_kwh: (i.terugleverkosten_2026_eur_kwh === null || i.terugleverkosten_2026_eur_kwh === undefined || i.terugleverkosten_2026_eur_kwh === '' || isNaN(Number(i.terugleverkosten_2026_eur_kwh))) ? null : clamp(Number(i.terugleverkosten_2026_eur_kwh), 0, 5),
       batterij_kwh: clamp(getal(i.batterij_kwh, s.batterij_kwh), 0, 200),
       batterij_prijs_per_kwh_eur: clamp(getal(i.batterij_prijs_per_kwh_eur, s.batterij_prijs_per_kwh_eur), 0, 100000),
       batterij_prijs_eur: (i.batterij_prijs_eur === null || i.batterij_prijs_eur === undefined || i.batterij_prijs_eur === '') ? null : clamp(getal(i.batterij_prijs_eur, 0), 0, 10000000),
@@ -216,12 +226,16 @@
       ? netto * p.stroomprijs_allin_eur_kwh
       : netto * p.terugleververgoeding_bruto_eur_kwh;
     /* Terugleverkosten gelden sinds 1-1-2026 al per teruggeleverde kWh (B2d);
-       zelfde tarief als in 2027, zodat het verschil alleen saldering is.
+       zelfde tarief als in 2027, tenzij terugleverkosten_2026_eur_kwh is
+       ingevuld (dan geldt dat bedrag voor 2026, zodat lagere kosten in 2027
+       de referentie niet veranderen). Zonder dat veld is het verschil
+       alleen saldering.
        Staat de ondergrens "netto niet onder nul" aan, dan rekenen we in
        beide jaren hoogstens zoveel terugleverkosten als de vergoeding. */
+    var tlkBasis = p.terugleverkosten_2026_eur_kwh === null ? p.terugleverkosten_eur_kwh : p.terugleverkosten_2026_eur_kwh;
     var tlk = p.netto_vergoeding_min_nul
-      ? Math.min(p.terugleverkosten_eur_kwh, Math.max(0, p.terugleververgoeding_bruto_eur_kwh))
-      : p.terugleverkosten_eur_kwh;
+      ? Math.min(tlkBasis, Math.max(0, p.terugleververgoeding_bruto_eur_kwh))
+      : tlkBasis;
     k += terug * tlk;
     return { kosten: k, afname: afname, teruglevering: terug, maanden: mm };
   }
@@ -318,6 +332,11 @@
       if (typeof delta[k] === 'number') uit[k] = basis[k] + delta[k];
     });
     uit.terugleverkosten_eur_kwh = Math.max(0, uit.terugleverkosten_eur_kwh);
+    /* Een ingevuld bedrag voor 2026 schuift mee met dezelfde verschuiving
+       (zelfde richting als de kosten 2027); leeg blijft leeg. */
+    if (basis.terugleverkosten_2026_eur_kwh !== null) {
+      uit.terugleverkosten_2026_eur_kwh = Math.max(0, basis.terugleverkosten_2026_eur_kwh + (typeof delta.terugleverkosten_eur_kwh === 'number' ? delta.terugleverkosten_eur_kwh : 0));
+    }
     uit.batterij_prijs_per_kwh_eur = Math.max(0, uit.batterij_prijs_per_kwh_eur);
     uit.rendement_rondgang_pct = clamp(uit.rendement_rondgang_pct, 1, 100);
     uit.direct_eigen_verbruik_pct = clamp(uit.direct_eigen_verbruik_pct, 0, 100);

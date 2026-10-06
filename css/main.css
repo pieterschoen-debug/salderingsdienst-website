@@ -1980,11 +1980,32 @@ h1, h2, h3, .h2, .funnel-title, .kb-pillar h3, .kb-card h3 {
 .rk-param-waarde a { font-size: 14.5px; }
 .rk-param-bron { font-size: 14px; line-height: 1.6; color: var(--ink-500); }
 /* Leverancierstabel (/kennisbank/terugleververgoeding-2027-per-leverancier) */
-.lv-table { min-width: 880px; font-size: 14.5px; }
+.lv-table { min-width: 1080px; font-size: 14.5px; }
 .lv-table th, .lv-table td { padding: 10px 12px; }
 .lv-table small { display: inline-block; font-size: 12.5px; line-height: 1.45; color: var(--ink-500); margin-top: 2px; white-space: normal; font-family: var(--font-sans, inherit); }
 .lv-table .num { white-space: normal; }
 .lv-table a { color: var(--navy-400); text-decoration: underline; text-underline-offset: 2px; }
+.lv-table .lv-jr { display: block; white-space: nowrap; }
+.lv-table .lv-jr b { display: inline-block; min-width: 2.6em; font-weight: 600; color: var(--ink-500); font-family: var(--font-sans, inherit); font-size: 12.5px; }
+.lv-table .lv-leeg { color: var(--ink-500); white-space: normal; font-family: var(--font-sans, inherit); }
+.lv-table .lv-leeg b { margin-right: .3em; }
+.lv-table tr[data-status="geverifieerd"] > th { box-shadow: inset 3px 0 0 var(--navy-400); }
+/* Smal scherm: elke regel wordt een kaart met het label boven elk veld, zodat er niet zijwaarts gescrold hoeft te worden. */
+@media (max-width: 720px) {
+  .lv-wrap { overflow-x: visible; }
+  .lv-table { min-width: 0; display: block; font-size: 15px; }
+  .lv-table caption { display: block; padding: 0 0 12px; }
+  .lv-table thead { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); }
+  .lv-table tbody { display: block; }
+  .lv-table tr { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); column-gap: 14px; margin: 0 0 12px; padding: 12px 14px; border: 1px solid var(--line-2, var(--line)); border-radius: 10px; background: var(--paper, #fff); }
+  .lv-table tbody th, .lv-table td { display: block; min-width: 0; padding: 5px 0; border-bottom: 0; }
+  .lv-table tbody th, .lv-table td[data-label="Contract"], .lv-table td[data-label="Status"], .lv-table td[data-label="Bron"] { grid-column: 1 / -1; }
+  .lv-table tbody th { padding-top: 0; font-weight: 600; color: var(--ink-900); font-size: 16px; box-shadow: none !important; }
+  .lv-table tbody th small { font-weight: 400; }
+  .lv-table tr[data-status="geverifieerd"] { border-left: 3px solid var(--navy-400); }
+  .lv-table td[data-label]::before { content: attr(data-label); display: block; font-family: var(--font-sans, inherit); font-size: 12px; font-weight: 600; color: var(--ink-500); margin-bottom: 1px; }
+  .lv-table tr:last-child th, .lv-table tr:last-child td { border-bottom: 0; }
+}
 .lv-links { columns: 2 260px; column-gap: 28px; }
 .lv-links li { break-inside: avoid; }
 /* Leverancierskeuze in de aannames (js/data/leveranciers-2027.js) */
