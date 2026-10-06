@@ -23,6 +23,9 @@ p { margin: 0; }
 a { color: inherit; text-decoration: none; }
 a:hover { color: var(--navy-400); }
 img, svg { max-width: 100%; display: block; }
+/* WebP-wrapper: de <picture> doet niet mee in de layout, zodat bestaande img-regels ongewijzigd blijven werken. */
+picture:not(.hero-media) { display: contents; }
+picture > source { display: none; }
 input, textarea, button, select { font-family: inherit; font-size: inherit; }
 button { cursor: pointer; }
 ::placeholder { color: var(--ink-400); } /* ≥4.5:1 op wit; ink-300 haalde dat niet */
