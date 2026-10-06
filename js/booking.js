@@ -162,7 +162,7 @@
 
         '<div class="bstep" data-bstep="2" hidden>' +
           '<div class="book-step-label">Naar wie mogen wij de bevestiging sturen?</div>' +
-          '<div class="book-privacy"><span>Uw gegevens worden versleuteld verstuurd en alleen gebruikt voor het inplannen van het adviesgesprek. Zie ons <a href="privacybeleid.html" target="_blank" rel="noopener">privacybeleid</a>.</span></div>' +
+          '<div class="book-privacy"><span>Uw gegevens worden versleuteld verstuurd en alleen gebruikt voor het inplannen van het adviesgesprek. Zie ons <a href="/privacybeleid" target="_blank" rel="noopener">privacybeleid</a>.</span></div>' +
           '<div class="book-fields">' +
             '<div class="ffield"><input class="field" data-bk="naam" id="bk-naam" placeholder=" " autocomplete="name"><label for="bk-naam">Naam</label></div>' +
             '<div class="ffield"><input class="field" data-bk="email" id="bk-email" type="email" placeholder=" " autocomplete="email"><label for="bk-email">E-mailadres</label><small class="ffield-hint">Vul een geldig e-mailadres in, bijvoorbeeld naam@voorbeeld.nl.</small></div>' +
