@@ -357,6 +357,7 @@
     var r = res.scenarios.realistisch, c = res.scenarios.conservatief, o = res.scenarios.optimistisch;
     var besparing = r.parameters.batterij_kwh > 0 ? Math.max(0, Math.round(r.besparing_batterij_per_jaar)) : 0;
     var invoer = M.normaliseer(state);
+    schrijfUrl();   /* deellink bijwerken, zodat de samenvatting hem kan teruggeven */
     return {
       koopwoning: null,
       woningtype: null,
@@ -375,6 +376,7 @@
       rekentool: {
         versie: M.MODEL_VERSIE,
         peildatum: M.PEILDATUM,
+        url: location.pathname + location.search,   /* alleen getallen, voor "Gegevens wijzigen" */
         invoer: invoer,
         realistisch: {
           kosten_2026: Math.round(r.kosten_2026),

@@ -70,6 +70,7 @@
       <a href="/#oplossingen">Oplossingen</a>
       <a href="/#werkwijze">Werkwijze</a>
       <a href="/#over-ons">Over ons</a>
+      <a href="/rekentool">Rekentool</a>
       <a href="/kennisbank">Kennisbank</a>
       <a href="/#vragen">Vragen</a>
     </nav>
@@ -87,6 +88,7 @@
   <a href="/#oplossingen" data-nav-close>Oplossingen</a>
   <a href="/#werkwijze" data-nav-close>Werkwijze</a>
   <a href="/#over-ons" data-nav-close>Over ons</a>
+  <a href="/rekentool">Rekentool</a>
   <a href="/kennisbank">Kennisbank</a>
   <a href="/#vragen" data-nav-close>Vragen</a>
   <a href="/adviesgesprek" class="btn btn-primary nav-overlay-cta" data-nav-close>Plan adviesgesprek</a>
@@ -103,18 +105,32 @@
           <p class="book-duration">Kosteloos en vrijblijvend. U kunt altijd verzetten of annuleren.</p>
         </div>
 
-        <!-- Uitkomst van de bespaarcheck; alleen zichtbaar als die is ingevuld. -->
+        <!-- Uitkomst van de bespaarcheck of de rekentool; alleen zichtbaar als een van beide is ingevuld. -->
         <div class="fsummary" data-fsummary hidden>
-          <h3 class="fsummary-title">Uw <em>bespaarpotentieel</em></h3>
-          <p class="fsummary-sub">Op basis van uw ingevulde gegevens</p>
-          <div class="fsummary-amount">€ <span data-fs-amount>0</span></div>
-          <p class="fnote"><span class="fnote-ic" aria-hidden="true">i</span> Dit betreft een schatting</p>
-          <ul class="fsummary-rows">
-            <li><span><span class="ftile-ic" aria-hidden="true">⚡</span> Stroom</span><strong><span data-fs-stroom>0</span> kWh</strong></li>
-            <li><span><span class="ftile-ic" aria-hidden="true">🔥</span> Gas</span><strong><span data-fs-gas>0</span> m³</strong></li>
-            <li><span><span class="ftile-ic" aria-hidden="true">☀️</span> Opwek</span><strong><span data-fs-opwek>0</span> kWh</strong></li>
-          </ul>
-          <button type="button" class="btn fbtn-back fbtn-back--wide" data-fs-edit>Gegevens wijzigen</button>
+          <div data-fs-bc>
+            <h3 class="fsummary-title">Uw <em>bespaarpotentieel</em></h3>
+            <p class="fsummary-sub">Op basis van uw ingevulde gegevens</p>
+            <div class="fsummary-amount">€ <span data-fs-amount>0</span></div>
+            <p class="fnote"><span class="fnote-ic" aria-hidden="true">i</span> Dit betreft een schatting</p>
+            <ul class="fsummary-rows">
+              <li><span><span class="ftile-ic" aria-hidden="true">⚡</span> Stroom</span><strong><span data-fs-stroom>0</span> kWh</strong></li>
+              <li><span><span class="ftile-ic" aria-hidden="true">🔥</span> Gas</span><strong><span data-fs-gas>0</span> m³</strong></li>
+              <li><span><span class="ftile-ic" aria-hidden="true">☀️</span> Opwek</span><strong><span data-fs-opwek>0</span> kWh</strong></li>
+            </ul>
+            <button type="button" class="btn fbtn-back fbtn-back--wide" data-fs-edit>Gegevens wijzigen</button>
+          </div>
+          <div data-fs-rk hidden>
+            <h3 class="fsummary-title">Uw <em>doorrekening</em></h3>
+            <p class="fsummary-sub">Verlies door einde saldering</p>
+            <div class="fsummary-amount">€ <span data-fs-rk-verlies>0</span> <span class="fsummary-per">per jaar</span></div>
+            <p class="fnote"><span class="fnote-ic" aria-hidden="true">i</span> <span data-fs-rk-band></span></p>
+            <ul class="fsummary-rows">
+              <li><span>Thuisbatterij</span><strong data-fs-rk-batterij>Geen batterij</strong></li>
+              <li data-fs-rk-besparing-rij hidden><span>Besparing batterij</span><strong data-fs-rk-besparing>€ 0 per jaar</strong></li>
+              <li><span>Oordeel</span><strong data-fs-rk-oordeel></strong></li>
+            </ul>
+            <a href="/rekentool" class="btn fbtn-back fbtn-back--wide" data-fs-rk-edit data-track="funnel_edit">Gegevens wijzigen</a>
+          </div>
         </div>
 
         <div class="book-aside">
