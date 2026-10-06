@@ -1,0 +1,19 @@
+# Besluitenlog — zoek- en AI-zichtbaarheid salderingsdienst.nl
+
+Elke inhoudelijke keuze, met reden en bron. Nieuwste onderaan. Blijkt een besluit achteraf fout, dan wordt dat hier genoteerd en niet stilzwijgend gewijzigd.
+
+| Datum | Besluit | Reden | Bron / bewijs |
+|---|---|---|---|
+| 2026-09-17 (vorige ronde) | robots.txt met expliciet onderscheid zoek-/verwijsbots (toegestaan) en trainingsbots (nu toegestaan, heroverweegbaar) | Verwijsbots bepalen vindbaarheid in ChatGPT/Claude/Perplexity; trainingsbots leveren geen verwijzing op | robots.txt in repo; developers.openai.com/api/docs/bots |
+| 2026-09-17 (vorige ronde) | /portal en /widget via noindex in de pagina, bewust NIET via Disallow | Een Disallow verhindert dat de noindex ooit gelezen wordt | robots.txt-commentaar; Google-documentatie over noindex |
+| 2026-09-23 (vorige ronde) | KvK 42165216 en vestigingsadres op elke pagina; Organization-schema | Harde grens 2 uit de opdracht: nooit overheidsschijn | commit 7694921 |
+| 2026-09-25 (vorige ronde) | GA4 (G-XN788FNCZS) zonder cookiebalk, IP-anonimisering aan, advertentiesignalen uit | Besluit van Pieter; consent-vrije meting | commit a5efb05; js/analytics.js |
+| 2026-10-06 | Werkmap `docs/seo/` aangemaakt met baseline, besluitenlog, experimenten, bronnen; oudere ANALYSE-/CONTENT-/SEO-RAPPORT-bestanden in de root gelden als archief en worden niet overschreven | Opdracht §1; de oude rapporten (juni/juli 2026) beschrijven een site die sinds 31 augustus grotendeels herbouwd is | git log 1e035e6 e.v. |
+| 2026-10-06 | De siteroot is de bron van waarheid; de map `public/` is verouderd en gitignored en wordt niet meer bewerkt | `.gitignore` en `.vercelignore` sluiten `public/` uit; de live site serveert de rootbestanden | .gitignore, .vercelignore, live vergelijking |
+| 2026-10-06 | Geen GEO-trucs (llms.txt, "AI-schema", AI-schrijfstijl); alleen reguliere SEO plus crawlbaarheid voor verwijsbots | Google-gids mei 2026 (verificatie in bronnen.md); spambeleid dekt sinds mei 2026 ook AI-antwoorden | bronnen.md |
+| 2026-10-06 | Lead-attributie wordt opgeslagen in de bestaande jsonb-kolom `source` van `sd_bookings`; GEEN schemawijziging zonder akkoord van Pieter | Opdracht §3.6 en §6 (Supabase alleen lezen, attributievelden alleen met akkoord). De kolom `source` bestaat al en wordt al gevuld, dus uitbreiden van de inhoud raakt de CRM-logica niet | api/_lib/store.js; kolomlijst sd_bookings (gelezen 2026-10-06) |
+| 2026-10-06 | Het nieuwe attributieveld heet `source.verkeerskanaal`, niet `kanaal` | De tabel heeft al een losse CRM-kolom `kanaal` (nu leeg); een gelijknamig veld zou verwarring geven in rapportages | kolomlijst sd_bookings |
+| 2026-10-06 | Attributie gebeurt first-touch per sessie (sessionStorage), referrer alleen als hostnaam, UTM afgekapt, serverside gesaneerd; nooit persoonsgegevens in URL's | Opdracht §3.5 en Fase 1 | js/motion.js, api/_lib/attributie.js (branch) |
+| 2026-10-06 | Geen nieuwe artikelen vóór de poort van fase 1 (meting werkt, baseline staat) | Opdracht §5 en §9 | — |
+| 2026-10-06 | Vercel Web Analytics is (nog) niet actief op de site; GA4 blijft voorlopig de bezoekersmeting. Toevoegen van Vercel Web Analytics is een vraag aan Pieter, geen eigen besluit | Het website-project staat niet in het Vercel-account dat hier gekoppeld is; alleen Pieter kan het inschakelen | Vercel-connector: projecten offerte, rekenrapport, portaal, deur; website ontbreekt |
+| 2026-10-06 | Attributiecode (commit 85a0241) is lokaal end-to-end getest. Let op: de lokale dev-server gebruikt de productie-Supabase, waardoor testlead `TEST-ATTR-001` (status niet_gekwalificeerd, verkoopbaar=false, niet naar Pipedrive) in `sd_bookings` staat. Verwijderen is aan Pieter | Bewijs dat `source.verkeerskanaal` serverside wordt afgeleid en opgeslagen zonder schemawijziging; ik verwijder zelf geen data | SQL-leesquery op sd_bookings, 2026-10-06 |
