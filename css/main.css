@@ -1896,3 +1896,99 @@ h1, h2, h3, .h2, .funnel-title, .kb-pillar h3, .kb-card h3 {
   .legal-art { page-break-inside: avoid; }
   body { background: #fff; }
 }
+
+/* ============================================================
+   REKENTOOL (/rekentool)
+   Formulier links, drie scenario's rechts (vanaf 960px); op
+   mobiel onder elkaar met het realistische scenario bovenaan.
+   Hergebruikt de veldstijl van de bespaarcheck (.finput-wrap,
+   .fchoice) en het artikelregister (.prose, .prose-table).
+   ============================================================ */
+.rk { max-width: 1120px; }
+.rk-head h1 { font-size: clamp(30px, 3.8vw, 44px); line-height: 1.1; letter-spacing: -.4px; margin: 0 0 18px; max-width: 24ch; text-wrap: balance; }
+.rk-intro { max-width: 72ch; margin: 0 0 14px; }
+.rk-head .article-meta { margin-bottom: 28px; }
+.rk-noscript { padding: 14px 18px; margin: 0 0 20px; background: var(--warn-bg); border: 1px solid var(--warn-line); border-radius: var(--radius-md); color: var(--warn-fg); }
+
+.rk-layout { display: grid; gap: 24px; align-items: start; }
+.rk-layout > * { min-width: 0; }
+@media (min-width: 960px) { .rk-layout { grid-template-columns: 340px minmax(0, 1fr); gap: 32px; } }
+
+.rk-form { padding: 22px 18px 18px; }
+@media (min-width: 640px) { .rk-form { padding: 26px 24px 22px; } }
+.rk-form h2, .rk-results > h2 { font-size: 22px; line-height: 1.2; margin: 0 0 18px; }
+.rk-form .finput-wrap { min-height: 50px; border-radius: 12px; padding-right: 14px; }
+.rk-form .finput { padding: 12px 0; font-variant-numeric: tabular-nums; }
+.rk-unit { flex-shrink: 0; font-size: 14.5px; color: var(--ink-500); }
+.rk-form .fchoice { min-height: 48px; font-size: 15px; }
+.rk-panelen { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 10px; margin-top: 10px; }
+.rk-panelen .field { width: 150px; }
+.rk-panelen-x { font-size: 14.5px; color: var(--ink-500); }
+.rk-field-sm { padding: 10px 12px; font-size: 15.5px; font-variant-numeric: tabular-nums; }
+.rk-btn-sm { padding: 10px 14px; font-size: 14.5px; }
+.rk-formnote { font-size: 14px; line-height: 1.5; color: var(--ink-500); margin: 4px 0 0; }
+.rk-formnote a, .rk-param a, .rk-uitleg a { color: var(--navy-400); text-decoration: underline; text-underline-offset: 2px; }
+
+.rk-scen { display: grid; gap: 12px; }
+@media (max-width: 639.5px) { .rk-col--main { order: -1; } }
+@media (min-width: 640px) { .rk-scen { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
+.rk-col { background: #fff; border: 1px solid var(--line-2); border-radius: var(--radius-lg); padding: 16px 16px 6px; }
+.rk-col--main { border-color: var(--navy-400); box-shadow: 0 0 0 1px var(--navy-400) inset; }
+.rk-col h3 { font-size: 18px; margin: 0 0 2px; }
+.rk-col-sub { font-size: 13.5px; line-height: 1.4; color: var(--ink-500); margin: 0 0 8px; }
+.rk-col dl { margin: 0; }
+.rk-metric { padding: 10px 0; border-top: 1px solid var(--line); }
+.rk-metric dt { font-size: 13.5px; color: var(--ink-600); }
+.rk-metric dd { margin: 2px 0 0; font-family: var(--font-serif); font-weight: 700; font-size: 24px; line-height: 1.2; color: var(--ink-900); font-variant-numeric: tabular-nums; }
+.rk-metric small { display: block; margin-top: 2px; font-size: 13px; line-height: 1.4; color: var(--ink-500); }
+.rk-metric dd.rk-oordeel { font-size: 20px; color: var(--navy-400); }
+.rk-metric dd[data-v="tvt"] { font-size: 20px; }
+@media (max-width: 639.5px) {
+  .rk-col dl { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); column-gap: 14px; }
+  .rk-metric dd { font-size: 21px; }
+  .rk-metric dd.rk-oordeel, .rk-metric dd[data-v="tvt"] { font-size: 19px; }
+}
+
+.rk-uitleg { margin-top: 16px; padding: 18px 20px; background: var(--paper-2); border: 1px solid var(--line-2); border-radius: var(--radius-lg); }
+.rk-uitleg h3 { font-size: 18px; margin: 0 0 8px; }
+.rk-uitleg p { font-size: 16.5px; line-height: 1.65; color: var(--ink-700); margin: 0 0 12px; }
+.rk-uitleg p[hidden] { display: none; }
+.rk-share { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 12px; margin: 4px 0 0 !important; }
+.rk-share-note { font-size: 13.5px; color: var(--ink-500); overflow-wrap: anywhere; }
+
+.rk-sec { margin-top: 48px; }
+.rk-sec h2, .rk-methode h2 { font-size: 26px; line-height: 1.2; margin: 0 0 12px; }
+.rk-sec-intro { font-size: 16px; line-height: 1.65; color: var(--ink-600); margin: 0 0 16px; max-width: 72ch; }
+.rk-table tr.is-gekozen th, .rk-table tr.is-gekozen td { color: var(--ink-900); font-weight: 600; background: var(--paper-2); }
+
+.rk-aannames { margin-top: 40px; padding: 0; overflow: hidden; }
+.rk-aannames summary { list-style: none; cursor: pointer; display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: 4px 16px; padding: 18px 20px; font-family: var(--font-serif); font-size: 21px; font-weight: 700; color: var(--ink-900); }
+.rk-aannames summary::-webkit-details-marker { display: none; }
+.rk-aannames summary::after { content: '+'; font-family: var(--font-sans); font-weight: 400; font-size: 24px; line-height: 1; color: var(--navy-400); }
+.rk-aannames[open] summary::after { content: '\2212'; }
+.rk-summary-hint { font-family: var(--font-sans); font-size: 14.5px; font-weight: 600; color: var(--navy-400); margin-left: auto; }
+.rk-aannames-body { padding: 0 20px 20px; border-top: 1px solid var(--line); }
+.rk-aannames-body > .rk-sec-intro { margin-top: 16px; }
+.rk-param { display: grid; gap: 8px 20px; padding: 14px 0; border-top: 1px solid var(--line); }
+.rk-param:first-of-type { border-top: 0; }
+@media (min-width: 760px) { .rk-param { grid-template-columns: minmax(0, 1fr) 150px minmax(0, 1.5fr); align-items: start; } }
+.rk-param-naam strong { font-weight: 600; color: var(--ink-800); font-size: 15.5px; }
+.rk-param-unit { display: block; font-size: 13.5px; line-height: 1.4; color: var(--ink-500); margin-top: 2px; }
+.rk-param-waarde .field { width: 100%; max-width: 180px; }
+.rk-param-waarde a { font-size: 14.5px; }
+.rk-param-bron { font-size: 14px; line-height: 1.6; color: var(--ink-500); }
+.rk-tag { display: inline-block; font-size: 12.5px; font-weight: 600; line-height: 1.5; color: var(--ink-600); background: var(--paper-3); border: 1px solid var(--line-2); border-radius: var(--radius-pill); padding: 0 8px; margin-right: 4px; }
+.rk-delta { color: var(--ink-700); }
+.rk-check-wrap { display: inline-flex; align-items: flex-start; gap: 8px; }
+.rk-check-wrap input { width: 18px; height: 18px; margin: 2px 0 0; accent-color: var(--navy-400); flex-shrink: 0; }
+.rk-reset { margin: 12px 0 0; }
+
+.rk-methode { margin-top: 48px; max-width: 820px; }
+.rk-quote { margin: 0 0 16px; padding: 14px 20px; border-left: 3px solid var(--navy-400); background: var(--paper-2); }
+.rk-quote p { font-family: var(--font-serif); font-size: 19px; line-height: 1.5; color: var(--ink-800); margin: 0 0 6px; }
+.rk-quote footer { font-size: 14px; color: var(--ink-500); }
+
+.rk-cta { max-width: 820px; }
+.rk-cta .rk-cta-check { display: flex; align-items: flex-start; justify-content: center; gap: 8px; margin: 0 auto 18px; max-width: 560px; font-size: 14.5px; line-height: 1.5; color: var(--on-navy-80); text-align: left; cursor: pointer; }
+.rk-cta .rk-cta-check input { width: 18px; height: 18px; margin: 2px 0 0; flex-shrink: 0; accent-color: #fff; }
+.rk .ref-list, .rk .readmore-list { max-width: 820px; }

@@ -24,7 +24,8 @@ const jsFiles = [
   'js/motion.js', 'js/funnel.js', 'js/booking.js', 'js/embed.js', 'js/analytics.js',
   'api/bookings.js', 'api/portal-login.js', 'api/chat.js',
   'api/_lib/store.js', 'api/_lib/auth.js', 'api/_lib/ratelimit.js',
-  'api/_lib/attributie.js', 'api/_lib/pipedrive.js', 'tools/attributie-test.mjs'
+  'api/_lib/attributie.js', 'api/_lib/pipedrive.js', 'tools/attributie-test.mjs',
+  'js/rekenmodel.js', 'js/rekentool.js', 'tools/rekenmodel-test.mjs'
 ];
 for (const f of jsFiles) {
   const p = join(root, f);
@@ -47,9 +48,19 @@ try {
   fail('attributie-test mislukt:\n' + String((e.stderr || '') + (e.stdout || '') || e.message).slice(0, 1500));
 }
 
+/* 1c. Zelftest rekenmodel (js/rekenmodel.js, /rekentool) */
+console.log('Rekenmodel:');
+try {
+  const uit = execFileSync(process.execPath, [join(root, 'tools/rekenmodel-test.mjs')], { stdio: 'pipe' }).toString();
+  const regels = uit.trim().split('\n');
+  ok('rekenmodel-test: ' + regels[regels.length - 1]);
+} catch (e) {
+  fail('rekenmodel-test mislukt:\n' + String((e.stderr || '') + (e.stdout || '') || e.message).slice(0, 1500));
+}
+
 /* 2. Kernbestanden */
 console.log('Kernbestanden:');
-for (const f of ['index.html', 'adviesgesprek.html', 'widget.html', 'portal.html', 'css/tokens.css', 'css/main.css', 'vercel.json', 'assets/hero-advies.jpg', 'assets/hero-advies-mobile.jpg']) {
+for (const f of ['index.html', 'adviesgesprek.html', 'widget.html', 'portal.html', 'rekentool.html', 'css/tokens.css', 'css/main.css', 'vercel.json', 'assets/hero-advies.jpg', 'assets/hero-advies-mobile.jpg']) {
   if (existsSync(join(root, f))) ok(f); else fail(f + ' ontbreekt');
 }
 
@@ -59,6 +70,7 @@ const idx = readFileSync(join(root, 'index.html'), 'utf8');
 const widget = readFileSync(join(root, 'widget.html'), 'utf8');
 const boeking = readFileSync(join(root, 'adviesgesprek.html'), 'utf8');
 const analytics = readFileSync(join(root, 'js/analytics.js'), 'utf8');
+const rekentool = readFileSync(join(root, 'rekentool.html'), 'utf8');
 const markers = [
   [boeking, 'data-booking', 'adviesgesprek.html: boekingsmount (data-booking)'],
   [idx, 'href="/adviesgesprek"', 'index.html: link naar de boekingspagina (schone URL)'],
@@ -71,6 +83,10 @@ const markers = [
   [idx, 'js/analytics.js', 'index.html: GA4-laag (js/analytics.js)'],
   [analytics, 'G-XN788FNCZS', 'analytics.js: GA4-meet-id'],
   [analytics, 'anonymize_ip', 'analytics.js: IP-anonimisering aan'],
+  [rekentool, 'js/rekenmodel.js', 'rekentool.html: rekenmodel geladen'],
+  [rekentool, 'href="/adviesgesprek"', 'rekentool.html: overdracht naar het adviesgesprek'],
+  [rekentool, 'geen onderdeel van de Rijksoverheid', 'rekentool.html: Rijksoverheid-disclaimer'],
+  [idx, 'href="/rekentool"', 'index.html: link naar de rekentool'],
 ];
 for (const [haystack, needle, label] of markers) {
   if (haystack.includes(needle)) ok(label); else fail(label + ' — marker "' + needle + '" niet gevonden');
@@ -80,7 +96,7 @@ for (const [haystack, needle, label] of markers) {
 console.log('Veiligheid:');
 const keyPattern = /sk-[a-f0-9]{24,}/i;
 let leaks = 0;
-for (const f of [...jsFiles, 'index.html', 'widget.html', 'portal.html', 'vercel.json', 'package.json']) {
+for (const f of [...jsFiles, 'index.html', 'widget.html', 'portal.html', 'rekentool.html', 'vercel.json', 'package.json']) {
   const p = join(root, f);
   if (!existsSync(p)) continue;
   if (keyPattern.test(readFileSync(p, 'utf8'))) { fail(f + ' bevat iets dat op een API-key lijkt'); leaks++; }
@@ -98,7 +114,7 @@ const pub = join(root, 'public');
 rmSync(pub, { recursive: true, force: true });
 mkdirSync(pub, { recursive: true });
 const PUBLIC_ITEMS = [
-  'index.html', 'adviesgesprek.html', 'widget.html', 'portal.html', 'kennisbank.html', 'privacybeleid.html',
+  'index.html', 'adviesgesprek.html', 'widget.html', 'portal.html', 'kennisbank.html', 'rekentool.html', 'privacybeleid.html',
   'algemene-voorwaarden.html', 'algemene-voorwaarden-zakelijk.html', '404.html',
   'kennisbank', 'css', 'js', 'assets', 'robots.txt', 'sitemap.xml'
 ];
