@@ -4,11 +4,11 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Rekentool einde salderen en thuisbatterij | SalderingsDienst</title>
-<meta name="description" content="Wat kost het einde van salderen u vanaf 2027, en verdient een thuisbatterij zich terug? Drie scenario's, elke aanname met bron. Geen batterij kan ook.">
+<meta name="description" content="Wat kost het einde van salderen u vanaf 2027? Drie scenario's, elke aanname met bron, en de methode waarmee wij een thuisbatterij doorrekenen.">
 <meta name="robots" content="index,follow,max-snippet:-1,max-image-preview:large">
 <link rel="canonical" href="https://www.salderingsdienst.nl/rekentool">
 <meta property="og:title" content="Rekentool: wat kost het einde van salderen u, en wat doet een thuisbatterij?">
-<meta property="og:description" content="Wat kost het einde van salderen u vanaf 2027, en verdient een thuisbatterij zich terug? Drie scenario's, elke aanname met bron. Geen batterij kan ook.">
+<meta property="og:description" content="Wat kost het einde van salderen u vanaf 2027? Drie scenario's, elke aanname met bron, en de methode waarmee wij een thuisbatterij doorrekenen.">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://www.salderingsdienst.nl/rekentool">
 <meta property="og:site_name" content="SalderingsDienst">
@@ -41,7 +41,7 @@
   "@id":"https://www.salderingsdienst.nl/rekentool#webpage",
   "url":"https://www.salderingsdienst.nl/rekentool",
   "name":"Wat kost het einde van salderen u, en wat doet een thuisbatterij?",
-  "description":"Rekentool voor huiseigenaren met zonnepanelen: de kosten van het einde van de salderingsregeling per 1 januari 2027, het effect van een thuisbatterij en de terugverdientijd, in drie scenario's met zichtbare en aanpasbare aannames.",
+  "description":"Rekentool voor huiseigenaren met zonnepanelen: de kosten van het einde van de salderingsregeling per 1 januari 2027 in drie scenario's, met zichtbare en aanpasbare aannames en de openbare methode waarmee een thuisbatterij wordt doorgerekend.",
   "inLanguage":"nl-NL",
   "datePublished":"2026-10-06",
   "dateModified":"2026-10-06",
@@ -82,7 +82,7 @@
 
   <div class="rk-head">
     <h1>Wat kost het einde van salderen u, en wat doet een thuisbatterij?</h1>
-    <p class="lead rk-intro">Vul uw verbruik en opwek in en u ziet wat het einde van de salderingsregeling op 1 januari 2027 u per jaar kost, wat een thuisbatterij daaraan verandert en hoe lang het duurt voordat hij is terugverdiend. De Salderingsdienst B.V. is een commercieel bedrijf dat ook thuisbatterijen levert. Daarom toont deze tool elke uitkomst in drie scenario's, staat elke aanname met bron eronder, en is "geen batterij" hier gewoon een mogelijke uitkomst.</p>
+    <p class="lead rk-intro">Vul uw verbruik en opwek in en u ziet wat het einde van de salderingsregeling op 1 januari 2027 u per jaar kost, in drie scenario's. De methode en elke aanname staan met bron op deze pagina, ook die voor een thuisbatterij. Wat een batterij in uw situatie oplevert, tonen wij hier niet: dat rekenen wij in het adviesgesprek door met uw eigen meterstanden en contract. De Salderingsdienst B.V. is een commercieel bedrijf dat ook thuisbatterijen levert, en "geen batterij" is in dat gesprek gewoon een mogelijke uitkomst.</p>
     <p class="article-meta">Rekenmodel versie <span data-rk-versie>1.0.0</span>. Regels en prijzen gecontroleerd op <time datetime="2026-10-06">6 oktober 2026</time>. Wat u invult blijft in uw browser; wij vragen geen naam, adres of postcode.</p>
   </div>
 
@@ -152,59 +152,67 @@
           <h3>Conservatief</h3>
           <p class="rk-col-sub">Aannames die voor u ongunstig uitvallen</p>
           <dl>
-            <div class="rk-metric"><dt>Einde salderen kost u</dt><dd data-v="verlies">&euro; 540</dd><small>per jaar vanaf 2027</small></div>
-            <div class="rk-metric"><dt>Batterij bespaart</dt><dd data-v="besparing">&euro; 310</dd><small data-v="besparing-sub">in het eerste jaar, gemiddeld &euro; 280 over 12 jaar</small></div>
-            <div class="rk-metric"><dt>Terugverdientijd</dt><dd data-v="tvt">niet binnen 12 jaar</dd><small data-v="tvt-sub">na 12 jaar &euro; 3.410 van &euro; 5.500 terug</small></div>
-            <div class="rk-metric"><dt>Oordeel</dt><dd class="rk-oordeel" data-v="oordeel">Loont niet</dd></div>
+            <div class="rk-metric"><dt>Stroomkosten 2026</dt><dd data-v="k26">&euro; 80</dd><small>met saldering, alleen het deel per kWh</small></div>
+            <div class="rk-metric"><dt>Stroomkosten 2027</dt><dd data-v="k27">&euro; 620</dd><small>zonder saldering en zonder batterij</small></div>
+            <div class="rk-metric rk-metric--verlies"><dt>Einde salderen kost u</dt><dd data-v="verlies">&euro; 540</dd><small>per jaar vanaf 2027</small></div>
           </dl>
         </article>
         <article class="rk-col rk-col--main" data-scen="realistisch">
           <h3>Realistisch</h3>
           <p class="rk-col-sub">De standaardwaarden met bron</p>
           <dl>
-            <div class="rk-metric"><dt>Einde salderen kost u</dt><dd data-v="verlies">&euro; 480</dd><small>per jaar vanaf 2027</small></div>
-            <div class="rk-metric"><dt>Batterij bespaart</dt><dd data-v="besparing">&euro; 290</dd><small data-v="besparing-sub">in het eerste jaar, gemiddeld &euro; 270 over 12 jaar</small></div>
-            <div class="rk-metric"><dt>Terugverdientijd</dt><dd data-v="tvt">niet binnen 12 jaar</dd><small data-v="tvt-sub">na 12 jaar &euro; 3.240 van &euro; 4.500 terug</small></div>
-            <div class="rk-metric"><dt>Oordeel</dt><dd class="rk-oordeel" data-v="oordeel">Loont niet</dd></div>
+            <div class="rk-metric"><dt>Stroomkosten 2026</dt><dd data-v="k26">&euro; 50</dd><small>met saldering, alleen het deel per kWh</small></div>
+            <div class="rk-metric"><dt>Stroomkosten 2027</dt><dd data-v="k27">&euro; 530</dd><small>zonder saldering en zonder batterij</small></div>
+            <div class="rk-metric rk-metric--verlies"><dt>Einde salderen kost u</dt><dd data-v="verlies">&euro; 480</dd><small>per jaar vanaf 2027</small></div>
           </dl>
         </article>
         <article class="rk-col" data-scen="optimistisch">
           <h3>Optimistisch</h3>
           <p class="rk-col-sub">Aannames die voor u gunstig uitvallen</p>
           <dl>
-            <div class="rk-metric"><dt>Einde salderen kost u</dt><dd data-v="verlies">&euro; 400</dd><small>per jaar vanaf 2027</small></div>
-            <div class="rk-metric"><dt>Batterij bespaart</dt><dd data-v="besparing">&euro; 250</dd><small data-v="besparing-sub">in het eerste jaar, gemiddeld &euro; 230 over 12 jaar</small></div>
-            <div class="rk-metric"><dt>Terugverdientijd</dt><dd data-v="tvt">niet binnen 12 jaar</dd><small data-v="tvt-sub">na 12 jaar &euro; 2.770 van &euro; 3.500 terug</small></div>
-            <div class="rk-metric"><dt>Oordeel</dt><dd class="rk-oordeel" data-v="oordeel">Loont niet</dd></div>
+            <div class="rk-metric"><dt>Stroomkosten 2026</dt><dd data-v="k26">&euro; 20</dd><small>met saldering, alleen het deel per kWh</small></div>
+            <div class="rk-metric"><dt>Stroomkosten 2027</dt><dd data-v="k27">&euro; 430</dd><small>zonder saldering en zonder batterij</small></div>
+            <div class="rk-metric rk-metric--verlies"><dt>Einde salderen kost u</dt><dd data-v="verlies">&euro; 400</dd><small>per jaar vanaf 2027</small></div>
           </dl>
         </article>
       </div>
 
       <div class="rk-uitleg">
         <h3>Wat dit voor u betekent</h3>
-        <p data-rk-uitleg>In het realistische scenario betaalt u vanaf 2027 ongeveer &euro; 480 per jaar meer voor stroom dan in 2026, omdat de 2.450 kWh die u teruglevert niet meer tegen het volle tarief worden verrekend. Een thuisbatterij van 5 kWh (ongeveer &euro; 4.500) bespaart in het eerste jaar ongeveer &euro; 290 en heeft na 12 jaar ongeveer &euro; 3.240 opgebracht. Hij verdient zich in dit scenario niet terug binnen de aangenomen levensduur. Op deze cijfers is geen batterij de verstandigere keuze.</p>
+        <p data-rk-uitleg>In het realistische scenario betaalt u vanaf 2027 ongeveer &euro; 480 per jaar meer voor stroom dan in 2026, omdat de 2.450 kWh die u teruglevert niet meer tegen het volle tarief worden verrekend. Over de drie scenario's ligt dat tussen &euro; 400 en &euro; 540. Hoeveel u daarvan terughaalt, hangt vooral af van drie dingen: hoeveel van uw opwek u direct zelf gebruikt, wat uw contract betaalt voor teruggeleverde stroom en rekent aan terugleverkosten, en op welke uren u stroom verbruikt. De eerste twee past u hier zelf aan; uw verbruik per uur rekenen wij in het adviesgesprek door met uw meterstanden.</p>
         <p data-rk-tip>Gebruikt u 10 procentpunt meer van uw opwek direct zelf, bijvoorbeeld door wasmachine en vaatwasser overdag te laten draaien, dan scheelt dat in het realistische scenario ongeveer &euro; 80 per jaar, zonder dat u iets hoeft te kopen.</p>
         <p class="rk-share"><button type="button" class="btn btn-ghost rk-btn-sm" data-rk-deel>Kopieer de link naar deze berekening</button> <span class="rk-share-note" data-rk-deel-note aria-live="polite"></span></p>
+      </div>
+
+      <div class="card rk-gate" data-rk-gate data-rk-cta-box>
+        <h3 data-rk-gate-kop>Wat een thuisbatterij van 5 kWh in uw situatie doet</h3>
+        <div class="rk-gate-ph" aria-hidden="true">
+          <div class="rk-gate-cel"><span class="rk-gate-label">Besparing per jaar</span><span class="rk-gate-bar"></span><span class="rk-gate-bar rk-gate-bar--kort"></span></div>
+          <div class="rk-gate-cel"><span class="rk-gate-label">Terugverdientijd</span><span class="rk-gate-bar"></span><span class="rk-gate-bar rk-gate-bar--kort"></span></div>
+        </div>
+        <p>Deze uitkomst tonen wij niet online. Een batterij loont in de ene situatie wel en in de andere niet; dat hangt af van uw verbruik per uur, uw contract en de prijs van het systeem. In het adviesgesprek rekenen wij het met uw eigen meterstanden door en krijgt u de uitkomst zwart op wit.</p>
+        <label class="rk-gate-check"><input type="checkbox" data-rk-meenemen checked> Neem deze berekening mee naar het gesprek. Alleen de getallen, geen persoonsgegevens.</label>
+        <a href="/adviesgesprek" class="btn btn-primary" data-rk-cta data-rk-cta-plek="uitkomst">Plan gratis adviesgesprek</a>
       </div>
     </section>
   </div>
 
   <section class="rk-sec" id="maat" aria-labelledby="rk-maat-kop">
-    <h2 id="rk-maat-kop">Wat elke batterijgrootte oplevert</h2>
-    <p class="rk-sec-intro">Realistisch scenario, met uw invoer. Een grotere batterij loopt vol tegen wat u 's avonds en 's nachts verbruikt, en in de winter is er weinig zonne-overschot om mee te laden. Daarom levert elke extra kWh minder op. Hoe u met deze tabel een maat kiest, leest u in <a href="/kennisbank/welke-batterijgrootte">welke thuisbatterij-grootte past bij uw dak en verbruik</a>.</p>
+    <h2 id="rk-maat-kop">Hoeveel stroom elke batterijgrootte verplaatst</h2>
+    <p class="rk-sec-intro">Realistisch scenario, met uw invoer. Verplaatst is de zonnestroom die de batterij opslaat en die u later zelf gebruikt, in plaats van hem terug te leveren. Een grotere batterij loopt vol tegen wat u 's avonds en 's nachts verbruikt, en in de winter is er weinig zonne-overschot om mee te laden. Daarom verplaatst elke extra kWh capaciteit minder. Wat dat in euro's betekent bij uw contract en de prijs van het systeem, rekenen wij in het adviesgesprek door. Hoe u een maat kiest, leest u in <a href="/kennisbank/welke-batterijgrootte">welke thuisbatterij-grootte past bij uw dak en verbruik</a>.</p>
     <div class="prose-table-wrap">
       <table class="prose-table rk-table">
-        <caption>Prijs: <span data-rk-curve-prijs>900</span> euro per kWh inclusief installatie en btw. Besparing in het eerste jaar; terugverdientijd over de hele levensduur, met degradatie.</caption>
+        <caption>Verplaatste stroom in het eerste jaar, afgerond op tientallen kWh. De laatste kolom: hoeveel kWh per jaar elke kWh capaciteit bovenop de vorige maat nog toevoegt.</caption>
         <thead>
-          <tr><th scope="col">Batterij</th><th scope="col">Verplaatst per jaar</th><th scope="col">Besparing jaar 1</th><th scope="col">Prijs</th><th scope="col">Terugverdiend</th></tr>
+          <tr><th scope="col">Batterij</th><th scope="col">Verplaatst per jaar</th><th scope="col">Erbij per extra kWh capaciteit</th></tr>
         </thead>
         <tbody data-rk-curve>
-          <tr><th scope="row">geen</th><td class="num">0 kWh</td><td class="num">&euro; 0</td><td class="num">&euro; 0</td><td>n.v.t.</td></tr>
-          <tr><th scope="row">2,5 kWh</th><td class="num">790 kWh</td><td class="num">&euro; 170</td><td class="num">&euro; 2.250</td><td>niet binnen 12 jaar</td></tr>
-          <tr><th scope="row">5 kWh</th><td class="num">1.380 kWh</td><td class="num">&euro; 290</td><td class="num">&euro; 4.500</td><td>niet binnen 12 jaar</td></tr>
-          <tr><th scope="row">7,5 kWh</th><td class="num">1.620 kWh</td><td class="num">&euro; 340</td><td class="num">&euro; 6.750</td><td>niet binnen 12 jaar</td></tr>
-          <tr><th scope="row">10 kWh</th><td class="num">1.620 kWh</td><td class="num">&euro; 340</td><td class="num">&euro; 9.000</td><td>niet binnen 12 jaar</td></tr>
-          <tr><th scope="row">15 kWh</th><td class="num">1.620 kWh</td><td class="num">&euro; 340</td><td class="num">&euro; 13.500</td><td>niet binnen 12 jaar</td></tr>
+          <tr><th scope="row">geen</th><td class="num">0 kWh</td><td class="num"></td></tr>
+          <tr><th scope="row">2,5 kWh</th><td class="num">790 kWh</td><td class="num">316 kWh</td></tr>
+          <tr class="is-gekozen"><th scope="row">5 kWh</th><td class="num">1.380 kWh</td><td class="num">237 kWh</td></tr>
+          <tr><th scope="row">7,5 kWh</th><td class="num">1.620 kWh</td><td class="num">94 kWh</td></tr>
+          <tr><th scope="row">10 kWh</th><td class="num">1.620 kWh</td><td class="num">0 kWh</td></tr>
+          <tr><th scope="row">15 kWh</th><td class="num">1.620 kWh</td><td class="num">0 kWh</td></tr>
         </tbody>
       </table>
     </div>
@@ -325,7 +333,7 @@
       <li><strong>Vanaf 2027, zonder saldering.</strong> Alle afname kost het all-in tarief. Teruglevering levert de vergoeding min de terugleverkosten op, per maand niet onder nul zolang die ondergrens aanstaat. Het verschil met 2026 is wat het einde van salderen u per jaar kost.</li>
       <li><strong>Wat de batterij bespaart.</strong> Het verschil tussen de kosten vanaf 2027 zonder en met batterij. Elke verplaatste kWh is dus het all-in tarief waard in plaats van de netto vergoeding.</li>
       <li><strong>Dynamisch contract.</strong> Op dagen waarop de zon de batterij voor minder dan 30% vult, laadt het model de rest goedkoop van het net en gebruikt u die stroom zelf op een duur moment. Opbrengst per geladen kWh: rendement maal (prijs plus de helft van het prijsverschil), min (prijs min de helft van het prijsverschil).</li>
-      <li><strong>Terugverdientijd en oordeel.</strong> De besparingen per jaar worden opgeteld tot ze de prijs van de batterij dekken. Lukt dat niet binnen de levensduur, dan is het oordeel "loont niet". Binnen twee derde van de levensduur heet het "loont"; daartussen "twijfelgeval". Er is geen rente of prijsstijging meegerekend.</li>
+      <li><strong>Terugverdientijd.</strong> De besparingen per jaar, met degradatie, worden opgeteld tot ze de prijs van de batterij dekken. Het model deelt de uitkomst in drie klassen in: binnen twee derde van de levensduur, binnen de levensduur, of niet binnen de levensduur. Er is geen rente of prijsstijging meegerekend. Deze uitkomst toont de pagina niet; de adviseur bespreekt hem met u, doorgerekend met uw eigen meterstanden en contract.</li>
     </ol>
 
     <div class="prose-table-wrap">
@@ -351,19 +359,20 @@
       <p>"een thuisbatterij is zo duur dat je hem op dit moment hoogstwaarschijnlijk niet terugverdient"</p>
       <footer>Milieu Centraal, <a href="https://www.milieucentraal.nl/energie-besparen/zonnepanelen/thuisbatterij-zonne-energie-opslaan/" rel="nofollow noopener" target="_blank">Thuisbatterij: zonne-energie opslaan</a>, bijgewerkt 28 september 2026.</footer>
     </blockquote>
-    <p>Milieu Centraal adviseert eerst te isoleren, een warmtepomp te overwegen en meer stroom direct zelf te gebruiken. Komt deze tool bij u op "loont niet" uit, dan zegt hij hetzelfde.</p>
+    <p>Milieu Centraal adviseert eerst te isoleren, een warmtepomp te overwegen en meer stroom direct zelf te gebruiken. Die volgorde houden wij ook in het adviesgesprek aan, en "geen batterij" is daar een volwaardige uitkomst.</p>
 
     <h3>Wijzigingslog</h3>
     <ul data-rk-changelog>
+      <li><strong>Weergave, 6 oktober 2026.</strong> De batterij-uitkomst (besparing en terugverdientijd) staat niet meer op deze pagina. Het model rekent hem nog steeds uit, op dezelfde manier; u krijgt hem in het adviesgesprek, doorgerekend met uw eigen meterstanden en contract.</li>
       <li><strong>1.0.0, 6 oktober 2026.</strong> Eerste publieke versie: maandmodel, drie scenario's, batterij met degradatie en terugverdientijd. Prijzen CBS augustus 2026; terugleververgoeding op het wettelijke minimum tot 1 januari 2030. Opbrengst uit onbalanshandel staat standaard op nul.</li>
     </ul>
   </section>
 
-  <div class="card article-cta on-navy rk-cta" style="background:var(--grad-navy);">
+  <div class="card article-cta on-navy rk-cta" style="background:var(--grad-navy);" data-rk-cta-box>
     <h2>Laat dit narekenen met uw eigen meterstanden</h2>
-    <p>Een adviseur zet uw werkelijke verbruik per uur, uw contract en een eventuele offerte in hetzelfde model. Ook als de uitkomst is dat u beter geen batterij kunt nemen.</p>
+    <p>Een adviseur zet uw werkelijke verbruik per uur, uw contract en een eventuele offerte in hetzelfde model, en u krijgt de uitkomst voor een batterij zwart op wit. Ook als die uitkomst is dat u beter geen batterij kunt nemen.</p>
     <label class="rk-cta-check"><input type="checkbox" data-rk-meenemen checked> Neem deze berekening mee naar het gesprek. Alleen de getallen, geen persoonsgegevens.</label>
-    <a href="/adviesgesprek" class="btn btn--lg" style="background:#fff; color:var(--navy-400); font-weight:700;" data-rk-cta>Plan gratis adviesgesprek</a>
+    <a href="/adviesgesprek" class="btn btn--lg" style="background:#fff; color:var(--navy-400); font-weight:700;" data-rk-cta data-rk-cta-plek="onder">Plan gratis adviesgesprek</a>
   </div>
 
   <div class="ref-list" id="bronnen">

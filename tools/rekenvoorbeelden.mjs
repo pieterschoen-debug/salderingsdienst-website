@@ -6,8 +6,17 @@
    - /kennisbank/vast-of-dynamisch-na-2027  (voorbeelden B1 t/m B5)
    - /kennisbank/welke-batterijgrootte       (voorbeelden C1, C2, maandbeeld)
 
-   node tools/rekenvoorbeelden.mjs          tabellen in de terminal
-   node tools/rekenvoorbeelden.mjs --html   HTML-tabellen en SVG voor de artikelen
+   node tools/rekenvoorbeelden.mjs                   volledige tabellen (intern)
+   node tools/rekenvoorbeelden.mjs --html            volledige HTML (intern)
+   node tools/rekenvoorbeelden.mjs --publiek         alleen de publieke tabellen
+   node tools/rekenvoorbeelden.mjs --publiek --html  publieke HTML en SVG voor de artikelen
+
+   Publiek (besluit eigenaar, 6 oktober 2026): de site toont het
+   verlies door het einde van saldering, stroomkosten zonder batterij
+   en kWh-cijfers van een batterij, maar geen batterij-uitkomst in
+   euro's: geen besparing, geen terugverdientijd, geen oordeel en geen
+   prijsgrens per kWh. Die staan alleen in de volledige (interne)
+   uitvoer, voor het adviesgesprek.
 
    Bedragen zijn afgerond op tientallen euro's, net als in de
    rekentool zelf. Elk voorbeeld krijgt de deel-URL waarmee de
@@ -21,6 +30,7 @@ const require = createRequire(import.meta.url);
 const root = join(dirname(fileURLToPath(import.meta.url)), '..');
 const M = require(join(root, 'js/rekenmodel.js'));
 const HTML = process.argv.includes('--html');
+const PUBLIEK = process.argv.includes('--publiek');
 const S = M.SCENARIO_VOLGORDE;
 const LABEL = { conservatief: 'Conservatief', realistisch: 'Realistisch', optimistisch: 'Optimistisch' };
 
@@ -309,15 +319,150 @@ function htmlC() {
     }).join('; '));
     out.push('<!-- ' + h.id + ' SVG -->\n' + svgCurve(h));
   }
-  const mb = maandbeeld(3500, 3500, MAANDBEELD_CAPS);
-  const body = mb.rijen.map((r) => '          <tr><th scope="row">' + r.maand + '</th><td class="num">' + nl(r.overschot, 1) + ' kWh</td><td class="num">' + nl(r.rest, 1) + ' kWh</td>' +
-    MAANDBEELD_CAPS.map((c) => '<td class="num">' + nl(r.laadt[c], 1) + ' kWh (' + Math.round(r.laadt[c] / c * 100) + '%)</td>').join('') + '</tr>');
-  out.push('<!-- maandbeeld C1: ' + MAANDBEELD_CAPS.map((c) => c + ' kWh ' + mb.urls[c] + ' verplaatst ' + nl(Math.round(mb.verplaatst[c])) + ' kWh').join('; ') + ' -->\n<div class="prose-table-wrap">\n  <table class="prose-table">\n    <caption>…</caption>\n    <thead><tr><th scope="col">Maand</th><th scope="col">Zonne-overschot per dag</th><th scope="col">Overig verbruik per dag</th>' +
-    MAANDBEELD_CAPS.map((c) => '<th scope="col">' + c + ' kWh laadt per dag</th>').join('') + '</tr></thead>\n    <tbody>\n' + body.join('\n') + '\n    </tbody>\n  </table>\n</div>');
+  out.push(htmlMaandbeeld());
   return out.join('\n\n');
 }
 
-if (HTML) {
+/* Maandbeeld C1: alleen kWh en percentages, dus ook publiek. */
+function htmlMaandbeeld() {
+  const mb = maandbeeld(3500, 3500, MAANDBEELD_CAPS);
+  const body = mb.rijen.map((r) => '          <tr><th scope="row">' + r.maand + '</th><td class="num">' + nl(r.overschot, 1) + ' kWh</td><td class="num">' + nl(r.rest, 1) + ' kWh</td>' +
+    MAANDBEELD_CAPS.map((c) => '<td class="num">' + nl(r.laadt[c], 1) + ' kWh (' + Math.round(r.laadt[c] / c * 100) + '%)</td>').join('') + '</tr>');
+  return '<!-- maandbeeld C1: ' + MAANDBEELD_CAPS.map((c) => c + ' kWh ' + mb.urls[c] + ' verplaatst ' + nl(Math.round(mb.verplaatst[c])) + ' kWh').join('; ') + ' -->\n<div class="prose-table-wrap">\n  <table class="prose-table">\n    <caption>…</caption>\n    <thead><tr><th scope="col">Maand</th><th scope="col">Zonne-overschot per dag</th><th scope="col">Overig verbruik per dag</th>' +
+    MAANDBEELD_CAPS.map((c) => '<th scope="col">' + c + ' kWh laadt per dag</th>').join('') + '</tr></thead>\n    <tbody>\n' + body.join('\n') + '\n    </tbody>\n  </table>\n</div>';
+}
+
+/* ---------- Publiek: zonder batterij-uitkomst in euro's ----------
+   Pagina B: teruglevering zonder batterij, het verlies, en hoeveel
+   kWh een batterij van 5 of 10 kWh verplaatst
+   (vast contract). Pagina C: verplaatste kWh per grootte en de extra
+   kWh per extra kWh capaciteit. Geen besparing, terugverdientijd,
+   oordeel of prijsgrens. */
+const kwh10 = (n) => nl(Math.round(n / 10) * 10) + ' kWh';
+
+function margeKwh(rijen, i) {
+  if (i === 0) return null;
+  const a = rijen[i - 1], b = rijen[i];
+  return (b.res.scenarios.realistisch.verplaatst_kwh_jaar1 - a.res.scenarios.realistisch.verplaatst_kwh_jaar1) / (b.kwh - a.kwh);
+}
+
+function publiekBRijen(h) {
+  const z = h.zonder.scenarios;
+  const v5 = h.rijen[0].res.scenarios, v10 = h.rijen[2].res.scenarios;   /* vast 5 en vast 10 */
+  return [
+    ['Teruglevering vanaf 2027, zonder batterij', S.map((n) => kwh10(z[n].teruglevering_kwh_2027))],
+    ['Extra stroomkosten vanaf 2027, zonder batterij', S.map((n) => eur10(z[n].verlies_per_jaar))],
+    ['Zonnestroom die een batterij van 5 kWh / 10 kWh verplaatst', S.map((n) => kwh10(v5[n].verplaatst_kwh_jaar1) + ' / ' + kwh10(v10[n].verplaatst_kwh_jaar1))]
+  ];
+}
+
+function terminalPubliek() {
+  console.log('PUBLIEK. Rekenmodel ' + M.MODEL_VERSIE + ', peildatum ' + M.PEILDATUM + '. Bedragen afgerond op tientallen; geen batterij-uitkomst in euro\'s.\n');
+  console.log('=== Pagina B: vast of dynamisch na 2027 ===');
+  for (const h of HUISHOUDENS_B.map(voorbeeldB)) {
+    console.log('\n' + h.id + ' ' + h.naam + ': verbruik ' + nl(h.v) + ' kWh, opwek ' + nl(h.o) + ' kWh   ' + h.urlZonder);
+    const br = [60, 20, 20, 20];
+    console.log(regel(['', ...S.map((n) => LABEL[n])], br));
+    for (const [kop, cellen] of publiekBRijen(h)) console.log(regel([kop, ...cellen], br));
+  }
+  console.log('\nB5 Gemiddeld huishouden (3.500/3.500), drie niveaus van netto terugleververgoeding, zonder batterij');
+  for (const n of voorbeeldB5()) {
+    const br = [14, 30, 30, 30];
+    console.log(regel([n.kort, ...S.map((x) => 'kosten ' + eur10(n.zonder.scenarios[x].kosten_2027_zonder_batterij) + ', extra ' + eur10(n.zonder.scenarios[x].verlies_per_jaar))], br) + '   ' + n.urlZonder);
+  }
+  console.log('\n=== Pagina C: welke batterijgrootte (verplaatste kWh in het eerste jaar) ===');
+  for (const h of HUISHOUDENS_C.map(voorbeeldC)) {
+    console.log('\n' + h.id + ' ' + h.naam + ': verbruik ' + nl(h.v) + ' kWh, opwek ' + nl(h.o) + ' kWh, vast contract');
+    const br = [8, 12, 12, 12, 16];
+    console.log(regel(['kWh', 'cons.', 'real.', 'opt.', 'erbij/extra kWh'], br));
+    h.rijen.forEach((r, i) => {
+      const m = margeKwh(h.rijen, i);
+      console.log(regel([kwhTxt(r.kwh), ...S.map((n) => kwh10(r.res.scenarios[n].verplaatst_kwh_jaar1)), m === null ? '' : nl(Math.round(m)) + ' kWh'], br) + '   ' + r.url);
+    });
+  }
+  const mb = maandbeeld(3500, 3500, MAANDBEELD_CAPS);
+  console.log('\nMaandbeeld C1 (realistisch): ' + MAANDBEELD_CAPS.map((c) => c + ' kWh verplaatst ' + nl(Math.round(mb.verplaatst[c])) + ' kWh').join('; ') + ' (tabel: zie volledige uitvoer, alleen kWh)');
+}
+
+function htmlBPubliek() {
+  const out = [];
+  const th = '<tr><th scope="col">Per jaar</th>' + S.map((n) => '<th scope="col">' + LABEL[n] + '</th>').join('') + '</tr>';
+  const rij = (kop, cellen) => '          <tr><th scope="row">' + kop + '</th>' + cellen.map((c) => '<td class="num">' + c + '</td>').join('') + '</tr>';
+  for (const h of HUISHOUDENS_B.map(voorbeeldB)) {
+    const body = publiekBRijen(h).map(([kop, cellen]) => rij(kop, cellen));
+    out.push('<!-- ' + h.id + ' -->\n<div class="prose-table-wrap">\n  <table class="prose-table">\n    <caption>' + esc(h.naam) + ': verbruik ' + nl(h.v) + ' kWh, opwek ' + nl(h.o) + ' kWh per jaar. Stroomkosten: alleen het deel per kWh. Rekenmodel ' + M.MODEL_VERSIE + ', bedragen afgerond op tientallen euro\'s, stroom op tientallen kWh.</caption>\n    <thead>' + th + '</thead>\n    <tbody>\n' + body.join('\n') + '\n    </tbody>\n  </table>\n</div>');
+    out.push('<p class="rk-voorbeeld-link"><a href="' + href(h.urlZonder) + '">Open dit voorbeeld in de rekentool</a> (zonder batterij). Met een batterij: ' +
+      h.rijen.map((r) => '<a href="' + href(r.url) + '">' + r.contract + ' met ' + r.b + ' kWh</a>').join(', ') + '.</p>');
+  }
+  const body = [];
+  for (const n of voorbeeldB5()) {
+    body.push(rij(esc(n.label) + ': stroomkosten 2027 zonder batterij', S.map((x) => eur10(n.zonder.scenarios[x].kosten_2027_zonder_batterij))));
+  }
+  out.push('<!-- B5 -->\n<div class="prose-table-wrap">\n  <table class="prose-table">\n    <caption>…</caption>\n    <thead>' + th + '</thead>\n    <tbody>\n' + body.join('\n') + '\n    </tbody>\n  </table>\n</div>');
+  out.push('<!-- B5 links -->\n' + voorbeeldB5().map((n) => n.kort + ': <a href="' + href(n.urlZonder) + '">zonder batterij</a>, <a href="' + href(n.urlMet) + '">dynamisch met 10 kWh</a>').join('; '));
+  return out.join('\n\n');
+}
+
+function svgCurveKwh(h) {
+  const rijen = h.rijen;
+  const W = 640, H = 280, L = 64, R = 16, T = 16, B = 40;
+  const pw = W - L - R, ph = H - T - B;
+  const waarden = rijen.map((r) => S.map((n) => r.res.scenarios[n].verplaatst_kwh_jaar1));
+  const max = Math.max(...waarden.flat());
+  const stap = 500;
+  const top = Math.ceil(max / stap) * stap;
+  const y = (v) => T + ph - (v / top) * ph;
+  const bw = pw / rijen.length;
+  const tekst = 'style="fill:var(--ink-400);font-size:12px;font-family:var(--font-sans)"';
+  const parts = [];
+  parts.push('<svg viewBox="0 0 ' + W + ' ' + H + '" width="100%" role="img" aria-labelledby="' + h.id.toLowerCase() + '-svg-titel" style="max-width:' + W + 'px; height:auto; display:block;">');
+  parts.push('  <title id="' + h.id.toLowerCase() + '-svg-titel">Verplaatste zonnestroom per jaar per batterijgrootte, ' + esc(h.naam.toLowerCase()) + ', realistisch scenario met de bandbreedte van conservatief tot optimistisch</title>');
+  for (let v = 0; v <= top; v += stap) {
+    parts.push('  <line x1="' + L + '" x2="' + (W - R) + '" y1="' + y(v).toFixed(1) + '" y2="' + y(v).toFixed(1) + '" style="stroke:var(--line);stroke-width:1"/>');
+    parts.push('  <text x="' + (L - 8) + '" y="' + (y(v) + 4).toFixed(1) + '" text-anchor="end" ' + tekst + '>' + nl(v) + ' kWh</text>');
+  }
+  rijen.forEach((r, i) => {
+    const [c, re, o] = waarden[i];
+    const cx = L + bw * i + bw / 2;
+    const w = bw * 0.56;
+    if (re > 0) parts.push('  <rect x="' + (cx - w / 2).toFixed(1) + '" y="' + y(re).toFixed(1) + '" width="' + w.toFixed(1) + '" height="' + (y(0) - y(re)).toFixed(1) + '" rx="3" style="fill:var(--navy-400)"/>');
+    const lo = Math.min(c, o), hi = Math.max(c, o);
+    if (hi > 0) {
+      parts.push('  <line x1="' + cx.toFixed(1) + '" x2="' + cx.toFixed(1) + '" y1="' + y(lo).toFixed(1) + '" y2="' + y(hi).toFixed(1) + '" style="stroke:var(--gold-500);stroke-width:2"/>');
+      parts.push('  <line x1="' + (cx - 6).toFixed(1) + '" x2="' + (cx + 6).toFixed(1) + '" y1="' + y(lo).toFixed(1) + '" y2="' + y(lo).toFixed(1) + '" style="stroke:var(--gold-500);stroke-width:2"/>');
+      parts.push('  <line x1="' + (cx - 6).toFixed(1) + '" x2="' + (cx + 6).toFixed(1) + '" y1="' + y(hi).toFixed(1) + '" y2="' + y(hi).toFixed(1) + '" style="stroke:var(--gold-500);stroke-width:2"/>');
+    }
+    parts.push('  <text x="' + cx.toFixed(1) + '" y="' + (H - B + 18) + '" text-anchor="middle" ' + tekst + '>' + nl(r.kwh) + '</text>');
+  });
+  parts.push('  <line x1="' + L + '" x2="' + (W - R) + '" y1="' + y(0) + '" y2="' + y(0) + '" style="stroke:var(--ink-300);stroke-width:1"/>');
+  parts.push('  <text x="' + (L + pw / 2) + '" y="' + (H - 4) + '" text-anchor="middle" ' + tekst + '>batterij in kWh</text>');
+  parts.push('</svg>');
+  return parts.join('\n');
+}
+
+function htmlCPubliek() {
+  const out = [];
+  for (const h of HUISHOUDENS_C.map(voorbeeldC)) {
+    const th = '<tr><th scope="col">Batterij</th>' + S.map((n) => '<th scope="col">' + LABEL[n] + '</th>').join('') + '<th scope="col">Erbij per extra kWh capaciteit</th></tr>';
+    const body = h.rijen.map((r, i) => {
+      const m = margeKwh(h.rijen, i);
+      return '          <tr><th scope="row"><a href="' + href(r.url) + '">' + kwhTxt(r.kwh) + '</a></th>' +
+        S.map((n) => '<td class="num">' + kwh10(r.res.scenarios[n].verplaatst_kwh_jaar1) + '</td>').join('') +
+        '<td class="num">' + (m === null ? '' : nl(Math.round(m)) + ' kWh') + '</td></tr>';
+    });
+    out.push('<!-- ' + h.id + ' -->\n<div class="prose-table-wrap">\n  <table class="prose-table">\n    <caption>' + esc(h.naam) + ': verbruik ' + nl(h.v) + ' kWh, opwek ' + nl(h.o) + ' kWh, vast contract. Zonnestroom die de batterij in het eerste jaar verplaatst, afgerond op tientallen kWh. Laatste kolom: realistisch scenario. Rekenmodel ' + M.MODEL_VERSIE + '.</caption>\n    <thead>' + th + '</thead>\n    <tbody>\n' + body.join('\n') + '\n    </tbody>\n  </table>\n</div>');
+    out.push('<!-- ' + h.id + ' SVG -->\n' + svgCurveKwh(h));
+  }
+  out.push(htmlMaandbeeld());
+  return out.join('\n\n');
+}
+
+if (PUBLIEK && HTML) {
+  console.log('<!-- ===== Pagina B (publiek) ===== -->\n' + htmlBPubliek());
+  console.log('\n<!-- ===== Pagina C (publiek) ===== -->\n' + htmlCPubliek());
+} else if (PUBLIEK) {
+  terminalPubliek();
+} else if (HTML) {
   console.log('<!-- ===== Pagina B ===== -->\n' + htmlB());
   console.log('\n<!-- ===== Pagina C ===== -->\n' + htmlC());
 } else {

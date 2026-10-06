@@ -5,6 +5,11 @@
    velden, toont drie scenario's en geeft de uitkomst mee naar
    het adviesgesprek.
 
+   - de pagina toont kosten 2026, kosten 2027 en het verlies door
+     het einde van saldering, maar geen batterij-uitkomst
+     (besparing, terugverdientijd, oordeel), ook niet verborgen in
+     de DOM; die staat alleen in de overdracht voor de adviseur;
+
    - invoer blijft in de browser; de URL bevat alleen getallen
      (voor delen), nooit persoonsgegevens;
    - de overdracht naar /adviesgesprek gebeurt alleen na een klik
@@ -62,10 +67,6 @@
   function eur10(n) { return eur(Math.round(n / 10) * 10); }
   function kwh(n) { return (Math.round(n / 10) * 10).toLocaleString('nl-NL') + ' kWh'; }
   function getal(n) { return n.toLocaleString('nl-NL', { maximumFractionDigits: 1 }); }
-  function jaren(n) {
-    if (n < 2) return getal(Math.round(n * 10) / 10) + ' jaar';
-    return getal(Math.round(n * 2) / 2) + ' jaar';
-  }
 
   /* ---------- Toestand ---------- */
   var state = {};
@@ -232,36 +233,24 @@
     try { history.replaceState(null, '', url); } catch (e) {}
   }
 
-  /* ---------- Weergave ---------- */
-  var OORDEEL_TEKST = { loont: 'Loont', twijfelgeval: 'Twijfelgeval', loont_niet: 'Loont niet' };
+  /* ---------- Weergave ----------
+     Besluit eigenaar (6 oktober 2026): de pagina toont het verlies door
+     het einde van saldering, maar geen batterij-uitkomst (besparing,
+     terugverdientijd, oordeel). Die getallen komen ook niet in de DOM;
+     het model rekent ze wel uit en ze gaan via payload() mee naar de
+     adviseur. */
   var laatste = null;
 
   function vulScenario(naam, s) {
     var col = q('[data-scen="' + naam + '"]');
     if (!col) return;
-    var p = s.parameters;
-    var heeft = p.batterij_kwh > 0;
+    q('[data-v="k26"]', col).textContent = eur10(s.kosten_2026);
+    q('[data-v="k27"]', col).textContent = eur10(s.kosten_2027_zonder_batterij);
     q('[data-v="verlies"]', col).textContent = eur10(s.verlies_per_jaar);
-    q('[data-v="besparing"]', col).textContent = heeft ? eur10(s.besparing_batterij_per_jaar) : eur(0);
-    q('[data-v="besparing-sub"]', col).textContent = heeft
-      ? 'in het eerste jaar, gemiddeld ' + eur10(s.besparing_batterij_gemiddeld) + ' over ' + p.levensduur_jaar + ' jaar'
-      : 'geen batterij ingevuld';
-    var tvt = q('[data-v="tvt"]', col), tvtSub = q('[data-v="tvt-sub"]', col);
-    if (!heeft) {
-      tvt.textContent = 'n.v.t.';
-      tvtSub.textContent = 'geen investering';
-    } else if (s.terugverdientijd_jaar === null) {
-      tvt.textContent = 'niet binnen ' + p.levensduur_jaar + ' jaar';
-      tvtSub.textContent = 'na ' + p.levensduur_jaar + ' jaar ' + eur10(Math.max(0, s.besparing_batterij_totaal)) + ' van ' + eur(s.batterij_prijs_eur) + ' terug';
-    } else {
-      tvt.textContent = jaren(s.terugverdientijd_jaar);
-      tvtSub.textContent = 'batterij van ' + eur(s.batterij_prijs_eur) + ', levensduur ' + p.levensduur_jaar + ' jaar';
-    }
-    var o = q('[data-v="oordeel"]', col);
-    o.textContent = heeft ? OORDEEL_TEKST[s.oordeel] : 'Geen batterij';
-    o.setAttribute('data-oordeel', s.oordeel || 'geen');
   }
 
+  /* Alleen het verlies en de knoppen waaraan u zelf draait; nooit een
+     batterijbedrag of terugverdientijd. */
   function uitleg(res) {
     var c = res.scenarios.conservatief, r = res.scenarios.realistisch, o = res.scenarios.optimistisch;
     var p = r.parameters;
@@ -272,26 +261,22 @@
       t.push('In het realistische scenario betaalt u vanaf 2027 ongeveer ' + eur10(r.verlies_per_jaar) + ' per jaar meer voor stroom dan in 2026, omdat de '
         + kwh(r.teruglevering_kwh_2027) + ' die u teruglevert niet meer tegen het volle tarief worden verrekend. Over de drie scenario\'s ligt dat tussen '
         + eur10(o.verlies_per_jaar) + ' en ' + eur10(c.verlies_per_jaar) + '.');
+      t.push('Hoeveel u daarvan terughaalt, hangt vooral af van drie dingen: hoeveel van uw opwek u direct zelf gebruikt, wat uw contract betaalt voor teruggeleverde stroom en rekent aan terugleverkosten, en op welke uren u stroom verbruikt.'
+        + ' De eerste twee past u hier zelf aan; uw verbruik per uur rekenen wij in het adviesgesprek door met uw meterstanden.');
     }
     if (!(p.batterij_kwh > 0)) {
-      t.push('U rekent zonder batterij. Dat is een volwaardige uitkomst. Wilt u zien wat een batterij zou doen, vul dan een capaciteit in; de tabel hieronder laat per grootte zien wat hij oplevert.');
-      return t.join(' ');
-    }
-    var kop = 'Een thuisbatterij van ' + getal(p.batterij_kwh) + ' kWh (ongeveer ' + eur(r.batterij_prijs_eur) + ') bespaart in het eerste jaar ongeveer ' + eur10(r.besparing_batterij_per_jaar);
-    if (r.oordeel === 'loont_niet') {
-      t.push(kop + ' en heeft na ' + p.levensduur_jaar + ' jaar ongeveer ' + eur10(Math.max(0, r.besparing_batterij_totaal)) + ' opgebracht. Hij verdient zich in dit scenario niet terug binnen de aangenomen levensduur.');
-      if (o.oordeel === 'loont_niet') t.push('Ook in het optimistische scenario lukt dat niet. Op deze cijfers is geen batterij de verstandigere keuze.');
-      else t.push('Alleen in het optimistische scenario lukt dat, in ongeveer ' + jaren(o.terugverdientijd_jaar) + '. Op deze cijfers is geen batterij de verstandigere keuze, tenzij uw offerte of uw verbruik gunstiger uitvalt.');
-    } else if (r.oordeel === 'twijfelgeval') {
-      t.push(kop + ' en verdient zich terug in ongeveer ' + jaren(r.terugverdientijd_jaar) + ', dicht bij de aangenomen levensduur van ' + p.levensduur_jaar + ' jaar. Dat is een twijfelgeval: een iets hogere prijs of een ander verbruikspatroon bepaalt of het uitkomt.');
-      if (c.oordeel === 'loont_niet') t.push('In het conservatieve scenario verdient hij zich niet terug.');
-    } else {
-      t.push(kop + ' en verdient zich terug in ongeveer ' + jaren(r.terugverdientijd_jaar) + ', binnen de aangenomen levensduur van ' + p.levensduur_jaar + ' jaar.');
-      t.push(c.oordeel === 'loont_niet'
-        ? 'In het conservatieve scenario lukt dat niet binnen de levensduur. Laat de aannames daarom controleren met uw eigen meetgegevens.'
-        : 'Controleer de aannames met uw eigen meetgegevens voordat u beslist.');
+      t.push('U rekent nu zonder batterij. Dat is een volwaardige uitkomst.');
     }
     return t.join(' ');
+  }
+
+  /* Kop van de afgeschermde batterijkaart: alleen de gekozen maat. */
+  function gate() {
+    var kop = q('[data-rk-gate-kop]');
+    if (!kop) return;
+    kop.textContent = state.batterij_kwh > 0
+      ? 'Wat een thuisbatterij van ' + getal(state.batterij_kwh) + ' kWh in uw situatie doet'
+      : 'Wat een thuisbatterij in uw situatie doet';
   }
 
   function tip(res) {
@@ -317,21 +302,20 @@
       groottes.push(state.batterij_kwh);
       groottes.sort(function (a, b) { return a - b; });
     }
+    /* Alleen kWh: geen besparing, prijs of terugverdientijd per maat. */
     var rijen = M.batterijCurve(state, groottes, 'realistisch');
-    var levensduur = M.normaliseer(state).levensduur_jaar;
     tbody.innerHTML = '';
-    rijen.forEach(function (rij) {
+    rijen.forEach(function (rij, i) {
       var tr = document.createElement('tr');
       if (rij.batterij_kwh === state.batterij_kwh) tr.className = 'is-gekozen';
-      var tvt = rij.batterij_kwh === 0 ? 'n.v.t.'
-        : rij.terugverdientijd_jaar === null ? 'niet binnen ' + levensduur + ' jaar'
-        : 'na ' + jaren(rij.terugverdientijd_jaar);
+      var vorige = i > 0 ? rijen[i - 1] : null;
+      var erbij = vorige && rij.batterij_kwh > vorige.batterij_kwh
+        ? Math.max(0, Math.round((rij.verplaatst_kwh - vorige.verplaatst_kwh) / (rij.batterij_kwh - vorige.batterij_kwh))).toLocaleString('nl-NL') + ' kWh'
+        : '';
       var cellen = [
         ['th', rij.batterij_kwh === 0 ? 'geen' : getal(rij.batterij_kwh) + ' kWh'],
         ['td', kwh(rij.verplaatst_kwh), 'num'],
-        ['td', eur10(rij.besparing_jaar1), 'num'],
-        ['td', eur(rij.prijs_eur), 'num'],
-        ['td', tvt]
+        ['td', erbij, 'num']
       ];
       cellen.forEach(function (c) {
         var el = document.createElement(c[0]);
@@ -342,8 +326,6 @@
       });
       tbody.appendChild(tr);
     });
-    var prijsEl = q('[data-rk-curve-prijs]');
-    if (prijsEl) prijsEl.textContent = Math.round(state.batterij_prijs_per_kwh_eur).toLocaleString('nl-NL');
   }
 
   function render() {
@@ -356,6 +338,7 @@
     var bp = q('[data-rk-batterijprijs]');
     if (bp) bp.textContent = state.batterij_kwh > 0 ? eur(res.scenarios.realistisch.batterij_prijs_eur) : eur(0);
     var kp = q('[data-rk-kwhpaneel]'); if (kp) kp.textContent = Math.round(state.kwh_per_paneel).toLocaleString('nl-NL');
+    gate();
     curve();
     return res;
   }
@@ -509,20 +492,24 @@
     };
   }
 
-  var cta = q('[data-rk-cta]');
-  var meenemen = q('[data-rk-meenemen]');
-  if (cta) cta.addEventListener('click', function () {
-    var mee = !meenemen || meenemen.checked;
-    var oordeel = laatste ? (laatste.scenarios.realistisch.oordeel || 'geen_batterij') : null;
-    if (mee) {
-      var f = payload();
-      window.SD = window.SD || {};
-      window.SD.funnel = f;
-      window.SD.calcState = function () { return window.SD.funnel || {}; };
-      try { sessionStorage.setItem('sd_funnel', JSON.stringify(f)); } catch (e) {}
-      try { window.dispatchEvent(new CustomEvent('sd:funnel', { detail: f })); } catch (e) {}
-    }
-    track('rekentool_cta', { oordeel: oordeel, batterij_kwh: state.batterij_kwh, meegenomen: mee });
+  /* Twee knoppen (bij de afgeschermde batterijkaart en onderaan), elk met
+     een eigen vinkje in dezelfde [data-rk-cta-box]. */
+  all('[data-rk-cta]').forEach(function (cta) {
+    cta.addEventListener('click', function () {
+      var box = cta.closest ? cta.closest('[data-rk-cta-box]') : null;
+      var meenemen = q('[data-rk-meenemen]', box || document);
+      var mee = !meenemen || meenemen.checked;
+      var oordeel = laatste ? (laatste.scenarios.realistisch.oordeel || 'geen_batterij') : null;
+      if (mee) {
+        var f = payload();
+        window.SD = window.SD || {};
+        window.SD.funnel = f;
+        window.SD.calcState = function () { return window.SD.funnel || {}; };
+        try { sessionStorage.setItem('sd_funnel', JSON.stringify(f)); } catch (e) {}
+        try { window.dispatchEvent(new CustomEvent('sd:funnel', { detail: f })); } catch (e) {}
+      }
+      track('rekentool_cta', { oordeel: oordeel, batterij_kwh: state.batterij_kwh, meegenomen: mee, plek: cta.getAttribute('data-rk-cta-plek') || '' });
+    });
   });
 
   /* ---------- Start ---------- */
