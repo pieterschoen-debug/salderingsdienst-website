@@ -28,6 +28,69 @@ Belangrijk voor de toon van alle redactionele pitches [FEIT]: de media zijn in 2
 
 ---
 
+## Top 10 in volgorde van opbrengst per uur werk (voor Pieter, 2026-10-06)
+
+Bijgewerkt in ronde 2 (uitvoerklaar maken). **Opbrengst** = verwacht effect (echte bezoekers, vertrouwen, NAP-consistentie, kans op verdiende vermelding) gedeeld door de werktijd van Pieter. Dit is een schatting, geen meting. De rekentool (R) is op 2026-10-06 **niet live** (`/rekentool` geeft 404); alles met "wacht op R" kan pas daarna. Teksten staan in `docs/seo/vermeldingen-kit.md` en `content/concepten/outreach/00-verzendplan.md`.
+
+**De eerste drie kan Pieter vandaag doen, elk in minder dan 30 minuten.** Voorwaarde voor 1 en 2: beslis eerst over het adres (kit §0, twee minuten).
+
+| # | Wat | Tijd | Waarom op deze plek | Voorwaarde | Zie |
+|---|---|---|---|---|---|
+| 1 | **Google Bedrijfsprofiel** aanmaken of claimen | 25 min (verificatie volgt) | Enige bron in deze lijst die echte bezoekers en merkzoekopdrachten oplevert, en het anker voor alle andere vermeldingen | Adresbesluit §0; eerst zoeken of er al een profiel bestaat | A1 |
+| 2 | **Bericht aan !WOON** (concept 05) | 15 min | Kan al vóór R weg; lokale, echte bezoekersbron; verwijst naar bestaande gids | Controleer vlak voor verzending of hun pagina nog niets over 2027 zegt; claimtabel van de gids afgetekend | B1 |
+| 3 | **Vraag aan Regionaal Energieloket** (draft 1 uit het verzendplan) | 10 min | Gemeentelijk vertrouwen voor 100+ gemeenten; aanmelden is gratis; volgende deadline voor opname is 20 december 2026 | Eerst vragen of een adviesbedrijf met partners mag; pas daarna het formulier | A7 |
+| 4 | **Bing Places** (importeren uit Google, of zelf) | 15 min | Klein volume, maar vrijwel zeker goedgekeurd en voedt Copilot | Bij import: A1 eerst geverifieerd | A2 |
+| 5 | **Solar Magazine**: lanceringsbericht rekentool (concept 01) | 30 min | Meest waarschijnlijke verdiende vermelding: publiceert lanceringen van rekentools, gratis redactioneel adres bevestigd | Wacht op R + methodepagina + juridische toets | C11 |
+| 6 | **LinkedIn-bedrijfspagina** (niet in de 52, aanvullend X1) | 20 min | Merkprofiel dat in zoekresultaten verschijnt; nodig voor `sameAs` in het schema; geen pagina gevonden | Account van Pieter of Reener; vierkant logo uit het kit | X1 |
+| 7 | **Apple Business Connect** | 20 min | Apple Kaarten en Siri; NAP-consistentie | Adresbesluit §0; servicegebieden zijn lastiger | A3 |
+| 8 | **Places.nl** gratis claimen | 15 min | Voedt Telefoonboek.nl en Openingstijden.com; weinig bezoekers, wel gelijke NAP | Alleen de gratis aanmelding; geen betaalpakket | A4 |
+| 9 | **Energeia** (concept 03) | 30 min | Gezag in de sector; redactieadres nu geverifieerd | Wacht op R + methodepagina | C12 |
+| 10 | **Radar** (concept 02, één bericht voor C1 tot en met C3) | 30 min | Hoogste gezag, maar kleine kans; kritisch op batterijverkopers | Wacht op R + tarieventabel T + juridische toets | C1 |
+
+**Valt buiten de top 10 maar is de moeite waard:** Amsterdam Energie (draft 3, B1/B3), MAX Vandaag (C15, wacht op R), id.nl (C9, wacht op R).
+
+## Wat bestaat er al? (controle 2026-10-06)
+
+Zoekopdrachten: "SalderingsDienst" Amsterdam, "De Salderingsdienst B.V." KvK 42165216, de btw-nummer, "Jonas Daniël Meijerplein 25", salderingsdienst.nl, linkedin.com/company/salderingsdienst, plus een lezing van de homepage.
+
+| Profiel | Gevonden? | Opmerking |
+|---|---|---|
+| Google Bedrijfsprofiel | **niet gevonden** | De zoektool heeft een Amerikaanse index zonder Maps-data. Dat is dus **geen bewijs dat er geen profiel is**. Zoek in Google Maps op "SalderingsDienst" en op business.google.com ("Uw bedrijf zoeken") vóór u iets aanmaakt. Bestaat er een profiel (ook door Google of derden aangemaakt), **claim dat dan**; een tweede profiel kan tot schorsing leiden. |
+| Bing Places | **niet gevonden** | Zelfde beperking. Zoek op bing.com/maps. |
+| LinkedIn-bedrijfspagina | **niet gevonden** | `linkedin.com/company/salderingsdienst` gaf 404, er is geen zoekresultaat en de homepage linkt niet naar een profiel; er is ook geen `sameAs` in de JSON-LD. Andere slugs (bijvoorbeeld met `-bv`) zijn niet geprobeerd. |
+| KvK-afgeleide gidsen (opencompanies, drimble, oozo, liza, creditsafe) | **niet gevonden** voor naam, KvK-nummer en btw-nummer | De zoekindex is beperkt; een directe opzoeking in drie databases lukte niet. Gidsen die uit het Handelsregister worden gevuld kunnen toch bestaan. Pieter zoekt zelf op kvk.nl en op "42165216". |
+| Social media op de eigen site | **geen links** | De footer linkt niet naar social profielen of reviewplatforms. |
+| Reviews op Trustpilot, Trustoo en dergelijke | **niet gevonden** | Niet gezocht op profielniveau. |
+
+**Gevolg voor de lijst:** A1, A2, A3, A4 en X1 staan als "aanmaken, nadat u hebt gezocht". Bestaat er al een profiel, dan wordt de actie "claimen en bijwerken" in plaats van "aanmaken". Er zijn geen profielen gevonden om te rapporteren.
+
+**Signaal bij het adres.** Op Jonas Daniël Meijerplein 25 staan blijkens twee Funda-advertenties (april en mei 2026) appartementen (25 C1 en 25 D) te koop. Dat suggereert een woonadres. Zie de beslissing in `vermeldingen-kit.md` §0.
+
+## Verificatieronde 2: contactroutes en kosten (2026-10-06)
+
+Methode: WebFetch (geautomatiseerde samenvatting van de pagina) en WebSearch. Waar de tool een pagina niet kon lezen staat dat erbij. **Niet gevonden** betekent: ik kon het niet bevestigen, niet dat het niet bestaat.
+
+| Route | Resultaat | Bron | Status |
+|---|---|---|---|
+| **NOS** persbericht en tip | Persberichten via **formulier** (kies redactie "Nieuws"; naam, e-mail, onderwerp, tekst, bijlage tot 12 MB). De NOS "kan niet nagaan of het persbericht is aangekomen"; geen e-mailadres voor persberichten. Tips: NOS Ooggetuige, NOS Net (nosnet@nos.nl), Publeaks. `nos.nl/tip` en `nos.nl/contact` bestaan niet meer (404, zoals eerder); alles staat op `over.nos.nl`. | https://over.nos.nl/uw-vragen-reacties/persbericht-sturen/ ; https://over.nos.nl/uw-vragen-reacties/tip-de-redactie/ | gevonden (formulier) |
+| **id.nl** redactie | **redactie@id.nl**; geen tipformulier gevonden. `/over/redactie` toont het team, `id.nl/contact` is 404. Adres komt uit één bron (de `llms.txt` van id.nl), niet uit een contactpagina. | https://id.nl/llms.txt ; https://id.nl/over/redactie | gevonden, één bron |
+| **Energeia** redactie | **redactie@energeia.nl**, telefoon 020 344 5154, Prins Bernhardplein 173, Amsterdam. Betaalmuur. Eigenaar FD Mediagroep. | https://energeia.nl/over-energeia/ | gevonden |
+| **Consumentenbond** pers | Perslijn **088 208 21 11**; woordvoerders per onderwerp (duurzaamheid en energie heeft er één); alleen voor media. Geen e-mailadres gevonden. | https://www.consumentenbond.nl/service/contact/voor-journalisten | gevonden (telefoon), e-mail niet gevonden |
+| **Milieu Centraal** pers | Perstelefoon **06 811 662 14**, werkdagen 08:30 tot 17:00, uitsluitend voor journalisten; persberichten op de persberichtenpagina. De organisatie noemt zich op die pagina "Kenniscentrum Duurzaam Leven (voorheen Milieu Centraal)". Geen algemeen pers-e-mailadres gevonden. Past niet bij een commerciële pitch (zie D1). | https://www.milieucentraal.nl/persberichten/ | gevonden (telefoon) |
+| **Kassa** | **Stopt.** NOS (25-11-2025): BNNVARA stopt in 2027 vanwege bezuinigingen met Kassa; VARAgids (07-04-2026): "Op 5 december valt definitief het doek". De twee bronnen zeggen niet hetzelfde: ik lees 5 december als **5 december 2026** (jaartal staat niet expliciet in de samenvatting) en 2027 als formele einddatum van de zendmachtiging. Tips en klachten: **kassa@bnnvara.nl** (site: bnnvara.nl/kassa/over-kassa). Een pitch heeft geen zin voor een programma dat over twee maanden eindigt. | https://nos.nl/l/2591966 ; https://www.bnnvara.nl/varagids/artikelen/hoe-vergaat-het-de-kassa-redactie-nu-ze-weten-dat-het-programma-stopt ; https://bnnvara.nl/kassa/over-kassa | gevonden; niet benaderen |
+| **Vereniging Eigen Huis** pers | Onze tool kan eigenhuis.nl niet lezen (geblokkeerd). Enige bron: persbericht van 2017 met pers@eigenhuis.nl en 033 450 75 02. | persbericht UIPI, 19-10-2017 | **niet geverifieerd** (verouderd) |
+| **thuisbatterijinstallateurs.nl** aanmelding | Gratis; formulier op https://thuisbatterijinstallateurs.nl/bedrijf-claimen/ ("Staat je bedrijf er nog niet in?") met bedrijfsnaam, KvK, adres, e-mail, telefoon, website en optioneel bericht. Controle handmatig via zakelijk e-mailadres en KvK-nummer. De site toont **alleen installateurs** (547); de TBI-score weegt reviews, keurmerken (InstallQ, Techniek Nederland, VCA) en ervaring. Of adviesbedrijven zonder eigen installateurs mogen: **niet vermeld**. Exploitant: Content Ventures B.V. (KvK 86714708), Purmerend. | https://thuisbatterijinstallateurs.nl/ | gevonden; toelating onzeker |
+| **Regionaal Energieloket** aanmelding | Gratis, "verplicht u tot niets", ca. 10 minuten, extern formulier: https://salesforce-eu.123formbuilder.com/form-66501/aanmeldformulier-bedrijven. Categorieën: isolatie, zonnepanelen, (hybride) warmtepompen. Vier deadlines per jaar: **13 maart, 20 juli, 28 september, 20 december** (voor projecten in het volgende kwartaal). Bedient 100+ gemeenten; Amsterdam wordt op deze pagina niet genoemd. Vragen: vragen@regionaalenergieloket.nl, 088 525 4110. Of een adviesbedrijf met partners mag: **niet vermeld**. | https://www.regionaalenergieloket.nl/aan-de-slag/vakspecialist/aanmelden | gevonden; toelating onzeker |
+| **thuisbatterij.nl** "platform" | Geen platform: het is een webshop en officieel distributeur (Indevolt, Anker SOLIX, EcoFlow, Marstek) in Den Hoorn, opgericht 2023, 16 collega's, info@thuisbatterij.nl, 085 333 2988. Geen partner- of installateursaanmelding zichtbaar. (ThuisbatterijNederland.nl is iets anders: ging van vergelijker naar eigen installatie.) | https://www.thuisbatterij.nl/ | **niet gevonden** (geen aanmeldroute) |
+| **Holland Solar** lidmaatschap | Alle bedrijven in de Nederlandse zonne-energiesector kunnen lid worden; aanvraag via interesseformulier (naam, e-mail, telefoon, bedrijf, hoofdactiviteit, marktsegment) plus akkoord met huisregels. Contributie op basis van omzet in zonne-energie én batterijen in Nederland vorig jaar: eenmanszaak **€630**; omzet onder €0,5 mln **€1.234**; €0,5 tot 2 mln €2.467; "overig" **€2.500**; hoogste categorie €27.109. Jaartal en btw-behandeling staan niet in het document. | https://www.hollandsolar.nl/algemeen/contributiestructuur.html ; https://www.hollandsolar.nl/lid-worden.html | gevonden (bedragen), btw/jaar niet gevonden |
+| **Solar Magazine** bedrijvenregister | **Betaald: €349 per 12 maanden** (bedrijfsprofiel plus de mogelijkheid persberichten, vacatures en evenementen te laten publiceren). Geen gratis optie genoemd. Redactie voor persberichten en tips: redactie@solarmagazine.nl (onderwerpregel "Tip voor de redactie"). | https://solarmagazine.nl/inschrijven-solar-industry-register ; https://solarmagazine.nl/contact | gevonden |
+| Places.nl | "Gratis aanmelden" via mijn.places.nl; levert Telefoonboek.nl, Openingstijden.com, en genoemde kaarten. Velden niet zichtbaar zonder inschrijving. info@places.nl. | https://www.places.nl/ | gevonden |
+| De Telefoongids | Pagina gaf 403 voor onze tool. | – | **niet gevonden** |
+| Energieloketten.nl | Telefoon 085 023 22 22 en `/contact`; de aanmeldroute voor uitvoerende bedrijven is niet leesbaar. | https://www.energieloketten.nl/ | **niet gevonden** |
+| Google Bedrijfsprofiel | Eisen: fysieke locatie voor klanten, óf servicegebied met verborgen adres; virtuele kantoren niet toegestaan; naam zonder zoekwoorden of "B.V."; servicegebied binnen ca. 2 uur reistijd. | https://support.google.com/business/answer/3038177?hl=nl | gevonden (zie kit §0) |
+
+**Wijzigingen ten opzichte van ronde 1.** A13 is betaald (€349) in plaats van "kosten niet gevonden". A14 heeft bedragen. A6 is waarschijnlijk niet voor adviesbedrijven. A16 is geen platform. C4 (Kassa) stopt. Voor C5, C9, C12, C14 en D1 zijn contactroutes nu gevonden of bevestigd; alleen D2 (VEH) blijft onbevestigd.
+
 ## Taak 1. Link-gap zonder backlinktool (indicatief, zonder backlinktool)
 
 Werkwijze: per concurrent gezocht naar pagina's die de naam of het domein noemen buiten het eigen domein (zoals `"zonneplan" thuisbatterij -site:zonneplan.nl`, `"anker solix" saldering -site:ankersolix.com`, `"energievergelijk.nl" terugleververgoeding`, `"keuze.nl" terugleverkosten`, `"slimster" thuisbatterij`), plus bron- en referentielijsten van media en Wikipedia. Let op: de `-site:`-operator werd door de zoektool vaak genegeerd; veel resultaten kwamen alsnog van de concurrent zelf. Dit is dus een steekproef van **typen** vermeldende domeinen, geen backlinkprofiel.
@@ -60,17 +123,40 @@ Kolommen: **Waarde** = hoog/midden/laag met reden (onderwerpsrelevantie + gezag 
 | A3 | Apple Business Connect | profiel | Apple Kaarten, Siri | H | businessconnect.apple.com | **laag/midden**: weinig zoekvolume voor advies, wel NAP-consistentie | Gratis | gevonden |
 | A4 | Places.nl / Telefoonboek.nl / Openingstijden.com (Places Nummerinformatie B.V.) | bedrijvengids | Vermelding claimen en bijwerken | H | via places.nl "bedrijf claimen" | **laag**: NAP-consistentie, nauwelijks bezoekers | Gratis claim [volgens zoekresultaat, **niet geverifieerd** op de claimpagina] | gevonden |
 | A5 | De Telefoongids (detelefoongids.nl) | bedrijvengids | Bedrijfsvermelding | H | via de site | **laag** | Basisvermelding: **[niet geverifieerd]**; let op betaalde upsells (oude klachten op Radar-forum). Alleen gratis basis. | gevonden |
-| A6 | thuisbatterijinstallateurs.nl (Content Ventures B.V., Purmerend) | installateursvergelijker | Register met "TBI-score"; "Claim je bedrijf gratis"; apart formulier "Meld mijn bedrijf aan" | H, G | thuisbatterijinstallateurs.nl/bedrijf-claimen/ | **midden**: precies het onderwerp; echte vergelijkingsbezoekers | Gratis, handmatige controle. Geeft voorkeur aan installateurs met InstallQ/Techniek Nederland. **Eerlijk invullen: advies + levering via partner-installateurs, geen eigen installateurs.** Als het platform alleen echte installateurs toelaat: niet aanmelden. | gevonden |
+| A6 | thuisbatterijinstallateurs.nl (Content Ventures B.V., Purmerend) | installateursvergelijker | Register met "TBI-score"; "Claim je bedrijf gratis"; apart formulier "Meld mijn bedrijf aan" | H, G | thuisbatterijinstallateurs.nl/bedrijf-claimen/ | **midden**: precies het onderwerp; echte vergelijkingsbezoekers | Gratis, handmatige controle. Geeft voorkeur aan installateurs met InstallQ/Techniek Nederland. **Eerlijk invullen: advies + levering via partner-installateurs, geen eigen installateurs.** Als het platform alleen echte installateurs toelaat: niet aanmelden. **Ronde 2:** de site toont uitsluitend installateurs (547); eerst vragen (zie volgende actie). | gevonden |
 | A7 | Regionaal Energieloket (regionaalenergieloket.nl) | gemeentelijk loket / register | Vakspecialistenregister; de Amsterdamse pagina duurzaamwonen.amsterdam verwijst naar "Regionaal Energieloket" en "Vind vakspecialist" | H | regionaalenergieloket.nl/aan-de-slag/vakspecialist/aanmelden; vragen@regionaalenergieloket.nl | **midden/hoog**: gemeentelijk vertrouwen, echte doorverwijzing | Gratis ("verplicht u tot niets"). Categorieën: isolatie, zonnepanelen, (hybride) warmtepompen; thuisbatterij/energieadvies niet expliciet. Alleen aanmelden voor regio's waar partners echt werken. | gevonden |
 | A8 | Energieloketten.nl ("powered by Duurzaam Bouwloket") | gemeentelijk loket | "Vind uitvoerende bedrijven uit jouw regio"; heeft een stuk "Salderingsregeling stopt" | H, G | 085 023 22 22 / contactpagina | **midden**: gemeentelijke doorverwijzing (o.a. Noordwijk) | Aanmeldroute niet gevonden. Een bron uit 2020 noemt kosteloze aansluiting bij Duurzaam Bouwloket (**verouderd, verifiëren**). | gevonden |
 | A9 | Trustoo | leadplatform / gids | Categorie "Thuisbatterij installateurs"; plaatsnaampagina's | H | trustoo.nl/bedrijf-aanmelden/ | **laag** als linkbron (plaatsnaamdoorways, leadmodel) | Gratis profiel, **betaald per offerteaanvraag** (prijs per branche). Alleen genoteerd; niet aanbevolen voor links. Past alleen als de categorie advies/levering via partners toelaat. | gevonden |
 | A10 | Slimster | leadplatform / gids | Bedrijvengids slimster.nl/bedrijf/…; "Vergelijk thuisbatterij installateurs" | H | slimster.nl/bedrijven/aanmelden/ | **laag** (concurrent in de SERP, leadmodel) | **Betaald per aanvraag**, geen abonnement. Alleen genoteerd. | gevonden |
 | A11 | Werkspot | leadplatform | Klussenplatform | – | werkspot.nl | **laag** | **Betaald** (abonnement/per klus; actuele tarieven **niet geverifieerd**). Past niet bij adviesbedrijf zonder eigen installateurs. Niet doen. | gevonden |
 | A12 | Homedeal | leadplatform | "Vergelijk thuisbatterij offertes", tot 6 offertes | – | homedeal.nl | **laag** | Leadmodel, kosten **niet geverifieerd**. Niet aanbevolen. | gevonden |
-| A13 | Solar Magazine Bedrijvenregister | branchegids | "Meld uw bedrijf ook aan voor het bedrijvenregister" | H | solarmagazine.nl/industry-register | **laag/midden**: B2B-publiek, relevant onderwerp | Kosten **niet gevonden**. Alleen als gratis; betaald = niet voor links. | gevonden |
-| A14 | Holland Solar (hollandsolar.nl) | branchevereniging | Ledenlijst ("Leden"); "alle bedrijven die actief zijn in de Nederlandse zonne-energiesector" (ook adviseurs) | H | hollandsolar.nl/lid-worden.html | **midden** als lidmaatschap om inhoudelijke redenen (zij vragen om "realistische beloftes"); niet als linktruc | **Vereist lidmaatschap.** Contributie staat in een apart document, bedrag **niet gevonden**. | gevonden |
+| A13 | Solar Magazine Bedrijvenregister | branchegids | "Meld uw bedrijf ook aan voor het bedrijvenregister" | H | solarmagazine.nl/industry-register | **laag/midden**: B2B-publiek, relevant onderwerp | **Betaald: €349 per 12 maanden** (ronde 2, https://solarmagazine.nl/inschrijven-solar-industry-register). Geen gratis optie. Niet voor links. | gevonden |
+| A14 | Holland Solar (hollandsolar.nl) | branchevereniging | Ledenlijst ("Leden"); "alle bedrijven die actief zijn in de Nederlandse zonne-energiesector" (ook adviseurs) | H | hollandsolar.nl/lid-worden.html | **midden** als lidmaatschap om inhoudelijke redenen (zij vragen om "realistische beloftes"); niet als linktruc | **Vereist lidmaatschap.** Ronde 2: omzet in zonne-energie en batterijen onder €0,5 mln €1.234 per jaar, "overig" €2.500, eenmanszaak €630; jaartal en btw niet vermeld (hollandsolar.nl/algemeen/contributiestructuur.html). | gevonden |
 | A15 | Techniek Nederland | branchevereniging | Ledenzoeker installateurs | – | ledenservice@technieknederland.nl | **laag**: gericht op installatiebedrijven | **Vereist lidmaatschap.** Basiscontributie 2025 €665 (tot 25 medewerkers) plus loonsomdeel (contributiestructuur 2025). Past niet zonder eigen installatiebedrijf. | gevonden |
 | A16 | thuisbatterij.nl (emerce, 29-01-2025) | vergelijkings-/adviesplatform | Blijkt zelf webshop en adviseur; geen partner- of vermeldingsroute gevonden | – | info@thuisbatterij.nl | **laag**: feitelijk concurrent | Geen vermelding mogelijk. Genoteerd zodat niemand het opnieuw uitzoekt. | gevonden |
+
+#### A. Volgende actie en prioriteit
+
+**Prioriteit (1 tot 5) = het afgeronde gemiddelde van relevantie (R), autoriteit (A) en kans (K), elk van 1 tot 5.** R = past het bij ons onderwerp en leidt het tot echte bezoekers; A = gezag van het domein; K = kans dat het lukt, gegeven wat we eerlijk kunnen bieden. Bij "niet doen" staat de prioriteit op **1**, ook als de potentie hoger zou zijn; de reden staat erbij. Tekstverwijzingen: "kit" = `docs/seo/vermeldingen-kit.md`; "draft 1 tot 3" = `content/concepten/outreach/00-verzendplan.md`. Velden "NAP" komen letterlijk uit kit §1. Tijden zijn werktijd van Pieter, exclusief wachttijd.
+
+| # | Volgende actie (exacte stap) | Kosten, tijd | Prioriteit |
+|---|---|---|---|
+| A1 | **0.** Zoek in Google Maps "SalderingsDienst" en op business.google.com "Uw bedrijf zoeken"; bestaat er een profiel: claim dat. **1.** Anders: https://business.google.com/create. Velden: naam `SalderingsDienst`; categorie *Energy advisory service* (secundair: *Solar energy company*, *Solar energy equipment supplier*, kit §2); "Locatie die klanten kunnen bezoeken?" **Nee** (bij adresbesluit nee, kit §0); servicegebied volgens kit §1; telefoon `06 3936 9781`; website kit-UTM `google-bedrijfsprofiel`; beschrijving 750 (kit §3); openingstijden ma t/m vr 09:00 tot 17:00; logo `assets/logo-vierkant-1024.png`. **2.** Verifiëren via de optie die Google aanbiedt (telefoon, e-mail, video). | Gratis, 25 min + wachten op verificatie (dagen) | **4** (R5 A4 K4): echte bezoekersbron en NAP-anker; kans hangt aan het adresbesluit |
+| A2 | https://www.bing.com/forbusiness. Zodra A1 geverifieerd is: kies "Importeren uit Google". Anders handmatig met dezelfde velden; website kit-UTM `bing-places`. Verificatie per telefoon, e-mail of post. | Gratis, 15 min | **4** (R3 A3 K5): klein volume, vrijwel zeker goedgekeurd, voedt Copilot |
+| A3 | https://business.apple.com (Apple Business Connect), aanmelden met een Apple-account van het bedrijf. Zoek eerst of Apple Maps al een kaart voor ons heeft; kies voor een bedrijf zonder openbare locatie als het adres verborgen blijft. Velden: NAP, categorie, logo, website kit-UTM `apple-maps`, korte beschrijving kit §3 (250). | Gratis, 20 min | **3** (R2 A3 K4): weinig zoekvolume, wel consistentie |
+| A4 | https://www.places.nl, knop "Gratis aanmelden" (inlog mijn.places.nl). Zoek eerst op naam of KvK of er al een vermelding is, en claim die. NAP letterlijk, website kit-UTM `places-nl`, beschrijving kit §3 (250). **Geen** betaalpakket kiezen. Bij een verborgen adres: adres niet tonen als dat kan, anders overslaan. Vragen: info@places.nl. | Gratis, 15 min | **3** (R2 A2 K5): alleen NAP-consistentie, nauwelijks bezoekers |
+| A5 | https://www.detelefoongids.nl (onze tool kreeg 403; niet gelezen). Alleen een **gratis** basisvermelding met NAP uit kit §1; bij elk betaald aanbod stoppen. | Gratis of overslaan, 10 min | **2** (R1 A2 K4): laag effect, kans op upsell |
+| A6 | **Niet als installateur aanmelden.** Formulier op https://thuisbatterijinstallateurs.nl/bedrijf-claimen/ (onderaan "Staat je bedrijf er nog niet in?"): Bedrijfsnaam `SalderingsDienst`, KvK `42165216`, adres/postcode/stad/provincie (alleen invullen als het adres getoond mag worden), e-mail `info@salderingsdienst.nl` (zakelijk adres is verplicht voor de controle), telefoon, website kit-UTM `thuisbatterijinstallateurs`, bericht: **draft 2**. Doel is een vraag, geen listing. | Gratis, 10 min | **2** (R4 A2 K1): de site toont 547 installateurs en weegt InstallQ/Techniek Nederland; adviesbedrijven zijn niet genoemd |
+| A7 | **1.** Stuur **draft 1** naar vragen@regionaalenergieloket.nl (088 525 4110) met de vraag of een adviesbedrijf dat via installatiepartners levert zich mag aanmelden en voor welke regio. **2.** Bij ja: formulier https://salesforce-eu.123formbuilder.com/form-66501/aanmeldformulier-bedrijven (te bereiken via https://www.regionaalenergieloket.nl/aan-de-slag/vakspecialist/aanmelden): categorie *zonnepanelen*, NAP, website kit-UTM `regionaal-energieloket`, alleen regio's waar partners echt werken. Volgende deadline voor opname: **20 december 2026** (projecten januari tot maart 2027). | Gratis, 10 min (vraag) + 10 min (formulier) | **4** (R4 A4 K3): gemeentelijk vertrouwen; onzeker of een adviesbedrijf zonder eigen installateurs wordt toegelaten |
+| A8 | Bel 085 023 22 22 (energieloketten.nl) of gebruik https://www.energieloketten.nl/contact en vraag hoe een uitvoerend bedrijf wordt opgenomen en of dat gratis is. Aanmeldroute zelf **niet gevonden**; een bron uit 2020 noemde kosteloze aansluiting bij het Duurzaam Bouwloket (verouderd). Na antwoord pas beslissen. | Gratis vraag, 10 min | **3** (R3 A3 K2) |
+| A9 | **Niet doen.** Trustoo: gratis profiel maar betaald per offerteaanvraag, plaatsnaamdoorways. Pas als Pieter zelf leads wil kopen; niet als linkbron. | betaald per lead | **1** (potentie R2 A1 K4; advies: niet doen, betaald) |
+| A10 | **Niet doen.** Slimster: betaald per aanvraag, concurrent in de zoekresultaten. | betaald per lead | **1** (potentie R2 A1 K4; advies: niet doen) |
+| A11 | **Niet doen.** Werkspot: betaald, past niet bij een adviesbedrijf zonder eigen installateurs. | betaald | **1** (potentie R1 A1 K2) |
+| A12 | **Niet doen.** Homedeal: leadmodel, kosten niet geverifieerd. | onbekend | **1** (potentie R1 A1 K2) |
+| A13 | **Niet voor links.** Het bedrijvenregister kost **€349 per 12 maanden** (https://solarmagazine.nl/inschrijven-solar-industry-register). Wel gratis: persbericht of tip aan redactie@solarmagazine.nl, zie C11. | €349/jaar, 0 min | **1** (potentie R3 A2 K1; advies: betaald, niet voor links) |
+| A14 | Alleen als inhoudelijk gewenst (zij vragen leden om realistische beloftes). Interesseformulier: https://www.hollandsolar.nl/lid-worden.html met naam, e-mail, telefoon, bedrijf `De Salderingsdienst B.V.`, hoofdactiviteit "Consultant" (zo staat de optie in de dropdown volgens de pagina), marktsegment. Daarna akkoord op huisregels. **Pieter beslist eerst over de kosten:** omzet in zonne-energie én batterijen onder €0,5 mln: €1.234 per jaar; "overig": €2.500; btw en jaartal niet vermeld. Bel 030 232 8008 voor bevestiging van het bedrag. | Lidmaatschap ca. €1.234 per jaar, 20 min | **3** (R4 A4 K2): sterk inhoudelijk signaal, maar geen linktruc en een vaste kostenpost |
+| A15 | **Niet doen.** Techniek Nederland: gericht op installatiebedrijven, contributie 2025 €665 plus loonsomdeel. | lidmaatschap | **1** (potentie R1 A3 K1) |
+| A16 | **Geen actie.** thuisbatterij.nl is een webshop en distributeur, geen platform; geen aanmeldroute (info@thuisbatterij.nl, 085 333 2988). | – | **1** (R1 A1 K1): feitelijk concurrent |
 
 Niet als kans geteld: KvK-handelsregister (geen link, wel bron voor NAP-consistentie) en de inkoopcollectieven van Vereniging Eigen Huis (installateurs worden via een veiling gekozen; wij zijn geen installateur).
 
@@ -86,6 +172,17 @@ Alleen waar echte lokale inhoud bestaat. Geen plaatsnaampagina's aan onze kant.
 | B4 | zuiderlicht.nu (Zuiderlicht, coöperatie) | energiecoöperatie | Gelinkt vanaf !WOON; geen content over 2027 gevonden | G | via site (**niet gecontroleerd**) | **laag** | Gratis | gevonden |
 | B5 | ecostroom.nu (Ecostroom) | energiecoöperatie | Gelinkt vanaf !WOON; **niet bekeken** | G | via site | **laag** | Gratis | gevonden |
 | B6 | Lokale pers Amsterdam (Het Parool, AT5) | lokale media | Geen Amsterdam-specifiek artikel over saldering/thuisbatterij gevonden | – | – | **laag nu**: alleen benaderen met een echte lokale haak (bijv. Amsterdamse cijfers uit eigen geanonimiseerde data, als die bestaan). Geen "Amsterdams bedrijf"-pitch zonder nieuws. | – | gevonden, parkeren |
+
+#### B. Volgende actie en prioriteit
+
+| # | Volgende actie (exacte stap) | Kosten, tijd | Prioriteit |
+|---|---|---|---|
+| B1 | Controleer vlak voor verzending of https://www.wooninfo.nl/zonne-energie nog niets over 1 januari 2027 zegt. Gecontroleerd op 2026-10-06: de pagina noemt het einde van de salderingsregeling nog niet. Stuur **concept 05 per e-mail aan info@wooninfo.nl**; het formulier op https://www.wooninfo.nl/vragen/ is voor bewonersvragen en eist een woonadres van de vrager, dus niet gebruiken. Onderwerp: zie `00-verzendplan.md`. Voorwaarden in concept 05 (claimtabel gids, adresbevestiging). | Gratis, 15 min | **3** (R4 A3 K3): lokale bezoekersbron, link onwaarschijnlijk, aanvulling van hun pagina reëel |
+| B2 | Geen eigen benadering. Route loopt via A7 (Regionaal Energieloket staat op duurzaamwonen.amsterdam). Alleen een vraag aan de gemeente (14020) als A7 ons afwijst. | – | **3** (R4 A5 K1): hoog gezag, directe link naar commercieel bedrijf onwaarschijnlijk |
+| B3 | Stuur **draft 3** aan info@amsterdamenergie.nl (Amsterdamse Energie Coöperatie U.A., KvK 54378990; bevestigd op amsterdamenergie.nl/over-ons/contact/). Geen partnerpagina gevonden, dus een vraag, geen aanbod. | Gratis, 10 min | **2** (R3 A2 K2) |
+| B4 | Zuiderlicht (zuiderlicht.nu): contactroute niet gecontroleerd. Pas als B1 of B3 reactie geeft; dan zoeken naar het contactformulier op de site. | Gratis, 10 min | **2** (R2 A2 K2) |
+| B5 | Ecostroom (ecostroom.nu): niet bekeken. Zelfde als B4. | Gratis, 10 min | **2** (R2 A2 K2) |
+| B6 | Parkeren: geen lokale haak. Alleen als er eigen, geanonimiseerde Amsterdamse cijfers zijn. | – | **2** (R2 A3 K1) |
 
 ### C. Media en journalisten (2025–2026) (16)
 
@@ -110,6 +207,29 @@ Nieuwswaardig voor hen is alleen: R met bandbreedte en "geen batterij"-uitkomst,
 | C15 | MAX Vandaag (Omroep MAX) | "Salderingsregeling stopt in 2027: zo haalt u dan het meeste uit uw zonnepanelen", 09-02-2026: https://www.maxvandaag.nl/sessies/themas/consument/salderingsregeling-stopt-in-2027-zo-haalt-u-dan-het-meeste-uit-uw-zonnepanelen/ | R, G | contactformulier maxvandaag.nl/contact/ (geen apart redactieadres gevonden); 035-677 61 88 | **midden/hoog**: precies de doelgroep (oudere huiseigenaren), artikel noemt geen rekentool | gevonden → concept 04 |
 | C16 | Welingelichtekringen.nl | "In Limburg kost het einde van salderen je €306 per jaar, in Noord-Holland €230…" (ANP-bericht over data van Pure Energie): https://www.welingelichtekringen.nl/samenleving/in-limburg-kost-het-einde-van-salderen-je-eur306-per-jaar-in-noord-holland-eur230-zoveel-scheelt-het-per-provincie | – | – | **laag**: overgenomen persbericht; de site heeft ook betaalde "partnerposting" (niet gebruiken) | gevonden |
 
+#### C. Volgende actie en prioriteit
+
+Voor alle redactionele rijen geldt: **pas verzenden als R live is** (op 2026-10-06 geeft `/rekentool` 404) en de voorwaarden in het betreffende concept zijn afgevinkt. Elke pitch begint met de eerlijke zin dat De Salderingsdienst B.V. commercieel is. Geen vervolgmail aan een redactie zonder reactie binnen twee weken; één herinnering is genoeg.
+
+| # | Volgende actie (exacte stap) | Kosten, tijd | Prioriteit |
+|---|---|---|---|
+| C1 | **Concept 02** via het formulier "Neem contact op met de online redactie" op https://radar.avrotros.nl/over/contact/ (naam, e-mail, bericht). Er is ook een WhatsApp-tiplijn (https://radar.avrotros.nl/over/contact/whatsapp/); die niet gebruiken voor een bedrijfspitch. Wacht op R, T en juridische toets. | Gratis, 30 min | **4** (R5 A5 K2): hoogste gezag, kleine kans |
+| C2 | Geen apart bericht: zit in C1. | – | **4** (R5 A5 K2) |
+| C3 | Geen apart bericht: zit in C1. | – | **4** (R5 A5 K2) |
+| C4 | **Niet benaderen.** Kassa stopt (5 december, zie verificatieronde 2). Als Pieter toch iets wil melden: kassa@bnnvara.nl (tips en klachten). Een zoekresultaat meldt dat de NPO Kassa schrapte omdat het te veel overlapte met Radar; richt dus op Radar (C1). | – | **2** (R2 A4 K1): programma eindigt over ca. twee maanden |
+| C5 | Alleen bij echt nieuws (cijfers uit R/T): formulier https://over.nos.nl/uw-vragen-reacties/persbericht-sturen/, redactie "Nieuws", korte tekst met link naar R en T. De NOS bevestigt geen ontvangst. Er is geen concept; schrijf alleen na livegang. | Gratis, 20 min | **3** (R4 A5 K1) |
+| C6 | Geen actie: context voor toon (meldpunt VEH). | – | **1** (geen pitch) |
+| C7 | Eerst het artikel over het CE Delft-onderzoek zoeken op rtl.nl/nieuws; contactroute **niet gevonden**. Zonder artikel geen pitch. | – | **3** (R4 A4 K1) |
+| C8 | Pieter zoekt zelf op nu.nl en op "tip de redactie"; niets gevonden via onze zoektool. | – | **3** (R3 A4 K1) |
+| C9 | **Pitch** een update van hun artikel over terugverdientijd (30-03-2024) met R en T: stuur een korte mail aan redactie@id.nl (adres uit de `llms.txt` van id.nl, bevestig bij de eerste verzending dat het aankomt). Onderwerp: "Update-voorstel bij uw artikel over de terugverdientijd van een thuisbatterij". Tekst: korte variant van concept 02 (verwijs naar hun artikel van 30-03-2024, dan R en M, dan de eerlijke zin dat De Salderingsdienst B.V. commercieel is); nog niet geschreven omdat R niet live is. Alleen na livegang R. | Gratis, 20 min | **3** (R4 A3 K3) |
+| C10 | In dezelfde mail als C9; niet apart. Geen correctie op "50% van de prijs" voorstellen, tenzij Pieter dat wil, en dan vriendelijk. | – | **3** (R3 A3 K2) |
+| C11 | **Concept 01** per e-mail aan redactie@solarmagazine.nl (adres bevestigd op solarmagazine.nl/contact; onderwerpregel van de pagina: "Tip voor de redactie" mag worden toegevoegd). Wacht op R en methodepagina M. Geen advertentie of registerlidmaatschap nodig (€349 per jaar is een apart betaald product). | Gratis, 30 min | **4** (R5 A4 K4): vakmedium dat lanceringen van rekentools publiceert |
+| C12 | **Concept 03** per e-mail aan redactie@energeia.nl (bevestigd op energeia.nl/over-energeia/; telefoon 020 344 5154). Lees eerst het artikel van Alex Kaat volledig (betaalmuur). Wacht op M. | Gratis, 30 min | **4** (R4 A4 K3) |
+| C13 | Geen actie: concurrent (gaslicht.com). | – | **1** (R1 A2 K1; advies: niet doen) |
+| C14 | Geen concept. Na livegang R/T: bel de perslijn 088 208 21 11 en vraag naar de woordvoerder duurzaamheid en energie, of laat een korte, feitelijke mail met links liggen als er geen e-mailadres is. Kans op vermelding zeer klein (eigen vergelijker). | Gratis, 15 min | **3** (R4 A5 K1) |
+| C15 | **Concept 04** via het formulier op https://www.maxvandaag.nl/contact/ (geen redactieadres; telefoon 035 677 61 88, werkdagen 09:00 tot 16:00). Het formulier (gecontroleerd 2026-10-06) vraagt aanhef, naam, adres, postcode en plaats, telefoon, e-mail, een onderwerp uit een keuzelijst (kies "Overige vragen"; "Vraag over een programma van MAX" past niet), bericht, akkoord op voorwaarden en een **CAPTCHA** die Pieter zelf invult. Vul bedrijfsgegevens in, geen privé-adres. Wacht op R; controleer dat de tool werkt zonder gegevens in te vullen. | Gratis, 20 min | **3** (R4 A3 K3) |
+| C16 | Geen actie: overgenomen persbericht. | – | **1** (R1 A1 K1) |
+
 ### D. Kennis- en bronpagina's (14)
 
 | # | Domein | Categorie | Hun pagina en waarom | Onze asset | Contactroute | Waarde | Kosten | Status |
@@ -129,6 +249,25 @@ Nieuwswaardig voor hen is alleen: R met bandbreedte en "geen batterij"-uitkomst,
 | D13 | keuze.nl | vergelijker (concurrent) | Excel-tool terugverdientijd | – | – | **laag** | – | gevonden, niet benaderen |
 | D14 | ioplus.nl | nieuwsplatform energietransitie | "Op zoek naar een thuisbatterij? Deze drie opties springen eruit" (noemt aanbieders) | R (lancering) | via site (**niet gecontroleerd**) | **laag/midden** | Gratis (redactioneel); betaalde content niet gebruiken | gevonden |
 
+#### D. Volgende actie en prioriteit
+
+| # | Volgende actie (exacte stap) | Kosten, tijd | Prioriteit |
+|---|---|---|---|
+| D1 | **Niet benaderen.** Milieu Centraal linkt niet naar aanbieders; wij citeren hen als tegenstem. Hun perstelefoon (06 811 662 14) is uitsluitend voor journalisten. | – | **1** (potentie R3 A5 K1; advies: niet doen) |
+| D2 | **Niet benaderen.** Eigen opslagcheck en meldpunt. pers@eigenhuis.nl is uit 2017 en niet te verifiëren. | – | **1** (potentie R4 A5 K1; advies: niet doen) |
+| D3 | Geen actie. Alleen reageren als HIER zelf een bronnenpagina bijwerkt. Contact: hier.nu/contact. | – | **2** (R3 A3 K1) |
+| D4 | Geen actie nu: de gelinkte pagina gaf 404. Contact via energiesamen.nu. | – | **2** (R2 A3 K2) |
+| D5 | Alleen als R vóór hun avond eind oktober 2026 live is, wat niet haalbaar lijkt. Anders niets. Contact: info@dorpspleindiepenveen.nl. | Gratis, 10 min | **2** (R3 A2 K2): timing mist |
+| D6 | Geen actie nu; contactroute niet gecontroleerd. | – | **2** (R2 A2 K3) |
+| D7 | **Niet doen.** Niet zelf bewerken, geen verzoek aan redacteuren. | – | **1** (potentie R1 A5 K0; belangenverstrengeling) |
+| D8 | Na livegang R: contact via de nieuwsredactie van tweakers.net; route **niet gezocht**. Geen forumberichten. | Gratis, 15 min | **3** (R3 A4 K2) |
+| D9 | **Niet doen.** Geen berichten namens het bedrijf op Reddit. | – | **1** (advies: niet doen) |
+| D10 | Geen actie; route loopt via A8. | – | **2** (R2 A3 K1) |
+| D11 | Geen actie; pagina gaf 404. | – | **2** (R2 A2 K2) |
+| D12 | **Niet benaderen**: concurrent. | – | **1** (advies: niet doen) |
+| D13 | **Niet benaderen**: concurrent. | – | **1** (advies: niet doen) |
+| D14 | Na livegang R: contactroute **niet gecontroleerd**; zoek op ioplus.nl naar redactie of tipformulier. Geen betaalde content. | Gratis, 15 min | **3** (R3 A3 K2) |
+
 ### E. Partners en leveranciers (alleen echte partners, invullen door Pieter)
 
 Geen namen verzonnen. Een partner- of leverancierslink is alleen in orde als de relatie echt bestaat, publiek mag worden gemaakt en de vermelding redactioneel klopt ("installatie door X"). Geen wederzijdse linkruil als afspraak.
@@ -138,6 +277,19 @@ Geen namen verzonnen. Een partner- of leverancierslink is alleen in orde als de 
 | E1 | [invullen door Pieter] | | | | open |
 | E2 | [invullen door Pieter] | | | | open |
 | E3 | [invullen door Pieter] | | | | open |
+
+#### E. Volgende actie en prioriteit
+
+| # | Volgende actie (exacte stap) | Kosten, tijd | Prioriteit |
+|---|---|---|---|
+| E1 tot en met E3 | Pieter vult per rij de echte partner in (naam, rol, of de partner een dealers- of samenwerkingenpagina heeft, en schriftelijk akkoord dat de relatie publiek mag). Pas daarna een bericht aan die partner, bijvoorbeeld met de vraag om op hun pagina "installatie door ons" te vermelden. Geen wederzijdse linkruil. Er is geen concept omdat de namen onbekend zijn. | – | n.v.t. (leeg; 0 tot 3 wint) |
+
+#### Aanvullend (niet in de 52 en niet meegeteld)
+
+| # | Wat | Volgende actie (exacte stap) | Kosten, tijd | Prioriteit |
+|---|---|---|---|---|
+| X1 | LinkedIn-bedrijfspagina | https://www.linkedin.com/company/setup/new/ vanaf een persoonlijk account van Pieter of Reener (de pagina moet aan een bestaand persoon hangen). Velden: naam `SalderingsDienst`, URL `salderingsdienst` indien vrij, website kit-UTM `linkedin`, branche en grootte (kit §2), logo `assets/logo-vierkant-1024.png`, tagline (kit §3, 100 tekens), "over ons" (kit §3, 750). Plaats geen reviews of "klantverhalen". Daarna kan de URL als `sameAs` in het Organization-schema (aparte opdracht). **Eerst controleren dat er geen pagina bestaat**: `linkedin.com/company/salderingsdienst` gaf 404. | Gratis, 20 min | **3** (R3 A3 K5): merkprofiel, `sameAs`-anker, kleine eigen zoekwaarde |
+| X2 | KvK-handelsnaam controleren | Zoek op kvk.nl op `42165216`, controleer of "SalderingsDienst" als handelsnaam staat ingeschreven en of het adres klopt. Zie kit §0. | Gratis, 5 min | n.v.t. (voorwaarde voor A1 tot A4) |
 
 **Telling:** A 16 · B 6 · C 16 · D 14 · E 3 open rijen (niet meegeteld) = **52 kansen**. Daarvan zijn er circa 11 "gevonden, niet benaderen" of "alleen noteren"; die staan erin zodat niemand ze opnieuw uitzoekt.
 
@@ -158,7 +310,9 @@ Meten: zet in deze lijst bij elke kans de status (gevonden → benaderd → gewo
 
 ## Volgorde (voorstel)
 
-1. Nu: A1 (na adrescheck), A2, A3, A4, A6, A7. Allemaal gratis en in eigen beheer; NAP exact gelijk aan de footer.
+(Vervangen door de "Top 10 in volgorde van opbrengst per uur werk" bovenaan dit bestand; onderstaande volgorde is de oorspronkelijke van ronde 1.)
+
+1. Nu: A1 (na adrescheck), A2, A3, A4, A6 (alleen als vraag), A7 (eerst een vraag). Allemaal gratis en in eigen beheer; NAP exact gelijk aan de footer.
 2. Na livegang R/T/M en juridische toets: C11 (Solar Magazine), dan C1–C3 (Radar, één bericht), C15 (MAX Vandaag), C12 (Energeia), C9 (id.nl).
 3. Parallel, laagdrempelig: B1 (!WOON), D5 (Diepenveen, vóór hun avond eind oktober alleen als R dan live is).
 4. Niet doen: A9–A12 (betaald), D1, D2, D7, D9, D12, D13.
@@ -166,12 +320,15 @@ Meten: zet in deze lijst bij elke kans de status (gevonden → benaderd → gewo
 ## Niet geverifieerd (samenvatting)
 
 - Of Jonas Daniël Meijerplein 25 C 2 een kantoor met klantcontact is (bepaalt A1).
-- Contactroutes van NOS, id.nl, Energeia, Consumentenbond (pers), Milieu Centraal (pers), Kassa (tipformulier), Zuiderlicht, Ecostroom, RoerdalenNu, ioplus.nl.
-- Of Kassa nog een actieve redactie heeft.
+- Of er al een Google Bedrijfsprofiel, Bing Places-vermelding of KvK-afgeleide gids bestaat. Onze zoektool ziet Maps niet; Pieter zoekt zelf (zie "Wat bestaat er al?").
+- Contactroutes die nog openstaan na ronde 2: Zuiderlicht, Ecostroom, RoerdalenNu, ioplus.nl, Tweakers, NU.nl, RTL Nieuws, De Telefoongids, Energieloketten.nl (aanmeldroute), Consumentenbond (e-mail; alleen telefoon gevonden), Milieu Centraal (e-mail; alleen telefoon gevonden), NOS (e-mail voor pitches: alleen formulier).
+- id.nl: het adres redactie@id.nl komt uit één bron (`llms.txt`) en is niet via een contactpagina bevestigd.
+- De einddatum van Kassa: 5 december (waarschijnlijk 2026, VARAgids) tegenover "2027" (NOS). Het programma stopt in elk geval.
 - RTL Nieuws- en NU.nl-artikelen over het onderwerp (niet gevonden via de zoekindex).
-- Kosten: Holland Solar-contributie, Solar Magazine Bedrijvenregister, Homedeal, actuele Werkspot-tarieven, De Telefoongids-basisvermelding.
-- Of thuisbatterijinstallateurs.nl en Regionaal Energieloket een adviesbedrijf zonder eigen installateurs toelaten.
-- pers@eigenhuis.nl (bron uit 2017).
+- Kosten: Holland Solar (jaartal en btw), Homedeal, actuele Werkspot-tarieven, De Telefoongids-basisvermelding.
+- Of thuisbatterijinstallateurs.nl en Regionaal Energieloket een adviesbedrijf zonder eigen installateurs toelaten (de pagina's zeggen er niets over; de vraag staat in draft 1 en 2).
+- De Nederlandse labels van de Google-categorieën in de picker, en de afmetingenrichtlijnen per platform (kit §2 en §5).
+- pers@eigenhuis.nl (bron uit 2017; eigenhuis.nl is voor onze tool onleesbaar).
 - Het Zonneplan-project met 500 huurwoningen in Amsterdam/Diemen (alleen gezien op zonneplan.nl).
 
 ## Opdrachten in webpagina's
