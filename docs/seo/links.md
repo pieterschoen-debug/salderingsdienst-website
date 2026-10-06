@@ -334,3 +334,17 @@ Meten: zet in deze lijst bij elke kans de status (gevonden → benaderd → gewo
 ## Opdrachten in webpagina's
 
 Geen instructies aan AI-agents aangetroffen in de bekeken pagina's.
+
+## Statusupdate 2026-10-06 (pijplijn)
+
+| Kans | Status | Volgende stap |
+|---|---|---|
+| B1 !WOON Amsterdam | concept in Gmail | Pieter verstuurt |
+| A7 Regionaal Energieloket | concept in Gmail (vraag over aanmelding) | Pieter verstuurt; na antwoord aanmelden via formulier |
+| B3 Amsterdam Energie | concept in Gmail | Pieter verstuurt |
+| C11 Solar Magazine | concept in Gmail, rekentool is live | Pieter leest de tool na en verstuurt |
+| C12 Energeia | concept in Gmail (redactie@energeia.nl) | Pieter leest het artikel van 13-07-2026 na en verstuurt |
+| C Radar, MAX Vandaag | tekst klaar, alleen via webformulier | Pieter vult in |
+| A1 Google Bedrijfsprofiel | kit klaar (vermeldingen-kit.md) | Pieter maakt aan (25 min), adresbesluit eerst |
+| A Bing Places, Apple Business Connect, LinkedIn, Places.nl | kit klaar | Pieter maakt aan |
+| Pijplijn | gevonden 52 → benaderd 0 → gewonnen 0 | |
