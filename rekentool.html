@@ -83,7 +83,7 @@
   <div class="rk-head">
     <h1>Wat kost het einde van salderen u, en wat doet een thuisbatterij?</h1>
     <p class="lead rk-intro">Vul uw verbruik en opwek in en u ziet wat het einde van de salderingsregeling op 1 januari 2027 u per jaar kost, in drie scenario's. De methode en elke aanname staan met bron op deze pagina, ook die voor een thuisbatterij. Wat een batterij in uw situatie oplevert, tonen wij hier niet: dat rekenen wij in het adviesgesprek door met uw eigen meterstanden en contract. De Salderingsdienst B.V. is een commercieel bedrijf dat ook thuisbatterijen levert, en "geen batterij" is in dat gesprek gewoon een mogelijke uitkomst.</p>
-    <p class="article-meta">Rekenmodel versie <span data-rk-versie>1.0.0</span>. Regels en prijzen gecontroleerd op <time datetime="2026-10-06">6 oktober 2026</time>. Wat u invult blijft in uw browser; wij vragen geen naam, adres of postcode.</p>
+    <p class="article-meta">Rekenmodel versie <span data-rk-versie>1.1.0</span>. Regels en prijzen gecontroleerd op <time datetime="2026-10-06">6 oktober 2026</time>. Wat u invult blijft in uw browser; wij vragen geen naam, adres of postcode.</p>
   </div>
 
   <noscript><p class="rk-noscript">De rekentool heeft JavaScript nodig. De uitkomst hieronder hoort bij de standaardwaarden; de methode en alle aannames staan verderop op deze pagina.</p></noscript>
@@ -324,7 +324,7 @@
 
   <section class="prose rk-methode" id="methode" aria-labelledby="rk-methode-kop">
     <h2 id="rk-methode-kop">Methode</h2>
-    <p>Rekenmodel versie <span data-rk-versie>1.0.0</span>, peildatum 6 oktober 2026. Het model is openbaar: de broncode staat in <a href="/js/rekenmodel.js">rekenmodel.js</a> en draait volledig in uw browser.</p>
+    <p>Rekenmodel versie <span data-rk-versie>1.1.0</span>, peildatum 6 oktober 2026. Het model is openbaar: de broncode staat in <a href="/js/rekenmodel.js">rekenmodel.js</a> en draait volledig in uw browser.</p>
     <ol>
       <li><strong>Per maand, per dag.</strong> Uw opwek wordt over de maanden verdeeld volgens de tabel hieronder; uw verbruik is elke dag gelijk. Binnen een maand rekent het model met een gemiddelde dag.</li>
       <li><strong>Direct eigen verbruik.</strong> Per dag gebruikt u het ingevulde percentage van de opwek direct zelf, maar nooit meer dan u die dag verbruikt. De rest van de opwek is overschot; de rest van uw verbruik haalt u van het net.</li>
@@ -364,6 +364,7 @@
     <h3>Wijzigingslog</h3>
     <ul data-rk-changelog>
       <li><strong>Weergave, 6 oktober 2026.</strong> De batterij-uitkomst (besparing en terugverdientijd) staat niet meer op deze pagina. Het model rekent hem nog steeds uit, op dezelfde manier; u krijgt hem in het adviesgesprek, doorgerekend met uw eigen meterstanden en contract.</li>
+      <li><strong>1.1.0, 6 oktober 2026.</strong> Terugleverkosten voor 2026 en 2027 apart, zodat een leverancierskeuze met lagere kosten vanaf 2027 het verlies in het referentiejaar niet verandert. Leverancierskeuze uit de tabel per leverancier toegevoegd.</li>
       <li><strong>1.0.0, 6 oktober 2026.</strong> Eerste publieke versie: maandmodel, drie scenario's, batterij met degradatie en terugverdientijd. Prijzen CBS augustus 2026; terugleververgoeding op het wettelijke minimum tot 1 januari 2030. Opbrengst uit onbalanshandel staat standaard op nul.</li>
     </ul>
   </section>
