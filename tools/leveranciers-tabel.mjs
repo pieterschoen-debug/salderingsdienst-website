@@ -1,13 +1,13 @@
 /* ============================================================
    SalderingsDienst — tools/leveranciers-tabel.mjs
-   Drukt de statische HTML af van de leverancierstabel en de lijst
-   met rekentool-links, uit dezelfde dataset als de pagina en de
+   Drukt de statische HTML af van de telzin, de leverancierstabel en de
+   lijst met rekentool-links, uit dezelfde dataset als de pagina en de
    rekentool (js/data/leveranciers-2027.js). De HTML-functies staan
    in die dataset (SD_LEVERANCIERS_HTML), zodat het inline script op
    de pagina en dit script dezelfde tabel maken.
 
    Gebruik:
-     node tools/leveranciers-tabel.mjs          print beide blokken
+     node tools/leveranciers-tabel.mjs          print de blokken
      node tools/leveranciers-tabel.mjs --write  zet ze in de pagina,
        tussen de markeringen <!-- lv:tabel:begin --> enz.
      node tools/leveranciers-tabel.mjs --check  exit 1 als de pagina
@@ -24,6 +24,7 @@ const { data, html } = require(join(root, 'js/data/leveranciers-2027.js'));
 const PAGINA = join(root, 'kennisbank/terugleververgoeding-2027-per-leverancier.html');
 
 const blokken = {
+  telling: html.telling(data),
   tabel: html.tabel(data),
   links: html.rekentoolLinks(data)
 };

@@ -95,11 +95,15 @@
      Leest window.SD_LEVERANCIERS uit js/data/leveranciers-2027.js,
      dezelfde dataset als de tabel op
      /kennisbank/terugleververgoeding-2027-per-leverancier. Kiesbaar zijn
-     rijen met een vergoeding en terugleverkosten per kWh; rijen die
-     alleen van een vergelijkingssite komen staan in een aparte groep en
-     noemen die site in de bronregel. Laadt de dataset niet, dan blijft
-     het veld verborgen en werkt de tool zoals altijd. In de URL staat
-     alleen het id (lv=). */
+     rijen met een vergoeding en terugleverkosten per kWh voor 2027
+     (r.kiesbaar). Rijen die bij de leverancier zelf zijn gecontroleerd
+     staan in de eerste groep; rijen die alleen van een vergelijkingssite
+     komen staan in de tweede en noemen die site in de bronregel. De
+     terugleverkosten 2026 gaan als terugleverkosten_2026_eur_kwh mee
+     (interne invoer, geen veld in de aannames) zodra ze per kWh bekend
+     zijn en geen staffel zijn; anders rekent het model 2026 met de
+     kosten 2027. Laadt de dataset niet, dan blijft het veld verborgen en
+     werkt de tool zoals altijd. In de URL staat alleen het id (lv=). */
   var LV = window.SD_LEVERANCIERS;
   var lvBlok = q('[data-rk-leverancier-blok]');
   var lvSelect = q('[data-rk-leverancier]');
@@ -108,10 +112,14 @@
   var lvGekozen = '';
 
   function lvKiesbaar(r) {
-    return r && (r.status === 'geverifieerd' || r.status === 'secundair')
-      && typeof r.vergoeding_ct_kwh === 'number' && typeof r.terugleverkosten_ct_kwh === 'number';
+    return !!r && (r.status === 'geverifieerd' || r.status === 'secundair')
+      && typeof r.vergoeding_2027_ct_kwh === 'number' && typeof r.kosten_2027_ct_kwh === 'number';
   }
   function lvEur(ct) { return Math.round(ct * 100) / 10000; }
+  /* Kosten 2026 alleen als per kWh bekend en geen staffel (een staffel geldt alleen bij 2.500 kWh). */
+  function lvKosten2026(r) {
+    return (typeof r.kosten_2026_ct_kwh === 'number' && !r.kosten_staffel) ? lvEur(r.kosten_2026_ct_kwh) : null;
+  }
   function lvDatum(iso) {
     var d = String(iso || '').split('-');
     var maanden = ['januari', 'februari', 'maart', 'april', 'mei', 'juni', 'juli', 'augustus', 'september', 'oktober', 'november', 'december'];
@@ -131,10 +139,15 @@
       a.textContent = b.naam || r.leverancier;
       lvNote.appendChild(a);
     } else lvNote.appendChild(document.createTextNode(b.naam || r.leverancier));
-    var netto = r.vergoeding_ct_kwh - r.terugleverkosten_ct_kwh;
-    lvNote.appendChild(document.createTextNode(', peildatum ' + lvDatum(r.peildatum || LV.peildatum) + '. Netto '
-      + netto.toLocaleString('nl-NL', { maximumFractionDigits: 2 }) + ' cent per kWh'
-      + (netto < 0 ? '; zet de ondergrens hieronder uit als uw contract netto geld kost.' : '.')));
+    var netto = r.vergoeding_2027_ct_kwh - r.kosten_2027_ct_kwh;
+    var k26 = lvKosten2026(r);
+    lvNote.appendChild(document.createTextNode(', peildatum ' + lvDatum(r.peildatum || LV.peildatum) + '. Netto vanaf 2027 '
+      + netto.toLocaleString('nl-NL', { maximumFractionDigits: 3 }) + ' cent per kWh'
+      + (r.netto_basis ? ' (' + r.netto_basis + ')' : '') + '. '
+      + (k26 !== null
+        ? 'Voor 2026 rekent de tool met de terugleverkosten van ' + (r.kosten_2026_ct_kwh).toLocaleString('nl-NL', { maximumFractionDigits: 3 }) + ' cent per kWh, zodat lagere kosten in 2027 de referentie niet veranderen.'
+        : 'De terugleverkosten voor 2026 zijn bij deze leverancier niet per kWh bekend; voor 2026 rekent de tool met dezelfde kosten als voor 2027.')
+      + (netto < 0 ? ' Zet de ondergrens hieronder uit als uw contract netto geld kost.' : '')));
     lvNote.hidden = false;
   }
   function lvKies(id, schrijf) {
@@ -142,8 +155,9 @@
     lvGekozen = r ? id : '';
     if (lvSelect) lvSelect.value = lvGekozen;
     if (r) {
-      state.terugleververgoeding_bruto_eur_kwh = lvEur(r.vergoeding_ct_kwh);
-      state.terugleverkosten_eur_kwh = lvEur(r.terugleverkosten_ct_kwh);
+      state.terugleververgoeding_bruto_eur_kwh = lvEur(r.vergoeding_2027_ct_kwh);
+      state.terugleverkosten_eur_kwh = lvEur(r.kosten_2027_ct_kwh);
+      state.terugleverkosten_2026_eur_kwh = lvKosten2026(r);
     }
     lvToonBron(r || null);
     if (schrijf) { schrijfVelden(); plan(); }
@@ -158,9 +172,10 @@
     /* Wie een van beide bedragen zelf aanpast, rekent niet meer met de leverancier. */
     var r = lvRijen[lvGekozen];
     if (!r) return;
-    if (Math.abs(state.terugleververgoeding_bruto_eur_kwh - lvEur(r.vergoeding_ct_kwh)) > 1e-9
-      || Math.abs(state.terugleverkosten_eur_kwh - lvEur(r.terugleverkosten_ct_kwh)) > 1e-9) {
+    if (Math.abs(state.terugleververgoeding_bruto_eur_kwh - lvEur(r.vergoeding_2027_ct_kwh)) > 1e-9
+      || Math.abs(state.terugleverkosten_eur_kwh - lvEur(r.kosten_2027_ct_kwh)) > 1e-9) {
       lvGekozen = '';
+      state.terugleverkosten_2026_eur_kwh = null;
       if (lvSelect) lvSelect.value = '';
       lvToonBron(null);
     }
@@ -181,6 +196,7 @@
       o.textContent = r.leverancier + ', ' + r.contractvorm;
       g.el.appendChild(o);
     });
+    /* De geverifieerde groep staat bovenaan, de vergelijkingssites daaronder. */
     if (groepen.geverifieerd.el) lvSelect.appendChild(groepen.geverifieerd.el);
     if (groepen.secundair.el) lvSelect.appendChild(groepen.secundair.el);
     if (!Object.keys(lvRijen).length) return;
@@ -191,6 +207,7 @@
       lvKies('', false);
       state.terugleververgoeding_bruto_eur_kwh = STANDAARD.terugleververgoeding_bruto_eur_kwh;
       state.terugleverkosten_eur_kwh = STANDAARD.terugleverkosten_eur_kwh;
+      state.terugleverkosten_2026_eur_kwh = null;
       schrijfVelden();
       plan();
     });

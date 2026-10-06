@@ -133,6 +133,26 @@ bewering(M.STANDAARD.stroomprijs_allin_eur_kwh === 0.258 && M.STANDAARD.teruglev
   bewering(s.oordeel === null && s.besparing_batterij_per_jaar === 0 && s.batterij_prijs_eur === 0, 'zonder batterij: oordeel null en besparing 0');
 }
 
+/* 16. Terugleverkosten 2026 los van 2027: de referentie 2026 verandert niet door lagere kosten 2027 */
+{
+  const hoog26 = M.bereken({ batterij_kwh: 0, terugleverkosten_eur_kwh: 0.03, terugleverkosten_2026_eur_kwh: 0.12 }).scenarios;
+  const ref = M.bereken({ batterij_kwh: 0, terugleverkosten_eur_kwh: 0.12 }).scenarios;
+  const lager27 = M.bereken({ batterij_kwh: 0, terugleverkosten_eur_kwh: 0.01, terugleverkosten_2026_eur_kwh: 0.12 }).scenarios;
+  bewering(S.every((n) => bijna(hoog26[n].kosten_2026, ref[n].kosten_2026) && bijna(lager27[n].kosten_2026, hoog26[n].kosten_2026))
+    && S.every((n) => lager27[n].kosten_2027_zonder_batterij < hoog26[n].kosten_2027_zonder_batterij + 1e-9),
+    'kosten 2026 hangen niet af van de terugleverkosten 2027 zodra terugleverkosten_2026_eur_kwh is ingevuld');
+}
+
+/* 17. Zonder terugleverkosten_2026_eur_kwh gelijk aan de kosten 2027 (gedrag van versie 1.0.0) */
+{
+  const zonder = M.bereken({ batterij_kwh: 0, terugleverkosten_eur_kwh: 0.05 }).scenarios;
+  const gelijk = M.bereken({ batterij_kwh: 0, terugleverkosten_eur_kwh: 0.05, terugleverkosten_2026_eur_kwh: 0.05 }).scenarios;
+  const leeg = M.bereken({ batterij_kwh: 0, terugleverkosten_eur_kwh: 0.05, terugleverkosten_2026_eur_kwh: null }).scenarios;
+  bewering(S.every((n) => bijna(zonder[n].kosten_2026, gelijk[n].kosten_2026) && bijna(zonder[n].kosten_2026, leeg[n].kosten_2026)
+    && bijna(zonder[n].verlies_per_jaar, gelijk[n].verlies_per_jaar)),
+    'zonder terugleverkosten_2026_eur_kwh zijn de kosten 2026 gelijk aan die met hetzelfde bedrag voor 2027');
+}
+
 /* Rekenvoorbeeld voor het rapport */
 const eur = (n) => '€ ' + Math.round(n).toLocaleString('nl-NL');
 console.log('\nRekenvoorbeeld 3.500 kWh verbruik, 3.500 kWh opwek, 30% direct, vast contract:');
