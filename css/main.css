@@ -1979,6 +1979,20 @@ h1, h2, h3, .h2, .funnel-title, .kb-pillar h3, .kb-card h3 {
 .rk-param-waarde .field { width: 100%; max-width: 180px; }
 .rk-param-waarde a { font-size: 14.5px; }
 .rk-param-bron { font-size: 14px; line-height: 1.6; color: var(--ink-500); }
+/* Leverancierstabel (/kennisbank/terugleververgoeding-2027-per-leverancier) */
+.lv-table { min-width: 880px; font-size: 14.5px; }
+.lv-table th, .lv-table td { padding: 10px 12px; }
+.lv-table small { display: inline-block; font-size: 12.5px; line-height: 1.45; color: var(--ink-500); margin-top: 2px; white-space: normal; font-family: var(--font-sans, inherit); }
+.lv-table .num { white-space: normal; }
+.lv-table a { color: var(--navy-400); text-decoration: underline; text-underline-offset: 2px; }
+.lv-links { columns: 2 260px; column-gap: 28px; }
+.lv-links li { break-inside: avoid; }
+/* Leverancierskeuze in de aannames (js/data/leveranciers-2027.js) */
+.rk-param[hidden], .rk-lev-bron[hidden] { display: none; }
+@media (min-width: 760px) { .rk-param--lev .rk-param-waarde { grid-column: span 2; } }
+.rk-lev-select { max-width: 360px; min-height: 46px; font-size: 15.5px; }
+.rk-lev-bron { font-size: 14px; line-height: 1.6; color: var(--ink-500); margin: 8px 0 0; }
+.rk-lev-bron a { color: var(--navy-400); text-decoration: underline; text-underline-offset: 2px; }
 .rk-tag { display: inline-block; font-size: 12.5px; font-weight: 600; line-height: 1.5; color: var(--ink-600); background: var(--paper-3); border: 1px solid var(--line-2); border-radius: var(--radius-pill); padding: 0 8px; margin-right: 4px; }
 .rk-delta { color: var(--ink-700); }
 .rk-check-wrap { display: inline-flex; align-items: flex-start; gap: 8px; }

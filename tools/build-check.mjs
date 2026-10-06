@@ -25,7 +25,8 @@ const jsFiles = [
   'api/bookings.js', 'api/portal-login.js', 'api/chat.js',
   'api/_lib/store.js', 'api/_lib/auth.js', 'api/_lib/ratelimit.js',
   'api/_lib/attributie.js', 'api/_lib/pipedrive.js', 'tools/attributie-test.mjs',
-  'js/rekenmodel.js', 'js/rekentool.js', 'tools/rekenmodel-test.mjs', 'tools/rekenvoorbeelden.mjs'
+  'js/rekenmodel.js', 'js/rekentool.js', 'tools/rekenmodel-test.mjs', 'tools/rekenvoorbeelden.mjs',
+  'js/data/leveranciers-2027.js', 'tools/leveranciers-tabel.mjs'
 ];
 for (const f of jsFiles) {
   const p = join(root, f);
@@ -58,9 +59,18 @@ try {
   fail('rekenmodel-test mislukt:\n' + String((e.stderr || '') + (e.stdout || '') || e.message).slice(0, 1500));
 }
 
+/* 1d. Leverancierstabel: statische tabel op de pagina gelijk aan de dataset */
+console.log('Leverancierstabel:');
+try {
+  const uit = execFileSync(process.execPath, [join(root, 'tools/leveranciers-tabel.mjs'), '--check'], { stdio: 'pipe' }).toString();
+  ok(uit.trim());
+} catch (e) {
+  fail('leveranciers-tabel --check mislukt:\n' + String((e.stderr || '') + (e.stdout || '') || e.message).slice(0, 800));
+}
+
 /* 2. Kernbestanden */
 console.log('Kernbestanden:');
-for (const f of ['index.html', 'adviesgesprek.html', 'widget.html', 'portal.html', 'rekentool.html', 'css/tokens.css', 'css/main.css', 'vercel.json', 'assets/hero-advies.jpg', 'assets/hero-advies-mobile.jpg']) {
+for (const f of ['index.html', 'adviesgesprek.html', 'widget.html', 'portal.html', 'rekentool.html', 'kennisbank/terugleververgoeding-2027-per-leverancier.html', 'css/tokens.css', 'css/main.css', 'vercel.json', 'assets/hero-advies.jpg', 'assets/hero-advies-mobile.jpg']) {
   if (existsSync(join(root, f))) ok(f); else fail(f + ' ontbreekt');
 }
 

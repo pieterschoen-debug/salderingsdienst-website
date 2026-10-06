@@ -227,6 +227,17 @@
         <div class="rk-param-bron"><span class="rk-tag">geverifieerd</span> CBS StatLine 85592NED, augustus 2026: variabel leveringstarief &euro; 0,1469 plus energiebelasting &euro; 0,11085 per kWh, beide inclusief btw. <a href="https://www.cbs.nl/nl-nl/cijfers/detail/85592NED" rel="nofollow noopener" target="_blank">cbs.nl</a>, gecontroleerd 2026-10-06. Gelijk in alle scenario's. Vul uw eigen tarief in van uw jaarafrekening.</div>
       </div>
 
+      <div class="rk-param rk-param--lev" data-rk-leverancier-blok hidden>
+        <div class="rk-param-naam"><label for="rk-p-leverancier"><strong>Uw leverancier (optioneel)</strong></label><span class="rk-param-unit">vult vergoeding en terugleverkosten hieronder in</span></div>
+        <div class="rk-param-waarde">
+          <select class="fselect rk-lev-select" id="rk-p-leverancier" data-rk-leverancier>
+            <option value="">Zelf invullen</option>
+          </select>
+          <p class="rk-lev-bron" data-rk-leverancier-bron aria-live="polite" hidden></p>
+          <p class="rk-lev-bron">De lijst toont leveranciers waarvan een vergoeding en terugleverkosten per kWh voor 2027 bekend zijn. De meeste bedragen komen van vergelijkingssites, omdat leveranciers ze zelf vaak alleen in hun aanbod noemen; controleer ze in uw eigen contract. Het volledige overzicht, met bron en peildatum per leverancier, staat in <a href="/kennisbank/terugleververgoeding-2027-per-leverancier">terugleververgoeding en terugleverkosten 2027 per leverancier</a>.</p>
+        </div>
+      </div>
+
       <div class="rk-param">
         <div class="rk-param-naam"><label for="rk-p-vergoeding"><strong>Terugleververgoeding vanaf 2027, bruto</strong></label><span class="rk-param-unit">euro per kWh</span></div>
         <div class="rk-param-waarde"><input class="field rk-field-sm" id="rk-p-vergoeding" type="text" inputmode="decimal" autocomplete="off" data-rk="terugleververgoeding_bruto_eur_kwh" data-soort="dec" value="0,061"></div>
@@ -393,6 +404,7 @@
 
 <script defer src="js/motion.js"></script>
 <script defer src="js/rekenmodel.js"></script>
+<script defer src="js/data/leveranciers-2027.js"></script>
 <script defer src="js/rekentool.js"></script>
 </body>
 </html>
