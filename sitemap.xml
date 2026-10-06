@@ -38,6 +38,18 @@
     <priority>0.8</priority>
   </url>
   <url>
+    <loc>https://www.salderingsdienst.nl/kennisbank/vast-of-dynamisch-na-2027</loc>
+    <lastmod>2026-10-06</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://www.salderingsdienst.nl/kennisbank/welke-batterijgrootte</loc>
+    <lastmod>2026-10-06</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
     <loc>https://www.salderingsdienst.nl/kennisbank</loc>
     <lastmod>2026-10-06</lastmod>
     <changefreq>weekly</changefreq>

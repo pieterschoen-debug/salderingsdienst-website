@@ -25,7 +25,7 @@ const jsFiles = [
   'api/bookings.js', 'api/portal-login.js', 'api/chat.js',
   'api/_lib/store.js', 'api/_lib/auth.js', 'api/_lib/ratelimit.js',
   'api/_lib/attributie.js', 'api/_lib/pipedrive.js', 'tools/attributie-test.mjs',
-  'js/rekenmodel.js', 'js/rekentool.js', 'tools/rekenmodel-test.mjs'
+  'js/rekenmodel.js', 'js/rekentool.js', 'tools/rekenmodel-test.mjs', 'tools/rekenvoorbeelden.mjs'
 ];
 for (const f of jsFiles) {
   const p = join(root, f);
