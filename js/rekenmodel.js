@@ -75,7 +75,7 @@
     dynamisch_spread_eur_kwh: 0.10,
     onbalans_opbrengst_eur_jaar: 0,
     netto_vergoeding_min_nul: true,
-    kwh_per_paneel: 350
+    kwh_per_paneel: 315
   };
 
   /* Scenario's: verschuivingen ten opzichte van de (eventueel aangepaste)
