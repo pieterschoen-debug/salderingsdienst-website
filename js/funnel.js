@@ -66,7 +66,10 @@
   }
 
   /* Uitkomst uit /rekentool (js/rekentool.js, bron 'rekentool'): geen
-     bespaarcheck-cijfers, maar verlies per jaar, batterij en oordeel. */
+     bespaarcheck-cijfers, maar verlies per jaar en batterijgrootte.
+     Besparing, terugverdientijd en oordeel van de batterij staan wel in
+     sessionStorage (voor de adviseur), maar worden hier bewust niet
+     getoond: die uitkomst krijgt de klant in het adviesgesprek. */
   function isRekentool(f) {
     return !!(f && f.bron === 'rekentool' && f.rekentool && f.rekentool.realistisch);
   }
@@ -78,7 +81,6 @@
     var qs = i > -1 ? u.slice(i) : '';
     return '/rekentool' + (/^\?[A-Za-z0-9=&._-]*$/.test(qs) ? qs : '');
   }
-  var OORDEEL = { loont: 'Loont', twijfelgeval: 'Twijfelgeval', loont_niet: 'Loont niet' };
 
   function vulRekentool(f) {
     var rt = f.rekentool, r = rt.realistisch;
@@ -86,18 +88,11 @@
     var lo = band.length === 2 ? Math.min(num(band[0]), num(band[1])) : num(r.verlies_per_jaar);
     var hi = band.length === 2 ? Math.max(num(band[0]), num(band[1])) : num(r.verlies_per_jaar);
     var batterij = num(rt.invoer && rt.invoer.batterij_kwh);
-    var besparing = num(r.besparing_batterij_per_jaar);
     q('[data-fs-rk-verlies]', summary).textContent = fmt(Math.round(num(r.verlies_per_jaar) / 10) * 10);
     q('[data-fs-rk-band]', summary).textContent = '(realistisch scenario, bandbreedte ' + eur10(lo) + ' tot ' + eur10(hi) + ')';
     q('[data-fs-rk-batterij]', summary).textContent = batterij > 0
       ? batterij.toLocaleString('nl-NL', { maximumFractionDigits: 1 }) + ' kWh'
       : 'Geen batterij';
-    var rijBesp = q('[data-fs-rk-besparing-rij]', summary);
-    rijBesp.hidden = !(batterij > 0 && besparing > 0);
-    q('[data-fs-rk-besparing]', summary).textContent = eur10(besparing) + ' per jaar';
-    q('[data-fs-rk-oordeel]', summary).textContent = batterij > 0 && OORDEEL[r.oordeel]
-      ? OORDEEL[r.oordeel]
-      : 'Zonder batterij gerekend';
     var edit = q('[data-fs-rk-edit]', summary);
     if (edit) edit.setAttribute('href', rekentoolUrl(f));
   }

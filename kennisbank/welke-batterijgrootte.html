@@ -41,7 +41,7 @@
   "@type":"Article",
   "@id":"https://www.salderingsdienst.nl/kennisbank/welke-batterijgrootte#article",
   "headline":"Welke thuisbatterij-grootte past bij uw dak en verbruik, en wanneer geen batterij?",
-  "description":"De capaciteitscurve uit het rekenmodel van SalderingsDienst: wat elke extra kWh thuisbatterij oplevert, waarom de winter de grens zet, een intakechecklist en wanneer geen batterij het goede antwoord is.",
+  "description":"De capaciteitscurve uit het rekenmodel van SalderingsDienst: hoeveel stroom elke extra kWh thuisbatterij verplaatst, waarom de winter de grens zet, een intakechecklist en wanneer geen batterij het goede antwoord is.",
   "inLanguage":"nl-NL",
   "datePublished":"2026-10-06",
   "dateModified":"2026-10-06",
@@ -85,16 +85,16 @@
 
   <h1 style="font-size:clamp(30px,3.8vw,44px); line-height:1.1; letter-spacing:-.4px; margin:0 0 20px;">Welke thuisbatterij-grootte past bij uw dak en verbruik, en wanneer geen batterij?</h1>
 
-  <p class="article-meta">Geschreven door de adviseurs van <strong>SalderingsDienst</strong>. Laatst gecontroleerd op <time datetime="2026-10-06">6 oktober 2026</time>. De Salderingsdienst B.V. is een commercieel bedrijf dat ook thuisbatterijen levert. Alle bedragen in dit artikel komen uit hetzelfde rekenmodel als onze <a href="/rekentool">rekentool</a> (versie 1.0.0), en elke regel kunt u daar zelf openen.</p>
+  <p class="article-meta">Geschreven door de adviseurs van <strong>SalderingsDienst</strong>. Laatst gecontroleerd op <time datetime="2026-10-06">6 oktober 2026</time>. De Salderingsdienst B.V. is een commercieel bedrijf dat ook thuisbatterijen levert. Alle kWh-cijfers in dit artikel komen uit hetzelfde rekenmodel als onze <a href="/rekentool">rekentool</a> (versie 1.0.0), en elke regel kunt u daar zelf openen. Wat een batterij in euro's oplevert, staat hier bewust niet: die uitkomst rekenen wij per huishouden door in het adviesgesprek.</p>
 
   <div class="card answer-card">
     <div class="confirm-block-label">Kort antwoord</div>
-    <p>In ons rekenmodel levert elke extra kWh minder op: bij een gemiddeld huishouden voegt een batterij boven 8 kWh niets meer toe, bij een huishouden met warmtepomp ligt die grens rond 10 kWh. Die grens komt niet van de grootte van uw dak, maar van wat u 's avonds en 's nachts verbruikt en van het kleine zonne-overschot in de winter. Bij een prijs van 900 euro per kWh verdient in deze voorbeelden geen enkele maat zich binnen twaalf jaar terug, in geen van de drie scenario's, en dan is geen batterij het eerlijke antwoord.</p>
+    <p>In ons rekenmodel verplaatst elke extra kWh capaciteit minder stroom: bij een gemiddeld huishouden voegt een batterij boven 8 kWh niets meer toe, bij een huishouden met warmtepomp ligt die grens rond 10 kWh. Die grens komt niet van de grootte van uw dak, maar van wat u 's avonds en 's nachts verbruikt en van het kleine zonne-overschot in de winter. Capaciteit boven die grens betaalt u wel, maar gebruikt u vrijwel nooit. Wat de maat onder de grens bij uw contract en de prijs van het systeem oplevert, rekenen wij in het adviesgesprek door met uw eigen meterstanden.</p>
   </div>
 
   <div class="prose">
     <h2 id="taak">Waar dit artikel over gaat</h2>
-    <p>Of een thuisbatterij na 2027 loont, rekenen wij voor in <a href="/kennisbank/thuisbatterij-na-2027">Verdient een thuisbatterij zich terug na 2027?</a>. Dit artikel gaat over de vervolgvraag: als u een batterij overweegt, hoeveel kilowattuur heeft dan zin? Wij beantwoorden die vraag niet met een vuistregel per zonnepaneel, maar met een capaciteitscurve: wat levert elke extra kWh op, en vanaf welke maat koopt u capaciteit die vrijwel nooit vol of leeg raakt?</p>
+    <p>Hoe de rekensom achter een thuisbatterij na 2027 werkt, en welke subsidie en welk btw-voordeel er niet zijn, leest u in <a href="/kennisbank/thuisbatterij-na-2027">Verdient een thuisbatterij zich terug na 2027?</a>. Dit artikel gaat over de vervolgvraag: als u een batterij overweegt, hoeveel kilowattuur heeft dan zin? Wij beantwoorden die vraag niet met een vuistregel per zonnepaneel, maar met een capaciteitscurve: hoeveel stroom verplaatst elke extra kWh, en vanaf welke maat koopt u capaciteit die vrijwel nooit vol of leeg raakt?</p>
 
     <div class="card assumptions">
       <h3>Aannames in de voorbeelden</h3>
@@ -109,175 +109,171 @@
     </div>
 
     <h2 id="curve">De capaciteitscurve</h2>
-    <p>In de tabellen staat per batterijgrootte wat de batterij in het eerste jaar bespaart. De kolom "erbij per extra kWh" laat zien wat elke kilowattuur bovenop de vorige maat nog toevoegt, in het realistische scenario. De laatste kolom geeft de prijs waarbij de batterij zich in twaalf jaar precies zou terugverdienen, ook realistisch.</p>
+    <p>In de tabellen staat per batterijgrootte hoeveel zonnestroom de batterij in het eerste jaar verplaatst: stroom die u anders had teruggeleverd en die u nu later op de dag zelf gebruikt. De kolom "erbij per extra kWh capaciteit" laat zien hoeveel kWh per jaar elke kilowattuur bovenop de vorige maat nog toevoegt, in het realistische scenario. Daar zit de knik in de curve.</p>
 
     <h3 id="c1">Gemiddeld huishouden: 3.500 kWh verbruik, 3.500 kWh opwek</h3>
     <div class="prose-table-wrap">
       <table class="prose-table">
-        <caption>Gemiddeld huishouden: verbruik 3.500 kWh, opwek 3.500 kWh, vast contract. Besparing door de batterij in het eerste jaar, afgerond op tientallen euro's. Rekenmodel 1.0.0.</caption>
-        <thead><tr><th scope="col">Batterij</th><th scope="col">Conservatief</th><th scope="col">Realistisch</th><th scope="col">Optimistisch</th><th scope="col">Erbij per extra kWh</th><th scope="col">Terugverdiend in 12 jaar bij een prijs tot</th></tr></thead>
+        <caption>Gemiddeld huishouden: verbruik 3.500 kWh, opwek 3.500 kWh, vast contract. Zonnestroom die de batterij in het eerste jaar verplaatst, afgerond op tientallen kWh. Laatste kolom: realistisch scenario. Rekenmodel 1.0.0.</caption>
+        <thead><tr><th scope="col">Batterij</th><th scope="col">Conservatief</th><th scope="col">Realistisch</th><th scope="col">Optimistisch</th><th scope="col">Erbij per extra kWh capaciteit</th></tr></thead>
         <tbody>
-              <tr><th scope="row"><a href="/rekentool?b=0">geen</a></th><td class="num">€ 0</td><td class="num">€ 0</td><td class="num">€ 0</td><td class="num"></td><td class="num"></td></tr>
-              <tr><th scope="row"><a href="/rekentool?b=2">2 kWh</a></th><td class="num">€ 140</td><td class="num">€ 140</td><td class="num">€ 120</td><td class="num">€ 69</td><td class="num">€ 1.490 (€ 740 per kWh)</td></tr>
-              <tr><th scope="row"><a href="/rekentool?b=4">4 kWh</a></th><td class="num">€ 260</td><td class="num">€ 250</td><td class="num">€ 210</td><td class="num">€ 55</td><td class="num">€ 2.700 (€ 670 per kWh)</td></tr>
-              <tr><th scope="row"><a href="/rekentool">5 kWh</a></th><td class="num">€ 310</td><td class="num">€ 290</td><td class="num">€ 250</td><td class="num">€ 47</td><td class="num">€ 3.240 (€ 650 per kWh)</td></tr>
-              <tr><th scope="row"><a href="/rekentool?b=6">6 kWh</a></th><td class="num">€ 350</td><td class="num">€ 330</td><td class="num">€ 260</td><td class="num">€ 36</td><td class="num">€ 3.700 (€ 620 per kWh)</td></tr>
-              <tr><th scope="row"><a href="/rekentool?b=8">8 kWh</a></th><td class="num">€ 410</td><td class="num">€ 340</td><td class="num">€ 260</td><td class="num">€ 7</td><td class="num">€ 4.090 (€ 510 per kWh)</td></tr>
-              <tr><th scope="row"><a href="/rekentool?b=10">10 kWh</a></th><td class="num">€ 410</td><td class="num">€ 340</td><td class="num">€ 260</td><td class="num">€ 0</td><td class="num">€ 4.120 (€ 410 per kWh)</td></tr>
-              <tr><th scope="row"><a href="/rekentool?b=12">12 kWh</a></th><td class="num">€ 410</td><td class="num">€ 340</td><td class="num">€ 260</td><td class="num">€ 0</td><td class="num">€ 4.120 (€ 340 per kWh)</td></tr>
-              <tr><th scope="row"><a href="/rekentool?b=15">15 kWh</a></th><td class="num">€ 410</td><td class="num">€ 340</td><td class="num">€ 260</td><td class="num">€ 0</td><td class="num">€ 4.120 (€ 270 per kWh)</td></tr>
+              <tr><th scope="row"><a href="/rekentool?b=0">geen</a></th><td class="num">0 kWh</td><td class="num">0 kWh</td><td class="num">0 kWh</td><td class="num"></td></tr>
+              <tr><th scope="row"><a href="/rekentool?b=2">2 kWh</a></th><td class="num">610 kWh</td><td class="num">650 kWh</td><td class="num">660 kWh</td><td class="num">323 kWh</td></tr>
+              <tr><th scope="row"><a href="/rekentool?b=4">4 kWh</a></th><td class="num">1.110 kWh</td><td class="num">1.160 kWh</td><td class="num">1.170 kWh</td><td class="num">257 kWh</td></tr>
+              <tr><th scope="row"><a href="/rekentool">5 kWh</a></th><td class="num">1.330 kWh</td><td class="num">1.380 kWh</td><td class="num">1.360 kWh</td><td class="num">223 kWh</td></tr>
+              <tr><th scope="row"><a href="/rekentool?b=6">6 kWh</a></th><td class="num">1.520 kWh</td><td class="num">1.550 kWh</td><td class="num">1.430 kWh</td><td class="num">168 kWh</td></tr>
+              <tr><th scope="row"><a href="/rekentool?b=8">8 kWh</a></th><td class="num">1.740 kWh</td><td class="num">1.620 kWh</td><td class="num">1.460 kWh</td><td class="num">33 kWh</td></tr>
+              <tr><th scope="row"><a href="/rekentool?b=10">10 kWh</a></th><td class="num">1.740 kWh</td><td class="num">1.620 kWh</td><td class="num">1.460 kWh</td><td class="num">0 kWh</td></tr>
+              <tr><th scope="row"><a href="/rekentool?b=12">12 kWh</a></th><td class="num">1.740 kWh</td><td class="num">1.620 kWh</td><td class="num">1.460 kWh</td><td class="num">0 kWh</td></tr>
+              <tr><th scope="row"><a href="/rekentool?b=15">15 kWh</a></th><td class="num">1.740 kWh</td><td class="num">1.620 kWh</td><td class="num">1.460 kWh</td><td class="num">0 kWh</td></tr>
         </tbody>
       </table>
     </div>
     <figure style="margin:0 0 22px;">
       <svg viewBox="0 0 640 280" width="100%" role="img" aria-labelledby="c1-svg-titel" style="max-width:640px; height:auto; display:block;">
-        <title id="c1-svg-titel">Besparing per jaar per batterijgrootte, gemiddeld huishouden, realistisch scenario met de bandbreedte van conservatief tot optimistisch</title>
-        <line x1="56" x2="624" y1="240.0" y2="240.0" style="stroke:var(--line);stroke-width:1"/>
-        <text x="48" y="244.0" text-anchor="end" style="fill:var(--ink-400);font-size:12px;font-family:var(--font-sans)">€ 0</text>
-        <line x1="56" x2="624" y1="195.2" y2="195.2" style="stroke:var(--line);stroke-width:1"/>
-        <text x="48" y="199.2" text-anchor="end" style="fill:var(--ink-400);font-size:12px;font-family:var(--font-sans)">€ 100</text>
-        <line x1="56" x2="624" y1="150.4" y2="150.4" style="stroke:var(--line);stroke-width:1"/>
-        <text x="48" y="154.4" text-anchor="end" style="fill:var(--ink-400);font-size:12px;font-family:var(--font-sans)">€ 200</text>
-        <line x1="56" x2="624" y1="105.6" y2="105.6" style="stroke:var(--line);stroke-width:1"/>
-        <text x="48" y="109.6" text-anchor="end" style="fill:var(--ink-400);font-size:12px;font-family:var(--font-sans)">€ 300</text>
-        <line x1="56" x2="624" y1="60.8" y2="60.8" style="stroke:var(--line);stroke-width:1"/>
-        <text x="48" y="64.8" text-anchor="end" style="fill:var(--ink-400);font-size:12px;font-family:var(--font-sans)">€ 400</text>
-        <line x1="56" x2="624" y1="16.0" y2="16.0" style="stroke:var(--line);stroke-width:1"/>
-        <text x="48" y="20.0" text-anchor="end" style="fill:var(--ink-400);font-size:12px;font-family:var(--font-sans)">€ 500</text>
-        <text x="87.6" y="258" text-anchor="middle" style="fill:var(--ink-400);font-size:12px;font-family:var(--font-sans)">0</text>
-        <rect x="133.0" y="178.6" width="35.3" height="61.4" rx="3" style="fill:var(--navy-400)"/>
-        <line x1="150.7" x2="150.7" y1="186.8" y2="176.0" style="stroke:var(--gold-500);stroke-width:2"/>
-        <line x1="144.7" x2="156.7" y1="186.8" y2="186.8" style="stroke:var(--gold-500);stroke-width:2"/>
-        <line x1="144.7" x2="156.7" y1="176.0" y2="176.0" style="stroke:var(--gold-500);stroke-width:2"/>
-        <text x="150.7" y="258" text-anchor="middle" style="fill:var(--ink-400);font-size:12px;font-family:var(--font-sans)">2</text>
-        <rect x="196.1" y="129.7" width="35.3" height="110.3" rx="3" style="fill:var(--navy-400)"/>
-        <line x1="213.8" x2="213.8" y1="145.0" y2="124.3" style="stroke:var(--gold-500);stroke-width:2"/>
-        <line x1="207.8" x2="219.8" y1="145.0" y2="145.0" style="stroke:var(--gold-500);stroke-width:2"/>
-        <line x1="207.8" x2="219.8" y1="124.3" y2="124.3" style="stroke:var(--gold-500);stroke-width:2"/>
-        <text x="213.8" y="258" text-anchor="middle" style="fill:var(--ink-400);font-size:12px;font-family:var(--font-sans)">4</text>
-        <rect x="259.2" y="108.5" width="35.3" height="131.5" rx="3" style="fill:var(--navy-400)"/>
-        <line x1="276.9" x2="276.9" y1="129.6" y2="100.9" style="stroke:var(--gold-500);stroke-width:2"/>
-        <line x1="270.9" x2="282.9" y1="129.6" y2="129.6" style="stroke:var(--gold-500);stroke-width:2"/>
-        <line x1="270.9" x2="282.9" y1="100.9" y2="100.9" style="stroke:var(--gold-500);stroke-width:2"/>
-        <text x="276.9" y="258" text-anchor="middle" style="fill:var(--ink-400);font-size:12px;font-family:var(--font-sans)">5</text>
-        <rect x="322.3" y="92.5" width="35.3" height="147.5" rx="3" style="fill:var(--navy-400)"/>
-        <line x1="340.0" x2="340.0" y1="124.2" y2="81.6" style="stroke:var(--gold-500);stroke-width:2"/>
-        <line x1="334.0" x2="346.0" y1="124.2" y2="124.2" style="stroke:var(--gold-500);stroke-width:2"/>
-        <line x1="334.0" x2="346.0" y1="81.6" y2="81.6" style="stroke:var(--gold-500);stroke-width:2"/>
-        <text x="340.0" y="258" text-anchor="middle" style="fill:var(--ink-400);font-size:12px;font-family:var(--font-sans)">6</text>
-        <rect x="385.4" y="86.2" width="35.3" height="153.8" rx="3" style="fill:var(--navy-400)"/>
-        <line x1="403.1" x2="403.1" y1="121.9" y2="58.0" style="stroke:var(--gold-500);stroke-width:2"/>
-        <line x1="397.1" x2="409.1" y1="121.9" y2="121.9" style="stroke:var(--gold-500);stroke-width:2"/>
-        <line x1="397.1" x2="409.1" y1="58.0" y2="58.0" style="stroke:var(--gold-500);stroke-width:2"/>
-        <text x="403.1" y="258" text-anchor="middle" style="fill:var(--ink-400);font-size:12px;font-family:var(--font-sans)">8</text>
-        <rect x="448.6" y="86.2" width="35.3" height="153.8" rx="3" style="fill:var(--navy-400)"/>
-        <line x1="466.2" x2="466.2" y1="121.9" y2="58.0" style="stroke:var(--gold-500);stroke-width:2"/>
-        <line x1="460.2" x2="472.2" y1="121.9" y2="121.9" style="stroke:var(--gold-500);stroke-width:2"/>
-        <line x1="460.2" x2="472.2" y1="58.0" y2="58.0" style="stroke:var(--gold-500);stroke-width:2"/>
-        <text x="466.2" y="258" text-anchor="middle" style="fill:var(--ink-400);font-size:12px;font-family:var(--font-sans)">10</text>
-        <rect x="511.7" y="86.2" width="35.3" height="153.8" rx="3" style="fill:var(--navy-400)"/>
-        <line x1="529.3" x2="529.3" y1="121.9" y2="58.0" style="stroke:var(--gold-500);stroke-width:2"/>
-        <line x1="523.3" x2="535.3" y1="121.9" y2="121.9" style="stroke:var(--gold-500);stroke-width:2"/>
-        <line x1="523.3" x2="535.3" y1="58.0" y2="58.0" style="stroke:var(--gold-500);stroke-width:2"/>
-        <text x="529.3" y="258" text-anchor="middle" style="fill:var(--ink-400);font-size:12px;font-family:var(--font-sans)">12</text>
-        <rect x="574.8" y="86.2" width="35.3" height="153.8" rx="3" style="fill:var(--navy-400)"/>
-        <line x1="592.4" x2="592.4" y1="121.9" y2="58.0" style="stroke:var(--gold-500);stroke-width:2"/>
-        <line x1="586.4" x2="598.4" y1="121.9" y2="121.9" style="stroke:var(--gold-500);stroke-width:2"/>
-        <line x1="586.4" x2="598.4" y1="58.0" y2="58.0" style="stroke:var(--gold-500);stroke-width:2"/>
-        <text x="592.4" y="258" text-anchor="middle" style="fill:var(--ink-400);font-size:12px;font-family:var(--font-sans)">15</text>
-        <line x1="56" x2="624" y1="240" y2="240" style="stroke:var(--ink-300);stroke-width:1"/>
-        <text x="340" y="276" text-anchor="middle" style="fill:var(--ink-400);font-size:12px;font-family:var(--font-sans)">batterij in kWh</text>
+        <title id="c1-svg-titel">Verplaatste zonnestroom per jaar per batterijgrootte, gemiddeld huishouden, realistisch scenario met de bandbreedte van conservatief tot optimistisch</title>
+        <line x1="64" x2="624" y1="240.0" y2="240.0" style="stroke:var(--line);stroke-width:1"/>
+        <text x="56" y="244.0" text-anchor="end" style="fill:var(--ink-400);font-size:12px;font-family:var(--font-sans)">0 kWh</text>
+        <line x1="64" x2="624" y1="184.0" y2="184.0" style="stroke:var(--line);stroke-width:1"/>
+        <text x="56" y="188.0" text-anchor="end" style="fill:var(--ink-400);font-size:12px;font-family:var(--font-sans)">500 kWh</text>
+        <line x1="64" x2="624" y1="128.0" y2="128.0" style="stroke:var(--line);stroke-width:1"/>
+        <text x="56" y="132.0" text-anchor="end" style="fill:var(--ink-400);font-size:12px;font-family:var(--font-sans)">1.000 kWh</text>
+        <line x1="64" x2="624" y1="72.0" y2="72.0" style="stroke:var(--line);stroke-width:1"/>
+        <text x="56" y="76.0" text-anchor="end" style="fill:var(--ink-400);font-size:12px;font-family:var(--font-sans)">1.500 kWh</text>
+        <line x1="64" x2="624" y1="16.0" y2="16.0" style="stroke:var(--line);stroke-width:1"/>
+        <text x="56" y="20.0" text-anchor="end" style="fill:var(--ink-400);font-size:12px;font-family:var(--font-sans)">2.000 kWh</text>
+        <text x="95.1" y="258" text-anchor="middle" style="fill:var(--ink-400);font-size:12px;font-family:var(--font-sans)">0</text>
+        <rect x="139.9" y="167.7" width="34.8" height="72.3" rx="3" style="fill:var(--navy-400)"/>
+        <line x1="157.3" x2="157.3" y1="171.4" y2="166.5" style="stroke:var(--gold-500);stroke-width:2"/>
+        <line x1="151.3" x2="163.3" y1="171.4" y2="171.4" style="stroke:var(--gold-500);stroke-width:2"/>
+        <line x1="151.3" x2="163.3" y1="166.5" y2="166.5" style="stroke:var(--gold-500);stroke-width:2"/>
+        <text x="157.3" y="258" text-anchor="middle" style="fill:var(--ink-400);font-size:12px;font-family:var(--font-sans)">2</text>
+        <rect x="202.1" y="110.2" width="34.8" height="129.8" rx="3" style="fill:var(--navy-400)"/>
+        <line x1="219.6" x2="219.6" y1="116.0" y2="108.7" style="stroke:var(--gold-500);stroke-width:2"/>
+        <line x1="213.6" x2="225.6" y1="116.0" y2="116.0" style="stroke:var(--gold-500);stroke-width:2"/>
+        <line x1="213.6" x2="225.6" y1="108.7" y2="108.7" style="stroke:var(--gold-500);stroke-width:2"/>
+        <text x="219.6" y="258" text-anchor="middle" style="fill:var(--ink-400);font-size:12px;font-family:var(--font-sans)">4</text>
+        <rect x="264.4" y="85.2" width="34.8" height="154.8" rx="3" style="fill:var(--navy-400)"/>
+        <line x1="281.8" x2="281.8" y1="90.9" y2="87.3" style="stroke:var(--gold-500);stroke-width:2"/>
+        <line x1="275.8" x2="287.8" y1="90.9" y2="90.9" style="stroke:var(--gold-500);stroke-width:2"/>
+        <line x1="275.8" x2="287.8" y1="87.3" y2="87.3" style="stroke:var(--gold-500);stroke-width:2"/>
+        <text x="281.8" y="258" text-anchor="middle" style="fill:var(--ink-400);font-size:12px;font-family:var(--font-sans)">5</text>
+        <rect x="326.6" y="66.4" width="34.8" height="173.6" rx="3" style="fill:var(--navy-400)"/>
+        <line x1="344.0" x2="344.0" y1="79.9" y2="70.3" style="stroke:var(--gold-500);stroke-width:2"/>
+        <line x1="338.0" x2="350.0" y1="79.9" y2="79.9" style="stroke:var(--gold-500);stroke-width:2"/>
+        <line x1="338.0" x2="350.0" y1="70.3" y2="70.3" style="stroke:var(--gold-500);stroke-width:2"/>
+        <text x="344.0" y="258" text-anchor="middle" style="fill:var(--ink-400);font-size:12px;font-family:var(--font-sans)">6</text>
+        <rect x="388.8" y="59.0" width="34.8" height="181.0" rx="3" style="fill:var(--navy-400)"/>
+        <line x1="406.2" x2="406.2" y1="76.8" y2="45.0" style="stroke:var(--gold-500);stroke-width:2"/>
+        <line x1="400.2" x2="412.2" y1="76.8" y2="76.8" style="stroke:var(--gold-500);stroke-width:2"/>
+        <line x1="400.2" x2="412.2" y1="45.0" y2="45.0" style="stroke:var(--gold-500);stroke-width:2"/>
+        <text x="406.2" y="258" text-anchor="middle" style="fill:var(--ink-400);font-size:12px;font-family:var(--font-sans)">8</text>
+        <rect x="451.0" y="59.0" width="34.8" height="181.0" rx="3" style="fill:var(--navy-400)"/>
+        <line x1="468.4" x2="468.4" y1="76.8" y2="45.0" style="stroke:var(--gold-500);stroke-width:2"/>
+        <line x1="462.4" x2="474.4" y1="76.8" y2="76.8" style="stroke:var(--gold-500);stroke-width:2"/>
+        <line x1="462.4" x2="474.4" y1="45.0" y2="45.0" style="stroke:var(--gold-500);stroke-width:2"/>
+        <text x="468.4" y="258" text-anchor="middle" style="fill:var(--ink-400);font-size:12px;font-family:var(--font-sans)">10</text>
+        <rect x="513.2" y="59.0" width="34.8" height="181.0" rx="3" style="fill:var(--navy-400)"/>
+        <line x1="530.7" x2="530.7" y1="76.8" y2="45.0" style="stroke:var(--gold-500);stroke-width:2"/>
+        <line x1="524.7" x2="536.7" y1="76.8" y2="76.8" style="stroke:var(--gold-500);stroke-width:2"/>
+        <line x1="524.7" x2="536.7" y1="45.0" y2="45.0" style="stroke:var(--gold-500);stroke-width:2"/>
+        <text x="530.7" y="258" text-anchor="middle" style="fill:var(--ink-400);font-size:12px;font-family:var(--font-sans)">12</text>
+        <rect x="575.5" y="59.0" width="34.8" height="181.0" rx="3" style="fill:var(--navy-400)"/>
+        <line x1="592.9" x2="592.9" y1="76.8" y2="45.0" style="stroke:var(--gold-500);stroke-width:2"/>
+        <line x1="586.9" x2="598.9" y1="76.8" y2="76.8" style="stroke:var(--gold-500);stroke-width:2"/>
+        <line x1="586.9" x2="598.9" y1="45.0" y2="45.0" style="stroke:var(--gold-500);stroke-width:2"/>
+        <text x="592.9" y="258" text-anchor="middle" style="fill:var(--ink-400);font-size:12px;font-family:var(--font-sans)">15</text>
+        <line x1="64" x2="624" y1="240" y2="240" style="stroke:var(--ink-300);stroke-width:1"/>
+        <text x="344" y="276" text-anchor="middle" style="fill:var(--ink-400);font-size:12px;font-family:var(--font-sans)">batterij in kWh</text>
       </svg>
-      <figcaption style="font-size:13.5px; line-height:1.55; color:var(--ink-500); margin-top:8px;">Staven: besparing per jaar in het realistische scenario. Lijnen: de bandbreedte van conservatief tot optimistisch. Horizontaal de batterijgrootte in kWh.</figcaption>
+      <figcaption style="font-size:13.5px; line-height:1.55; color:var(--ink-500); margin-top:8px;">Staven: verplaatste zonnestroom per jaar in het realistische scenario. Lijnen: de bandbreedte van conservatief tot optimistisch. Horizontaal de batterijgrootte in kWh.</figcaption>
     </figure>
     <p style="font-size:15px;"><a href="/rekentool?b=6">Open dit voorbeeld in de rekentool</a> (6 kWh). Elke grootte in de tabel is zelf ook een link naar de rekentool met die maat ingevuld.</p>
-    <p>De eerste kilowatturen zijn het meest waard: de stap van 0 naar 2 kWh levert € 69 per kWh per jaar op, de stap van 6 naar 8 kWh nog € 7, en daarboven niets meer. Een batterij van 10, 12 of 15 kWh bespaart hier precies evenveel als een van 8 kWh, terwijl hij duizenden euro's meer kost.</p>
-    <p>De terugverdienkolom is de nuttigste om een offerte mee te vergelijken. Voor 5 kWh ligt de grens bij ongeveer € 3.240, dat is € 650 per kWh. Kost de batterij meer, dan verdient hij zich in dit voorbeeld niet terug binnen twaalf jaar. Onze aanname van € 900 per kWh ligt daar ruim boven.</p>
+    <p>De eerste kilowatturen doen het meeste werk: van 0 naar 2 kWh verplaatst elke kWh capaciteit ongeveer 323 kWh per jaar, van 6 naar 8 kWh nog 33 kWh, en daarboven niets meer. Een batterij van 10, 12 of 15 kWh verplaatst hier precies evenveel stroom als een van 8 kWh, terwijl elke extra kWh capaciteit in onze aanname even veel kost.</p>
+    <p>Leg een offerte daarom naast deze curve. Ligt de aangeboden maat ver boven de knik, vraag dan waarom. Wat de maat onder de knik bij uw prijs en contract oplevert, hangt af van uw verbruik per uur; dat rekenen wij in het adviesgesprek door met uw eigen meterstanden.</p>
 
     <h3 id="c2">Met warmtepomp: 5.000 kWh verbruik, 4.500 kWh opwek</h3>
     <div class="prose-table-wrap">
       <table class="prose-table">
-        <caption>Met warmtepomp: verbruik 5.000 kWh, opwek 4.500 kWh, vast contract. Besparing door de batterij in het eerste jaar, afgerond op tientallen euro's. Rekenmodel 1.0.0.</caption>
-        <thead><tr><th scope="col">Batterij</th><th scope="col">Conservatief</th><th scope="col">Realistisch</th><th scope="col">Optimistisch</th><th scope="col">Erbij per extra kWh</th><th scope="col">Terugverdiend in 12 jaar bij een prijs tot</th></tr></thead>
+        <caption>Met warmtepomp: verbruik 5.000 kWh, opwek 4.500 kWh, vast contract. Zonnestroom die de batterij in het eerste jaar verplaatst, afgerond op tientallen kWh. Laatste kolom: realistisch scenario. Rekenmodel 1.0.0.</caption>
+        <thead><tr><th scope="col">Batterij</th><th scope="col">Conservatief</th><th scope="col">Realistisch</th><th scope="col">Optimistisch</th><th scope="col">Erbij per extra kWh capaciteit</th></tr></thead>
         <tbody>
-              <tr><th scope="row"><a href="/rekentool?v=5000&amp;o=4500&amp;b=0">geen</a></th><td class="num">€ 0</td><td class="num">€ 0</td><td class="num">€ 0</td><td class="num"></td><td class="num"></td></tr>
-              <tr><th scope="row"><a href="/rekentool?v=5000&amp;o=4500&amp;b=2">2 kWh</a></th><td class="num">€ 140</td><td class="num">€ 140</td><td class="num">€ 120</td><td class="num">€ 70</td><td class="num">€ 1.500 (€ 750 per kWh)</td></tr>
-              <tr><th scope="row"><a href="/rekentool?v=5000&amp;o=4500&amp;b=4">4 kWh</a></th><td class="num">€ 270</td><td class="num">€ 260</td><td class="num">€ 220</td><td class="num">€ 59</td><td class="num">€ 2.830 (€ 710 per kWh)</td></tr>
-              <tr><th scope="row"><a href="/rekentool?v=5000&amp;o=4500">5 kWh</a></th><td class="num">€ 320</td><td class="num">€ 310</td><td class="num">€ 270</td><td class="num">€ 52</td><td class="num">€ 3.390 (€ 680 per kWh)</td></tr>
-              <tr><th scope="row"><a href="/rekentool?v=5000&amp;o=4500&amp;b=6">6 kWh</a></th><td class="num">€ 380</td><td class="num">€ 360</td><td class="num">€ 310</td><td class="num">€ 50</td><td class="num">€ 3.950 (€ 660 per kWh)</td></tr>
-              <tr><th scope="row"><a href="/rekentool?v=5000&amp;o=4500&amp;b=8">8 kWh</a></th><td class="num">€ 470</td><td class="num">€ 440</td><td class="num">€ 370</td><td class="num">€ 41</td><td class="num">€ 4.900 (€ 610 per kWh)</td></tr>
-              <tr><th scope="row"><a href="/rekentool?v=5000&amp;o=4500&amp;b=10">10 kWh</a></th><td class="num">€ 550</td><td class="num">€ 490</td><td class="num">€ 380</td><td class="num">€ 23</td><td class="num">€ 5.670 (€ 570 per kWh)</td></tr>
-              <tr><th scope="row"><a href="/rekentool?v=5000&amp;o=4500&amp;b=12">12 kWh</a></th><td class="num">€ 570</td><td class="num">€ 490</td><td class="num">€ 380</td><td class="num">€ 0</td><td class="num">€ 5.850 (€ 490 per kWh)</td></tr>
-              <tr><th scope="row"><a href="/rekentool?v=5000&amp;o=4500&amp;b=15">15 kWh</a></th><td class="num">€ 570</td><td class="num">€ 490</td><td class="num">€ 380</td><td class="num">€ 0</td><td class="num">€ 5.850 (€ 390 per kWh)</td></tr>
+              <tr><th scope="row"><a href="/rekentool?v=5000&amp;o=4500&amp;b=0">geen</a></th><td class="num">0 kWh</td><td class="num">0 kWh</td><td class="num">0 kWh</td><td class="num"></td></tr>
+              <tr><th scope="row"><a href="/rekentool?v=5000&amp;o=4500&amp;b=2">2 kWh</a></th><td class="num">620 kWh</td><td class="num">660 kWh</td><td class="num">670 kWh</td><td class="num">329 kWh</td></tr>
+              <tr><th scope="row"><a href="/rekentool?v=5000&amp;o=4500&amp;b=4">4 kWh</a></th><td class="num">1.160 kWh</td><td class="num">1.210 kWh</td><td class="num">1.220 kWh</td><td class="num">276 kWh</td></tr>
+              <tr><th scope="row"><a href="/rekentool?v=5000&amp;o=4500">5 kWh</a></th><td class="num">1.390 kWh</td><td class="num">1.460 kWh</td><td class="num">1.470 kWh</td><td class="num">246 kWh</td></tr>
+              <tr><th scope="row"><a href="/rekentool?v=5000&amp;o=4500&amp;b=6">6 kWh</a></th><td class="num">1.620 kWh</td><td class="num">1.690 kWh</td><td class="num">1.690 kWh</td><td class="num">236 kWh</td></tr>
+              <tr><th scope="row"><a href="/rekentool?v=5000&amp;o=4500&amp;b=8">8 kWh</a></th><td class="num">2.000 kWh</td><td class="num">2.080 kWh</td><td class="num">2.060 kWh</td><td class="num">194 kWh</td></tr>
+              <tr><th scope="row"><a href="/rekentool?v=5000&amp;o=4500&amp;b=10">10 kWh</a></th><td class="num">2.360 kWh</td><td class="num">2.290 kWh</td><td class="num">2.100 kWh</td><td class="num">107 kWh</td></tr>
+              <tr><th scope="row"><a href="/rekentool?v=5000&amp;o=4500&amp;b=12">12 kWh</a></th><td class="num">2.450 kWh</td><td class="num">2.290 kWh</td><td class="num">2.100 kWh</td><td class="num">0 kWh</td></tr>
+              <tr><th scope="row"><a href="/rekentool?v=5000&amp;o=4500&amp;b=15">15 kWh</a></th><td class="num">2.450 kWh</td><td class="num">2.290 kWh</td><td class="num">2.100 kWh</td><td class="num">0 kWh</td></tr>
         </tbody>
       </table>
     </div>
     <figure style="margin:0 0 22px;">
       <svg viewBox="0 0 640 280" width="100%" role="img" aria-labelledby="c2-svg-titel" style="max-width:640px; height:auto; display:block;">
-        <title id="c2-svg-titel">Besparing per jaar per batterijgrootte, met warmtepomp, realistisch scenario met de bandbreedte van conservatief tot optimistisch</title>
-        <line x1="56" x2="624" y1="240.0" y2="240.0" style="stroke:var(--line);stroke-width:1"/>
-        <text x="48" y="244.0" text-anchor="end" style="fill:var(--ink-400);font-size:12px;font-family:var(--font-sans)">€ 0</text>
-        <line x1="56" x2="624" y1="202.7" y2="202.7" style="stroke:var(--line);stroke-width:1"/>
-        <text x="48" y="206.7" text-anchor="end" style="fill:var(--ink-400);font-size:12px;font-family:var(--font-sans)">€ 100</text>
-        <line x1="56" x2="624" y1="165.3" y2="165.3" style="stroke:var(--line);stroke-width:1"/>
-        <text x="48" y="169.3" text-anchor="end" style="fill:var(--ink-400);font-size:12px;font-family:var(--font-sans)">€ 200</text>
-        <line x1="56" x2="624" y1="128.0" y2="128.0" style="stroke:var(--line);stroke-width:1"/>
-        <text x="48" y="132.0" text-anchor="end" style="fill:var(--ink-400);font-size:12px;font-family:var(--font-sans)">€ 300</text>
-        <line x1="56" x2="624" y1="90.7" y2="90.7" style="stroke:var(--line);stroke-width:1"/>
-        <text x="48" y="94.7" text-anchor="end" style="fill:var(--ink-400);font-size:12px;font-family:var(--font-sans)">€ 400</text>
-        <line x1="56" x2="624" y1="53.3" y2="53.3" style="stroke:var(--line);stroke-width:1"/>
-        <text x="48" y="57.3" text-anchor="end" style="fill:var(--ink-400);font-size:12px;font-family:var(--font-sans)">€ 500</text>
-        <line x1="56" x2="624" y1="16.0" y2="16.0" style="stroke:var(--line);stroke-width:1"/>
-        <text x="48" y="20.0" text-anchor="end" style="fill:var(--ink-400);font-size:12px;font-family:var(--font-sans)">€ 600</text>
-        <text x="87.6" y="258" text-anchor="middle" style="fill:var(--ink-400);font-size:12px;font-family:var(--font-sans)">0</text>
-        <rect x="133.0" y="187.9" width="35.3" height="52.1" rx="3" style="fill:var(--navy-400)"/>
-        <line x1="150.7" x2="150.7" y1="194.9" y2="186.0" style="stroke:var(--gold-500);stroke-width:2"/>
-        <line x1="144.7" x2="156.7" y1="194.9" y2="194.9" style="stroke:var(--gold-500);stroke-width:2"/>
-        <line x1="144.7" x2="156.7" y1="186.0" y2="186.0" style="stroke:var(--gold-500);stroke-width:2"/>
-        <text x="150.7" y="258" text-anchor="middle" style="fill:var(--ink-400);font-size:12px;font-family:var(--font-sans)">2</text>
-        <rect x="196.1" y="144.1" width="35.3" height="95.9" rx="3" style="fill:var(--navy-400)"/>
-        <line x1="213.8" x2="213.8" y1="157.6" y2="139.2" style="stroke:var(--gold-500);stroke-width:2"/>
-        <line x1="207.8" x2="219.8" y1="157.6" y2="157.6" style="stroke:var(--gold-500);stroke-width:2"/>
-        <line x1="207.8" x2="219.8" y1="139.2" y2="139.2" style="stroke:var(--gold-500);stroke-width:2"/>
-        <text x="213.8" y="258" text-anchor="middle" style="fill:var(--ink-400);font-size:12px;font-family:var(--font-sans)">4</text>
-        <rect x="259.2" y="124.6" width="35.3" height="115.4" rx="3" style="fill:var(--navy-400)"/>
-        <line x1="276.9" x2="276.9" y1="140.7" y2="119.0" style="stroke:var(--gold-500);stroke-width:2"/>
-        <line x1="270.9" x2="282.9" y1="140.7" y2="140.7" style="stroke:var(--gold-500);stroke-width:2"/>
-        <line x1="270.9" x2="282.9" y1="119.0" y2="119.0" style="stroke:var(--gold-500);stroke-width:2"/>
-        <text x="276.9" y="258" text-anchor="middle" style="fill:var(--ink-400);font-size:12px;font-family:var(--font-sans)">5</text>
-        <rect x="322.3" y="105.8" width="35.3" height="134.2" rx="3" style="fill:var(--navy-400)"/>
-        <line x1="340.0" x2="340.0" y1="125.7" y2="98.7" style="stroke:var(--gold-500);stroke-width:2"/>
-        <line x1="334.0" x2="346.0" y1="125.7" y2="125.7" style="stroke:var(--gold-500);stroke-width:2"/>
-        <line x1="334.0" x2="346.0" y1="98.7" y2="98.7" style="stroke:var(--gold-500);stroke-width:2"/>
-        <text x="340.0" y="258" text-anchor="middle" style="fill:var(--ink-400);font-size:12px;font-family:var(--font-sans)">6</text>
-        <rect x="385.4" y="75.1" width="35.3" height="164.9" rx="3" style="fill:var(--navy-400)"/>
-        <line x1="403.1" x2="403.1" y1="101.3" y2="65.8" style="stroke:var(--gold-500);stroke-width:2"/>
-        <line x1="397.1" x2="409.1" y1="101.3" y2="101.3" style="stroke:var(--gold-500);stroke-width:2"/>
-        <line x1="397.1" x2="409.1" y1="65.8" y2="65.8" style="stroke:var(--gold-500);stroke-width:2"/>
-        <text x="403.1" y="258" text-anchor="middle" style="fill:var(--ink-400);font-size:12px;font-family:var(--font-sans)">8</text>
-        <rect x="448.6" y="58.0" width="35.3" height="182.0" rx="3" style="fill:var(--navy-400)"/>
-        <line x1="466.2" x2="466.2" y1="98.3" y2="34.6" style="stroke:var(--gold-500);stroke-width:2"/>
-        <line x1="460.2" x2="472.2" y1="98.3" y2="98.3" style="stroke:var(--gold-500);stroke-width:2"/>
-        <line x1="460.2" x2="472.2" y1="34.6" y2="34.6" style="stroke:var(--gold-500);stroke-width:2"/>
-        <text x="466.2" y="258" text-anchor="middle" style="fill:var(--ink-400);font-size:12px;font-family:var(--font-sans)">10</text>
-        <rect x="511.7" y="58.0" width="35.3" height="182.0" rx="3" style="fill:var(--navy-400)"/>
-        <line x1="529.3" x2="529.3" y1="98.3" y2="26.7" style="stroke:var(--gold-500);stroke-width:2"/>
-        <line x1="523.3" x2="535.3" y1="98.3" y2="98.3" style="stroke:var(--gold-500);stroke-width:2"/>
-        <line x1="523.3" x2="535.3" y1="26.7" y2="26.7" style="stroke:var(--gold-500);stroke-width:2"/>
-        <text x="529.3" y="258" text-anchor="middle" style="fill:var(--ink-400);font-size:12px;font-family:var(--font-sans)">12</text>
-        <rect x="574.8" y="58.0" width="35.3" height="182.0" rx="3" style="fill:var(--navy-400)"/>
-        <line x1="592.4" x2="592.4" y1="98.3" y2="26.7" style="stroke:var(--gold-500);stroke-width:2"/>
-        <line x1="586.4" x2="598.4" y1="98.3" y2="98.3" style="stroke:var(--gold-500);stroke-width:2"/>
-        <line x1="586.4" x2="598.4" y1="26.7" y2="26.7" style="stroke:var(--gold-500);stroke-width:2"/>
-        <text x="592.4" y="258" text-anchor="middle" style="fill:var(--ink-400);font-size:12px;font-family:var(--font-sans)">15</text>
-        <line x1="56" x2="624" y1="240" y2="240" style="stroke:var(--ink-300);stroke-width:1"/>
-        <text x="340" y="276" text-anchor="middle" style="fill:var(--ink-400);font-size:12px;font-family:var(--font-sans)">batterij in kWh</text>
+        <title id="c2-svg-titel">Verplaatste zonnestroom per jaar per batterijgrootte, met warmtepomp, realistisch scenario met de bandbreedte van conservatief tot optimistisch</title>
+        <line x1="64" x2="624" y1="240.0" y2="240.0" style="stroke:var(--line);stroke-width:1"/>
+        <text x="56" y="244.0" text-anchor="end" style="fill:var(--ink-400);font-size:12px;font-family:var(--font-sans)">0 kWh</text>
+        <line x1="64" x2="624" y1="195.2" y2="195.2" style="stroke:var(--line);stroke-width:1"/>
+        <text x="56" y="199.2" text-anchor="end" style="fill:var(--ink-400);font-size:12px;font-family:var(--font-sans)">500 kWh</text>
+        <line x1="64" x2="624" y1="150.4" y2="150.4" style="stroke:var(--line);stroke-width:1"/>
+        <text x="56" y="154.4" text-anchor="end" style="fill:var(--ink-400);font-size:12px;font-family:var(--font-sans)">1.000 kWh</text>
+        <line x1="64" x2="624" y1="105.6" y2="105.6" style="stroke:var(--line);stroke-width:1"/>
+        <text x="56" y="109.6" text-anchor="end" style="fill:var(--ink-400);font-size:12px;font-family:var(--font-sans)">1.500 kWh</text>
+        <line x1="64" x2="624" y1="60.8" y2="60.8" style="stroke:var(--line);stroke-width:1"/>
+        <text x="56" y="64.8" text-anchor="end" style="fill:var(--ink-400);font-size:12px;font-family:var(--font-sans)">2.000 kWh</text>
+        <line x1="64" x2="624" y1="16.0" y2="16.0" style="stroke:var(--line);stroke-width:1"/>
+        <text x="56" y="20.0" text-anchor="end" style="fill:var(--ink-400);font-size:12px;font-family:var(--font-sans)">2.500 kWh</text>
+        <text x="95.1" y="258" text-anchor="middle" style="fill:var(--ink-400);font-size:12px;font-family:var(--font-sans)">0</text>
+        <rect x="139.9" y="181.1" width="34.8" height="58.9" rx="3" style="fill:var(--navy-400)"/>
+        <line x1="157.3" x2="157.3" y1="184.4" y2="180.1" style="stroke:var(--gold-500);stroke-width:2"/>
+        <line x1="151.3" x2="163.3" y1="184.4" y2="184.4" style="stroke:var(--gold-500);stroke-width:2"/>
+        <line x1="151.3" x2="163.3" y1="180.1" y2="180.1" style="stroke:var(--gold-500);stroke-width:2"/>
+        <text x="157.3" y="258" text-anchor="middle" style="fill:var(--ink-400);font-size:12px;font-family:var(--font-sans)">2</text>
+        <rect x="202.1" y="131.6" width="34.8" height="108.4" rx="3" style="fill:var(--navy-400)"/>
+        <line x1="219.6" x2="219.6" y1="136.3" y2="130.7" style="stroke:var(--gold-500);stroke-width:2"/>
+        <line x1="213.6" x2="225.6" y1="136.3" y2="136.3" style="stroke:var(--gold-500);stroke-width:2"/>
+        <line x1="213.6" x2="225.6" y1="130.7" y2="130.7" style="stroke:var(--gold-500);stroke-width:2"/>
+        <text x="219.6" y="258" text-anchor="middle" style="fill:var(--ink-400);font-size:12px;font-family:var(--font-sans)">4</text>
+        <rect x="264.4" y="109.6" width="34.8" height="130.4" rx="3" style="fill:var(--navy-400)"/>
+        <line x1="281.8" x2="281.8" y1="115.5" y2="108.2" style="stroke:var(--gold-500);stroke-width:2"/>
+        <line x1="275.8" x2="287.8" y1="115.5" y2="115.5" style="stroke:var(--gold-500);stroke-width:2"/>
+        <line x1="275.8" x2="287.8" y1="108.2" y2="108.2" style="stroke:var(--gold-500);stroke-width:2"/>
+        <text x="281.8" y="258" text-anchor="middle" style="fill:var(--ink-400);font-size:12px;font-family:var(--font-sans)">5</text>
+        <rect x="326.6" y="88.4" width="34.8" height="151.6" rx="3" style="fill:var(--navy-400)"/>
+        <line x1="344.0" x2="344.0" y1="94.7" y2="88.3" style="stroke:var(--gold-500);stroke-width:2"/>
+        <line x1="338.0" x2="350.0" y1="94.7" y2="94.7" style="stroke:var(--gold-500);stroke-width:2"/>
+        <line x1="338.0" x2="350.0" y1="88.3" y2="88.3" style="stroke:var(--gold-500);stroke-width:2"/>
+        <text x="344.0" y="258" text-anchor="middle" style="fill:var(--ink-400);font-size:12px;font-family:var(--font-sans)">6</text>
+        <rect x="388.8" y="53.7" width="34.8" height="186.3" rx="3" style="fill:var(--navy-400)"/>
+        <line x1="406.2" x2="406.2" y1="60.8" y2="55.9" style="stroke:var(--gold-500);stroke-width:2"/>
+        <line x1="400.2" x2="412.2" y1="60.8" y2="60.8" style="stroke:var(--gold-500);stroke-width:2"/>
+        <line x1="400.2" x2="412.2" y1="55.9" y2="55.9" style="stroke:var(--gold-500);stroke-width:2"/>
+        <text x="406.2" y="258" text-anchor="middle" style="fill:var(--ink-400);font-size:12px;font-family:var(--font-sans)">8</text>
+        <rect x="451.0" y="34.4" width="34.8" height="205.6" rx="3" style="fill:var(--navy-400)"/>
+        <line x1="468.4" x2="468.4" y1="51.9" y2="28.7" style="stroke:var(--gold-500);stroke-width:2"/>
+        <line x1="462.4" x2="474.4" y1="51.9" y2="51.9" style="stroke:var(--gold-500);stroke-width:2"/>
+        <line x1="462.4" x2="474.4" y1="28.7" y2="28.7" style="stroke:var(--gold-500);stroke-width:2"/>
+        <text x="468.4" y="258" text-anchor="middle" style="fill:var(--ink-400);font-size:12px;font-family:var(--font-sans)">10</text>
+        <rect x="513.2" y="34.4" width="34.8" height="205.6" rx="3" style="fill:var(--navy-400)"/>
+        <line x1="530.7" x2="530.7" y1="51.9" y2="20.6" style="stroke:var(--gold-500);stroke-width:2"/>
+        <line x1="524.7" x2="536.7" y1="51.9" y2="51.9" style="stroke:var(--gold-500);stroke-width:2"/>
+        <line x1="524.7" x2="536.7" y1="20.6" y2="20.6" style="stroke:var(--gold-500);stroke-width:2"/>
+        <text x="530.7" y="258" text-anchor="middle" style="fill:var(--ink-400);font-size:12px;font-family:var(--font-sans)">12</text>
+        <rect x="575.5" y="34.4" width="34.8" height="205.6" rx="3" style="fill:var(--navy-400)"/>
+        <line x1="592.9" x2="592.9" y1="51.9" y2="20.6" style="stroke:var(--gold-500);stroke-width:2"/>
+        <line x1="586.9" x2="598.9" y1="51.9" y2="51.9" style="stroke:var(--gold-500);stroke-width:2"/>
+        <line x1="586.9" x2="598.9" y1="20.6" y2="20.6" style="stroke:var(--gold-500);stroke-width:2"/>
+        <text x="592.9" y="258" text-anchor="middle" style="fill:var(--ink-400);font-size:12px;font-family:var(--font-sans)">15</text>
+        <line x1="64" x2="624" y1="240" y2="240" style="stroke:var(--ink-300);stroke-width:1"/>
+        <text x="344" y="276" text-anchor="middle" style="fill:var(--ink-400);font-size:12px;font-family:var(--font-sans)">batterij in kWh</text>
       </svg>
-      <figcaption style="font-size:13.5px; line-height:1.55; color:var(--ink-500); margin-top:8px;">Staven: besparing per jaar in het realistische scenario. Lijnen: de bandbreedte van conservatief tot optimistisch. Horizontaal de batterijgrootte in kWh.</figcaption>
+      <figcaption style="font-size:13.5px; line-height:1.55; color:var(--ink-500); margin-top:8px;">Staven: verplaatste zonnestroom per jaar in het realistische scenario. Lijnen: de bandbreedte van conservatief tot optimistisch. Horizontaal de batterijgrootte in kWh.</figcaption>
     </figure>
     <p style="font-size:15px;"><a href="/rekentool?v=5000&amp;o=4500&amp;b=6">Open dit voorbeeld in de rekentool</a> (6 kWh). Ook hier opent elke grootte in de tabel de rekentool met die maat.</p>
-    <p>Met meer verbruik buiten de zonuren schuift de grens op. Elke extra kWh levert langer iets op, en pas boven 10 kWh houdt het op. Ook hier verdient geen maat zich binnen twaalf jaar terug: voor 6 kWh ligt de grens bij € 3.950, ongeveer € 660 per kWh.</p>
-    <p>Merk op dat de conservatieve kolom hoger uitvalt dan de optimistische. Conservatief rekent met een lagere terugleververgoeding, en dan is elke kilowattuur die u zelf opslaat juist meer waard. De conservatieve batterij is wel € 400 per kWh duurder dan de optimistische.</p>
+    <p>Met meer verbruik buiten de zonuren schuift de grens op. Elke extra kWh capaciteit verplaatst langer extra stroom: van 8 naar 10 kWh nog ongeveer 107 kWh per kWh, en pas boven 10 kWh houdt het op. Een batterij van 10 kWh verplaatst hier ongeveer 2.290 kWh per jaar, tegen 1.620 kWh bij het gemiddelde huishouden.</p>
+    <p>Merk op dat de conservatieve kolom bij de grotere maten hoger uitvalt dan de optimistische. Conservatief rekent met minder direct eigen verbruik. Er blijft dan overdag meer overschot over, en 's avonds is er meer verbruik om mee te dekken, dus een grote batterij heeft meer te doen. Bij de kleine maten wint het hogere rendement van het optimistische scenario.</p>
 
     <h2 id="winter">De winter zet de grens</h2>
     <p>Een batterij kan alleen laden met stroom die u op dat moment over heeft, en alleen ontladen als u op dat moment iets verbruikt. Het model rekent met een gemiddelde dag per maand. Voor het gemiddelde huishouden ziet dat er zo uit:</p>
@@ -307,10 +303,10 @@
 
     <h2 id="groter">Waarom groter niet vanzelf beter is</h2>
     <ul>
-      <li><strong>De prijs groeit mee, de opbrengst niet.</strong> Elke kWh kost in onze aanname even veel, maar levert steeds minder op. Boven de knik in de curve betaalt u voor capaciteit die vrijwel nooit wordt gebruikt.</li>
+      <li><strong>De prijs groeit mee, de verplaatste stroom niet.</strong> Elke kWh kost in onze aanname even veel, maar verplaatst steeds minder stroom. Boven de knik in de curve betaalt u voor capaciteit die vrijwel nooit wordt gebruikt.</li>
       <li><strong>Uw dak bepaalt het overschot, uw avond bepaalt de grens.</strong> Een groot dak geeft in de zomer meer overschot, maar een batterij helpt alleen als u die stroom 's avonds en 's nachts ook gebruikt.</li>
-      <li><strong>Extra capaciteit als reserve voor veroudering levert weinig op.</strong> Het model rekent met 2% minder capaciteit per jaar. Over twaalf jaar, met die veroudering, levert 10 kWh bij het gemiddelde huishouden € 4.120 op en 8 kWh € 4.090: € 30 verschil voor € 1.800 meerprijs.</li>
-      <li><strong>Een dynamisch contract verandert de curve weinig.</strong> Het model laat een batterij op winterdagen goedkoop van het net laden. In onze <a href="/kennisbank/vast-of-dynamisch-na-2027">voorbeelden met vast en dynamisch</a> voegt dat bij 10 kWh 10 tot 50 euro per jaar toe.</li>
+      <li><strong>Extra capaciteit als reserve voor veroudering levert weinig op.</strong> Het model rekent met 2% minder capaciteit per jaar. Over twaalf jaar, met die veroudering, verplaatst 10 kWh bij het gemiddelde huishouden in totaal ongeveer 19.390 kWh en 8 kWh ongeveer 19.270 kWh: nog geen 1% verschil voor 2 kWh extra capaciteit.</li>
+      <li><strong>Een dynamisch contract verandert de curve weinig.</strong> Het model laat een batterij op winterdagen goedkoop van het net laden, alleen op dagen waarop de zon hem voor minder dan 30% vult. Bij het gemiddelde huishouden gaat het met 10 kWh om ongeveer 50 kWh netstroom per jaar. Meer daarover in onze <a href="/kennisbank/vast-of-dynamisch-na-2027">voorbeelden met vast en dynamisch</a>.</li>
     </ul>
     <p>Een grotere batterij kan wel passen als uw verbruik buiten de zonuren straks hoger wordt, bijvoorbeeld door een warmtepomp of een auto die thuis 's avonds laadt. Reken dan met het verbruik dat u verwacht, en controleer het met meetgegevens zodra die er zijn.</p>
 
@@ -329,10 +325,10 @@
     <p>Stelt niemand u deze vragen en krijgt u toch een advies over de maat, vraag dan waarop dat advies gebaseerd is.</p>
 
     <h2 id="geen-batterij">Wanneer geen batterij het goede antwoord is</h2>
-    <p>Geen batterij is een volwaardige uitkomst, ook in onze rekentool. Het is de verstandige keuze als een of meer van deze dingen voor u gelden:</p>
+    <p>Geen batterij is een volwaardige uitkomst, ook in ons adviesgesprek. Het is de verstandige keuze als een of meer van deze dingen voor u gelden:</p>
     <ul>
       <li>U levert weinig terug, omdat uw dak klein is of omdat u al veel direct zelf gebruikt. Er valt dan weinig te verplaatsen.</li>
-      <li>De prijs in uw offerte ligt boven de terugverdiengrens die de rekentool voor uw situatie geeft.</li>
+      <li>De prijs in uw offerte ligt boven wat de batterij in uw situatie over zijn levensduur kan opbrengen. Dat rekenen wij in het adviesgesprek voor u door, met uw eigen meterstanden en contract.</li>
       <li>U heeft de goedkopere stappen nog niet gezet: wasmachine, vaatwasser en laden naar de middag verschuiven, uw contract vergelijken, en slimme sturing van grote verbruikers.</li>
       <li>Er staat een grote verandering op stapel, zoals een warmtepomp of een elektrische auto. Wacht dan tot u weet hoe uw verbruik eruitziet, en kies daarna de maat.</li>
     </ul>
@@ -340,17 +336,19 @@
       <p>"een thuisbatterij is zo duur dat je hem op dit moment hoogstwaarschijnlijk niet terugverdient"</p>
       <footer>Milieu Centraal, <a href="https://www.milieucentraal.nl/energie-besparen/zonnepanelen/thuisbatterij-zonne-energie-opslaan/" rel="nofollow noopener" target="_blank">Thuisbatterij: zonne-energie opslaan</a>, bijgewerkt 28 september 2026.</footer>
     </blockquote>
-    <p>Onze curves wijzen dezelfde kant op. Milieu Centraal adviseert eerst te isoleren, een warmtepomp te overwegen en meer stroom direct zelf te gebruiken. Dat is ook de volgorde die wij aanraden.</p>
+    <p>Milieu Centraal adviseert eerst te isoleren, een warmtepomp te overwegen en meer stroom direct zelf te gebruiken. Dat is ook de volgorde die wij aanraden.</p>
 
     <h2 id="vragen">Veelgestelde vragen</h2>
     <h3>Hoe groot is een gemiddelde thuisbatterij?</h3>
-    <p>Milieu Centraal noemt 6 kWh als gemiddelde. Voor het gemiddelde huishouden in dit artikel bespaart 6 kWh in het eerste jaar ongeveer € 330 in het realistische scenario, en zit de batterij net voor de knik in de curve.</p>
+    <p>Milieu Centraal noemt 6 kWh als gemiddelde. Voor het gemiddelde huishouden in dit artikel verplaatst 6 kWh in het eerste jaar ongeveer 1.550 kWh in het realistische scenario, en zit de batterij net voor de knik in de curve.</p>
     <h3>Bestaat er een vuistregel per zonnepaneel?</h3>
     <p>Er circuleren vuistregels op basis van het aantal panelen of het vermogen van de installatie. Die kijken alleen naar het overschot. In ons model zet uw verbruik buiten de zonuren de grens: met hetzelfde soort dak ligt de knik bij een huishouden met warmtepomp hoger dan bij een gemiddeld huishouden.</p>
+    <h3>Waarom staat hier niet wat elke maat bespaart?</h3>
+    <p>Omdat dat bedrag per huishouden te veel verschilt: het hangt af van uw verbruik per uur, uw contract en de prijs van het systeem. De kWh-curve hierboven laat wel zien vanaf welke maat extra capaciteit niets meer doet, en die is voor de maatkeuze het belangrijkst. Uw uitkomst in euro's ontvangt u in het adviesgesprek, doorgerekend met uw eigen meterstanden en contract.</p>
     <h3>Kan ik klein beginnen en later uitbreiden?</h3>
     <p>Dat hangt af van het systeem. Vraag in de offerte of uitbreiden mogelijk is, tot welke maat en tegen welke kosten. Kan het, dan kunt u onder de knik in de curve beginnen en later bijbouwen als uw verbruik verandert.</p>
     <h3>Heeft een grotere batterij meer zin met een dynamisch contract?</h3>
-    <p>Iets, maar minder dan vaak wordt gesuggereerd. Het model laat een batterij met een dynamisch contract op winterdagen goedkoop van het net laden. Dat levert in onze voorbeelden bij 10 kWh 10 tot 50 euro per jaar op. Hoe dat uitpakt, leest u in <a href="/kennisbank/vast-of-dynamisch-na-2027">Vast of dynamisch na 2027</a>.</p>
+    <p>Iets, maar minder dan vaak wordt gesuggereerd. Het model laat een batterij met een dynamisch contract op winterdagen goedkoop van het net laden, maar de winterzon vult een middelgrote batterij vaak al voor meer dan 30%. Met een systeem dat per uur op prijzen stuurt, kan het meer zijn; dat rekenen wij in het gesprek door met uw contract. Hoe vast en dynamisch zich verhouden, leest u in <a href="/kennisbank/vast-of-dynamisch-na-2027">Vast of dynamisch na 2027</a>.</p>
   </div>
 
   <div class="ref-list" id="bronnen">
@@ -361,7 +359,7 @@
       <li>Staatsblad 2025, 17, <a href="https://zoek.officielebekendmakingen.nl/stb-2025-17.html" rel="nofollow noopener" target="_blank">Wet beëindiging salderingsregeling</a>, en Rijksoverheid, <a href="https://www.rijksoverheid.nl/onderwerpen/energie-thuis/salderingsregeling" rel="nofollow noopener" target="_blank">Salderingsregeling stopt in 2027</a>. Gebruikt voor het minimum van 50% van het kale leveringstarief tot 1 januari 2030. Gecontroleerd op 6 oktober 2026.</li>
       <li>RVO, <a href="https://www.rvo.nl/subsidies-financiering/isde/woningeigenaren" rel="nofollow noopener" target="_blank">ISDE voor woningeigenaren</a>, en Belastingdienst, <a href="https://www.belastingdienst.nl/wps/wcm/connect/nl/btw/content/thuisbatterij-btw" rel="nofollow noopener" target="_blank">Thuisbatterij en btw</a>. Gebruikt voor: geen subsidie en 21% btw op een thuisbatterij. Gecontroleerd op 6 oktober 2026.</li>
     </ol>
-    <p style="font-size:14px; color:var(--ink-500); margin-top:16px;">De curves en het maandbeeld zijn reproduceerbaar met het openbare rekenmodel in <a href="/js/rekenmodel.js" style="color:var(--navy-400);">rekenmodel.js</a>. De batterijprijs is een aanname van ons, geen tarief. Dit artikel geeft een indicatie, geen financieel advies of offerte. Ziet u een fout, laat het ons weten via <a href="mailto:info@salderingsdienst.nl" style="color:var(--navy-400);">info@salderingsdienst.nl</a>.</p>
+    <p style="font-size:14px; color:var(--ink-500); margin-top:16px;">De kWh-curves en het maandbeeld zijn reproduceerbaar met het openbare rekenmodel in <a href="/js/rekenmodel.js" style="color:var(--navy-400);">rekenmodel.js</a>. De batterijprijs is een aanname van ons, geen tarief. Dit artikel geeft een indicatie, geen financieel advies of offerte. Ziet u een fout, laat het ons weten via <a href="mailto:info@salderingsdienst.nl" style="color:var(--navy-400);">info@salderingsdienst.nl</a>.</p>
   </div>
 
   <div class="readmore-list">
