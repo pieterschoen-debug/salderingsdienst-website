@@ -94,7 +94,7 @@
         }
         /* Op de boekingspagina staat de check niet; terug naar de homepage. */
         try { sessionStorage.setItem('sd_funnel_stap', '2'); } catch (e) {}
-        location.href = 'index.html#bereken';
+        location.href = '/#bereken';
       });
     }
   }
