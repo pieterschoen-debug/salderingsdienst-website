@@ -206,8 +206,20 @@ body.nav-open .nav-burger span:nth-child(3) { transform: translateY(-6.5px) rota
   }
   .nav-links a:hover { color: var(--navy-400); }
   .nav-links a:hover::after { transform: scaleX(1); }
-  .nav-cta { display: inline-flex; padding: 11px 18px; font-size: 14.5px; }
+  .nav-cta { display: inline-flex; padding: 11px 18px; font-size: 14.5px; white-space: nowrap; }
   .nav-burger, .nav-overlay { display: none; }
+  .nav-links a { white-space: nowrap; }
+}
+/* Smalle laptops: zeven links plus merk en knop passen niet op één
+   regel en braken af ("Over / ons"). De ankers naar de werkwijze en de
+   vragen vallen weg; de pagina's (rekentool, kennisbank) blijven staan. */
+@media (min-width: 900px) and (max-width: 1179.5px) {
+  .nav-links { gap: 20px; font-size: 14.5px; }
+  .nav-links a[href="#werkwijze"], .nav-links a[href="#vragen"] { display: none; }
+}
+@media (min-width: 900px) and (max-width: 1023.5px) {
+  .nav-links a[href="#over-ons"] { display: none; }
+  .site-header .brand-name { font-size: 18px; }
 }
 
 /* ============================================================
@@ -636,7 +648,7 @@ body.nav-open .nav-burger span:nth-child(3) { transform: translateY(-6.5px) rota
 }
 
 /* ============================================================
-   SPREAD — waarom en bespaarcheck als één beeld (vanaf 1100px).
+   SPREAD — waarom en bespaarcheck als één beeld (vanaf 1000px).
    Onder elkaar lieten ze op desktop twee lege velden achter: een
    kop met een gat eronder en een smalle kaart midden in een wit
    vlak van schermbreedte. Naast elkaar onderbouwt het register
@@ -646,23 +658,23 @@ body.nav-open .nav-burger span:nth-child(3) { transform: translateY(-6.5px) rota
       doorloopt. Het vlak begint pas onder de kaart, zodat de kaart
       half op papier en half op wit ligt: de twee vlakken grijpen
       in elkaar.
-   Onder 1100px blijven het twee losse secties, zoals voorheen.
+   Onder 1000px blijven het twee losse secties, zoals voorheen.
    ============================================================ */
 .duo { display: block; }
-@media (min-width: 1100px) {
+@media (min-width: 1000px) {
   .duo {
     display: grid; align-items: stretch;
-    grid-template-columns: minmax(0, 1fr) minmax(0, 540px);
-    column-gap: clamp(56px, 6vw, 96px);
+    grid-template-columns: minmax(0, 1fr) minmax(0, clamp(460px, 40vw, 540px));
+    column-gap: clamp(48px, 6vw, 96px);
     max-width: var(--container); margin: 0 auto; padding: 0 var(--gutter);
   }
   .duo > section > .container { max-width: none; padding-left: 0; padding-right: 0; }
 
   .duo .waarom-grid { display: block; }
   .duo .waarom-head { position: static; margin-bottom: 26px; }
-  .duo .waarom-head .h2 { font-size: 38px; }
+  .duo .waarom-head .h2 { font-size: clamp(32px, 1vw + 22px, 38px); }
   .duo .nu-item { padding: 26px 0 30px 34px; }
-  .duo .nu-title { font-size: 23px; }
+  .duo .nu-title { font-size: clamp(21px, .4vw + 17px, 23px); }
   .duo .nu-body { font-size: var(--fs-body); max-width: 48ch; }
 
   .duo .bereken { position: relative; isolation: isolate; background: none; border: 0; }
@@ -671,6 +683,7 @@ body.nav-open .nav-burger span:nth-child(3) { transform: translateY(-6.5px) rota
     left: 34%; right: calc(-1 * (max(0px, (100vw - var(--container)) / 2) + var(--gutter)));
     background: #fff; border-left: 1px solid var(--line);
   }
+  .duo .funnel-title { font-size: clamp(28px, 1.6vw + 9px, 34px); }
   .duo .funnel { max-width: none; margin: 0; box-shadow: 0 24px 50px -30px rgba(20,50,79,.4), var(--shadow-xs); }
   .duo .bereken .calc-more { text-align: left; padding-left: 34px; }
 }
@@ -853,7 +866,10 @@ body.nav-open .nav-burger span:nth-child(3) { transform: translateY(-6.5px) rota
   .werk-strook { grid-area: strook; gap: 8px; align-self: stretch; min-height: 380px; }
   .werk-foto { aspect-ratio: auto; }
   .werk-foto:nth-child(4) { border-radius: 0 48px 0 0; }
-  .werk-stappen { grid-area: stappen; grid-template-columns: 1fr; gap: 18px; margin: 0; align-self: start; }
+  /* De laatste stap staat op de onderlijn van de foto's: kop bovenaan,
+     stappen onderaan, zodat de kolom even hoog leest als de strook. */
+  .werk-stappen { grid-area: stappen; grid-template-columns: 1fr; gap: 18px; margin: 32px 0 0; align-self: end; }
+  .werk-head .lead { text-wrap: balance; max-width: 30ch; }
   .werk-tekst h3 { font-size: 21px; }
 }
 
@@ -1253,6 +1269,8 @@ body.nav-open .nav-burger span:nth-child(3) { transform: translateY(-6.5px) rota
 @media (prefers-reduced-motion: no-preference) {
   .transparency[open] .transparency-body { animation: rv-rise .35s var(--ease-out); }
 }
+/* Desktop: even breed als de portretrij, niet halverwege afgebroken. */
+@media (min-width: 1024px) { .transparency { max-width: none; } }
 
 /* ============================================================
    BRONNEN + VERTROUWEN — één verantwoordingsband
