@@ -78,7 +78,7 @@
   --space-1: 4px;  --space-2: 8px;  --space-3: 12px; --space-4: 16px;
   --space-5: 22px; --space-6: 28px; --space-7: 38px; --space-8: 56px;
   --space-9: 90px;                     /* sectie-verticaal op desktop */
-  --pad-section: clamp(56px, 5vw + 32px, 90px);
+  --pad-section: clamp(56px, 3vw + 38px, 80px); /* desktop 80: 90 liet tussen secties 180px lucht */
   --container: 1180px;
   --container-narrow: 820px;
   --gutter: 20px;

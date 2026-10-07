@@ -214,6 +214,11 @@
        Een register: links de kop, die op desktop blijft staan terwijl de
        drie punten er rechts langs schuiven. Elk punt hangt aan een
        doorlopende lijn en tekent zich in zodra het in beeld komt. -->
+  <!-- Waarom en bespaarcheck: op mobiel twee losse secties; vanaf 1100px
+       één spread. Links het register (waarom), rechts de check op een wit
+       vlak dat uit beeld loopt: de belofte "eerst rekenen" en het rekenen
+       zelf staan naast elkaar in plaats van onder elkaar. -->
+  <div class="duo">
   <section id="waarom-nu" class="waarom">
     <div class="container section waarom-grid">
       <div class="section-head waarom-head">
@@ -237,7 +242,7 @@
   </section>
 
   <!-- ===== 4. BESPAARCHECK — drie stappen: woning, verbruik, resultaat ===== -->
-  <section id="bereken" style="background:#fff; border-top:1px solid var(--line); border-bottom:1px solid var(--line);">
+  <section id="bereken" class="bereken">
     <div class="container section">
       <div class="funnel card rv" data-funnel>
         <div class="funnel-badge">Bespaar tot € 2.867 per jaar</div>
@@ -369,6 +374,7 @@
       <p class="calc-more"><a href="/kennisbank/salderingsregeling-gids#rekenen">Zo rekent u het zelf na, met uw jaarafrekening</a></p>
     </div>
   </section>
+  </div>
 
   <!-- ===== 5. ONZE OPLOSSINGEN =====
        Een lade die tot voorbij de rechterrand van het scherm doorloopt:
@@ -783,8 +789,8 @@
         <p><span class="faq-chat-title">Staat uw vraag er niet bij?</span> <button type="button" class="faq-chat-link" data-chat-open data-track="faq_chat_open">Stel hem via de chat</button></p>
       </div>
 
-      <div class="readmore-list" style="margin-top:36px;">
-        <div class="kb-label" style="margin-bottom:2px;">Liever eerst zelf lezen</div>
+      <div class="readmore-list faq-read">
+        <div class="kb-label">Liever eerst zelf lezen</div>
         <a href="/kennisbank/salderingsregeling-gids" class="card card--hover" data-track="kb_link_gids"><span>Einde salderingsregeling 2027: wat verandert er en wat kost het u?</span><span aria-hidden="true">&rarr;</span></a>
         <a href="/kennisbank/thuisbatterij-na-2027" class="card card--hover" data-track="kb_link_batterij"><span>Verdient een thuisbatterij zich terug na 2027?</span><span aria-hidden="true">&rarr;</span></a>
       </div>

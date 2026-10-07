@@ -304,6 +304,7 @@ body.nav-open .nav-burger span:nth-child(3) { transform: translateY(-6.5px) rota
    resultaat). Stappenbalk bovenin, per stap één scherm, twee
    hulpvensters (verbruik schatten en opwek schatten).
    ============================================================ */
+.bereken { background: #fff; border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
 .funnel {
   position: relative; max-width: 640px; margin: 0 auto;
   padding: 30px 20px 24px; border-radius: 24px; box-shadow: var(--shadow-sm);
@@ -635,6 +636,46 @@ body.nav-open .nav-burger span:nth-child(3) { transform: translateY(-6.5px) rota
 }
 
 /* ============================================================
+   SPREAD — waarom en bespaarcheck als één beeld (vanaf 1100px).
+   Onder elkaar lieten ze op desktop twee lege velden achter: een
+   kop met een gat eronder en een smalle kaart midden in een wit
+   vlak van schermbreedte. Naast elkaar onderbouwt het register
+   wat de check direct laat doen.
+   1. Links het register, met de kop erboven in plaats van ernaast.
+   2. Rechts de check op een wit vlak dat tot de schermrand
+      doorloopt. Het vlak begint pas onder de kaart, zodat de kaart
+      half op papier en half op wit ligt: de twee vlakken grijpen
+      in elkaar.
+   Onder 1100px blijven het twee losse secties, zoals voorheen.
+   ============================================================ */
+.duo { display: block; }
+@media (min-width: 1100px) {
+  .duo {
+    display: grid; align-items: stretch;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 540px);
+    column-gap: clamp(56px, 6vw, 96px);
+    max-width: var(--container); margin: 0 auto; padding: 0 var(--gutter);
+  }
+  .duo > section > .container { max-width: none; padding-left: 0; padding-right: 0; }
+
+  .duo .waarom-grid { display: block; }
+  .duo .waarom-head { position: static; margin-bottom: 26px; }
+  .duo .waarom-head .h2 { font-size: 38px; }
+  .duo .nu-item { padding: 26px 0 30px 34px; }
+  .duo .nu-title { font-size: 23px; }
+  .duo .nu-body { font-size: var(--fs-body); max-width: 48ch; }
+
+  .duo .bereken { position: relative; isolation: isolate; background: none; border: 0; }
+  .duo .bereken::before {
+    content: ''; position: absolute; z-index: -1; top: 0; bottom: 0;
+    left: 34%; right: calc(-1 * (max(0px, (100vw - var(--container)) / 2) + var(--gutter)));
+    background: #fff; border-left: 1px solid var(--line);
+  }
+  .duo .funnel { max-width: none; margin: 0; box-shadow: 0 24px 50px -30px rgba(20,50,79,.4), var(--shadow-xs); }
+  .duo .bereken .calc-more { text-align: left; padding-left: 34px; }
+}
+
+/* ============================================================
    ONZE OPLOSSINGEN — een horizontale lade.
    1. De rij loopt rechts door tot voorbij de schermrand, zodat de
       volgende kaart altijd om de hoek piept: zichtbaar dat er meer
@@ -940,7 +981,40 @@ body.nav-open .nav-burger span:nth-child(3) { transform: translateY(-6.5px) rota
     padding: 0 clamp(38px, 3.6vw, 60px) 18px var(--gutter);
   }
   .verhaal-slider { grid-column: 1; grid-row: 2; margin-top: 30px; }
-  .verhaal-slides p { max-width: 42ch; }
+  .verhaal-slides h3 { font-size: 23px; margin-bottom: 8px; }
+  .verhaal-slides p { font-size: 17px; line-height: 1.6; max-width: 44ch; }
+
+  /* Desktop: geen slider maar een index. Alle drie de punten staan er;
+     het actieve punt staat open, met de voortgang als navylijn over zijn
+     bovenrand, en de foto wisselt mee. De andere twee zijn gedempt en
+     klikbaar. Zo vult de kolom zich met inhoud in plaats van met lucht. */
+  .verhaal-slider.is-slider .verhaal-slides { display: block; border-top: 0; }
+  .verhaal-slider.is-slider .verhaal-slides li {
+    position: relative; opacity: 1; visibility: visible; transform: none;
+    padding: 20px 0 18px; border-top: 1px solid var(--line); cursor: pointer;
+    transition: none;
+  }
+  .verhaal-slider.is-slider .verhaal-slides li:last-child { border-bottom: 1px solid var(--line); }
+  .verhaal-slider.is-slider .verhaal-slides li::before {
+    content: ''; position: absolute; left: 0; right: 0; top: -1px; height: 2px;
+    background: var(--navy-400); transform-origin: left center;
+    transform: scaleX(0);
+  }
+  .verhaal-slider.is-slider .verhaal-slides li.is-active { cursor: default; }
+  .verhaal-slider.is-slider .verhaal-slides li.is-active::before { transform: scaleX(var(--verhaal-deel, 0)); }
+  .verhaal-slider.is-slider .verhaal-slides h3 { margin: 0; color: var(--ink-400); transition: color .35s ease; }
+  .verhaal-slider.is-slider .verhaal-slides li.is-active h3 { color: var(--ink-900); }
+  @media (hover: hover) { .verhaal-slider.is-slider .verhaal-slides li:not(.is-active):hover h3 { color: var(--navy-400); } }
+  .verhaal-slider.is-slider .verhaal-slides p {
+    max-height: 0; opacity: 0; overflow: hidden;
+    transition: max-height .5s var(--ease-out), opacity .35s ease, margin .5s var(--ease-out);
+  }
+  .verhaal-slider.is-slider .verhaal-slides li.is-active p { max-height: 8em; opacity: 1; margin-top: 8px; }
+  /* De balkjes blijven bestaan voor toetsenbordgebruikers, maar de
+     index zelf toont de voortgang al. */
+  .verhaal-slider.is-slider .verhaal-nav {
+    position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap;
+  }
 }
 @media (min-width: 1200px) {
   .verhaal-grid { grid-template-columns: minmax(0, 48%) minmax(0, 1fr); }
@@ -1543,16 +1617,25 @@ body.nav-open .nav-burger span:nth-child(3) { transform: translateY(-6.5px) rota
   .faq--home .faq-a p { padding-right: 46px; }
 }
 
+/* Leeslijst onder de chat. */
+.readmore-list.faq-read { margin-top: 36px; }
+.faq-read .kb-label { margin-bottom: 2px; }
+
 @media (min-width: 980px) {
+  /* De leeslijst staat direct onder de chat in de linkerkolom; de
+     laatste rij vangt het verschil in hoogte op, zodat er geen gat
+     tussen chat en leeslijst valt. */
   .faq-layout {
     max-width: var(--container);
     display: grid; grid-template-columns: minmax(0, 4fr) minmax(0, 7fr);
-    grid-template-areas: "head list" "chat list"; grid-template-rows: auto 1fr;
+    grid-template-areas: "head list" "chat list" "read list"; grid-template-rows: auto auto 1fr;
     column-gap: clamp(48px, 6vw, 96px);
   }
   .faq-layout .section-head { grid-area: head; margin-bottom: 0; }
-  .faq--home { grid-area: list; }
+  .faq--home { grid-area: list; align-self: start; }
   .faq-chat { grid-area: chat; align-self: start; margin-top: 28px; }
+  .readmore-list.faq-read { grid-area: read; align-self: start; margin-top: 44px; }
+  .faq-read a { font-size: 15.5px; padding: 16px 20px; }
 }
 
 /* ============================================================

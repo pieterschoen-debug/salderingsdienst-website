@@ -504,6 +504,8 @@
       var fill = tab.querySelector('.verhaal-tab-fill');
       if (fill) fill.style.transform = 'scaleX(' + (i < index ? 1 : i === index ? deel : 0) + ')';
     });
+    /* Desktop toont de voortgang op de lijn boven het actieve punt. */
+    slider.style.setProperty('--verhaal-deel', deel);
   }
 
   function toon(i) {
@@ -538,6 +540,11 @@
 
   tabs.forEach(function (tab, i) {
     tab.addEventListener('click', function () { toon(i); vorige = null; });
+  });
+  /* Op desktop staan alle punten als index onder elkaar; een klik op
+     een punt opent het. Op mobiel zijn de andere punten verborgen. */
+  slides.forEach(function (li, i) {
+    li.addEventListener('click', function () { if (i !== index) { toon(i); vorige = null; } });
   });
   slider.addEventListener('mouseenter', function () { gepauzeerd = true; });
   slider.addEventListener('mouseleave', function () { gepauzeerd = false; vorige = null; });
