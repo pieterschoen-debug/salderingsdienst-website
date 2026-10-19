@@ -93,7 +93,7 @@ Techniek: één klasse `.sluier` in `css/main.css` (blur, niet selecteerbaar, `a
 
 | Stap | Wat | Foto's nodig (zie fotoprompts) | Status |
 |---|---|---|---|
-| 1.1 | Productpagina `/thuisbatterij` met de volledige opbouw hierboven; kaart "Thuisbatterij" op de homepage linkt ernaartoe | B1 hero, B2 app, B3 productstill | Gebouwd op 16 oktober 2026 op branch `seo/fundament-deploy`, met de bestaande foto's als tijdelijke vulling. Gaat live zodra B1 t/m B3 erin zitten |
+| 1.1 | Productpagina `/thuisbatterij` met de volledige opbouw hierboven; kaart "Thuisbatterij" op de homepage linkt ernaartoe | B1 hero, B2 app, B3 productstill | Gebouwd op 16 oktober 2026; op 20 oktober 2026 de echte foto's B1 en B2 erin gezet (beeldpakket V2 van Pieter) en een eigen OG-beeld gemaakt. B3 staat klaar in `assets/` voor de kennisbankkaart en, op akkoord, de productkaart op de homepage. Klaar voor live na review van de preview |
 | 1.2 | Productpagina `/zonnepanelen` (nieuw dak én "meer uit uw bestaande dak" samengevoegd) | Z1 hero, Z2 omvormer | Te doen |
 | 1.3 | Productpagina `/warmtepomp` | W1 hero, W2 binnen | Te doen |
 | 1.4 | Productpagina `/slimme-energiesturing` | S1 meterkast, S2 app met prijsgrafiek | Te doen |
@@ -148,3 +148,4 @@ Wat ik verder op de homepage wil bouwen, komt niet op de homepage maar op eigen 
 | 2026-10-16 | Plan en fotoprompts geschreven. Stap 1.1 gebouwd met tijdelijke foto's; niet gecommit, niet live |
 | 2026-10-19 | Stap 1.1 gecommit (db57809) en als PR #1 naar main geopend; niet gemerged, dus niet live. Twee besluiten van Pieter verwerkt: homepage niet herbouwen (fase 2 herschreven), en cijfers uit het rekenmodel en rekenvoorbeelden achter het adviesgesprek (nieuwe fase 0). Fase 0 gaat vóór alles, omdat die cijfers nu live open staan |
 | 2026-10-19 | Fase 0 gebouwd op branch `seo/fundament-deploy`: rekentool, bespaarcheck stap 3, boekingssamenvatting, vier artikelen en /thuisbatterij gesluierd; leverancierstabel en methode-tekst open gelaten. Gecontroleerd: build slaagt, geen bedragen meer in de pagina's, overdracht naar het adviesgesprek werkt nog. Aandachtspunt: `js/rekenmodel.js` met de standaardwaarden blijft als bestand bereikbaar voor wie de broncode opent |
+| 2026-10-20 | Beeldpakket V2 verwerkt: B1 (hero), B2 (app) en B3 (still) in `assets/` als jpg, webp en 960px-webp; B1 en B2 op `/thuisbatterij`, plus `og-thuisbatterij.jpg`. De foto's tonen een batterij met zichtbaar merk (DMEGC); volgens de begeleidende notitie is het producttype voorlopig en de gelijkenis van de adviseur een benadering |
