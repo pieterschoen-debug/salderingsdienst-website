@@ -2144,3 +2144,124 @@ h1, h2, h3, .h2, .funnel-title, .kb-pillar h3, .kb-card h3 {
 .rk-gate-bar--kort { height: 10px; width: 45%; margin-top: 8px; opacity: .45; }
 .rk-gate-check { display: flex; align-items: flex-start; gap: 8px; margin: 0 0 14px; font-size: 14.5px; line-height: 1.5; color: var(--ink-600); cursor: pointer; }
 .rk-gate-check input { width: 18px; height: 18px; margin: 2px 0 0; flex-shrink: 0; accent-color: var(--navy-400); }
+
+/* ============================================================
+   PRODUCTPAGINA'S (thuisbatterij; later zonnepanelen, warmtepomp,
+   slimme sturing). Zelfde opbouw op elke pagina: hero met foto in
+   kader, dagverloop, foto + uitklaplijst, maat, eerlijk, offerte,
+   vragen, slot. Zie docs/website/fundament-plan.md.
+   ============================================================ */
+.prod-hero { background: var(--paper); border-bottom: 1px solid var(--line); }
+.prod-hero .container { display: grid; gap: 28px; padding-top: 28px; padding-bottom: 48px; }
+.prod-hero .breadcrumb { margin-bottom: 18px; }
+.prod-hero h1 {
+  font-size: clamp(34px, 2.6vw + 18px, 52px); line-height: 1.06;
+  letter-spacing: -.6px; margin: 0 0 16px; text-wrap: balance;
+}
+.prod-hero .lead { max-width: 54ch; }
+.prod-ctas { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 26px; }
+.prod-feiten { list-style: none; margin: 22px 0 0; padding: 0; display: flex; flex-wrap: wrap; gap: 8px 22px; font-size: 14.5px; color: var(--ink-500); }
+.prod-feiten li { display: inline-flex; align-items: center; gap: 8px; }
+.prod-feiten li::before { content: ''; width: 6px; height: 6px; border-radius: 50%; background: var(--gold-500); flex: 0 0 auto; }
+.prod-foto {
+  margin: 0; border-radius: var(--radius-xl); overflow: hidden;
+  box-shadow: var(--shadow-md); aspect-ratio: 4 / 3; background: var(--navy-600);
+}
+.prod-foto img { width: 100%; height: 100%; object-fit: cover; display: block; }
+@media (min-width: 900px) {
+  .prod-hero .container {
+    grid-template-columns: minmax(0, 1.05fr) minmax(0, .95fr);
+    align-items: center; gap: 56px; padding-top: 56px; padding-bottom: 64px;
+  }
+}
+
+/* ---- Dagverloop: vier momenten, laadniveau tekent zich in ---- */
+.dag { background: #fff; border-bottom: 1px solid var(--line); }
+.dag-lijn { list-style: none; margin: 0; padding: 0; display: grid; gap: 14px; }
+.dag-moment { position: relative; padding: 22px 22px 20px; display: flex; flex-direction: column; }
+.dag-glyph {
+  width: 40px; height: 40px; margin-bottom: 14px; overflow: visible;
+  fill: none; stroke: var(--navy-400); stroke-width: 1.5; stroke-linecap: round; stroke-linejoin: round;
+}
+.dag-glyph .ic-accent { stroke: var(--gold-500); }
+.dag-tijd { display: flex; align-items: baseline; gap: 10px; font-family: var(--font-serif); font-weight: 700; font-size: 22px; color: var(--ink-900); }
+.dag-tijd small { font-family: var(--font-mono); font-size: 13px; color: var(--ink-400); }
+.dag-moment h3 { font-size: 18px; line-height: 1.25; margin: 8px 0 8px; }
+.dag-moment p { font-size: 15.5px; line-height: 1.55; color: var(--ink-500); margin: 0 0 auto; }
+.dag-niveau { margin-top: 18px; }
+.dag-niveau > span { display: flex; justify-content: space-between; font-size: 13px; color: var(--ink-400); margin-bottom: 6px; }
+.dag-niveau b { font-weight: 600; color: var(--ink-700); }
+.dag-balk { height: 6px; border-radius: 3px; background: var(--paper-3); overflow: hidden; }
+.dag-balk i { display: block; height: 100%; width: var(--niveau); background: var(--gold-500); border-radius: 3px; }
+.dag-noot { margin: 22px 0 0; font-size: 14px; line-height: 1.55; color: var(--ink-400); max-width: 72ch; }
+@media (min-width: 640px) { .dag-lijn { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (min-width: 1000px) {
+  .dag-lijn { grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 18px; }
+  /* Gouden draad van moment naar moment, zoals in de stroomlijn op de homepage. */
+  .dag-moment:not(:last-child)::after {
+    content: ''; position: absolute; top: 42px; right: -19px; width: 20px; height: 1px;
+    background: var(--gold-400);
+  }
+}
+@media (prefers-reduced-motion: no-preference) {
+  .dag-lijn.rv-js .dag-balk i { width: 0; transition: width .9s var(--ease-out) .25s; }
+  .dag-lijn.rv-in .dag-balk i { width: var(--niveau); }
+  .dag-lijn.rv-in .dag-moment:nth-child(2) .dag-balk i { transition-delay: .4s; }
+  .dag-lijn.rv-in .dag-moment:nth-child(3) .dag-balk i { transition-delay: .55s; }
+  .dag-lijn.rv-in .dag-moment:nth-child(4) .dag-balk i { transition-delay: .7s; }
+}
+
+/* ---- Foto + uitklaplijst ---- */
+.prod-krijgt { background: var(--paper); }
+.prod-split { display: grid; gap: 28px; align-items: start; }
+.prod-split .section-head { margin-bottom: 18px; }
+.prod-foto--split { aspect-ratio: 4 / 3; }
+@media (min-width: 900px) {
+  .prod-split { grid-template-columns: minmax(0, .9fr) minmax(0, 1.1fr); gap: 56px; align-items: center; }
+}
+
+/* ---- Maat: twee cijfers uit het rekenmodel ---- */
+.maat { background: #fff; border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
+.maat-grid { display: grid; gap: 28px; align-items: center; }
+.maat-links { margin-top: 14px; font-size: 15px; font-weight: 600; }
+.maat-links a { color: var(--navy-400); }
+.maat-links span { color: var(--ink-300); margin: 0 8px; }
+.maat-cijfers { display: grid; gap: 14px; grid-template-columns: repeat(2, minmax(0, 1fr)); }
+.maat-cijfer { padding: 22px 20px; }
+.maat-cijfer strong { display: block; font-family: var(--font-serif); font-size: clamp(34px, 4vw, 52px); line-height: 1; letter-spacing: -1px; color: var(--navy-400); margin-bottom: 10px; }
+.maat-cijfer span { display: block; font-size: 14.5px; line-height: 1.5; color: var(--ink-500); }
+@media (min-width: 900px) {
+  .maat-grid { grid-template-columns: minmax(0, 1.1fr) minmax(0, .9fr); gap: 56px; }
+  .maat-grid .section-head { margin-bottom: 0; }
+  .maat-cijfers { gap: 18px; }
+  .maat-cijfer { padding: 28px 26px; }
+}
+
+/* ---- Eerlijk: wanneer wij afraden ---- */
+.eerlijk { background: var(--grad-navy); color: #fff; }
+.eerlijk .section-head .lead { color: var(--on-navy-60); }
+.eerlijk-grid { list-style: none; margin: 0; padding: 0; display: grid; gap: 22px; }
+.eerlijk-grid li { border-top: 1px solid rgba(231,201,138,.5); padding-top: 18px; }
+.eerlijk-grid h3 { font-size: 19px; line-height: 1.25; margin: 0 0 8px; color: #fff; }
+.eerlijk-grid p { font-size: 15.5px; line-height: 1.55; color: var(--on-navy-60); margin: 0; }
+.eerlijk-noot { margin: 28px 0 0; font-size: 15px; color: var(--gold-300); }
+@media (min-width: 800px) { .eerlijk-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 32px; } }
+
+/* ---- Offerte: genummerde lijst met serif-nummers ---- */
+.offerte { background: var(--paper); }
+.offerte-lijst { list-style: none; margin: 0; padding: 0; counter-reset: offerte; display: grid; gap: 0; }
+.offerte-lijst li {
+  counter-increment: offerte; position: relative;
+  padding: 22px 0 22px 56px; border-top: 1px solid var(--line);
+}
+.offerte-lijst li:last-child { border-bottom: 1px solid var(--line); }
+.offerte-lijst li::before {
+  content: counter(offerte); position: absolute; left: 0; top: 20px;
+  font-family: var(--font-serif); font-weight: 700; font-size: 26px; line-height: 1; color: var(--gold-500);
+}
+.offerte-lijst h3 { font-size: 18.5px; line-height: 1.25; margin: 0 0 6px; }
+.offerte-lijst p { font-size: 15.5px; line-height: 1.6; color: var(--ink-500); margin: 0; max-width: 62ch; }
+
+/* ---- Vragen op de productpagina ---- */
+.prod-vragen { background: #fff; border-top: 1px solid var(--line); }
+.faq-more a { color: var(--navy-400); font-weight: 600; }

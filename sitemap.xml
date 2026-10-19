@@ -26,6 +26,12 @@
     <priority>0.9</priority>
   </url>
   <url>
+    <loc>https://www.salderingsdienst.nl/thuisbatterij</loc>
+    <lastmod>2026-10-16</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
     <loc>https://www.salderingsdienst.nl/kennisbank/salderingsregeling-gids</loc>
     <lastmod>2026-10-06</lastmod>
     <changefreq>monthly</changefreq>
