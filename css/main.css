@@ -2284,3 +2284,6 @@ h1, h2, h3, .h2, .funnel-title, .kb-pillar h3, .kb-card h3 {
 .famount--sluier { display: inline-flex; align-items: center; gap: 10px; }
 .sluier-noot { margin: -8px 0 24px; font-size: 14.5px; line-height: 1.55; color: var(--ink-600); }
 .sluier-noot a { color: var(--navy-400); font-weight: 600; }
+
+/* Productkaart met tekst in plaats van cijfer (zonnepanelen: bestaand dak) */
+.maat-cijfer--tekst strong { font-size: 22px; letter-spacing: -.3px; line-height: 1.2; margin-bottom: 8px; }

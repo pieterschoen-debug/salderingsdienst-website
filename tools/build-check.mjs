@@ -70,7 +70,7 @@ try {
 
 /* 2. Kernbestanden */
 console.log('Kernbestanden:');
-for (const f of ['index.html', 'adviesgesprek.html', 'widget.html', 'portal.html', 'rekentool.html', 'thuisbatterij.html', 'kennisbank/terugleververgoeding-2027-per-leverancier.html', 'css/tokens.css', 'css/main.css', 'vercel.json', 'assets/hero-advies.jpg', 'assets/hero-advies-mobile.jpg']) {
+for (const f of ['index.html', 'adviesgesprek.html', 'widget.html', 'portal.html', 'rekentool.html', 'thuisbatterij.html', 'zonnepanelen.html', 'kennisbank/terugleververgoeding-2027-per-leverancier.html', 'css/tokens.css', 'css/main.css', 'vercel.json', 'assets/hero-advies.jpg', 'assets/hero-advies-mobile.jpg']) {
   if (existsSync(join(root, f))) ok(f); else fail(f + ' ontbreekt');
 }
 
@@ -124,7 +124,7 @@ const pub = join(root, 'public');
 rmSync(pub, { recursive: true, force: true });
 mkdirSync(pub, { recursive: true });
 const PUBLIC_ITEMS = [
-  'index.html', 'adviesgesprek.html', 'widget.html', 'portal.html', 'kennisbank.html', 'rekentool.html', 'thuisbatterij.html', 'privacybeleid.html',
+  'index.html', 'adviesgesprek.html', 'widget.html', 'portal.html', 'kennisbank.html', 'rekentool.html', 'thuisbatterij.html', 'zonnepanelen.html', 'privacybeleid.html',
   'algemene-voorwaarden.html', 'algemene-voorwaarden-zakelijk.html', '404.html',
   'kennisbank', 'css', 'js', 'assets', 'robots.txt', 'sitemap.xml',
   /* Favicon-set: favicon.ico moet op /favicon.ico staan; manifest verwijst naar icon-192/512 */
