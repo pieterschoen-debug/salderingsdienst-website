@@ -95,7 +95,7 @@ Techniek: één klasse `.sluier` in `css/main.css` (blur, niet selecteerbaar, `a
 |---|---|---|---|
 | 1.1 | Productpagina `/thuisbatterij` met de volledige opbouw hierboven; kaart "Thuisbatterij" op de homepage linkt ernaartoe | B1 hero, B2 app, B3 productstill | Gebouwd op 16 oktober 2026; op 20 oktober 2026 de echte foto's B1 en B2 erin gezet (beeldpakket V2 van Pieter) en een eigen OG-beeld gemaakt. B3 staat klaar in `assets/` voor de kennisbankkaart en, op akkoord, de productkaart op de homepage. Klaar voor live na review van de preview |
 | 1.2 | Productpagina `/zonnepanelen` (nieuw dak én "meer uit uw bestaande dak" samengevoegd, anker `#bestaand-dak`) | Z1 hero, Z2 omvormer | Gebouwd op 20 oktober 2026; dezelfde dag de echte foto's Z1 en Z2 erin gezet (beeldpakket van Pieter) plus `og-zonnepanelen.jpg`. De kaarten Zonnepanelen en "Meer uit uw bestaande dak" op de homepage linken ernaartoe. Klaar voor live na review van de preview |
-| 1.3 | Productpagina `/warmtepomp` | W1 hero, W2 binnen | Te doen |
+| 1.3 | Productpagina `/warmtepomp` (hybride of volledig elektrisch, anker `#hybride-of-elektrisch`) | W1 hero, W2 binnen | Gebouwd op 20 oktober 2026 met tijdelijke foto's (`product-warmtepomp.webp`, `eerlijk-verhaal-1.jpg`); de kaart Warmtepomp op de homepage linkt ernaartoe. Live zodra W1 en W2 erin zitten. Inhoudelijk te bevestigen door Pieter: dat wij hybride én volledig elektrisch leveren en de ISDE-aanvraag verzorgen |
 | 1.4 | Productpagina `/slimme-energiesturing` | S1 meterkast, S2 app met prijsgrafiek | Te doen |
 | 1.5 | Menu-item "Oplossingen" wordt een uitklap naar de vier pagina's (desktop en mobiel) | geen | Te doen na 1.4 |
 
