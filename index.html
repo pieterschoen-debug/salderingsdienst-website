@@ -148,7 +148,18 @@
     </a>
     <nav class="nav-links" aria-label="Hoofdnavigatie">
       <a href="#bereken">Bereken impact</a>
-      <a href="#oplossingen">Oplossingen</a>
+      <div class="nav-sub" data-nav-sub>
+        <a href="#oplossingen">Oplossingen</a>
+        <button type="button" class="nav-sub-toggle" aria-expanded="false" aria-controls="nav-sub-oplossingen" aria-label="Productpagina's tonen"><svg viewBox="0 0 16 16" aria-hidden="true" focusable="false"><path d="m4 6 4 4 4-4"/></svg></button>
+        <div class="nav-sub-panel" id="nav-sub-oplossingen">
+          <div class="nav-sub-list">
+            <a href="/thuisbatterij">Thuisbatterij</a>
+            <a href="/zonnepanelen">Zonnepanelen</a>
+            <a href="/warmtepomp">Warmtepomp</a>
+            <a href="/slimme-energiesturing">Slimme energiesturing</a>
+          </div>
+        </div>
+      </div>
       <a href="#werkwijze">Werkwijze</a>
       <a href="#over-ons">Over ons</a>
       <a href="/rekentool">Rekentool</a>
@@ -167,6 +178,12 @@
 <div class="nav-overlay" id="nav-overlay" aria-hidden="true">
   <a href="#bereken" data-nav-close>Bereken impact</a>
   <a href="#oplossingen" data-nav-close>Oplossingen</a>
+  <div class="nav-overlay-sub">
+    <a href="/thuisbatterij">Thuisbatterij</a>
+    <a href="/zonnepanelen">Zonnepanelen</a>
+    <a href="/warmtepomp">Warmtepomp</a>
+    <a href="/slimme-energiesturing">Slimme energiesturing</a>
+  </div>
   <a href="#werkwijze" data-nav-close>Werkwijze</a>
   <a href="#over-ons" data-nav-close>Over ons</a>
   <a href="/rekentool">Rekentool</a>

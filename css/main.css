@@ -2287,3 +2287,42 @@ h1, h2, h3, .h2, .funnel-title, .kb-pillar h3, .kb-card h3 {
 
 /* Productkaart met tekst in plaats van cijfer (zonnepanelen: bestaand dak) */
 .maat-cijfer--tekst strong { font-size: 22px; letter-spacing: -.3px; line-height: 1.2; margin-bottom: 8px; }
+
+/* ============================================================
+   UITKLAPMENU "OPLOSSINGEN" (stap 1.5): desktop een paneel onder het
+   menu-item met de vier productpagina's; in het mobiele overlaymenu
+   vier ingesprongen regels. Alleen de kopregel verandert.
+   ============================================================ */
+.nav-sub { position: relative; display: inline-flex; align-items: center; gap: 2px; }
+.nav-sub-toggle {
+  display: inline-flex; align-items: center; justify-content: center;
+  width: 22px; height: 22px; padding: 0; border: none; background: none;
+  color: var(--ink-500); border-radius: 4px; cursor: pointer;
+  transition: color var(--t-fast), transform .25s var(--ease-out);
+}
+.nav-sub-toggle svg { width: 14px; height: 14px; fill: none; stroke: currentColor; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
+.nav-sub-toggle:hover, .nav-sub:hover .nav-sub-toggle { color: var(--navy-400); }
+.nav-sub-toggle:focus-visible { outline: 2px solid var(--navy-400); outline-offset: 2px; }
+.nav-sub.is-open .nav-sub-toggle, .nav-sub:hover .nav-sub-toggle { transform: rotate(180deg); }
+/* Het paneel hangt aan de onderkant van het item; de bovenrand van het
+   paneel is onzichtbare ruimte, zodat de muis niet in een gat valt. */
+.nav-sub-panel { position: absolute; top: 100%; left: -10px; padding-top: 16px; display: none; z-index: 60; }
+/* Aanwijzen met de muis of geopend via de knop; het toetsenbord opent via de knop of de pijl omlaag, zodat Escape het paneel ook echt sluit. */
+.nav-sub:hover .nav-sub-panel, .nav-sub.is-open .nav-sub-panel { display: block; }
+.nav-sub-list {
+  min-width: 232px; padding: 8px; background: #fff;
+  border: 1px solid var(--line-2); border-radius: var(--radius-lg); box-shadow: var(--shadow-lg);
+}
+.nav-links .nav-sub-list a {
+  display: block; padding: 10px 12px; border-radius: var(--radius-sm);
+  font-size: 15px; color: var(--ink-700); white-space: nowrap;
+}
+.nav-links .nav-sub-list a::after { display: none; }
+.nav-links .nav-sub-list a:hover, .nav-links .nav-sub-list a:focus-visible { background: var(--paper-3); color: var(--navy-400); outline: none; }
+@media (prefers-reduced-motion: no-preference) {
+  .nav-sub-list { animation: rv-rise .22s var(--ease-out); }
+}
+/* Mobiel overlaymenu: vier kleinere regels onder "Oplossingen" */
+.nav-overlay-sub { padding: 2px 0 10px 18px; border-bottom: 1px solid rgba(255,255,255,.08); }
+.nav-overlay .nav-overlay-sub a { font-family: var(--font-sans); font-size: 18px; font-weight: 600; color: var(--on-navy-80); padding: 8px 0; border-bottom: none; }
+.nav-overlay .nav-overlay-sub a:hover { color: var(--gold-300); }

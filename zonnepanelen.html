@@ -59,7 +59,18 @@
     </a>
     <nav class="nav-links" aria-label="Hoofdnavigatie">
       <a href="/">Home</a>
-      <a href="/#oplossingen">Oplossingen</a>
+      <div class="nav-sub" data-nav-sub>
+        <a href="/#oplossingen">Oplossingen</a>
+        <button type="button" class="nav-sub-toggle" aria-expanded="false" aria-controls="nav-sub-oplossingen" aria-label="Productpagina's tonen"><svg viewBox="0 0 16 16" aria-hidden="true" focusable="false"><path d="m4 6 4 4 4-4"/></svg></button>
+        <div class="nav-sub-panel" id="nav-sub-oplossingen">
+          <div class="nav-sub-list">
+            <a href="/thuisbatterij">Thuisbatterij</a>
+            <a href="/zonnepanelen">Zonnepanelen</a>
+            <a href="/warmtepomp">Warmtepomp</a>
+            <a href="/slimme-energiesturing">Slimme energiesturing</a>
+          </div>
+        </div>
+      </div>
       <a href="/rekentool">Rekentool</a>
       <a href="/kennisbank">Kennisbank</a>
     </nav>

@@ -171,6 +171,33 @@
     document.addEventListener('keydown', function (e) { if (e.key === 'Escape') setNav(false); });
   }
 
+  /* ---------- Uitklapmenu "Oplossingen" (desktop) ----------
+     Aanwijzen opent via CSS (:hover / :focus-within); de pijlknop opent
+     en sluit met klik of toets, pijltjestoetsen lopen door de vier
+     productpagina's, Escape sluit en zet de focus terug op de knop. */
+  all('[data-nav-sub]', function (sub) {
+    var btn = sub.querySelector('.nav-sub-toggle');
+    var panel = sub.querySelector('.nav-sub-panel');
+    if (!btn || !panel) return;
+    var zet = function (open) { sub.classList.toggle('is-open', open); btn.setAttribute('aria-expanded', String(open)); };
+    var links = function () { return Array.prototype.slice.call(panel.querySelectorAll('a')); };
+    btn.addEventListener('click', function () {
+      var open = !sub.classList.contains('is-open');
+      zet(open);
+      if (open) { var eerste = links()[0]; if (eerste) eerste.focus(); }
+    });
+    sub.addEventListener('keydown', function (e) {
+      var l = links(), i = l.indexOf(document.activeElement);
+      if (e.key === 'Escape') { zet(false); btn.focus(); return; }
+      if (e.key === 'ArrowDown') { e.preventDefault(); if (!sub.classList.contains('is-open')) zet(true); (l[Math.min(l.length - 1, i + 1)] || l[0]).focus(); }
+      else if (e.key === 'ArrowUp') { e.preventDefault(); if (i > 0) l[i - 1].focus(); else { zet(false); btn.focus(); } }
+    });
+    document.addEventListener('click', function (e) { if (!sub.contains(e.target)) zet(false); });
+    sub.addEventListener('focusout', function () {
+      setTimeout(function () { if (!sub.contains(document.activeElement)) zet(false); }, 0);
+    });
+  });
+
   /* ---------- Urgentiebalk: dagen tot 1 januari 2027 (statisch per pageview) ---------- */
   var TARGET = new Date('2027-01-01T00:00:00').getTime();
   var daysLeft = String(Math.max(0, Math.floor((TARGET - Date.now()) / 86400000)));
