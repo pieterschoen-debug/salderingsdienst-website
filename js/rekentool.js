@@ -5,10 +5,10 @@
    velden, toont drie scenario's en geeft de uitkomst mee naar
    het adviesgesprek.
 
-   - de pagina toont kosten 2026, kosten 2027 en het verlies door
-     het einde van saldering, maar geen batterij-uitkomst
-     (besparing, terugverdientijd, oordeel), ook niet verborgen in
-     de DOM; die staat alleen in de overdracht voor de adviseur;
+   - de pagina toont geen uitkomst (besluit 19 oktober 2026): geen
+     kosten, geen verlies, geen kWh-curve en geen batterij-uitkomst,
+     ook niet verborgen in de DOM; alles staat alleen in de overdracht
+     voor de adviseur (payload);
 
    - invoer blijft in de browser; de URL bevat alleen getallen
      (voor delen), nooit persoonsgegevens;
@@ -251,41 +251,11 @@
   }
 
   /* ---------- Weergave ----------
-     Besluit eigenaar (6 oktober 2026): de pagina toont het verlies door
-     het einde van saldering, maar geen batterij-uitkomst (besparing,
-     terugverdientijd, oordeel). Die getallen komen ook niet in de DOM;
-     het model rekent ze wel uit en ze gaan via payload() mee naar de
-     adviseur. */
+     Besluit eigenaar (6 en 19 oktober 2026): de pagina toont geen
+     bedragen, geen kWh-curve en geen batterij-uitkomst. Het model rekent
+     alles wel uit; de uitkomst gaat via payload() mee naar de adviseur en
+     de bezoeker krijgt hem in het adviesgesprek. */
   var laatste = null;
-
-  function vulScenario(naam, s) {
-    var col = q('[data-scen="' + naam + '"]');
-    if (!col) return;
-    q('[data-v="k26"]', col).textContent = eur10(s.kosten_2026);
-    q('[data-v="k27"]', col).textContent = eur10(s.kosten_2027_zonder_batterij);
-    q('[data-v="verlies"]', col).textContent = eur10(s.verlies_per_jaar);
-  }
-
-  /* Alleen het verlies en de knoppen waaraan u zelf draait; nooit een
-     batterijbedrag of terugverdientijd. */
-  function uitleg(res) {
-    var c = res.scenarios.conservatief, r = res.scenarios.realistisch, o = res.scenarios.optimistisch;
-    var p = r.parameters;
-    var t = [];
-    if (r.teruglevering_kwh_2027 < 1 || Math.abs(r.verlies_per_jaar) < 5) {
-      t.push('Met deze invoer levert u vrijwel niets terug. Het einde van salderen verandert uw stroomrekening daardoor nauwelijks.');
-    } else {
-      t.push('In het realistische scenario betaalt u vanaf 2027 ongeveer ' + eur10(r.verlies_per_jaar) + ' per jaar meer voor stroom dan in 2026, omdat de '
-        + kwh(r.teruglevering_kwh_2027) + ' die u teruglevert niet meer tegen het volle tarief worden verrekend. Over de drie scenario\'s ligt dat tussen '
-        + eur10(o.verlies_per_jaar) + ' en ' + eur10(c.verlies_per_jaar) + '.');
-      t.push('Hoeveel u daarvan terughaalt, hangt vooral af van drie dingen: hoeveel van uw opwek u direct zelf gebruikt, wat uw contract betaalt voor teruggeleverde stroom en rekent aan terugleverkosten, en op welke uren u stroom verbruikt.'
-        + ' De eerste twee past u hier zelf aan; uw verbruik per uur rekenen wij in het adviesgesprek door met uw meterstanden.');
-    }
-    if (!(p.batterij_kwh > 0)) {
-      t.push('U rekent nu zonder batterij. Dat is een volwaardige uitkomst.');
-    }
-    return t.join(' ');
-  }
 
   /* Kop van de afgeschermde batterijkaart: alleen de gekozen maat. */
   function gate() {
@@ -296,67 +266,11 @@
       : 'Wat een thuisbatterij in uw situatie doet';
   }
 
-  function tip(res) {
-    var r = res.scenarios.realistisch;
-    var huidig = r.parameters.direct_eigen_verbruik_pct;
-    if (huidig >= 95 || r.teruglevering_kwh_2027 < 1) return '';
-    var meer = Math.min(100, state.direct_eigen_verbruik_pct + 10);
-    var invoer = {};
-    Object.keys(state).forEach(function (k) { invoer[k] = state[k]; });
-    invoer.direct_eigen_verbruik_pct = meer;
-    var r10 = M.bereken(invoer).scenarios.realistisch;
-    var verschil = r.kosten_2027_zonder_batterij - r10.kosten_2027_zonder_batterij;
-    if (verschil < 5) return '';
-    return 'Gebruikt u ' + getal(meer - state.direct_eigen_verbruik_pct) + ' procentpunt meer van uw opwek direct zelf, bijvoorbeeld door wasmachine en vaatwasser overdag te laten draaien, dan scheelt dat in het realistische scenario ongeveer '
-      + eur10(verschil) + ' per jaar, zonder dat u iets hoeft te kopen.';
-  }
-
-  function curve() {
-    var tbody = q('[data-rk-curve]');
-    if (!tbody) return;
-    var groottes = [0, 2.5, 5, 7.5, 10, 15];
-    if (state.batterij_kwh > 0 && groottes.indexOf(state.batterij_kwh) === -1) {
-      groottes.push(state.batterij_kwh);
-      groottes.sort(function (a, b) { return a - b; });
-    }
-    /* Alleen kWh: geen besparing, prijs of terugverdientijd per maat. */
-    var rijen = M.batterijCurve(state, groottes, 'realistisch');
-    tbody.innerHTML = '';
-    rijen.forEach(function (rij, i) {
-      var tr = document.createElement('tr');
-      if (rij.batterij_kwh === state.batterij_kwh) tr.className = 'is-gekozen';
-      var vorige = i > 0 ? rijen[i - 1] : null;
-      var erbij = vorige && rij.batterij_kwh > vorige.batterij_kwh
-        ? Math.max(0, Math.round((rij.verplaatst_kwh - vorige.verplaatst_kwh) / (rij.batterij_kwh - vorige.batterij_kwh))).toLocaleString('nl-NL') + ' kWh'
-        : '';
-      var cellen = [
-        ['th', rij.batterij_kwh === 0 ? 'geen' : getal(rij.batterij_kwh) + ' kWh'],
-        ['td', kwh(rij.verplaatst_kwh), 'num'],
-        ['td', erbij, 'num']
-      ];
-      cellen.forEach(function (c) {
-        var el = document.createElement(c[0]);
-        if (c[0] === 'th') el.setAttribute('scope', 'row');
-        if (c[2]) el.className = c[2];
-        el.textContent = c[1];
-        tr.appendChild(el);
-      });
-      tbody.appendChild(tr);
-    });
-  }
-
   function render() {
     var res = M.bereken(state);
     laatste = res;
-    VOLGORDE.forEach(function (n) { vulScenario(n, res.scenarios[n]); });
-    var u = q('[data-rk-uitleg]'); if (u) u.textContent = uitleg(res);
-    var t = q('[data-rk-tip]');
-    if (t) { var tekst = tip(res); t.textContent = tekst; t.hidden = !tekst; }
-    var bp = q('[data-rk-batterijprijs]');
-    if (bp) bp.textContent = state.batterij_kwh > 0 ? eur(res.scenarios.realistisch.batterij_prijs_eur) : eur(0);
     var kp = q('[data-rk-kwhpaneel]'); if (kp) kp.textContent = Math.round(state.kwh_per_paneel).toLocaleString('nl-NL');
     gate();
-    curve();
     return res;
   }
 

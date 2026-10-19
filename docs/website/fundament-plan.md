@@ -66,7 +66,28 @@ Elke productpagina heeft dezelfde opbouw, zodat de bezoeker na één pagina de r
 
 ## 3. Fases en stappen
 
-Regels voor elke stap: één stap per commit, de stap is op zichzelf compleet, de foto's zijn er vóór het live gaat, `npm run build` slaagt, mobiel (375 px) en desktop (1280 px) gecontroleerd, sitemap en JSON-LD bijgewerkt.
+Regels voor elke stap: één stap per commit, de stap is op zichzelf compleet, de foto's zijn er vóór het live gaat, `npm run build` slaagt, mobiel (375 px) en desktop (1280 px) gecontroleerd, sitemap en JSON-LD bijgewerkt. Twee regels van Pieter (19 oktober 2026) gaan boven alles: de homepage wordt niet herbouwd, en cijfers uit het rekenmodel of rekenvoorbeelden staan nooit open op de site; het adviesgesprek is de drempel.
+
+### Fase 0: de sluier over de cijfers (eerst, want dit staat nu live open)
+
+Wat nu open staat en achter het adviesgesprek moet:
+
+| Plek | Wat nu zichtbaar is | Wat de sluier doet |
+|---|---|---|
+| `/rekentool`, blok "Uitkomst per jaar, in drie scenario's" | Stroomkosten 2026, 2027 en het verlies in euro's, per scenario, plus de uitlegzin met bedragen | Bedragen worden geblurde balken zoals nu al bij de batterij-uitkomst; de uitlegzin verdwijnt; één knop "Ontvang uw uitkomst in het adviesgesprek". De berekening gaat wél mee naar het gesprek (bestaande overdracht blijft) |
+| `/rekentool`, tabel "Hoeveel stroom elke batterijgrootte verplaatst" | kWh per batterijgrootte uit het model | Tabel geblurd, kop en toelichting blijven |
+| `/rekentool`, uitklap "Aannames, met bron en datum" | Alle parameterwaarden (stroomprijs, vergoeding, terugleverkosten, batterijprijs, enz.), aanpasbaar | Waarden en invoervelden verdwijnen; alleen de namen van de aannames en de bronvermeldingen blijven, als bewijs dat er met bronnen gerekend wordt |
+| `/rekentool`, formulier | Standaardwaarden zoals 315 kWh per paneel en de batterijprijs in de hint | Hint met batterijprijs weg; de invoer zelf blijft (die is van de bezoeker) |
+| Homepage, bespaarcheck stap 3 | Besparingsbedrag en de drie tegels (kWh stroom, m³ gas, kWh opwek) | Bedrag en tegels geblurd, knop en terugbelformulier blijven. Dit is de enige homepage-ingreep in deze fase en raakt alleen de resultaatstap van de check |
+| Kennisbank `vast-of-dynamisch-na-2027` | Vijf tabellen met rekenvoorbeelden in euro's | Tabellen geblurd met één regel eronder: "De uitkomst voor uw woning krijgt u in het adviesgesprek" |
+| Kennisbank `welke-batterijgrootte` | Drie tabellen (capaciteitscurve, warmtepomp, winter) in kWh | Idem |
+| Kennisbank `thuisbatterij-na-2027` | Tabel met de bouwstenen en voorbeeldwaarden | Idem |
+| Kennisbank `salderingsregeling-gids` | Indicatietabel vergoeding en het uitgewerkte rekenvoorbeeld | Idem; de wetgevingstabel (datums, geen cijfers van ons) blijft open |
+| `/thuisbatterij` (nieuw), blok "Groter is niet vanzelf beter" | De grenzen 8 en 10 kWh uit het model | De twee cijfers worden geblurd, de tekst eromheen blijft |
+
+Blijft open, tenzij Pieter anders beslist: de leverancierstabel (`terugleververgoeding-2027-per-leverancier`), want dat zijn tarieven van leveranciers, niet onze rekensom, en het is het linkwaardige asset uit het SEO-plan. Ook open blijven: de methode-tekst, de bronnen en het wijzigingslog van het rekenmodel.
+
+Techniek: één klasse `.sluier` in `css/main.css` (blur, niet selecteerbaar, `aria-hidden`), de echte getallen worden serverzijde niet verwijderd maar in de HTML vervangen door vaste placeholderbalken, zodat niemand ze via "bron bekijken" of kopiëren kan lezen. Het rekenmodel blijft rekenen voor de overdracht naar het gesprek. Dit is één commit over `rekentool.html`, `js/rekentool.js`, `index.html` (alleen stap 3 van de check), vier kennisbankartikelen en `thuisbatterij.html`.
 
 ### Fase 1: productfundament (vier pagina's)
 
@@ -78,15 +99,20 @@ Regels voor elke stap: één stap per commit, de stap is op zichzelf compleet, d
 | 1.4 | Productpagina `/slimme-energiesturing` | S1 meterkast, S2 app met prijsgrafiek | Te doen |
 | 1.5 | Menu-item "Oplossingen" wordt een uitklap naar de vier pagina's (desktop en mobiel) | geen | Te doen na 1.4 |
 
-### Fase 2: homepage als etalage
+### Fase 2: de homepage blijft zoals hij is
 
-| Stap | Wat | Foto's nodig | Status |
+Besluit Pieter, 19 oktober 2026: de homepage wordt niet herbouwd. De eerdere ideeën (fotokaarten in plaats van de carrousel, bespaarcheck naast de hero, dagverloop op de homepage, nieuwe slotfoto) vervallen. Wat er wél op de homepage verandert, staat hieronder exact; niets anders.
+
+| Ingreep | Sectie | Wat verandert | Wat niet verandert |
 |---|---|---|---|
-| 2.1 | "Onze oplossingen" wordt vier staande fotokaarten met titel over de foto, elk naar de productpagina | K1 t/m K4 (staande uitsnedes) | Te doen |
-| 2.2 | Dagverloop-tekening krijgt een zachte animatie (tijdstip loopt door, pauzeerbaar, respecteert "minder beweging") en komt als eigen sectie op de homepage, onder de bespaarcheck | geen | Te doen |
-| 2.3 | Sectie "Uit de kennisbank": drie kaarten met beeld, datum en leestijd, knop "Alle artikelen" | A1 t/m A3 | Te doen |
-| 2.4 | Hero: bespaarcheck-kaart naast de herofoto (desktop), onder de foto (mobiel). De losse sectie "Bereken" verdwijnt dan | H1 nieuwe hero (breed, met ruimte rechts) | Te doen |
-| 2.5 | Slot-CTA met foto | C1 | Te doen |
+| Gedaan (commit db57809) | "Onze oplossingen", kaart Thuisbatterij | De link onder de kaart: tekst "Meer informatie" naar "Alles over de thuisbatterij", doel `/adviesgesprek` naar `/thuisbatterij` | Foto, titel, tekst, de andere vier kaarten, de carrousel zelf |
+| Bij stap 1.2 t/m 1.4 | Dezelfde kaarten Zonnepanelen, Warmtepomp, Slimme energiesturing | Alleen de link onder de kaart, op dezelfde manier | Alles anders |
+| Bij fase 0 | Bespaarcheck, stap 3 "De besparingen die u kunt verwachten" | Het bedrag en de drie tegels worden geblurd | Stap 1 en 2 van de check, de knop, het terugbelformulier, de disclaimer |
+| Bij stap 1.5 | Kopregel, menu-item "Oplossingen" | Wordt een uitklap met de vier productpagina's; op mobiel vier regels onder "Oplossingen" in het overlay-menu | Volgorde en tekst van de andere menu-items, de knop "Plan adviesgesprek" |
+| Bij stap 3.3 | Kopregel, rechts naast "Plan adviesgesprek" | Een kleine tweedelige schakelaar "Particulier | Zakelijk" | Logo, menu, knop |
+| Optioneel, alleen op akkoord | Tussen "Veelgestelde vragen" en het slot | Eén nieuwe sectie "Uit de kennisbank" met drie kaarten | Alle bestaande secties en hun volgorde |
+
+Wat ik verder op de homepage wil bouwen, komt niet op de homepage maar op eigen pagina's: de dagverloop-animatie op `/thuisbatterij`, de productetalage via de vier productpagina's, zakelijk op `/zakelijk`.
 
 ### Fase 3: zakelijk en de schakelaar
 
@@ -120,3 +146,5 @@ Regels voor elke stap: één stap per commit, de stap is op zichzelf compleet, d
 | Datum | Wat |
 |---|---|
 | 2026-10-16 | Plan en fotoprompts geschreven. Stap 1.1 gebouwd met tijdelijke foto's; niet gecommit, niet live |
+| 2026-10-19 | Stap 1.1 gecommit (db57809) en als PR #1 naar main geopend; niet gemerged, dus niet live. Twee besluiten van Pieter verwerkt: homepage niet herbouwen (fase 2 herschreven), en cijfers uit het rekenmodel en rekenvoorbeelden achter het adviesgesprek (nieuwe fase 0). Fase 0 gaat vóór alles, omdat die cijfers nu live open staan |
+| 2026-10-19 | Fase 0 gebouwd op branch `seo/fundament-deploy`: rekentool, bespaarcheck stap 3, boekingssamenvatting, vier artikelen en /thuisbatterij gesluierd; leverancierstabel en methode-tekst open gelaten. Gecontroleerd: build slaagt, geen bedragen meer in de pagina's, overdracht naar het adviesgesprek werkt nog. Aandachtspunt: `js/rekenmodel.js` met de standaardwaarden blijft als bestand bereikbaar voor wie de broncode opent |

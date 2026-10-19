@@ -2265,3 +2265,22 @@ h1, h2, h3, .h2, .funnel-title, .kb-pillar h3, .kb-card h3 {
 /* ---- Vragen op de productpagina ---- */
 .prod-vragen { background: #fff; border-top: 1px solid var(--line); }
 .faq-more a { color: var(--navy-400); font-weight: 600; }
+
+
+/* ============================================================
+   SLUIER (besluit Pieter, 19 oktober 2026): cijfers uit het
+   rekenmodel en rekenvoorbeelden staan niet online. De echte
+   getallen staan niet in de HTML; dit zijn alleen balken.
+   ============================================================ */
+.sluier-cijfer {
+  display: inline-block; vertical-align: middle; width: 4.4em; height: .95em; border-radius: 4px;
+  background: linear-gradient(90deg, var(--ink-300), var(--line-2));
+  filter: blur(4px); opacity: .62; user-select: none; pointer-events: none;
+}
+.sluier-cijfer--kort { width: 2.8em; }
+.sluier-cijfer--groot { width: 3.4em; height: .9em; }
+.prose-table td .sluier-cijfer { width: 3.6em; height: .8em; }
+.rk-metric dd .sluier-cijfer { width: 3.2em; height: .85em; }
+.famount--sluier { display: inline-flex; align-items: center; gap: 10px; }
+.sluier-noot { margin: -8px 0 24px; font-size: 14.5px; line-height: 1.55; color: var(--ink-600); }
+.sluier-noot a { color: var(--navy-400); font-weight: 600; }
