@@ -88,8 +88,6 @@
     var lo = band.length === 2 ? Math.min(num(band[0]), num(band[1])) : num(r.verlies_per_jaar);
     var hi = band.length === 2 ? Math.max(num(band[0]), num(band[1])) : num(r.verlies_per_jaar);
     var batterij = num(rt.invoer && rt.invoer.batterij_kwh);
-    q('[data-fs-rk-verlies]', summary).textContent = fmt(Math.round(num(r.verlies_per_jaar) / 10) * 10);
-    q('[data-fs-rk-band]', summary).textContent = '(realistisch scenario, bandbreedte ' + eur10(lo) + ' tot ' + eur10(hi) + ')';
     q('[data-fs-rk-batterij]', summary).textContent = batterij > 0
       ? batterij.toLocaleString('nl-NL', { maximumFractionDigits: 1 }) + ' kWh'
       : 'Geen batterij';
@@ -103,7 +101,6 @@
     all('[data-fs-bc]', function (el) { el.hidden = rk; }, summary);
     all('[data-fs-rk]', function (el) { el.hidden = !rk; }, summary);
     if (rk) { vulRekentool(f); summary.hidden = false; return; }
-    q('[data-fs-amount]', summary).textContent = fmt(f.besparing);
     q('[data-fs-stroom]', summary).textContent = fmt(f.kwh);
     q('[data-fs-gas]', summary).textContent = fmt(f.gas);
     q('[data-fs-opwek]', summary).textContent = fmt(f.opwek);
@@ -218,11 +215,9 @@
     state.besparing = state.stroomvoordeel + state.gasvoordeel;
   }
 
+  /* Besluit 19 oktober 2026: de uitkomst (bedrag en tegels) staat niet
+     op de pagina; de berekening gaat wel mee naar het adviesgesprek. */
   function toonUitkomst() {
-    q('[data-f-amount]', root).textContent = fmt(state.besparing);
-    q('[data-f-tile-stroom]', root).textContent = fmt(state.kwh);
-    q('[data-f-tile-gas]', root).textContent = fmt(state.gas);
-    q('[data-f-tile-opwek]', root).textContent = fmt(state.opwek);
     deel();
   }
 

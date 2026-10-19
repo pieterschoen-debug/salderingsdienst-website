@@ -44,7 +44,7 @@
   "description":"Rekentool voor huiseigenaren met zonnepanelen: de kosten van het einde van de salderingsregeling per 1 januari 2027 in drie scenario's, met zichtbare en aanpasbare aannames en de openbare methode waarmee een thuisbatterij wordt doorgerekend.",
   "inLanguage":"nl-NL",
   "datePublished":"2026-10-06",
-  "dateModified":"2026-10-06",
+  "dateModified":"2026-10-19",
   "isPartOf":{"@id":"https://www.salderingsdienst.nl/#website"},
   "publisher":{"@type":"Organization","@id":"https://www.salderingsdienst.nl/#organization","name":"SalderingsDienst","url":"https://www.salderingsdienst.nl/","logo":{"@type":"ImageObject","url":"https://www.salderingsdienst.nl/assets/salderingsdienst-logo-navy-960x396.png","width":960,"height":396}},
   "image":"https://www.salderingsdienst.nl/assets/og-salderingsdienst.jpg",
@@ -82,11 +82,11 @@
 
   <div class="rk-head">
     <h1>Wat kost het einde van salderen u, en wat doet een thuisbatterij?</h1>
-    <p class="lead rk-intro">Vul uw verbruik en opwek in en u ziet wat het einde van de salderingsregeling op 1 januari 2027 u per jaar kost, in drie scenario's. De methode en elke aanname staan met bron op deze pagina, ook die voor een thuisbatterij. Wat een batterij in uw situatie oplevert, tonen wij hier niet: dat rekenen wij in het adviesgesprek door met uw eigen meterstanden en contract. De Salderingsdienst B.V. is een commercieel bedrijf dat ook thuisbatterijen levert, en "geen batterij" is in dat gesprek gewoon een mogelijke uitkomst.</p>
+    <p class="lead rk-intro">Vul uw verbruik en opwek in. Het model rekent in drie scenario's door wat het einde van de salderingsregeling op 1 januari 2027 voor uw woning betekent, en wat een thuisbatterij daarvan terughaalt. De uitkomst in euro's tonen wij niet online: die krijgt u in het adviesgesprek, doorgerekend met uw eigen meterstanden en contract. De methode en de aannames staan met bron op deze pagina.</p>
     <p class="article-meta">Rekenmodel versie <span data-rk-versie>1.1.0</span>. Regels en prijzen gecontroleerd op <time datetime="2026-10-06">6 oktober 2026</time>. Wat u invult blijft in uw browser; wij vragen geen naam, adres of postcode.</p>
   </div>
 
-  <noscript><p class="rk-noscript">De rekentool heeft JavaScript nodig. De uitkomst hieronder hoort bij de standaardwaarden; de methode en alle aannames staan verderop op deze pagina.</p></noscript>
+  <noscript><p class="rk-noscript">De rekentool heeft JavaScript nodig om uw invoer mee te nemen naar het adviesgesprek. De methode en de aannames staan verderop op deze pagina.</p></noscript>
 
   <div class="rk-layout">
     <form class="card rk-form" data-rk-form novalidate aria-labelledby="rk-form-kop">
@@ -139,10 +139,10 @@
           <input class="finput" id="rk-batterij" type="text" inputmode="decimal" autocomplete="off" data-rk="batterij_kwh" data-soort="dec" value="5">
           <span class="rk-unit">kWh</span>
         </div>
-        <p class="fhint">Vul 0 in om zonder batterij te rekenen. Prijs in het realistische scenario: <strong data-rk-batterijprijs>&euro; 4.500</strong>, inclusief installatie en 21% btw.</p>
+        <p class="fhint">Vul 0 in om zonder batterij te rekenen. De prijs waarmee het model rekent, bespreken wij in het adviesgesprek naast uw offerte.</p>
       </div>
 
-      <p class="rk-formnote">Alle overige aannames, zoals stroomprijs, terugleververgoeding en terugleverkosten, past u aan bij <a href="#aannames" data-rk-open-aannames>Aannames</a>.</p>
+      <p class="rk-formnote">De overige aannames, zoals stroomprijs, terugleververgoeding en terugleverkosten, staan met bron onder <a href="#aannames" data-rk-open-aannames>Aannames</a>. De waarden zelf lopen wij in het adviesgesprek met u door.</p>
     </form>
 
     <section class="rk-results" aria-labelledby="rk-uitkomst-kop">
@@ -152,35 +152,34 @@
           <h3>Conservatief</h3>
           <p class="rk-col-sub">Aannames die voor u ongunstig uitvallen</p>
           <dl>
-            <div class="rk-metric"><dt>Stroomkosten 2026</dt><dd data-v="k26">&euro; 80</dd><small>met saldering, alleen het deel per kWh</small></div>
-            <div class="rk-metric"><dt>Stroomkosten 2027</dt><dd data-v="k27">&euro; 620</dd><small>zonder saldering en zonder batterij</small></div>
-            <div class="rk-metric rk-metric--verlies"><dt>Einde salderen kost u</dt><dd data-v="verlies">&euro; 540</dd><small>per jaar vanaf 2027</small></div>
+            <div class="rk-metric"><dt>Stroomkosten 2026</dt><dd data-v="k26"><span class="sluier-cijfer" role="img" aria-label="Verborgen: u krijgt dit cijfer in het adviesgesprek"></span></dd><small>met saldering, alleen het deel per kWh</small></div>
+            <div class="rk-metric"><dt>Stroomkosten 2027</dt><dd data-v="k27"><span class="sluier-cijfer" role="img" aria-label="Verborgen: u krijgt dit cijfer in het adviesgesprek"></span></dd><small>zonder saldering en zonder batterij</small></div>
+            <div class="rk-metric rk-metric--verlies"><dt>Einde salderen kost u</dt><dd data-v="verlies"><span class="sluier-cijfer" role="img" aria-label="Verborgen: u krijgt dit cijfer in het adviesgesprek"></span></dd><small>per jaar vanaf 2027</small></div>
           </dl>
         </article>
         <article class="rk-col rk-col--main" data-scen="realistisch">
           <h3>Realistisch</h3>
           <p class="rk-col-sub">De standaardwaarden met bron</p>
           <dl>
-            <div class="rk-metric"><dt>Stroomkosten 2026</dt><dd data-v="k26">&euro; 50</dd><small>met saldering, alleen het deel per kWh</small></div>
-            <div class="rk-metric"><dt>Stroomkosten 2027</dt><dd data-v="k27">&euro; 530</dd><small>zonder saldering en zonder batterij</small></div>
-            <div class="rk-metric rk-metric--verlies"><dt>Einde salderen kost u</dt><dd data-v="verlies">&euro; 480</dd><small>per jaar vanaf 2027</small></div>
+            <div class="rk-metric"><dt>Stroomkosten 2026</dt><dd data-v="k26"><span class="sluier-cijfer" role="img" aria-label="Verborgen: u krijgt dit cijfer in het adviesgesprek"></span></dd><small>met saldering, alleen het deel per kWh</small></div>
+            <div class="rk-metric"><dt>Stroomkosten 2027</dt><dd data-v="k27"><span class="sluier-cijfer" role="img" aria-label="Verborgen: u krijgt dit cijfer in het adviesgesprek"></span></dd><small>zonder saldering en zonder batterij</small></div>
+            <div class="rk-metric rk-metric--verlies"><dt>Einde salderen kost u</dt><dd data-v="verlies"><span class="sluier-cijfer" role="img" aria-label="Verborgen: u krijgt dit cijfer in het adviesgesprek"></span></dd><small>per jaar vanaf 2027</small></div>
           </dl>
         </article>
         <article class="rk-col" data-scen="optimistisch">
           <h3>Optimistisch</h3>
           <p class="rk-col-sub">Aannames die voor u gunstig uitvallen</p>
           <dl>
-            <div class="rk-metric"><dt>Stroomkosten 2026</dt><dd data-v="k26">&euro; 20</dd><small>met saldering, alleen het deel per kWh</small></div>
-            <div class="rk-metric"><dt>Stroomkosten 2027</dt><dd data-v="k27">&euro; 430</dd><small>zonder saldering en zonder batterij</small></div>
-            <div class="rk-metric rk-metric--verlies"><dt>Einde salderen kost u</dt><dd data-v="verlies">&euro; 400</dd><small>per jaar vanaf 2027</small></div>
+            <div class="rk-metric"><dt>Stroomkosten 2026</dt><dd data-v="k26"><span class="sluier-cijfer" role="img" aria-label="Verborgen: u krijgt dit cijfer in het adviesgesprek"></span></dd><small>met saldering, alleen het deel per kWh</small></div>
+            <div class="rk-metric"><dt>Stroomkosten 2027</dt><dd data-v="k27"><span class="sluier-cijfer" role="img" aria-label="Verborgen: u krijgt dit cijfer in het adviesgesprek"></span></dd><small>zonder saldering en zonder batterij</small></div>
+            <div class="rk-metric rk-metric--verlies"><dt>Einde salderen kost u</dt><dd data-v="verlies"><span class="sluier-cijfer" role="img" aria-label="Verborgen: u krijgt dit cijfer in het adviesgesprek"></span></dd><small>per jaar vanaf 2027</small></div>
           </dl>
         </article>
       </div>
 
       <div class="rk-uitleg">
         <h3>Wat dit voor u betekent</h3>
-        <p data-rk-uitleg>In het realistische scenario betaalt u vanaf 2027 ongeveer &euro; 480 per jaar meer voor stroom dan in 2026, omdat de 2.450 kWh die u teruglevert niet meer tegen het volle tarief worden verrekend. Over de drie scenario's ligt dat tussen &euro; 400 en &euro; 540. Hoeveel u daarvan terughaalt, hangt vooral af van drie dingen: hoeveel van uw opwek u direct zelf gebruikt, wat uw contract betaalt voor teruggeleverde stroom en rekent aan terugleverkosten, en op welke uren u stroom verbruikt. De eerste twee past u hier zelf aan; uw verbruik per uur rekenen wij in het adviesgesprek door met uw meterstanden.</p>
-        <p data-rk-tip>Gebruikt u 10 procentpunt meer van uw opwek direct zelf, bijvoorbeeld door wasmachine en vaatwasser overdag te laten draaien, dan scheelt dat in het realistische scenario ongeveer &euro; 80 per jaar, zonder dat u iets hoeft te kopen.</p>
+        <p>Uw verbruik, uw opwek en het deel dat u direct zelf gebruikt bepalen samen wat het einde van salderen u per jaar kost. Dat bedrag, de bandbreedte over de drie scenario's en wat een batterij ervan terughaalt, tonen wij niet online. U krijgt ze in het adviesgesprek, doorgerekend met uw eigen meterstanden en contract, zwart op wit. Neem deze berekening mee: dan start het gesprek met uw cijfers.</p>
         <p class="rk-share"><button type="button" class="btn btn-ghost rk-btn-sm" data-rk-deel>Kopieer de link naar deze berekening</button> <span class="rk-share-note" data-rk-deel-note aria-live="polite"></span></p>
       </div>
 
@@ -206,143 +205,109 @@
         <thead>
           <tr><th scope="col">Batterij</th><th scope="col">Verplaatst per jaar</th><th scope="col">Erbij per extra kWh capaciteit</th></tr>
         </thead>
-        <tbody data-rk-curve>
-          <tr><th scope="row">geen</th><td class="num">0 kWh</td><td class="num"></td></tr>
-          <tr><th scope="row">2,5 kWh</th><td class="num">790 kWh</td><td class="num">316 kWh</td></tr>
-          <tr class="is-gekozen"><th scope="row">5 kWh</th><td class="num">1.380 kWh</td><td class="num">237 kWh</td></tr>
-          <tr><th scope="row">7,5 kWh</th><td class="num">1.620 kWh</td><td class="num">94 kWh</td></tr>
-          <tr><th scope="row">10 kWh</th><td class="num">1.620 kWh</td><td class="num">0 kWh</td></tr>
-          <tr><th scope="row">15 kWh</th><td class="num">1.620 kWh</td><td class="num">0 kWh</td></tr>
+        <tbody>
+          <tr><th scope="row">geen</th><td class="num"><span class="sluier-cijfer" role="img" aria-label="Verborgen: u krijgt dit cijfer in het adviesgesprek"></span></td><td class="num"></td></tr>
+          <tr><th scope="row">2,5 kWh</th><td class="num"><span class="sluier-cijfer" role="img" aria-label="Verborgen: u krijgt dit cijfer in het adviesgesprek"></span></td><td class="num"><span class="sluier-cijfer" role="img" aria-label="Verborgen: u krijgt dit cijfer in het adviesgesprek"></span></td></tr>
+          <tr class="is-gekozen"><th scope="row">5 kWh</th><td class="num"><span class="sluier-cijfer" role="img" aria-label="Verborgen: u krijgt dit cijfer in het adviesgesprek"></span></td><td class="num"><span class="sluier-cijfer" role="img" aria-label="Verborgen: u krijgt dit cijfer in het adviesgesprek"></span></td></tr>
+          <tr><th scope="row">7,5 kWh</th><td class="num"><span class="sluier-cijfer" role="img" aria-label="Verborgen: u krijgt dit cijfer in het adviesgesprek"></span></td><td class="num"><span class="sluier-cijfer" role="img" aria-label="Verborgen: u krijgt dit cijfer in het adviesgesprek"></span></td></tr>
+          <tr><th scope="row">10 kWh</th><td class="num"><span class="sluier-cijfer" role="img" aria-label="Verborgen: u krijgt dit cijfer in het adviesgesprek"></span></td><td class="num"><span class="sluier-cijfer" role="img" aria-label="Verborgen: u krijgt dit cijfer in het adviesgesprek"></span></td></tr>
+          <tr><th scope="row">15 kWh</th><td class="num"><span class="sluier-cijfer" role="img" aria-label="Verborgen: u krijgt dit cijfer in het adviesgesprek"></span></td><td class="num"><span class="sluier-cijfer" role="img" aria-label="Verborgen: u krijgt dit cijfer in het adviesgesprek"></span></td></tr>
         </tbody>
       </table>
     </div>
+    <p class="sluier-noot">De kWh per batterijgrootte tonen wij niet online. In het adviesgesprek ziet u de curve voor uw eigen verbruik en welke maat daarbij past.</p>
   </section>
 
   <details class="card rk-aannames" id="aannames" data-rk-aannames>
-    <summary><span>Aannames, met bron en datum</span><span class="rk-summary-hint">Bekijken en aanpassen</span></summary>
+    <summary><span>Aannames, met bron en datum</span><span class="rk-summary-hint">Bekijken</span></summary>
     <div class="rk-aannames-body">
-      <p class="rk-sec-intro">Elke waarde hieronder is aan te passen; de uitkomst rekent direct mee. De kolom scenario's laat zien hoe conservatief en optimistisch afwijken van uw waarde. Labels: <em>geverifieerd</em> is gecontroleerd bij de primaire bron, <em>hypothese</em> komt uit een secundaire bron of berekening, <em>aanname</em> is een keuze van ons zonder externe bron.</p>
-
+      <p class="rk-sec-intro">Het model rekent met de aannames hieronder, elk met bron en peildatum. De waarden zelf, en hoe conservatief en optimistisch daarvan afwijken, tonen wij niet online: die lopen wij in het adviesgesprek met u door, naast uw eigen contract en meterstanden. Labels: <em>geverifieerd</em> is gecontroleerd bij de primaire bron, <em>hypothese</em> komt uit een secundaire bron of berekening, <em>aanname</em> is een eigen keuze.</p>
       <div class="rk-param">
         <div class="rk-param-naam"><strong>Stroomverbruik, opwek, direct eigen verbruik, contract en batterijgrootte</strong></div>
         <div class="rk-param-waarde"><a href="#rk-verbruik">Aanpassen in het formulier</a></div>
-        <div class="rk-param-bron">Direct eigen verbruik 30%: <span class="rk-tag">geverifieerd</span> Milieu Centraal, <a href="https://www.milieucentraal.nl/energie-besparen/zonnepanelen/thuisbatterij-zonne-energie-opslaan/" rel="nofollow noopener" target="_blank">Thuisbatterij: zonne-energie opslaan</a> (bijgewerkt 28-09-2026), gecontroleerd 2026-10-06. Scenario's: 5 procentpunt lager of hoger. Verbruik en opwek 3.500 kWh en batterij 5 kWh zijn voorbeeldwaarden (<span class="rk-tag">aanname</span>); Milieu Centraal noemt 6 kWh als gemiddelde batterij.</div>
+        <div class="rk-param-bron">Direct eigen verbruik: <span class="rk-tag">geverifieerd</span> Milieu Centraal, <a href="https://www.milieucentraal.nl/energie-besparen/zonnepanelen/thuisbatterij-zonne-energie-opslaan/" rel="nofollow noopener" target="_blank">Thuisbatterij: zonne-energie opslaan</a>, bijgewerkt 28 september 2026.</div>
       </div>
-
       <div class="rk-param">
-        <div class="rk-param-naam"><label for="rk-p-prijs"><strong>Stroomprijs, all-in</strong></label><span class="rk-param-unit">euro per kWh, inclusief energiebelasting en btw</span></div>
-        <div class="rk-param-waarde"><input class="field rk-field-sm" id="rk-p-prijs" type="text" inputmode="decimal" autocomplete="off" data-rk="stroomprijs_allin_eur_kwh" data-soort="dec" value="0,258"></div>
-        <div class="rk-param-bron"><span class="rk-tag">geverifieerd</span> CBS StatLine 85592NED, augustus 2026: variabel leveringstarief &euro; 0,1469 plus energiebelasting &euro; 0,11085 per kWh, beide inclusief btw. <a href="https://www.cbs.nl/nl-nl/cijfers/detail/85592NED" rel="nofollow noopener" target="_blank">cbs.nl</a>, gecontroleerd 2026-10-06. Gelijk in alle scenario's. Vul uw eigen tarief in van uw jaarafrekening.</div>
+        <div class="rk-param-naam"><strong>Stroomprijs, all-in</strong><span class="rk-param-unit">euro per kWh, inclusief energiebelasting en btw</span></div>
+        <div class="rk-param-waarde"><span class="sluier-cijfer sluier-cijfer--kort" role="img" aria-label="Verborgen: u krijgt dit cijfer in het adviesgesprek"></span></div>
+        <div class="rk-param-bron"><span class="rk-tag">geverifieerd</span> CBS StatLine 85592NED, gemiddelde energietarieven voor consumenten, augustus 2026. <a href="https://www.cbs.nl/nl-nl/cijfers/detail/85592NED" rel="nofollow noopener" target="_blank">cbs.nl</a>. Scenario's: gelijk; het verschil zit in vergoeding en kosten.</div>
       </div>
-
-      <div class="rk-param rk-param--lev" data-rk-leverancier-blok hidden>
-        <div class="rk-param-naam"><label for="rk-p-leverancier"><strong>Uw leverancier (optioneel)</strong></label><span class="rk-param-unit">vult vergoeding en terugleverkosten hieronder in</span></div>
-        <div class="rk-param-waarde">
-          <select class="fselect rk-lev-select" id="rk-p-leverancier" data-rk-leverancier>
-            <option value="">Zelf invullen</option>
-          </select>
-          <p class="rk-lev-bron" data-rk-leverancier-bron aria-live="polite" hidden></p>
-          <p class="rk-lev-bron">De lijst toont leveranciers waarvan een vergoeding en terugleverkosten per kWh voor 2027 bekend zijn. De meeste bedragen komen van vergelijkingssites, omdat leveranciers ze zelf vaak alleen in hun aanbod noemen; controleer ze in uw eigen contract. Het volledige overzicht, met bron en peildatum per leverancier, staat in <a href="/kennisbank/terugleververgoeding-2027-per-leverancier">terugleververgoeding en terugleverkosten 2027 per leverancier</a>.</p>
-        </div>
-      </div>
-
       <div class="rk-param">
-        <div class="rk-param-naam"><label for="rk-p-vergoeding"><strong>Terugleververgoeding vanaf 2027, bruto</strong></label><span class="rk-param-unit">euro per kWh</span></div>
-        <div class="rk-param-waarde"><input class="field rk-field-sm" id="rk-p-vergoeding" type="text" inputmode="decimal" autocomplete="off" data-rk="terugleververgoeding_bruto_eur_kwh" data-soort="dec" value="0,061"></div>
-        <div class="rk-param-bron"><span class="rk-tag">geverifieerd</span> Het wettelijke minimum tot 1 januari 2030: minimaal 50% van het kale leveringstarief, dus zonder energiebelasting en btw. Bij het CBS-tarief is dat &euro; 0,1469 / 1,21 &times; 50% = ongeveer &euro; 0,061. <a href="https://zoek.officielebekendmakingen.nl/stb-2025-17.html" rel="nofollow noopener" target="_blank">Staatsblad 2025, 17, art. 2.34 Energiewet</a>; uitleg <a href="https://www.rijksoverheid.nl/onderwerpen/energie-thuis/salderingsregeling" rel="nofollow noopener" target="_blank">Rijksoverheid</a> en <a href="https://consument.acm.nl/elektriciteit-en-gas/duurzame-energie/wat-is-salderen" rel="nofollow noopener" target="_blank">ACM ConsuWijzer</a>, gecontroleerd 2026-10-06. Scenario's: <span class="rk-delta">conservatief 1 cent lager, optimistisch 2 cent hoger</span>.</div>
+        <div class="rk-param-naam"><strong>Terugleververgoeding vanaf 2027, bruto</strong><span class="rk-param-unit">euro per kWh</span></div>
+        <div class="rk-param-waarde"><span class="sluier-cijfer sluier-cijfer--kort" role="img" aria-label="Verborgen: u krijgt dit cijfer in het adviesgesprek"></span></div>
+        <div class="rk-param-bron"><span class="rk-tag">geverifieerd</span> Het wettelijke minimum tot 1 januari 2030: een vast deel van het kale leveringstarief, dus zonder energiebelasting en btw. <a href="https://zoek.officielebekendmakingen.nl/stb-2025-17.html" rel="nofollow noopener" target="_blank">Staatsblad 2025, 17</a>. Scenario's: conservatief lager, optimistisch hoger.</div>
       </div>
-
       <div class="rk-param">
-        <div class="rk-param-naam"><label for="rk-p-tlk"><strong>Terugleverkosten</strong></label><span class="rk-param-unit">euro per teruggeleverde kWh, in 2026 en 2027</span></div>
-        <div class="rk-param-waarde"><input class="field rk-field-sm" id="rk-p-tlk" type="text" inputmode="decimal" autocomplete="off" data-rk="terugleverkosten_eur_kwh" data-soort="dec" value="0,02"></div>
-        <div class="rk-param-bron"><span class="rk-tag">hypothese</span> Vergelijkingssites noemen voor vaste contracten in 2027 een netto vergoeding (vergoeding min terugleverkosten) van ongeveer 0 tot 4 cent per kWh; leveranciers publiceren dit zelf nog niet. <a href="https://www.energievergelijk.nl/nieuws/terugleververgoedingen-stijgen-in-2027-deze-5-leveranciers-betalen-het-meest" rel="nofollow noopener" target="_blank">energievergelijk.nl</a> (1-10-2026), gecontroleerd 2026-10-06. Sinds 1 januari 2026 rekent het modelcontract terugleverkosten per kWh (<a href="https://www.acm.nl/nl/publicaties/acm-terugleverkosten-zonnestroom-niet-onredelijk-contracten-wel-moeilijk-te-vergelijken" rel="nofollow noopener" target="_blank">ACM</a>), daarom tellen ze in beide jaren mee. Scenario's: <span class="rk-delta">conservatief 1 cent hoger, optimistisch 1 cent lager</span>.</div>
+        <div class="rk-param-naam"><strong>Terugleverkosten</strong><span class="rk-param-unit">euro per teruggeleverde kWh, in 2026 en 2027</span></div>
+        <div class="rk-param-waarde"><span class="sluier-cijfer sluier-cijfer--kort" role="img" aria-label="Verborgen: u krijgt dit cijfer in het adviesgesprek"></span></div>
+        <div class="rk-param-bron"><span class="rk-tag">hypothese</span> Leveranciers publiceren hun kosten voor 2027 nog niet; het model gebruikt een niveau uit vergelijkingssites. Wat leveranciers wel noemen, met bron en peildatum, staat in <a href="/kennisbank/terugleververgoeding-2027-per-leverancier">het overzicht per leverancier</a>.</div>
       </div>
-
       <div class="rk-param">
-        <div class="rk-param-naam"><span class="rk-check-wrap"><input type="checkbox" id="rk-p-nul" data-rk="netto_vergoeding_min_nul" data-soort="bool" checked> <label for="rk-p-nul"><strong>Netto teruglevering per maand niet onder nul</strong></label></span></div>
-        <div class="rk-param-waarde"><span class="rk-param-unit">aan of uit</span></div>
-        <div class="rk-param-bron"><span class="rk-tag">aanname</span> De wet bepaalt dat de vergoeding per maand gemiddeld niet negatief mag zijn (<a href="https://zoek.officielebekendmakingen.nl/stb-2025-17.html" rel="nofollow noopener" target="_blank">art. 2.34 lid 7</a>). Terugleverkosten komen daar los bij. Of het bedrag na aftrek van die kosten negatief mag worden, is juridisch niet getoetst, en een ouder overzicht noemde bij enkele leveranciers negatieve netto bedragen. Standaard staat de ondergrens aan; dat geeft een lager verlies en een lagere batterijopbrengst. Zet hem uit als uw contract netto geld kost.</div>
+        <div class="rk-param-naam"><strong>Netto teruglevering per maand niet onder nul</strong><span class="rk-param-unit">aan of uit</span></div>
+        <div class="rk-param-waarde"><span class="sluier-cijfer sluier-cijfer--kort" role="img" aria-label="Verborgen: u krijgt dit cijfer in het adviesgesprek"></span></div>
+        <div class="rk-param-bron"><span class="rk-tag">aanname</span> De wet bepaalt dat de vergoeding per maand gemiddeld niet negatief mag zijn (<a href="https://zoek.officielebekendmakingen.nl/stb-2025-17.html" rel="nofollow noopener" target="_blank">art. 2.34 lid 7</a>). Terugleverkosten komen daar los bij.</div>
       </div>
-
       <div class="rk-param">
-        <div class="rk-param-naam"><label for="rk-p-bprijs"><strong>Prijs thuisbatterij</strong></label><span class="rk-param-unit">euro per kWh, inclusief installatie en 21% btw</span></div>
-        <div class="rk-param-waarde"><input class="field rk-field-sm" id="rk-p-bprijs" type="text" inputmode="numeric" autocomplete="off" data-rk="batterij_prijs_per_kwh_eur" data-soort="int" value="900"></div>
-        <div class="rk-param-bron"><span class="rk-tag">aanname</span> Marktindicatie, geen tarief. Er is geen ISDE-subsidie en geen 0%-btw op een thuisbatterij (<a href="https://www.rvo.nl/subsidies-financiering/isde/woningeigenaren" rel="nofollow noopener" target="_blank">RVO</a>, <a href="https://www.belastingdienst.nl/wps/wcm/connect/nl/btw/content/thuisbatterij-btw" rel="nofollow noopener" target="_blank">Belastingdienst</a>, gecontroleerd 2026-10-06). Kleine batterijen zijn per kWh vaak duurder door vaste installatiekosten. Heeft u een offerte, vul dan de totaalprijs gedeeld door de kWh in. Scenario's: <span class="rk-delta">conservatief 200 euro per kWh hoger, optimistisch 200 euro lager</span>.</div>
+        <div class="rk-param-naam"><strong>Prijs thuisbatterij</strong><span class="rk-param-unit">euro per kWh, inclusief installatie en 21% btw</span></div>
+        <div class="rk-param-waarde"><span class="sluier-cijfer sluier-cijfer--kort" role="img" aria-label="Verborgen: u krijgt dit cijfer in het adviesgesprek"></span></div>
+        <div class="rk-param-bron"><span class="rk-tag">aanname</span> Marktindicatie, geen tarief. Er is geen ISDE-subsidie en geen 0%-btw op een thuisbatterij (<a href="https://www.rvo.nl/subsidies-financiering/isde/woningeigenaren" rel="nofollow noopener" target="_blank">RVO</a>, <a href="https://www.belastingdienst.nl/wps/wcm/connect/bldcontentnl/belastingdienst/zakelijk/btw/tarieven_en_vrijstellingen/goederen_0_btw/btw-tarief-zonnepanelen" rel="nofollow noopener" target="_blank">Belastingdienst</a>). Scenario's: conservatief duurder, optimistisch goedkoper.</div>
       </div>
-
       <div class="rk-param">
-        <div class="rk-param-naam"><label for="rk-p-rendement"><strong>Rendement laden en ontladen</strong></label><span class="rk-param-unit">procent van de geladen stroom die er weer uit komt</span></div>
-        <div class="rk-param-waarde"><input class="field rk-field-sm" id="rk-p-rendement" type="text" inputmode="decimal" autocomplete="off" data-rk="rendement_rondgang_pct" data-soort="dec" value="90"></div>
-        <div class="rk-param-bron"><span class="rk-tag">aanname</span> Inclusief de verliezen in de omvormer. Het rendement staat op het datablad van de batterij. Scenario's: <span class="rk-delta">conservatief 5 procentpunt lager, optimistisch 2 hoger</span>.</div>
+        <div class="rk-param-naam"><strong>Rendement laden en ontladen</strong><span class="rk-param-unit">procent van de geladen stroom die er weer uit komt</span></div>
+        <div class="rk-param-waarde"><span class="sluier-cijfer sluier-cijfer--kort" role="img" aria-label="Verborgen: u krijgt dit cijfer in het adviesgesprek"></span></div>
+        <div class="rk-param-bron"><span class="rk-tag">aanname</span> Inclusief de verliezen in de omvormer. Het rendement staat op het datablad van de batterij. Scenario's: conservatief lager, optimistisch hoger.</div>
       </div>
-
       <div class="rk-param">
-        <div class="rk-param-naam"><label for="rk-p-degradatie"><strong>Capaciteitsverlies per jaar</strong></label><span class="rk-param-unit">procent</span></div>
-        <div class="rk-param-waarde"><input class="field rk-field-sm" id="rk-p-degradatie" type="text" inputmode="decimal" autocomplete="off" data-rk="degradatie_pct_per_jaar" data-soort="dec" value="2"></div>
-        <div class="rk-param-bron"><span class="rk-tag">aanname</span> De batterij houdt elk jaar 2% minder capaciteit over. Vraag in een offerte naar de gegarandeerde restcapaciteit. Gelijk in alle scenario's.</div>
+        <div class="rk-param-naam"><strong>Capaciteitsverlies per jaar</strong><span class="rk-param-unit">procent</span></div>
+        <div class="rk-param-waarde"><span class="sluier-cijfer sluier-cijfer--kort" role="img" aria-label="Verborgen: u krijgt dit cijfer in het adviesgesprek"></span></div>
+        <div class="rk-param-bron"><span class="rk-tag">aanname</span> De batterij houdt elk jaar iets minder capaciteit over. Vraag in een offerte naar de gegarandeerde restcapaciteit. Gelijk in alle scenario's.</div>
       </div>
-
       <div class="rk-param">
-        <div class="rk-param-naam"><label for="rk-p-levensduur"><strong>Levensduur</strong></label><span class="rk-param-unit">jaar</span></div>
-        <div class="rk-param-waarde"><input class="field rk-field-sm" id="rk-p-levensduur" type="text" inputmode="numeric" autocomplete="off" data-rk="levensduur_jaar" data-soort="int" value="12"></div>
-        <div class="rk-param-bron"><span class="rk-tag">aanname</span> De periode waarover de batterij zich moet terugverdienen. Fabrikanten geven garantie op jaren of cycli; houd de garantietermijn aan als u die kent. Gelijk in alle scenario's.</div>
+        <div class="rk-param-naam"><strong>Levensduur</strong><span class="rk-param-unit">jaar</span></div>
+        <div class="rk-param-waarde"><span class="sluier-cijfer sluier-cijfer--kort" role="img" aria-label="Verborgen: u krijgt dit cijfer in het adviesgesprek"></span></div>
+        <div class="rk-param-bron"><span class="rk-tag">aanname</span> De periode waarover de batterij zich moet terugverdienen. Fabrikanten geven garantie op jaren of cycli; in het gesprek houden wij de garantietermijn van uw offerte aan. Gelijk in alle scenario's.</div>
       </div>
-
       <div class="rk-param">
-        <div class="rk-param-naam"><label for="rk-p-cycli"><strong>Laadcycli per dag, hoogstens</strong></label><span class="rk-param-unit">volle cycli</span></div>
-        <div class="rk-param-waarde"><input class="field rk-field-sm" id="rk-p-cycli" type="text" inputmode="decimal" autocomplete="off" data-rk="max_cycli_per_dag" data-soort="dec" value="1"></div>
-        <div class="rk-param-bron"><span class="rk-tag">aanname</span> Eén keer per dag vol laden met zonnestroom en weer leeg verbruiken. Bij een dynamisch contract gebruikt handel op prijsverschillen dezelfde cyclus.</div>
+        <div class="rk-param-naam"><strong>Laadcycli per dag, hoogstens</strong><span class="rk-param-unit">volle cycli</span></div>
+        <div class="rk-param-waarde"><span class="sluier-cijfer sluier-cijfer--kort" role="img" aria-label="Verborgen: u krijgt dit cijfer in het adviesgesprek"></span></div>
+        <div class="rk-param-bron"><span class="rk-tag">aanname</span> Vol laden met zonnestroom en weer leeg verbruiken. Bij een dynamisch contract gebruikt handel op prijsverschillen dezelfde cyclus.</div>
       </div>
-
       <div class="rk-param">
-        <div class="rk-param-naam"><label for="rk-p-spread"><strong>Prijsverschil dag en nacht</strong></label><span class="rk-param-unit">euro per kWh, alleen bij een dynamisch contract</span></div>
-        <div class="rk-param-waarde"><input class="field rk-field-sm" id="rk-p-spread" type="text" inputmode="decimal" autocomplete="off" data-rk="dynamisch_spread_eur_kwh" data-soort="dec" value="0,10"></div>
-        <div class="rk-param-bron"><span class="rk-tag">aanname</span> Verschil tussen het goedkope laadmoment en het dure moment waarop u de stroom zelf gebruikt. Het model gebruikt het alleen op dagen waarop de zon de batterij voor minder dan 30% vult, en levert die netstroom nooit terug. Gelijk in alle scenario's.</div>
+        <div class="rk-param-naam"><strong>Prijsverschil dag en nacht</strong><span class="rk-param-unit">euro per kWh, alleen bij een dynamisch contract</span></div>
+        <div class="rk-param-waarde"><span class="sluier-cijfer sluier-cijfer--kort" role="img" aria-label="Verborgen: u krijgt dit cijfer in het adviesgesprek"></span></div>
+        <div class="rk-param-bron"><span class="rk-tag">aanname</span> Verschil tussen het goedkope laadmoment en het dure moment waarop u de stroom zelf gebruikt. Het model gebruikt het alleen op dagen waarop de zon de batterij maar voor een klein deel vult, en levert die netstroom nooit terug. Gelijk in alle scenario's.</div>
       </div>
-
       <div class="rk-param">
-        <div class="rk-param-naam"><label for="rk-p-onbalans"><strong>Opbrengst uit onbalanshandel</strong></label><span class="rk-param-unit">euro per jaar</span></div>
-        <div class="rk-param-waarde"><input class="field rk-field-sm" id="rk-p-onbalans" type="text" inputmode="numeric" autocomplete="off" data-rk="onbalans_opbrengst_eur_jaar" data-soort="int" value="0"></div>
-        <div class="rk-param-bron"><span class="rk-tag">aanname</span> Staat bewust op 0. Sommige aanbieders laten de batterij handelen op de onbalansmarkt. Die opbrengst wisselt sterk en is niet gegarandeerd. Heeft u een contract met een vaste vergoeding hiervoor, vul die dan hier in.</div>
+        <div class="rk-param-naam"><strong>Opbrengst uit onbalanshandel</strong><span class="rk-param-unit">euro per jaar</span></div>
+        <div class="rk-param-waarde"><span class="sluier-cijfer sluier-cijfer--kort" role="img" aria-label="Verborgen: u krijgt dit cijfer in het adviesgesprek"></span></div>
+        <div class="rk-param-bron"><span class="rk-tag">aanname</span> Staat bewust op nul. Sommige aanbieders laten de batterij handelen op de onbalansmarkt; die opbrengst wisselt sterk en is niet gegarandeerd. Heeft u een contract met een vaste vergoeding, dan nemen wij die in het gesprek mee.</div>
       </div>
-
       <div class="rk-param">
-        <div class="rk-param-naam"><label for="rk-p-paneel"><strong>Opwek per zonnepaneel</strong></label><span class="rk-param-unit">kWh per jaar, alleen voor de hulp bij opwek</span></div>
-        <div class="rk-param-waarde"><input class="field rk-field-sm" id="rk-p-paneel" type="text" inputmode="numeric" autocomplete="off" data-rk="kwh_per_paneel" data-soort="int" value="315"></div>
+        <div class="rk-param-naam"><strong>Opwek per zonnepaneel</strong><span class="rk-param-unit">kWh per jaar, alleen voor de hulp bij opwek</span></div>
+        <div class="rk-param-waarde"><span class="sluier-cijfer sluier-cijfer--kort" role="img" aria-label="Verborgen: u krijgt dit cijfer in het adviesgesprek"></span></div>
         <div class="rk-param-bron"><span class="rk-tag">aanname</span> Voor een modern paneel op een redelijk georiënteerd dak. Oudere of beschaduwde panelen leveren minder; de opwek uit uw omvormer-app is altijd beter.</div>
       </div>
-
       <div class="rk-param">
         <div class="rk-param-naam"><strong>Verdeling van de opwek over het jaar</strong></div>
         <div class="rk-param-waarde"><a href="#methode">Zie Methode</a></div>
-        <div class="rk-param-bron"><span class="rk-tag">aanname</span> Een vaste Nederlandse maandverdeling, van 2% in december tot 13% in mei, juni en juli. Het verbruik is vlak over het jaar verdeeld.</div>
+        <div class="rk-param-bron"><span class="rk-tag">aanname</span> Een vaste Nederlandse maandverdeling: laag in de winter, hoog in mei tot en met juli. Het verbruik is vlak over het jaar verdeeld.</div>
       </div>
-
-      <p class="rk-reset"><button type="button" class="btn btn-ghost rk-btn-sm" data-rk-reset>Standaardwaarden herstellen</button></p>
     </div>
   </details>
 
   <section class="prose rk-methode" id="methode" aria-labelledby="rk-methode-kop">
     <h2 id="rk-methode-kop">Methode</h2>
-    <p>Rekenmodel versie <span data-rk-versie>1.1.0</span>, peildatum 6 oktober 2026. Het model is openbaar: de broncode staat in <a href="/js/rekenmodel.js">rekenmodel.js</a> en draait volledig in uw browser.</p>
+    <p>Rekenmodel versie <span data-rk-versie>1.1.0</span>, peildatum 6 oktober 2026. Het model draait volledig in uw browser; wat u invult verlaat uw apparaat pas als u het zelf meeneemt naar het adviesgesprek.</p>
     <ol>
-      <li><strong>Per maand, per dag.</strong> Uw opwek wordt over de maanden verdeeld volgens de tabel hieronder; uw verbruik is elke dag gelijk. Binnen een maand rekent het model met een gemiddelde dag.</li>
+      <li><strong>Per maand, per dag.</strong> Uw opwek wordt over de maanden verdeeld volgens een vast Nederlands profiel, laag in de winter en hoog in de zomer; uw verbruik is elke dag gelijk. Binnen een maand rekent het model met een gemiddelde dag.</li>
       <li><strong>Direct eigen verbruik.</strong> Per dag gebruikt u het ingevulde percentage van de opwek direct zelf, maar nooit meer dan u die dag verbruikt. De rest van de opwek is overschot; de rest van uw verbruik haalt u van het net.</li>
       <li><strong>Batterij.</strong> De batterij laadt per dag het kleinste van: het overschot, de bruikbare capaciteit maal het aantal cycli, en wat u daarna nog verbruikt gedeeld door het rendement. Wat eruit komt is de geladen stroom maal het rendement. Elk jaar neemt de capaciteit af met het capaciteitsverlies.</li>
       <li><strong>2026, met saldering.</strong> Teruglevering wordt over het jaar weggestreept tegen afname en is dus het volle all-in tarief waard. Levert u meer terug dan u afneemt, dan krijgt u voor dat deel alleen de terugleververgoeding. Terugleverkosten betaalt u over alle teruggeleverde kWh.</li>
       <li><strong>Vanaf 2027, zonder saldering.</strong> Alle afname kost het all-in tarief. Teruglevering levert de vergoeding min de terugleverkosten op, per maand niet onder nul zolang die ondergrens aanstaat. Het verschil met 2026 is wat het einde van salderen u per jaar kost.</li>
       <li><strong>Wat de batterij bespaart.</strong> Het verschil tussen de kosten vanaf 2027 zonder en met batterij. Elke verplaatste kWh is dus het all-in tarief waard in plaats van de netto vergoeding.</li>
-      <li><strong>Dynamisch contract.</strong> Op dagen waarop de zon de batterij voor minder dan 30% vult, laadt het model de rest goedkoop van het net en gebruikt u die stroom zelf op een duur moment. Opbrengst per geladen kWh: rendement maal (prijs plus de helft van het prijsverschil), min (prijs min de helft van het prijsverschil).</li>
+      <li><strong>Dynamisch contract.</strong> Op dagen waarop de zon de batterij maar voor een klein deel vult, laadt het model de rest goedkoop van het net en gebruikt u die stroom zelf op een duur moment. Opbrengst per geladen kWh: rendement maal (prijs plus de helft van het prijsverschil), min (prijs min de helft van het prijsverschil).</li>
       <li><strong>Terugverdientijd.</strong> De besparingen per jaar, met degradatie, worden opgeteld tot ze de prijs van de batterij dekken. Het model deelt de uitkomst in drie klassen in: binnen twee derde van de levensduur, binnen de levensduur, of niet binnen de levensduur. Er is geen rente of prijsstijging meegerekend. Deze uitkomst toont de pagina niet; de adviseur bespreekt hem met u, doorgerekend met uw eigen meterstanden en contract.</li>
     </ol>
-
-    <div class="prose-table-wrap">
-      <table class="prose-table rk-table">
-        <caption>Verdeling van de jaaropwek over de maanden (aanname, gangbaar Nederlands profiel). Samen 100%.</caption>
-        <thead><tr><th scope="col">jan</th><th scope="col">feb</th><th scope="col">mrt</th><th scope="col">apr</th><th scope="col">mei</th><th scope="col">jun</th><th scope="col">jul</th><th scope="col">aug</th><th scope="col">sep</th><th scope="col">okt</th><th scope="col">nov</th><th scope="col">dec</th></tr></thead>
-        <tbody><tr><td class="num">3%</td><td class="num">5%</td><td class="num">9%</td><td class="num">12%</td><td class="num">13%</td><td class="num">13%</td><td class="num">13%</td><td class="num">12%</td><td class="num">9%</td><td class="num">6%</td><td class="num">3%</td><td class="num">2%</td></tr></tbody>
-      </table>
-    </div>
 
     <h3>Wat het model niet doet</h3>
     <ul>
@@ -363,6 +328,7 @@
 
     <h3>Wijzigingslog</h3>
     <ul data-rk-changelog>
+      <li><strong>Weergave, 19 oktober 2026.</strong> De uitkomst in euro's, de kWh-curve per batterijgrootte en de waarden van de aannames staan niet meer op deze pagina; u krijgt ze in het adviesgesprek. Het model zelf is niet veranderd (1.1.0).</li>
       <li><strong>Weergave, 6 oktober 2026.</strong> De batterij-uitkomst (besparing en terugverdientijd) staat niet meer op deze pagina. Het model rekent hem nog steeds uit, op dezelfde manier; u krijgt hem in het adviesgesprek, doorgerekend met uw eigen meterstanden en contract.</li>
       <li><strong>1.1.0, 6 oktober 2026.</strong> Terugleverkosten voor 2026 en 2027 apart, zodat een leverancierskeuze met lagere kosten vanaf 2027 het verlies in het referentiejaar niet verandert. Leverancierskeuze uit de tabel per leverancier toegevoegd.</li>
       <li><strong>1.0.0, 6 oktober 2026.</strong> Eerste publieke versie: maandmodel, drie scenario's, batterij met degradatie en terugverdientijd. Prijzen CBS augustus 2026; terugleververgoeding op het wettelijke minimum tot 1 januari 2030. Opbrengst uit onbalanshandel staat standaard op nul.</li>
@@ -399,7 +365,7 @@
 
 <footer class="site-footer">
   <div class="container" style="padding-top:40px; padding-bottom:34px; font-size:13.5px; display:flex; flex-wrap:wrap; gap:10px 20px; justify-content:space-between;">
-    <span>&copy; 2026 De Salderingsdienst B.V., KvK 42165216, btw NL851987461B01, Jonas Dani&euml;l Meijerplein 25 C 2, 1011 RG Amsterdam. <a href="mailto:info@salderingsdienst.nl" style="color:var(--gold-300);">info@salderingsdienst.nl</a>, telefoon <a href="tel:+31639369781" style="color:var(--gold-300);">06 3936 9781</a>, <a href="https://wa.me/31639369781" rel="noopener" style="color:var(--gold-300);">WhatsApp</a>.<br>Particuliere onderneming, geen onderdeel van de Rijksoverheid.</span>
+    <span>&copy; 2026 De Salderingsdienst B.V., KvK 42165216, Jonas Dani&euml;l Meijerplein 25 C 2, 1011 RG Amsterdam. <a href="mailto:info@salderingsdienst.nl" style="color:var(--gold-300);">info@salderingsdienst.nl</a>, telefoon <a href="tel:+31639369781" style="color:var(--gold-300);">06 3936 9781</a>, <a href="https://wa.me/31639369781" rel="noopener" style="color:var(--gold-300);">WhatsApp</a>.<br>Particuliere onderneming, geen onderdeel van de Rijksoverheid.</span>
     <span>
       <a href="/algemene-voorwaarden" style="color:var(--gold-300);">Algemene voorwaarden</a>
       &nbsp;·&nbsp;
@@ -414,7 +380,6 @@
 
 <script defer src="js/motion.js"></script>
 <script defer src="js/rekenmodel.js"></script>
-<script defer src="js/data/leveranciers-2027.js"></script>
 <script defer src="js/rekentool.js"></script>
 </body>
 </html>

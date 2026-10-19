@@ -44,7 +44,7 @@
   "description":"Vijf rekenvoorbeelden uit het rekenmodel van SalderingsDienst: wat het einde van saldering per huishouden kost bij een vast of dynamisch contract, in drie scenario's, en welke factoren bepalen wat een thuisbatterij daarin doet.",
   "inLanguage":"nl-NL",
   "datePublished":"2026-10-06",
-  "dateModified":"2026-10-06",
+  "dateModified":"2026-10-19",
   "author":{"@id":"https://www.salderingsdienst.nl/#organization"},
   "publisher":{"@type":"Organization","@id":"https://www.salderingsdienst.nl/#organization","name":"SalderingsDienst","url":"https://www.salderingsdienst.nl/","logo":{"@type":"ImageObject","url":"https://www.salderingsdienst.nl/assets/salderingsdienst-logo-navy-960x396.png","width":960,"height":396}},
   "mainEntityOfPage":"https://www.salderingsdienst.nl/kennisbank/vast-of-dynamisch-na-2027",
@@ -89,7 +89,7 @@
 
   <div class="card answer-card">
     <div class="confirm-block-label">Kort antwoord</div>
-    <p>Zonder batterij hangt de keuze tussen vast en dynamisch vooral af van twee getallen in het contract: de terugleververgoeding en de terugleverkosten, plus het tarief dat u voor afname betaalt. Het einde van saldering kost de huishoudens in onze voorbeelden ongeveer € 270 tot € 870 per jaar, afhankelijk van verbruik, opwek en scenario. Een batterij verandert de contractkeuze nauwelijks: in het model voegt een dynamisch contract vooral op winterdagen iets toe. Kies uw contract dus op de netto terugleververgoeding en uw afnametarief, en beslis los daarvan of een batterij bij u past. Die uitkomst rekenen wij in het adviesgesprek door met uw eigen meterstanden en contract.</p>
+    <p>Zonder batterij hangt de keuze tussen vast en dynamisch vooral af van twee getallen in het contract: de terugleververgoeding en de terugleverkosten, plus het tarief dat u voor afname betaalt. Wat het einde van saldering de huishoudens in onze voorbeelden kost, verschilt sterk per verbruik, opwek en scenario; het bedrag voor uw eigen woning krijgt u in het adviesgesprek. Een batterij verandert de contractkeuze nauwelijks: in het model voegt een dynamisch contract vooral op winterdagen iets toe. Kies uw contract dus op de netto terugleververgoeding en uw afnametarief, en beslis los daarvan of een batterij bij u past. Die uitkomst rekenen wij in het adviesgesprek door met uw eigen meterstanden en contract.</p>
   </div>
 
   <div class="prose">
@@ -110,15 +110,16 @@
     <div class="card assumptions">
       <h3>Aannames, gelijk in alle voorbeelden tenzij anders vermeld</h3>
       <ul>
-        <li>Stroomprijs all-in € 0,258 per kWh: het CBS-gemiddelde van augustus 2026, leveringstarief plus energiebelasting, inclusief btw. Het model gebruikt dezelfde prijs voor vast en dynamisch.</li>
-        <li>Terugleververgoeding € 0,061 per kWh (het wettelijke minimum bij dat CBS-tarief) en terugleverkosten € 0,02 per kWh, dus netto ongeveer 4 cent.</li>
-        <li>Zonder batterij gebruikt u 30% van uw opwek direct zelf, het getal dat Milieu Centraal noemt.</li>
-        <li>Batterij € 900 per kWh inclusief installatie en 21% btw. Dat is onze aanname, geen tarief. Er is geen ISDE-subsidie en geen 0%-btw op een thuisbatterij.</li>
-        <li>Rendement 90%, 2% capaciteitsverlies per jaar, levensduur 12 jaar, hoogstens één volle laadcyclus per dag.</li>
-        <li>Dynamisch contract: een vast prijsverschil van € 0,10 per kWh tussen goedkoop laden en duur verbruiken. Opbrengst uit onbalanshandel: nul.</li>
+        <li>Stroomprijs all-in: het CBS-gemiddelde van augustus 2026, leveringstarief plus energiebelasting, inclusief btw. Het model gebruikt dezelfde prijs voor vast en dynamisch.</li>
+        <li>Terugleververgoeding op het wettelijke minimum bij dat CBS-tarief, met daarbovenop terugleverkosten.</li>
+        <li>Zonder batterij gebruikt u het deel van uw opwek direct zelf dat Milieu Centraal als gemiddelde noemt.</li>
+        <li>Batterijprijs per kWh inclusief installatie en 21% btw: onze aanname, geen tarief. Er is geen ISDE-subsidie en geen 0%-btw op een thuisbatterij.</li>
+        <li>Een vast rendement, een vast capaciteitsverlies per jaar, een vaste levensduur en hoogstens één volle laadcyclus per dag.</li>
+        <li>Dynamisch contract: een vast prijsverschil tussen goedkoop laden en duur verbruiken. Opbrengst uit onbalanshandel: nul.</li>
+        <li>De waarden zelf tonen wij sinds 19 oktober 2026 niet meer online; u krijgt ze in het adviesgesprek, naast uw eigen contract.</li>
       </ul>
     </div>
-    <p>Het conservatieve scenario rekent met 1 cent minder vergoeding, 1 cent meer terugleverkosten, 200 euro per kWh duurdere batterij, 5 procentpunt minder rendement en 5 procentpunt minder direct eigen verbruik. Het optimistische scenario rekent met 2 cent meer vergoeding, 1 cent minder terugleverkosten, een 200 euro per kWh goedkopere batterij, 2 procentpunt meer rendement en 5 procentpunt meer direct eigen verbruik. Let op: optimistisch is gunstig voor uw rekening, en juist daardoor is opslag er minder waard. Een hogere vergoeding maakt elke kilowattuur die u zelf opslaat minder waard.</p>
+    <p>Het conservatieve scenario rekent met minder vergoeding, meer terugleverkosten, een duurdere batterij, minder rendement en minder direct eigen verbruik. Het optimistische scenario rekent met het omgekeerde. Zo ziet u per voorbeeld niet één getal, maar een bandbreedte.</p>
 
     <h2 id="voorbeelden">Vier huishoudens doorgerekend</h2>
     <p>Per huishouden ziet u hoeveel stroom u vanaf 2027 teruglevert, wat het einde van saldering per jaar extra kost zonder batterij, en hoeveel van die zonnestroom een batterij van 5 of 10 kWh zou verplaatsen naar een moment waarop u hem zelf gebruikt. Wat die verplaatste stroom in euro's waard is, hangt af van uw contract, uw verbruik per uur en de prijs van het systeem. Die uitkomst rekenen wij per huishouden door in het adviesgesprek.</p>
@@ -129,12 +130,13 @@
         <caption>Verbruik 2.500 kWh, opwek 2.800 kWh per jaar. Rekenmodel 1.0.0, bedragen afgerond op tientallen euro's, stroom op tientallen kWh. Verplaatste stroom: eerste jaar, vast contract.</caption>
         <thead><tr><th scope="col">Per jaar</th><th scope="col">Conservatief</th><th scope="col">Realistisch</th><th scope="col">Optimistisch</th></tr></thead>
         <tbody>
-          <tr><th scope="row">Teruglevering vanaf 2027, zonder batterij</th><td class="num">2.100 kWh</td><td class="num">1.960 kWh</td><td class="num">1.820 kWh</td></tr>
-          <tr><th scope="row">Extra stroomkosten vanaf 2027, zonder batterij</th><td class="num">€ 370</td><td class="num">€ 330</td><td class="num">€ 270</td></tr>
-          <tr><th scope="row">Zonnestroom die een batterij van 5 kWh / 10 kWh verplaatst</th><td class="num">1.210 kWh / 1.240 kWh</td><td class="num">1.120 kWh / 1.120 kWh</td><td class="num">990 kWh / 990 kWh</td></tr>
+          <tr><th scope="row">Teruglevering vanaf 2027, zonder batterij</th><td class="num"><span class="sluier-cijfer" role="img" aria-label="Verborgen: u krijgt dit cijfer in het adviesgesprek"></span></td><td class="num"><span class="sluier-cijfer" role="img" aria-label="Verborgen: u krijgt dit cijfer in het adviesgesprek"></span></td><td class="num"><span class="sluier-cijfer" role="img" aria-label="Verborgen: u krijgt dit cijfer in het adviesgesprek"></span></td></tr>
+          <tr><th scope="row">Extra stroomkosten vanaf 2027, zonder batterij</th><td class="num"><span class="sluier-cijfer" role="img" aria-label="Verborgen: u krijgt dit cijfer in het adviesgesprek"></span></td><td class="num"><span class="sluier-cijfer" role="img" aria-label="Verborgen: u krijgt dit cijfer in het adviesgesprek"></span></td><td class="num"><span class="sluier-cijfer" role="img" aria-label="Verborgen: u krijgt dit cijfer in het adviesgesprek"></span></td></tr>
+          <tr><th scope="row">Zonnestroom die een batterij van 5 kWh / 10 kWh verplaatst</th><td class="num"><span class="sluier-cijfer" role="img" aria-label="Verborgen: u krijgt dit cijfer in het adviesgesprek"></span></td><td class="num"><span class="sluier-cijfer" role="img" aria-label="Verborgen: u krijgt dit cijfer in het adviesgesprek"></span></td><td class="num"><span class="sluier-cijfer" role="img" aria-label="Verborgen: u krijgt dit cijfer in het adviesgesprek"></span></td></tr>
         </tbody>
       </table>
     </div>
+<p class="sluier-noot">De cijfers in deze tabel tonen wij niet online. De uitkomst voor uw eigen woning krijgt u in het <a href="/adviesgesprek">adviesgesprek</a>.</p>
     <p style="font-size:15px;"><a href="/rekentool?v=2500&amp;o=2800&amp;b=0">Open dit voorbeeld in de rekentool</a> (zonder batterij). Met een batterij: <a href="/rekentool?v=2500&amp;o=2800">vast met 5 kWh</a>, <a href="/rekentool?v=2500&amp;o=2800&amp;c=1">dynamisch met 5 kWh</a>, <a href="/rekentool?v=2500&amp;o=2800&amp;b=10">vast met 10 kWh</a>, <a href="/rekentool?v=2500&amp;o=2800&amp;c=1&amp;b=10">dynamisch met 10 kWh</a>.</p>
     <p>Een batterij van 10 kWh verplaatst hier in het realistische scenario niet meer stroom dan een van 5 kWh. In de zomer kan de batterij niet meer kwijt dan u 's avonds en 's nachts verbruikt, en in de winter is er te weinig overschot om hem te vullen. De tweede helft van de capaciteit wordt dan vrijwel nooit gebruikt.</p>
 
@@ -144,12 +146,13 @@
         <caption>Verbruik 3.500 kWh, opwek 3.500 kWh per jaar. Rekenmodel 1.0.0, bedragen afgerond op tientallen euro's, stroom op tientallen kWh. Verplaatste stroom: eerste jaar, vast contract.</caption>
         <thead><tr><th scope="col">Per jaar</th><th scope="col">Conservatief</th><th scope="col">Realistisch</th><th scope="col">Optimistisch</th></tr></thead>
         <tbody>
-          <tr><th scope="row">Teruglevering vanaf 2027, zonder batterij</th><td class="num">2.630 kWh</td><td class="num">2.450 kWh</td><td class="num">2.280 kWh</td></tr>
-          <tr><th scope="row">Extra stroomkosten vanaf 2027, zonder batterij</th><td class="num">€ 540</td><td class="num">€ 480</td><td class="num">€ 400</td></tr>
-          <tr><th scope="row">Zonnestroom die een batterij van 5 kWh / 10 kWh verplaatst</th><td class="num">1.330 kWh / 1.740 kWh</td><td class="num">1.380 kWh / 1.620 kWh</td><td class="num">1.360 kWh / 1.460 kWh</td></tr>
+          <tr><th scope="row">Teruglevering vanaf 2027, zonder batterij</th><td class="num"><span class="sluier-cijfer" role="img" aria-label="Verborgen: u krijgt dit cijfer in het adviesgesprek"></span></td><td class="num"><span class="sluier-cijfer" role="img" aria-label="Verborgen: u krijgt dit cijfer in het adviesgesprek"></span></td><td class="num"><span class="sluier-cijfer" role="img" aria-label="Verborgen: u krijgt dit cijfer in het adviesgesprek"></span></td></tr>
+          <tr><th scope="row">Extra stroomkosten vanaf 2027, zonder batterij</th><td class="num"><span class="sluier-cijfer" role="img" aria-label="Verborgen: u krijgt dit cijfer in het adviesgesprek"></span></td><td class="num"><span class="sluier-cijfer" role="img" aria-label="Verborgen: u krijgt dit cijfer in het adviesgesprek"></span></td><td class="num"><span class="sluier-cijfer" role="img" aria-label="Verborgen: u krijgt dit cijfer in het adviesgesprek"></span></td></tr>
+          <tr><th scope="row">Zonnestroom die een batterij van 5 kWh / 10 kWh verplaatst</th><td class="num"><span class="sluier-cijfer" role="img" aria-label="Verborgen: u krijgt dit cijfer in het adviesgesprek"></span></td><td class="num"><span class="sluier-cijfer" role="img" aria-label="Verborgen: u krijgt dit cijfer in het adviesgesprek"></span></td><td class="num"><span class="sluier-cijfer" role="img" aria-label="Verborgen: u krijgt dit cijfer in het adviesgesprek"></span></td></tr>
         </tbody>
       </table>
     </div>
+<p class="sluier-noot">De cijfers in deze tabel tonen wij niet online. De uitkomst voor uw eigen woning krijgt u in het <a href="/adviesgesprek">adviesgesprek</a>.</p>
     <p style="font-size:15px;"><a href="/rekentool?b=0">Open dit voorbeeld in de rekentool</a> (zonder batterij). Met een batterij: <a href="/rekentool">vast met 5 kWh</a> (de standaardwaarden), <a href="/rekentool?c=1">dynamisch met 5 kWh</a>, <a href="/rekentool?b=10">vast met 10 kWh</a>, <a href="/rekentool?c=1&amp;b=10">dynamisch met 10 kWh</a>.</p>
 
     <h3 id="b3">3. Met warmtepomp</h3>
@@ -158,12 +161,13 @@
         <caption>Verbruik 5.000 kWh, opwek 4.500 kWh per jaar. Rekenmodel 1.0.0, bedragen afgerond op tientallen euro's, stroom op tientallen kWh. Verplaatste stroom: eerste jaar, vast contract.</caption>
         <thead><tr><th scope="col">Per jaar</th><th scope="col">Conservatief</th><th scope="col">Realistisch</th><th scope="col">Optimistisch</th></tr></thead>
         <tbody>
-          <tr><th scope="row">Teruglevering vanaf 2027, zonder batterij</th><td class="num">3.380 kWh</td><td class="num">3.150 kWh</td><td class="num">2.930 kWh</td></tr>
-          <tr><th scope="row">Extra stroomkosten vanaf 2027, zonder batterij</th><td class="num">€ 700</td><td class="num">€ 620</td><td class="num">€ 520</td></tr>
-          <tr><th scope="row">Zonnestroom die een batterij van 5 kWh / 10 kWh verplaatst</th><td class="num">1.390 kWh / 2.360 kWh</td><td class="num">1.460 kWh / 2.290 kWh</td><td class="num">1.470 kWh / 2.100 kWh</td></tr>
+          <tr><th scope="row">Teruglevering vanaf 2027, zonder batterij</th><td class="num"><span class="sluier-cijfer" role="img" aria-label="Verborgen: u krijgt dit cijfer in het adviesgesprek"></span></td><td class="num"><span class="sluier-cijfer" role="img" aria-label="Verborgen: u krijgt dit cijfer in het adviesgesprek"></span></td><td class="num"><span class="sluier-cijfer" role="img" aria-label="Verborgen: u krijgt dit cijfer in het adviesgesprek"></span></td></tr>
+          <tr><th scope="row">Extra stroomkosten vanaf 2027, zonder batterij</th><td class="num"><span class="sluier-cijfer" role="img" aria-label="Verborgen: u krijgt dit cijfer in het adviesgesprek"></span></td><td class="num"><span class="sluier-cijfer" role="img" aria-label="Verborgen: u krijgt dit cijfer in het adviesgesprek"></span></td><td class="num"><span class="sluier-cijfer" role="img" aria-label="Verborgen: u krijgt dit cijfer in het adviesgesprek"></span></td></tr>
+          <tr><th scope="row">Zonnestroom die een batterij van 5 kWh / 10 kWh verplaatst</th><td class="num"><span class="sluier-cijfer" role="img" aria-label="Verborgen: u krijgt dit cijfer in het adviesgesprek"></span></td><td class="num"><span class="sluier-cijfer" role="img" aria-label="Verborgen: u krijgt dit cijfer in het adviesgesprek"></span></td><td class="num"><span class="sluier-cijfer" role="img" aria-label="Verborgen: u krijgt dit cijfer in het adviesgesprek"></span></td></tr>
         </tbody>
       </table>
     </div>
+<p class="sluier-noot">De cijfers in deze tabel tonen wij niet online. De uitkomst voor uw eigen woning krijgt u in het <a href="/adviesgesprek">adviesgesprek</a>.</p>
     <p style="font-size:15px;"><a href="/rekentool?v=5000&amp;o=4500&amp;b=0">Open dit voorbeeld in de rekentool</a> (zonder batterij). Met een batterij: <a href="/rekentool?v=5000&amp;o=4500">vast met 5 kWh</a>, <a href="/rekentool?v=5000&amp;o=4500&amp;c=1">dynamisch met 5 kWh</a>, <a href="/rekentool?v=5000&amp;o=4500&amp;b=10">vast met 10 kWh</a>, <a href="/rekentool?v=5000&amp;o=4500&amp;c=1&amp;b=10">dynamisch met 10 kWh</a>.</p>
 
     <h3 id="b4">4. Met elektrische auto</h3>
@@ -172,12 +176,13 @@
         <caption>Verbruik 6.000 kWh, opwek 5.600 kWh per jaar. Rekenmodel 1.0.0, bedragen afgerond op tientallen euro's, stroom op tientallen kWh. Verplaatste stroom: eerste jaar, vast contract.</caption>
         <thead><tr><th scope="col">Per jaar</th><th scope="col">Conservatief</th><th scope="col">Realistisch</th><th scope="col">Optimistisch</th></tr></thead>
         <tbody>
-          <tr><th scope="row">Teruglevering vanaf 2027, zonder batterij</th><td class="num">4.200 kWh</td><td class="num">3.920 kWh</td><td class="num">3.640 kWh</td></tr>
-          <tr><th scope="row">Extra stroomkosten vanaf 2027, zonder batterij</th><td class="num">€ 870</td><td class="num">€ 770</td><td class="num">€ 640</td></tr>
-          <tr><th scope="row">Zonnestroom die een batterij van 5 kWh / 10 kWh verplaatst</th><td class="num">1.450 kWh / 2.500 kWh</td><td class="num">1.510 kWh / 2.600 kWh</td><td class="num">1.520 kWh / 2.480 kWh</td></tr>
+          <tr><th scope="row">Teruglevering vanaf 2027, zonder batterij</th><td class="num"><span class="sluier-cijfer" role="img" aria-label="Verborgen: u krijgt dit cijfer in het adviesgesprek"></span></td><td class="num"><span class="sluier-cijfer" role="img" aria-label="Verborgen: u krijgt dit cijfer in het adviesgesprek"></span></td><td class="num"><span class="sluier-cijfer" role="img" aria-label="Verborgen: u krijgt dit cijfer in het adviesgesprek"></span></td></tr>
+          <tr><th scope="row">Extra stroomkosten vanaf 2027, zonder batterij</th><td class="num"><span class="sluier-cijfer" role="img" aria-label="Verborgen: u krijgt dit cijfer in het adviesgesprek"></span></td><td class="num"><span class="sluier-cijfer" role="img" aria-label="Verborgen: u krijgt dit cijfer in het adviesgesprek"></span></td><td class="num"><span class="sluier-cijfer" role="img" aria-label="Verborgen: u krijgt dit cijfer in het adviesgesprek"></span></td></tr>
+          <tr><th scope="row">Zonnestroom die een batterij van 5 kWh / 10 kWh verplaatst</th><td class="num"><span class="sluier-cijfer" role="img" aria-label="Verborgen: u krijgt dit cijfer in het adviesgesprek"></span></td><td class="num"><span class="sluier-cijfer" role="img" aria-label="Verborgen: u krijgt dit cijfer in het adviesgesprek"></span></td><td class="num"><span class="sluier-cijfer" role="img" aria-label="Verborgen: u krijgt dit cijfer in het adviesgesprek"></span></td></tr>
         </tbody>
       </table>
     </div>
+<p class="sluier-noot">De cijfers in deze tabel tonen wij niet online. De uitkomst voor uw eigen woning krijgt u in het <a href="/adviesgesprek">adviesgesprek</a>.</p>
     <p style="font-size:15px;"><a href="/rekentool?v=6000&amp;o=5600&amp;b=0">Open dit voorbeeld in de rekentool</a> (zonder batterij). Met een batterij: <a href="/rekentool?v=6000&amp;o=5600">vast met 5 kWh</a>, <a href="/rekentool?v=6000&amp;o=5600&amp;c=1">dynamisch met 5 kWh</a>, <a href="/rekentool?v=6000&amp;o=5600&amp;b=10">vast met 10 kWh</a>, <a href="/rekentool?v=6000&amp;o=5600&amp;c=1&amp;b=10">dynamisch met 10 kWh</a>.</p>
     <p>Het model rekent met een vlak verbruik over de dag. Laadt u de auto vooral 's avonds, of draait de warmtepomp vooral 's nachts, dan kan uw werkelijke uitkomst flink afwijken. Daarvoor zijn meetgegevens uit uw slimme meter nodig.</p>
 
@@ -188,22 +193,23 @@
         <caption>Verbruik en opwek 3.500 kWh per jaar. Stroomkosten 2027: alleen het deel per kWh, zonder vaste leverings- en netbeheerkosten. Het niveau van 7,6 cent komt van een vergelijkingssite (1 oktober 2026) en is geen leverancierstarief. Rekenmodel 1.0.0, afgerond op tientallen euro's.</caption>
         <thead><tr><th scope="col">Per jaar</th><th scope="col">Conservatief</th><th scope="col">Realistisch</th><th scope="col">Optimistisch</th></tr></thead>
         <tbody>
-          <tr><th scope="row">Netto ongeveer 0 cent: stroomkosten 2027 zonder batterij</th><td class="num">€ 680</td><td class="num">€ 630</td><td class="num">€ 520</td></tr>
-          <tr><th scope="row">Netto ongeveer 4 cent: stroomkosten 2027 zonder batterij</th><td class="num">€ 620</td><td class="num">€ 530</td><td class="num">€ 430</td></tr>
-          <tr><th scope="row">Netto ongeveer 7,6 cent: stroomkosten 2027 zonder batterij</th><td class="num">€ 530</td><td class="num">€ 450</td><td class="num">€ 350</td></tr>
+          <tr><th scope="row">Netto ongeveer 0 cent: stroomkosten 2027 zonder batterij</th><td class="num"><span class="sluier-cijfer" role="img" aria-label="Verborgen: u krijgt dit cijfer in het adviesgesprek"></span></td><td class="num"><span class="sluier-cijfer" role="img" aria-label="Verborgen: u krijgt dit cijfer in het adviesgesprek"></span></td><td class="num"><span class="sluier-cijfer" role="img" aria-label="Verborgen: u krijgt dit cijfer in het adviesgesprek"></span></td></tr>
+          <tr><th scope="row">Netto ongeveer 4 cent: stroomkosten 2027 zonder batterij</th><td class="num"><span class="sluier-cijfer" role="img" aria-label="Verborgen: u krijgt dit cijfer in het adviesgesprek"></span></td><td class="num"><span class="sluier-cijfer" role="img" aria-label="Verborgen: u krijgt dit cijfer in het adviesgesprek"></span></td><td class="num"><span class="sluier-cijfer" role="img" aria-label="Verborgen: u krijgt dit cijfer in het adviesgesprek"></span></td></tr>
+          <tr><th scope="row">Netto ongeveer 7,6 cent: stroomkosten 2027 zonder batterij</th><td class="num"><span class="sluier-cijfer" role="img" aria-label="Verborgen: u krijgt dit cijfer in het adviesgesprek"></span></td><td class="num"><span class="sluier-cijfer" role="img" aria-label="Verborgen: u krijgt dit cijfer in het adviesgesprek"></span></td><td class="num"><span class="sluier-cijfer" role="img" aria-label="Verborgen: u krijgt dit cijfer in het adviesgesprek"></span></td></tr>
         </tbody>
       </table>
     </div>
+<p class="sluier-noot">De cijfers in deze tabel tonen wij niet online. De uitkomst voor uw eigen woning krijgt u in het <a href="/adviesgesprek">adviesgesprek</a>.</p>
     <p style="font-size:15px;">Open in de rekentool: netto 0 cent <a href="/rekentool?b=0&amp;tk=0.061">zonder batterij</a> of <a href="/rekentool?c=1&amp;b=10&amp;tk=0.061">met 10 kWh</a>; netto 4 cent <a href="/rekentool?b=0">zonder batterij</a> of <a href="/rekentool?c=1&amp;b=10">met 10 kWh</a>; netto 7,6 cent <a href="/rekentool?b=0&amp;tv=0.096">zonder batterij</a> of <a href="/rekentool?c=1&amp;b=10&amp;tv=0.096">met 10 kWh</a>.</p>
-    <p>Twee effecten lopen hier tegen elkaar in. Een hogere netto vergoeding verlaagt uw rekening: in het realistische scenario van € 630 naar € 450 per jaar. Maar dezelfde hogere vergoeding maakt opslag minder waard, omdat u minder misloopt door terug te leveren. Elke kilowattuur die een batterij verplaatst, levert dan minder op. Wie overstapt naar een contract met een hoge terugleververgoeding, heeft dus minder reden voor een batterij.</p>
+    <p>Twee effecten lopen hier tegen elkaar in. Een hogere netto vergoeding verlaagt uw rekening: hoe hoger de netto vergoeding, hoe lager uw stroomkosten in 2027. Maar dezelfde hogere vergoeding maakt opslag minder waard, omdat u minder misloopt door terug te leveren. Elke kilowattuur die een batterij verplaatst, levert dan minder op. Wie overstapt naar een contract met een hoge terugleververgoeding, heeft dus minder reden voor een batterij.</p>
     <p>Wat dit voorbeeld niet meeneemt: bij een dynamisch contract wisselt ook de prijs die u voor afname betaalt, per uur. Het model rekent voor beide contractvormen met dezelfde gemiddelde prijs. Of dynamisch voor u goedkoper uitvalt, hangt ook af van wanneer u stroom van het net haalt.</p>
 
     <h2 id="batterij">Wat een batterij hierin doet</h2>
     <p>Een thuisbatterij verandert niets aan de regels van 2027. Hij verandert alleen hoeveel van uw opwek u teruglevert en hoeveel u zelf gebruikt. Of dat in uw situatie opweegt tegen de prijs, verschilt sterk per huishouden. Deze dingen verschuiven de uitkomst het meest:</p>
     <ul>
       <li><strong>Uw verbruik 's avonds en 's nachts.</strong> Een batterij kan alleen ontladen als u op dat moment stroom gebruikt. Hoe meer u na zonsondergang verbruikt, bijvoorbeeld met een warmtepomp of een auto die thuis laadt, hoe meer stroom hij per jaar verplaatst. In de tabellen hierboven ziet u dat terug: bij het kleine dak voegt 10 kWh niets toe aan 5 kWh, bij de warmtepomp en de auto wel.</li>
-      <li><strong>Een dynamisch contract met sturing.</strong> Het model laat de batterij goedkoop van het net laden op dagen waarop de zon hem voor minder dan 30% vult. Dat zijn vooral winterdagen. Bij het gemiddelde huishouden, de warmtepomp en de auto vult de winterzon een batterij van 5 kWh meestal al verder dan dat, zodat het verschil tussen vast en dynamisch klein blijft. Met een systeem dat per uur op prijzen stuurt en een groter verschil tussen dal en piek kan het meer worden; het model rekent met één vast prijsverschil en niet met uurprijzen.</li>
-      <li><strong>De prijs van het systeem.</strong> De batterijprijs in het model is een aanname van € 900 per kWh, geen tarief. Een offerte kan daar flink van afwijken, naar boven en naar beneden, en kleine batterijen zijn per kWh vaak duurder door vaste installatiekosten.</li>
+      <li><strong>Een dynamisch contract met sturing.</strong> Het model laat de batterij goedkoop van het net laden op dagen waarop de zon hem maar voor een klein deel vult. Dat zijn vooral winterdagen. Bij het gemiddelde huishouden, de warmtepomp en de auto vult de winterzon een batterij van 5 kWh meestal al verder dan dat, zodat het verschil tussen vast en dynamisch klein blijft. Met een systeem dat per uur op prijzen stuurt en een groter verschil tussen dal en piek kan het meer worden; het model rekent met één vast prijsverschil en niet met uurprijzen.</li>
+      <li><strong>De prijs van het systeem.</strong> De batterijprijs in het model is een aanname, geen tarief. Een offerte kan daar flink van afwijken, naar boven en naar beneden, en kleine batterijen zijn per kWh vaak duurder door vaste installatiekosten.</li>
       <li><strong>De netto terugleververgoeding.</strong> Zie voorbeeld 5: hoe meer uw contract voor teruggeleverde stroom betaalt, hoe minder het oplevert om die stroom zelf op te slaan.</li>
     </ul>
     <p>Daarom staat in dit artikel geen bedrag voor wat een batterij bespaart. Uw uitkomst ontvangt u in het adviesgesprek, doorgerekend met uw eigen meterstanden en contract. De voorbeelden hierboven kunt u wel zelf openen in de rekentool; daar staan de methode en alle aannames voor een batterij erbij.</p>
@@ -261,7 +267,7 @@
 
 <footer class="site-footer">
   <div class="container" style="padding-top:40px; padding-bottom:34px; font-size:13.5px; display:flex; flex-wrap:wrap; gap:10px 20px; justify-content:space-between;">
-    <span>&copy; 2026 De Salderingsdienst B.V., KvK 42165216, btw NL851987461B01, Jonas Dani&euml;l Meijerplein 25 C 2, 1011 RG Amsterdam. <a href="mailto:info@salderingsdienst.nl" style="color:var(--gold-300);">info@salderingsdienst.nl</a>, telefoon <a href="tel:+31639369781" style="color:var(--gold-300);">06 3936 9781</a>, <a href="https://wa.me/31639369781" rel="noopener" style="color:var(--gold-300);">WhatsApp</a>.<br>Particuliere onderneming, geen onderdeel van de Rijksoverheid.</span>
+    <span>&copy; 2026 De Salderingsdienst B.V., KvK 42165216, Jonas Dani&euml;l Meijerplein 25 C 2, 1011 RG Amsterdam. <a href="mailto:info@salderingsdienst.nl" style="color:var(--gold-300);">info@salderingsdienst.nl</a>, telefoon <a href="tel:+31639369781" style="color:var(--gold-300);">06 3936 9781</a>, <a href="https://wa.me/31639369781" rel="noopener" style="color:var(--gold-300);">WhatsApp</a>.<br>Particuliere onderneming, geen onderdeel van de Rijksoverheid.</span>
     <span>
       <a href="/algemene-voorwaarden" style="color:var(--gold-300);">Algemene voorwaarden</a>
       &nbsp;·&nbsp;
